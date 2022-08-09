@@ -7,6 +7,7 @@ public class ButtonClick : MonoBehaviour,IPointerDownHandler,IPointerUpHandler
 {
     RectTransform _rectTrans;
     bool _isButtonDown = false;
+    
     private void Awake()
     {
         _rectTrans = this.GetComponent<RectTransform>();
