@@ -5,9 +5,9 @@ using UnityEngine;
 public class BaseObject : MonoBehaviour
 {
     public float _hp;
-    public float _att;
-    public float _matt;
-    public float _attSpeed;
+    public float _atk;
+    public float _matk;
+    public float _atkSpeed;
     public float _def;
     public float _speed;
     public float _critical;
@@ -19,6 +19,8 @@ public class BaseObject : MonoBehaviour
     {
 
     }
+
+   
     virtual public void UseSpell()
     {
 

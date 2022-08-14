@@ -8,10 +8,7 @@ public class PlayerManager : MonoBehaviour
 {
     
 
-    public void Save(string path)
-    {
-
-    }
+   
 
 
 }
