@@ -2443,10 +2443,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 1403416166}
-  _offsetX: 2
-  _offsetY: 2
-  _offsetZ: 2
-  _delayTime: 5
+  _offsetX: 0
+  _offsetY: 16
+  _offsetZ: 0
+  _delayTime: 500
 --- !u!1 &2056480305
 GameObject:
   m_ObjectHideFlags: 0
