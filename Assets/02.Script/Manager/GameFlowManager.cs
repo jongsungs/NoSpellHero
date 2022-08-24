@@ -9,9 +9,10 @@ public class GameFlowManager : MonoBehaviour
     public Fade _fade;
     public Fade _logoFade;
     public Fade _titleFade;
+    public GameObject _lobby;
 
 
-    [SerializeField] bool _isLobby = true;
+    public bool _isLobby = true;
 
 
 
@@ -21,10 +22,7 @@ public class GameFlowManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
     }
-    private void Start()
-    {
-        StartCoroutine(LogoFadeStart());
-    }
+    
 
 
     private void Update()
@@ -50,16 +48,7 @@ public class GameFlowManager : MonoBehaviour
 
     }
 
-   IEnumerator LogoFadeStart()
-    {
-        yield return new WaitForSeconds(1f);
-        _logoFade.FadeIn(1f);
-        yield return new WaitForSeconds(2f);
-        _logoFade.FadeOut(1f);
-        yield return new WaitForSeconds(2f);
-        _titleFade.FadeIn(1f);
-
-    }
+   
 
    
 

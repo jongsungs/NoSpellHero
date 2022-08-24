@@ -14,8 +14,8 @@ public class Title : MonoBehaviour,IPointerDownHandler
     }
     public void OnPointerDown(PointerEventData eventData)
     {
-
-        fade.FadeOut(1f);   
+        Debug.Log("ŸġŸġ");
+        LoadSceneManager.LoadScene("Lobby");
     }
 
    

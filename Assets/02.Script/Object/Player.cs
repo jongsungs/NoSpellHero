@@ -48,6 +48,7 @@ public class Player : BaseObject
 
     private void Awake()
     {
+        Load();
         _data = new PlayerData(_hp, _atk, _matk, _atkSpeed, _def, _speed, _critical, _handicraft, _charm);
         
         _preSpeed = _speed;
@@ -86,7 +87,7 @@ public class Player : BaseObject
                 _speed = _preSpeed;
             }
             Vector3 direction = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
-            rb.velocity = (direction * _speed * Time.fixedDeltaTime);
+            rb.velocity = (direction * ((_speed+1) * 50f)* Time.fixedDeltaTime);
 
             transform.rotation = Quaternion.LookRotation(direction);
             transform.Translate(Vector3.forward * _rotateSpeed * Time.deltaTime);
