@@ -87,7 +87,7 @@ public class Player : BaseObject
                 _speed = _preSpeed;
             }
             Vector3 direction = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
-            rb.velocity = (direction * ((_speed+1) * 50f)* Time.fixedDeltaTime);
+            rb.velocity = (direction * (_speed  * 50f)* Time.fixedDeltaTime);
 
             transform.rotation = Quaternion.LookRotation(direction);
             transform.Translate(Vector3.forward * _rotateSpeed * Time.deltaTime);
