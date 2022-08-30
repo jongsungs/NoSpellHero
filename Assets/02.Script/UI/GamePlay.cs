@@ -1,24 +1,54 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Pool;
 
 public class GamePlay : MonoBehaviour
 {
+
+    static public GamePlay Instance { get; private set; }
+
+
     [SerializeField] Player _player;
     public GameObject _pausePopUp;
     public GameObject _choicePopUp;
     public GameObject _bossHPBar;
     public GameObject _resultPopUp;
+    public Monster _monsterList;
+
+    private IObjectPool<Monster> _monsterPool;
 
 
-
-    private void Update()
+    private void Awake()
     {
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-            ActiveResultPopUp();
-        }
+        Instance = this;
+
+        _monsterPool = new ObjectPool<Monster>(CreatMonser);
+
+        
+
     }
+
+    private Monster CreatMonser()
+    {
+        var monster = Instantiate(_monsterList, transform.position, Quaternion.identity);
+        return monster;
+    }
+    private void OngetMonster(GameObject obj)
+    {
+
+    }
+    private void OnReleaseMonster(GameObject obj)
+    {
+
+    }
+    private void OnDestroyMonster(GameObject obj)
+    {
+
+    }
+
+
+
 
 
     public void EnterLobby()
