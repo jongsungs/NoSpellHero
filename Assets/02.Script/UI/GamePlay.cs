@@ -22,29 +22,36 @@ public class GamePlay : MonoBehaviour
     private void Awake()
     {
         Instance = this;
+        _monsterPool = new ObjectPool<Monster>(CreatMonser,OngetMonster,OnReleaseMonster,OnDestroyMonster,maxSize:10);
 
-        _monsterPool = new ObjectPool<Monster>(CreatMonser);
+    }
 
-        
-
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            _monsterPool.Get();
+        }
     }
 
     private Monster CreatMonser()
     {
         var monster = Instantiate(_monsterList, transform.position, Quaternion.identity);
+        monster.SetPool(_monsterPool);
         return monster;
     }
-    private void OngetMonster(GameObject obj)
+    private void OngetMonster(Monster obj)
     {
-
+        obj.gameObject.SetActive(true);
+        obj.transform.position = _player.transform.position;
     }
-    private void OnReleaseMonster(GameObject obj)
+    private void OnReleaseMonster(Monster obj)
     {
-
+        obj.gameObject.SetActive(false);
     }
-    private void OnDestroyMonster(GameObject obj)
+    private void OnDestroyMonster(Monster obj)
     {
-
+        Destroy(obj.gameObject);
     }
 
 

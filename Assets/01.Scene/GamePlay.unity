@@ -789,6 +789,8 @@ MonoBehaviour:
   _choicePopUp: {fileID: 1713121211}
   _bossHPBar: {fileID: 316581530}
   _resultPopUp: {fileID: 89509090}
+  _monsterList: {fileID: 709556150034476233, guid: e08046deef98f844aa7bb3c7a5d1643e,
+    type: 3}
 --- !u!4 &266487998
 Transform:
   m_ObjectHideFlags: 0
