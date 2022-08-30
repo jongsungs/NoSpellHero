@@ -54,6 +54,12 @@ public class Player : BaseObject
         _preSpeed = _speed;
     }
 
+    private void Start()
+    {
+        _animator = GetComponent<Animator>();
+        
+    }
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -68,6 +74,7 @@ public class Player : BaseObject
         {
             _hp += 1;
         }
+        Debug.Log(variableJoystick._isStop);
     }
 
 
@@ -78,19 +85,39 @@ public class Player : BaseObject
 
             if (variableJoystick._isStop)
             {
-                // rb.velocity = Vector3.zero;
-                //rb.angularVelocity = Vector3.zero;
                 _speed = 0f;
+                ChangeState(State.Idle);
             }
             else if (variableJoystick._isStop == false)
             {
                 _speed = _preSpeed;
+                ChangeState(State.Walk);
             }
             Vector3 direction = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
             rb.velocity = (direction * (_speed  * 50f)* Time.fixedDeltaTime);
 
             transform.rotation = Quaternion.LookRotation(direction);
             transform.Translate(Vector3.forward * _rotateSpeed * Time.deltaTime);
+        }
+    }
+
+
+    protected override void ChangeState(State state)
+    {
+        base.ChangeState(state);
+        _animator.SetInteger(_aniHashKeyState, (int)_state);
+        switch(_state)
+        {
+            case State.Idle:
+                break;
+            case State.Walk:
+                break;
+            case State.Attack:
+                break;
+            case State.Hit:
+                break;
+            case State.Die:
+                break;
         }
     }
 

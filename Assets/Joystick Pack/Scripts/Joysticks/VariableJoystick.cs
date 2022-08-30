@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 public class VariableJoystick : Joystick
 {
     public float MoveThreshold { get { return moveThreshold; } set { moveThreshold = Mathf.Abs(value); } }
-    public bool _isStop;
+    public bool _isStop = true;
 
     [SerializeField] private float moveThreshold = 1;
     [SerializeField] private JoystickType joystickType = JoystickType.Fixed;
@@ -30,6 +30,7 @@ public class VariableJoystick : Joystick
         base.Start();
         fixedPosition = background.anchoredPosition;
         SetMode(joystickType);
+        _isStop = true;
     }
 
     public override void OnPointerDown(PointerEventData eventData)
