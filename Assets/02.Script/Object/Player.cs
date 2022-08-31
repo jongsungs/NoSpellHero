@@ -42,6 +42,8 @@ public class Player : BaseObject
     public VariableJoystick variableJoystick;
     public Rigidbody rb;
     PlayerData _data;
+    public Weapon _myWeapon;
+    public bool _isAttack;
 
     
 
@@ -131,6 +133,16 @@ public class Player : BaseObject
         ChangeState(State.Die);
     }
 
+    public void AttackOn()
+    {
+        _isAttack = true;
+    }
+    public void AttackOff()
+    {
+        _isAttack = false;
+    }
+
+
     protected override void ChangeState(State state)
     {
         base.ChangeState(state);
@@ -140,22 +152,25 @@ public class Player : BaseObject
             case State.Idle:
                 Vector3 direction = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
                 rb.velocity = (direction * (_speed * 50f) * Time.fixedDeltaTime);
-
                 transform.rotation = Quaternion.LookRotation(direction);
                 transform.Translate(Vector3.forward * _rotateSpeed * Time.deltaTime);
+               
                 break;
             case State.Walk:
                 Vector3 direction2 = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
                 rb.velocity = (direction2 * (_speed * 50f) * Time.fixedDeltaTime);
-
                 transform.rotation = Quaternion.LookRotation(direction2);
                 transform.Translate(Vector3.forward * _rotateSpeed * Time.deltaTime);
+                
                 break;
             case State.Attack:
+                _isAttack = true;
                 break;
             case State.Hit:
+            
                 break;
             case State.Die:
+                
                 break;
         }
     }

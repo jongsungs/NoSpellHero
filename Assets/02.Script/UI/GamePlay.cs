@@ -14,15 +14,23 @@ public class GamePlay : MonoBehaviour
     public GameObject _choicePopUp;
     public GameObject _bossHPBar;
     public GameObject _resultPopUp;
-    public Monster _monsterList;
+    public Monster _wolf;
+    public Monster _slime;
+    public GameObject _objectPool;
+    public GameObject _spawnZone;
 
-    private IObjectPool<Monster> _monsterPool;
+    private IObjectPool<Monster> _wolfpool;
+    private IObjectPool<Monster> _slimePool;
 
 
     private void Awake()
     {
         Instance = this;
-        _monsterPool = new ObjectPool<Monster>(CreatMonser,OngetMonster,OnReleaseMonster,OnDestroyMonster,maxSize:10);
+
+        _slimePool = new ObjectPool<Monster>(CreatSlime,OngetMonster,OnReleaseMonster,OnDestroyMonster,maxSize:10);
+        _wolfpool = new ObjectPool<Monster>(CreatWolf, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
+
+
 
     }
 
@@ -30,25 +38,41 @@ public class GamePlay : MonoBehaviour
     {
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            _monsterPool.Get();
+
+            _slimePool.Get();
+           // _wolfpool.Get();
+
         }
     }
 
-    private Monster CreatMonser()
+    private Monster CreatSlime()
     {
-        var monster = Instantiate(_monsterList, transform.position, Quaternion.identity);
-        monster.SetPool(_monsterPool);
+        var monster = Instantiate(_slime, _spawnZone.transform.position, Quaternion.identity,_objectPool.transform);
+        monster.SetPool(_slimePool);
         return monster;
     }
+    private Monster CreatWolf()
+    {
+        var monster = Instantiate(_wolf, _spawnZone.transform.position, Quaternion.identity, _objectPool.transform);
+        monster.SetPool(_wolfpool);
+        return monster;
+    }
+
+    // 새로 뽑을 때
     private void OngetMonster(Monster obj)
     {
         obj.gameObject.SetActive(true);
-        obj.transform.position = _player.transform.position;
+        obj.transform.position = _spawnZone.transform.position;
     }
+
+    // 반환할때 사라질때
+
     private void OnReleaseMonster(Monster obj)
     {
         obj.gameObject.SetActive(false);
     }
+
+    //풀이 꽉차서 없어질때
     private void OnDestroyMonster(Monster obj)
     {
         Destroy(obj.gameObject);
