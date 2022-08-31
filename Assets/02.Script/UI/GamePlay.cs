@@ -18,6 +18,7 @@ public class GamePlay : MonoBehaviour
     public Monster _slime;
     public GameObject _objectPool;
     public GameObject _spawnZone;
+    public RespawnZone _randomSpawn;
 
     private IObjectPool<Monster> _wolfpool;
     private IObjectPool<Monster> _slimePool;
@@ -47,13 +48,13 @@ public class GamePlay : MonoBehaviour
 
     private Monster CreatSlime()
     {
-        var monster = Instantiate(_slime, _spawnZone.transform.position, Quaternion.identity,_objectPool.transform);
+        var monster = Instantiate(_slime, _randomSpawn.Return_RandomPosition(), Quaternion.identity,_objectPool.transform);
         monster.SetPool(_slimePool);
         return monster;
     }
     private Monster CreatWolf()
     {
-        var monster = Instantiate(_wolf, _spawnZone.transform.position, Quaternion.identity, _objectPool.transform);
+        var monster = Instantiate(_wolf, _randomSpawn.Return_RandomPosition() ,Quaternion.identity, _objectPool.transform);
         monster.SetPool(_wolfpool);
         return monster;
     }
@@ -62,7 +63,7 @@ public class GamePlay : MonoBehaviour
     private void OngetMonster(Monster obj)
     {
         obj.gameObject.SetActive(true);
-        obj.transform.position = _spawnZone.transform.position;
+        obj.transform.position = _randomSpawn.Return_RandomPosition();
     }
 
     // 반환할때 사라질때
