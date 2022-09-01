@@ -33,6 +33,15 @@ public class Slime : Monster
     }
 
 
+    public override void Idle()
+    {
+        ChangeState(State.Idle);
+    }
+    
+
+
+
+
     protected override void ChangeState(State state)
     {
         base.ChangeState(state);
@@ -74,6 +83,7 @@ public class Slime : Monster
         {
             Debug.Log("여기여기");
            
+            ChangeState(State.Hit);
             _hp -= other.GetComponent<Weapon>()._damage;
 
         }

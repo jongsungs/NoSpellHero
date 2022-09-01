@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
+using UnityEngine.UI;
 
 public class GamePlay : MonoBehaviour
 {
@@ -20,8 +21,15 @@ public class GamePlay : MonoBehaviour
     public GameObject _spawnZone;
     public RespawnZone _randomSpawn;
 
+
+
+
+    public DamageText _damageText;
+
     private IObjectPool<Monster> _wolfpool;
     private IObjectPool<Monster> _slimePool;
+
+
 
 
     private void Awake()
@@ -44,6 +52,9 @@ public class GamePlay : MonoBehaviour
            // _wolfpool.Get();
 
         }
+        
+            DamageTextOn("10000", _slime.transform.position);
+        
     }
 
     private Monster CreatSlime()
@@ -125,5 +136,9 @@ public class GamePlay : MonoBehaviour
         _bossHPBar.gameObject.SetActive(false);
     }
 
+    public void DamageTextOn(string str, Vector3 worldPosition)
+    {
+        _damageText.RequestDamageText(str,worldPosition);
+    }
 
 }
