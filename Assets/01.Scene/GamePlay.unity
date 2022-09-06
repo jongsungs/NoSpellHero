@@ -6446,12 +6446,21 @@ MonoBehaviour:
   _critical: 0
   _handicraft: 0
   _charm: 0
+  _criticalDamage: 0
   _preSpeed: 0
   _rotateSpeed: 0
+  _maxHp: 0
+  _basicAtk: 0
+  _basicMatk: 0
+  _criticalProbability: 0
   variableJoystick: {fileID: 498063751}
   rb: {fileID: 1867921290}
-  _myWeapon: {fileID: 1880770978}
+  _myWeapon:
+  - {fileID: 1880770978}
   _isAttack: 0
+  _half: 0
+  _1_3: 0
+  _quater: 0
 --- !u!54 &1867921290
 Rigidbody:
   m_ObjectHideFlags: 0

@@ -39,12 +39,65 @@ public class PlayerData
 #endregion
 public class Player : BaseObject
 {
+
+    public enum PlayerTitle : int
+    {
+        MagicalBlader = 0, // 마검사
+        MadMan, //광인
+        StrongMan, //괴력몬 
+        Warrior, //전사
+        Dwarf, //난쟁이
+        JackFrost, // 동장군
+        AssaultCaptain,//돌격대장
+        ZhangFei,//삼국지 장비
+        Berserker, // 광전사
+        Critialer,//급소킬러
+        Druid, //드루이드
+        Assassin,//암살자
+        Ambidextrous,//양손잡이
+        LuBu,//여포
+        HeavyCavalry, //개마무사
+        HealthMagician,//덩치법사
+        Priest, // 사제
+        Warlock, // 흑마법사
+        Salamander, // 불도마뱀
+        Zeus,//제우스
+        PracticeBug,//연습벌레
+        Stranger,//스트레인저
+        GateKeeper,//문지기
+        Cook,//요리사
+        QRF,//번개조
+        Servant, //돌쇠
+        Athlete, //운동선수
+        Versatile,//다재다능
+        Shieldbearer,//방패병
+        Acupuncturist,//침술사
+        SpoonKiller,//숟가락 살인마
+        Helen,//절세미인
+        Slicker,//야바위꾼
+        Idol,//아이돌
+        Delivery,//배달부
+        Repairman,//수리공
+        Taoist,//전우치
+        Gambler,//도박사
+        SlowStarter,//슬로우스타터
+        Orpheus,//오르페우스
+        DokeV,//도깨비
+
+
+
+    }
+
     [SerializeField] float _preSpeed;
     [SerializeField] float _rotateSpeed;
+    [SerializeField] float _maxHp;
+    [SerializeField] float _basicAtk;
+    [SerializeField] float _basicMatk;
+    [SerializeField] float _criticalProbability;
     public VariableJoystick variableJoystick;
     public Rigidbody rb;
     PlayerData _data;
-    public Weapon _myWeapon;
+    public List<Weapon> _myWeapon = new List<Weapon>();
     public bool _isAttack;
 
 
@@ -65,6 +118,9 @@ public class Player : BaseObject
         _data = new PlayerData(_hp, _atk, _matk, _atkSpeed, _def, _speed, _critical, _handicraft, _charm,_criticalDamage);
         
         _preSpeed = _speed;
+        _maxHp = _hp;
+        _basicAtk = _atk;
+        _basicMatk = _matk;
     }
 
     private void Start()
@@ -197,7 +253,7 @@ public class Player : BaseObject
         }
     }
     #region SKill
-    public void asd() //마검사 효과
+    public void MagicalBlader() //마검사 효과
     {
         if(_half == 0)
         {
@@ -213,12 +269,12 @@ public class Player : BaseObject
 
     public void MadMan() // 광인 효과
     {
-        _atk = _atk * (3f / 4f);
-        _matk = _matk * (3f / 4f);
+        _atk = _atk * 0.75f;
+        _matk = _matk * 0.75f;
         _criticalDamage = _criticalDamage * 2f;
     }
     
-    public void PowerMan() //괴력몬 효과
+    public void StrongMan() //괴력몬 효과
     {
         if(_half == 0)
         {
@@ -227,11 +283,17 @@ public class Player : BaseObject
     }
     public void Warrior() // 전사 효과
     {
-        _atk = _atk + (_atk / 10);
+        _atk = _atk + (_atk*0.1f);
     }
     public void Dwarf() // 난쟁이
     {
-        //추후 추가
+        for(int i = 0; i < _myWeapon.Count; ++i)
+        {
+            if(_myWeapon[i].gameObject.activeSelf == true)
+            {
+                _myWeapon[i]._damage = _myWeapon[i]._damage + ( _myWeapon[i]._damage * 0.2f);
+            }
+        }
     }
     public void JackFrost() // 동장군
     {
@@ -240,7 +302,39 @@ public class Player : BaseObject
             //빙결
         }
     }
-    //--------------------
+    public void AssaultCaptain() // 돌격대장
+    {
+        _speed = _speed + (_speed * 0.2f);
+    }
+
+    public void ZhangFei() // 삼국지 장비
+    {
+        //스킬 만들어라
+    }
+
+    public void Berserker() //광전사
+    {
+        if(_hp <= _maxHp * 0.25f)
+        {
+            _atk = _basicAtk * 2f;
+        }
+    }
+    public void Critialer() //급소쟁이
+    {
+        _criticalProbability = 1f;
+    }
+
+    public void Druid() //드루이드
+    {
+        // 스킬 만들어라
+    }
+
+    public void Assassin() // 암살자
+    {
+        _criticalDamage = _criticalDamage + (_criticalDamage * 0.2f);
+    }
+
+
 
     #endregion
 
