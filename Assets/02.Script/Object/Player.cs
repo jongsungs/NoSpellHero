@@ -20,8 +20,9 @@ public class PlayerData
     public float m_critical;
     public float m_handicraft;
     public float m_charm;
+    public float m_criticalDamage;
 
-    public PlayerData(float hp, float atk, float matk, float atkspeed, float def, float speed, float critical, float handicraft, float charm)
+    public PlayerData(float hp, float atk, float matk, float atkspeed, float def, float speed, float critical, float handicraft, float charm,float criticalDamage)
     {
         m_hp = hp;
         m_atk = atk;
@@ -32,6 +33,7 @@ public class PlayerData
         m_critical = critical;
         m_handicraft = handicraft;
         m_charm = charm;
+        m_criticalDamage = criticalDamage;
     }
 }
 #endregion
@@ -45,25 +47,43 @@ public class Player : BaseObject
     public Weapon _myWeapon;
     public bool _isAttack;
 
+
+    /// --------------
+    /// 확률
+    public int _half;
+    public int _1_3;
+    public int _quater;
+
+
+
     
 
 
     private void Awake()
     {
         Load();
-        _data = new PlayerData(_hp, _atk, _matk, _atkSpeed, _def, _speed, _critical, _handicraft, _charm);
+        _data = new PlayerData(_hp, _atk, _matk, _atkSpeed, _def, _speed, _critical, _handicraft, _charm,_criticalDamage);
         
         _preSpeed = _speed;
     }
 
     private void Start()
     {
+        
         _animator = GetComponent<Animator>();
         
     }
 
     private void Update()
     {
+        _half = UnityEngine.Random.Range(0, 2);
+        _1_3 = UnityEngine.Random.Range(0, 3);
+        _quater = UnityEngine.Random.Range(0, 4);
+        if(_animator != null)
+        {
+            _animator.speed = 0.5f + (_atkSpeed / 10f);
+            _animator.SetFloat("AtkSpeed", _animator.speed);
+        }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             Save();
@@ -170,10 +190,60 @@ public class Player : BaseObject
             
                 break;
             case State.Die:
-                
+                break;
+            case State.Attack2:
+                _isAttack = true;
                 break;
         }
     }
+    #region SKill
+    public void asd() //마검사 효과
+    {
+        if(_half == 0)
+        {
+            _atk = _atk * 2f;
+            _matk = 0f;
+        }
+        else if(_half == 1)
+        {
+            _atk = 0f;
+            _matk = _matk * 2f;
+        }
+    }
+
+    public void MadMan() // 광인 효과
+    {
+        _atk = _atk * (3f / 4f);
+        _matk = _matk * (3f / 4f);
+        _criticalDamage = _criticalDamage * 2f;
+    }
+    
+    public void PowerMan() //괴력몬 효과
+    {
+        if(_half == 0)
+        {
+            ChangeState(State.Attack2);
+        }
+    }
+    public void Warrior() // 전사 효과
+    {
+        _atk = _atk + (_atk / 10);
+    }
+    public void Dwarf() // 난쟁이
+    {
+        //추후 추가
+    }
+    public void JackFrost() // 동장군
+    {
+        if(_1_3 == 0)
+        {
+            //빙결
+        }
+    }
+    //--------------------
+
+    #endregion
+
 
     #region File IO
     public void Save()
@@ -204,6 +274,7 @@ public class Player : BaseObject
         _critical = data.m_critical;
         _handicraft = data.m_handicraft;
         _charm = data.m_charm;
+        _criticalDamage = data.m_criticalDamage;
     }
     public void DataSave()
     {
@@ -216,6 +287,7 @@ public class Player : BaseObject
         _data.m_critical = _critical;
         _data.m_handicraft = _handicraft;
         _data.m_charm = _charm;
+        _data.m_criticalDamage = _criticalDamage;
 
     }
     string ObjectToJason(object data)

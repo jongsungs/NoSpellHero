@@ -13,6 +13,7 @@ public class BaseObject : MonoBehaviour
         Attack = 2,
         Hit = 3,
         Die = 4,
+        Attack2 = 5,
 
     }
 
@@ -27,6 +28,7 @@ public class BaseObject : MonoBehaviour
     public float _critical;
     public float _handicraft;
     public float _charm;
+    public float _criticalDamage;
 
    protected Animator _animator;
     virtual public void Idle()
@@ -46,6 +48,10 @@ public class BaseObject : MonoBehaviour
 
     }
     virtual public void Die()
+    {
+
+    }
+    virtual public void Attack2()
     {
 
     }
