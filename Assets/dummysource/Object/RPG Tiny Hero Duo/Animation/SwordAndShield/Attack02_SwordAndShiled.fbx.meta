@@ -76,8 +76,8 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.9097745
-        functionName: Idle
+      - time: 0.91376495
+        functionName: Attack2
         data: 
         objectReferenceParameter: {fileID: 11500000, guid: 86d1a251739ce1549841cb0b98326ee4,
           type: 3}
