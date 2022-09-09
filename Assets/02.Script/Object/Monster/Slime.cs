@@ -21,11 +21,26 @@ public class Slime : Monster
 
     private void Update()
     {
+        if(_ccDurationTime <= 0)
+        {
+            _ccDurationTime = 0f;
+        }
+        if(_ccOn == true)
+        {
+            _ccDurationTime -= Time.deltaTime;
+
+        }
+        Mathf.Abs(_ccDurationTime);
         if(_hp <= 0f)
         {
             ChangeState(State.Die);
 
         }
+        if(_ccDurationTime <= 0 && _ccOn == true)
+        {
+            CCrecovery();
+        }
+
         _onHit = _player.GetComponent<Player>()._isAttack;
        
 
@@ -73,32 +88,56 @@ public class Slime : Monster
                 break;
         }
     }
-
+    protected override void Freezing()
+    {
+        base.Freezing();
+        _ccDurationTime += 3f;
+        _material.material.color = Color.blue;
+        _ccOn = true;
+    }
+    protected override void CCrecovery()
+    {
+        base.CCrecovery();
+        _material.material.color = Color.white; 
+        _ccOn = false;
+        Debug.Log("회복");
+    }
 
     private void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
             ChangeState(State.Attack);
         }
         if (other.tag == "Weapon" && _onHit == true)
         {
             Debug.Log("여기여기");
-           
+
             ChangeState(State.Hit);
             _hp -= other.GetComponent<Weapon>()._damage;
 
         }
+
+        if (other.tag == "IceBall")
+        {
+            int _30 = Random.Range(0, 3); // 30퍼확률로 빙결
+            if (_30 == 0)
+            {
+                Freezing();
+
+            }
+        }
+
     }
     private void OnTriggerExit(Collider other)
     {
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
             ChangeState(State.Walk);
         }
-        if(other.tag == "Weapon")
+        if (other.tag == "Weapon")
         {
-            
+
         }
     }
 

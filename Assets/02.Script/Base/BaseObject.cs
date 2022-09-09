@@ -31,6 +31,7 @@ public class BaseObject : MonoBehaviour
     public float _criticalDamage;
 
    protected Animator _animator;
+    protected Rigidbody _rigidbody;
     virtual public void Idle()
     {
 
