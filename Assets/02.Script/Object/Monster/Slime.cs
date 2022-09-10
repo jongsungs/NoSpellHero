@@ -21,25 +21,19 @@ public class Slime : Monster
 
     private void Update()
     {
-        if(_ccDurationTime <= 0)
-        {
-            _ccDurationTime = 0f;
-        }
+        
         if(_ccOn == true)
         {
             _ccDurationTime -= Time.deltaTime;
 
         }
-        Mathf.Abs(_ccDurationTime);
+        
         if(_hp <= 0f)
         {
             ChangeState(State.Die);
 
         }
-        if(_ccDurationTime <= 0 && _ccOn == true)
-        {
-            CCrecovery();
-        }
+        
 
         _onHit = _player.GetComponent<Player>()._isAttack;
        
@@ -88,28 +82,33 @@ public class Slime : Monster
                 break;
         }
     }
+    protected override void Burn()
+    {
+        base.Burn();
+        _material.material.color = Color.red;
+    }
     protected override void Freezing()
     {
         base.Freezing();
-        _ccDurationTime += 3f;
+        
         _material.material.color = Color.blue;
-        _ccOn = true;
     }
+   
     protected override void CCrecovery()
     {
         base.CCrecovery();
         _material.material.color = Color.white; 
-        _ccOn = false;
+       
         Debug.Log("회복");
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             ChangeState(State.Attack);
         }
-        if (other.tag == "Weapon" && _onHit == true)
+        if (other.CompareTag("Weapon") && _onHit == true)
         {
             Debug.Log("여기여기");
 
@@ -118,7 +117,7 @@ public class Slime : Monster
 
         }
 
-        if (other.tag == "IceBall")
+        if (other.CompareTag("IceBall"))
         {
             int _30 = Random.Range(0, 3); // 30퍼확률로 빙결
             if (_30 == 0)
@@ -127,15 +126,26 @@ public class Slime : Monster
 
             }
         }
-
+        if(other.CompareTag("FireBall"))
+        {
+            int _30 = Random.Range(0, 3);
+            if(_30 == 0)
+            {
+                Burn();
+            }
+        }
+        if(other.CompareTag("Roar"))
+        {
+            Roar();
+        }
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.tag == "Player")
+        if (other.CompareTag("Player"))
         {
             ChangeState(State.Walk);
         }
-        if (other.tag == "Weapon")
+        if (other.CompareTag("Weapon"))
         {
 
         }

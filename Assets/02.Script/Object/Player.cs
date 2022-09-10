@@ -92,17 +92,7 @@ public class Player : BaseObject
     [SerializeField] float _preSpeed;
     [SerializeField] float _rotateSpeed;
     //---------------------------------
-    [SerializeField] float _maxHp;
-    [SerializeField] float _basicHp;
-    [SerializeField] float _basicAtk;
-    [SerializeField] float _basicMatk;
-    [SerializeField] float _basicAtkSpeed;
-    [SerializeField] float _basicDef;
-    [SerializeField] float _basicSpeed;
-    [SerializeField] float _basicCritical;
-    [SerializeField] float _basicHandicraft;
-    [SerializeField] float _basicCharm;
-    [SerializeField] float _criticalProbability;
+    
   
     //-----------------------------
     public VariableJoystick variableJoystick;

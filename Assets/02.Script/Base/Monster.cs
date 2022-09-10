@@ -19,14 +19,37 @@ public class Monster : BaseObject
         _navimeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
-        
+        _maxHp = _hp;
+        _basicAtk = _atk;
+        _basicMatk = _matk;
+        _basicAtkSpeed = _atkSpeed;
+        _basicDef = _def;
+        _basicSpeed = _speed;
+        _basicCritical = _critical;
+        _basicHandicraft = _handicraft;
+        _basicCharm = _charm;
+
     }
 
-    private void Update()
+    private void LateUpdate()
     {
 
         _navimeshAgent.SetDestination(_player.transform.position);
+        if (_ccDurationTime <= 0)
+        {
+            _ccDurationTime = 0f;
+        }
+        if (_ccDurationTime <= 0 && _ccOn == true)
+        {
+            CCrecovery();
+        }
+        if(_CC == CrowdControl.Burn)
+        {
+            _hp -= (_player.GetComponent<Player>()._matk / 10f) * Time.deltaTime ;
+        }
         
+
+
     }
 
     private void Awake()
@@ -49,15 +72,38 @@ public class Monster : BaseObject
 
     protected virtual void Freezing()
     {
+        _CC = CrowdControl.Freezing;
         Debug.Log("얼었다");
         _animator.speed = 0f;
         _navimeshAgent.speed = 0f;
+        _ccDurationTime += 3f;
+        _ccOn = true;
 
+    }
+    protected virtual void Burn()
+    {
+        _CC = CrowdControl.Burn;
+        _ccDurationTime += 3f;
+        Debug.Log("으이구 이 화상아");
+        _atk = _basicAtk / 2;
+        _ccOn = true;
+
+    }
+    protected virtual void Roar()
+    {
+        _CC = CrowdControl.Stun;
+        _ccDurationTime += 3f;
+        _animator.speed = 0f;
+        _navimeshAgent.speed = 0f;
+        _ccOn = true;
     }
     protected virtual void CCrecovery()
     {
+        _CC = CrowdControl.Normal;
         _animator.speed = 1f;
         _navimeshAgent.speed = _speed;
+        _atk = _basicAtk;
+        _ccOn = false;
     }
 
 
