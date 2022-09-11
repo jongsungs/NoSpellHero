@@ -146,8 +146,8 @@ public class Player : BaseObject
         _quater = UnityEngine.Random.Range(0, 4);
         if(_animator != null)
         {
-            //_animator.speed = 0.5f + (_atkSpeed / 10f);
-           // _animator.SetFloat("AtkSpeed", _animator.speed);
+            _animator.speed = 0.5f + (_atkSpeed / 10f);
+            _animator.SetFloat("AtkSpeed", _animator.speed);
         }
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
@@ -163,7 +163,7 @@ public class Player : BaseObject
         }
         if(Input.GetKeyDown(KeyCode.A))
         {
-            //_animator.SetInteger(_aniHashKeyState, 2);
+            
             Attack();
         }
         if (Input.GetKeyDown(KeyCode.S))

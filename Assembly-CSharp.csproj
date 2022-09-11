@@ -86,6 +86,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
     <Compile Include="Assets\02.Script\Manager\PlayerManager.cs" />
     <Compile Include="Assets\02.Script\Manager\GameFlowManager.cs" />
+    <Compile Include="Assets\02.Script\Base\IDamagable.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Joystick Pack\Examples\JoystickSetterExample.cs" />
     <Compile Include="Assets\02.Script\Base\Weapon.cs" />

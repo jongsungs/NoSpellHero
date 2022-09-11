@@ -10,7 +10,8 @@ public class Decoy : BaseObject
     public NavMeshAgent _nav;
     public List<Weapon> _myWeapon = new List<Weapon>();
     public bool _isAttack;
-    public bool _isIdle = true;
+    public bool _attackOnce;
+    public float _attackDistance = 2f;
 
 
     [SerializeField] float m_speed;
@@ -43,15 +44,21 @@ public class Decoy : BaseObject
         _critical = _player._critical;
         _handicraft = _player._handicraft;
         _charm = _player._charm;
-
+        _nav.stoppingDistance = 2f;
+        _attackOnce = true;
+        StartCoroutine(CoFindEnemy());
     }
 
     private void Update()
     {
+        if (_animator != null)
+        {
+            _animator.speed = 0.5f + (_atkSpeed / 10f);
+             _animator.SetFloat("AtkSpeed", _animator.speed);
+        }
 
-        
         DrawView();  // Scene뷰에 시야범위 그리기
-        FindVisibleTargets(); // Enemy인지 장애물인지 판별
+      // FindVisibleTargets(); // Enemy인지 장애물인지 판별
 
     }
     public Vector3 DirFromAngle(float angleInDegrees)
@@ -71,10 +78,11 @@ public class Decoy : BaseObject
     {
         //시야거리 내에 존재하는 모든 컬라이더 받아오기
         Collider[] targets = Physics.OverlapSphere(m_transform.position, m_viewDistance, m_targetMask);
+        
         for (int i = 0; i < targets.Length; i++)
         {
             Transform target = targets[i].transform;
-
+            
             //타겟까지의 단위벡터
             Vector3 dirToTarget = (target.position - m_transform.position).normalized;
             //transform.forward와 dirToTarget은 모두 단위벡터이므로 내적값은 두 벡터가 이루는 각의 Cos값과 같다.
@@ -85,7 +93,17 @@ public class Decoy : BaseObject
                 if (!Physics.Raycast(m_transform.position + m_transform.transform.up, dirToTarget, distToTarget, m_obstacleMask) )
                 {
                     Debug.DrawLine(m_transform.position, target.position, Color.red);
-                    _nav.SetDestination(target.position);
+                    
+                    if(distToTarget <= _attackDistance && _attackOnce == true)
+                    {
+                        transform.LookAt(target);
+                        ChangeState(State.Attack);
+                    }
+                    else if(distToTarget > _attackDistance)
+                    {
+                        ChangeState(State.Walk);
+                        _nav.SetDestination(target.position);
+                    }
 
                 }
             }
@@ -94,7 +112,7 @@ public class Decoy : BaseObject
 
     public override void Idle()
     {
-        _isIdle = true;
+        
         ChangeState(State.Idle);
     }
     public override void Attack()
@@ -123,6 +141,8 @@ public class Decoy : BaseObject
     public void AttackOff()
     {
         _isAttack = false;
+        _attackOnce = true;
+        Idle();
     }
 
 
@@ -133,25 +153,36 @@ public class Decoy : BaseObject
         switch (_state)
         {
             case State.Idle:
-                
-
+                _nav.speed = 0f;
+                _attackOnce = true;
                 break;
             case State.Walk:
-               
-
+                _attackOnce= true;
+                _nav.speed = _speed;
                 break;
             case State.Attack:
                 _isAttack = true;
-
+                _attackOnce = false;
+                _nav.speed = 0f;
                 break;
             case State.Hit:
-
+                _nav.speed = 0f;
                 break;
             case State.Die:
+                _nav.speed = _speed;
                 break;
             case State.Attack2:
                 _isAttack = true;
                 break;
         }
+    }
+    IEnumerator CoFindEnemy()
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(1f);
+            FindVisibleTargets();
+        }
+
     }
 }

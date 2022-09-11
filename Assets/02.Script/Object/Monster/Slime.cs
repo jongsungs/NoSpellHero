@@ -104,6 +104,7 @@ public class Slime : Monster
 
     private void OnTriggerEnter(Collider other)
     {
+
         if (other.CompareTag("Player"))
         {
             ChangeState(State.Attack);
@@ -111,19 +112,19 @@ public class Slime : Monster
         if (other.CompareTag("Weapon") && _onHit == true)
         {
             Debug.Log("여기여기");
-
+       
             ChangeState(State.Hit);
             _hp -= other.GetComponent<Weapon>()._damage;
-
+       
         }
-
+       
         if (other.CompareTag("IceBall"))
         {
             int _30 = Random.Range(0, 3); // 30퍼확률로 빙결
             if (_30 == 0)
             {
                 Freezing();
-
+       
             }
         }
         if(other.CompareTag("FireBall"))
@@ -215,5 +216,6 @@ public class Slime : Monster
         sr.material.color = tempColor;
         if (nextEvent != null) nextEvent();
     }
+   
 
 }
