@@ -3,12 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using TMPro;
 
 public class Lobby : MonoBehaviour
 {
     [SerializeField] Player _player;
     public GameObject _inGameTitlePopUp;
     public GameObject _achivementPopUp;
+    public GameObject _playerTitleText;
+    
 
     public List<GameObject> _listStatSpace = new List<GameObject>();
 
@@ -54,11 +57,73 @@ public class Lobby : MonoBehaviour
     }
 
 
+    private void Update()
+    {
+
+
+
+        if(_player._atk == 5 && _player._matk == 5 && _player._hp == 5)
+        {
+            _player._playerTitle = Player.PlayerTitle.MagicalBlader;
+            _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+        }
+        else if (_player._atk == 5 && _player._matk == 5 && _player._critical == 5)
+        {
+            _player._playerTitle = Player.PlayerTitle.MadMan;
+            _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+        }
+        else if (_player._atk == 5 && _player._matk == 5 && _player._atkSpeed == 5)
+        {
+            _player._playerTitle = Player.PlayerTitle.StrongMan;
+            _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+        }
+        else if (_player._atk == 5 && _player._hp == 5 && _player._atkSpeed == 5)
+        {
+            _player._playerTitle = Player.PlayerTitle.Warrior;
+            _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+        }
+        else if (_player._atk == 5 && _player._hp == 5 && _player._handicraft == 5)
+        {
+            _player._playerTitle = Player.PlayerTitle.Dwarf;
+            _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+        }
+        else if (_player._atk == 5 && _player._hp == 5 && _player._charm == 5)
+        {
+            _player._playerTitle = Player.PlayerTitle.JackFrost;
+            _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+        }
+        else if (_player._atk == 5 && _player._hp == 5 && _player._speed == 5)
+        {
+            _player._playerTitle = Player.PlayerTitle.AssaultCaptain;
+            _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+        }
+        else if (_player._atk == 5 && _player._hp == 5 && _player._def == 5)
+        {
+            _player._playerTitle = Player.PlayerTitle.ZhangFei;
+            _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+        }
+        else if (_player._atk == 5 && _player._critical == 5 && _player._atkSpeed == 5)
+        {
+            _player._playerTitle = Player.PlayerTitle.Berserker;
+            _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+        }
+        else if (_player._atk == 5 && _player._critical == 5 && _player._handicraft == 5)
+        {
+            _player._playerTitle = Player.PlayerTitle.Critialer;
+            _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+        }
+
+
+    }
 
     public void ATKUP()
     {
         
         _player._atk += 1;
+        if(_player._atk >= 5)
+        {
+            _player._atk = 5f;
+        }
         _player.Save();
         for(int i = 0; i <_player._atk; ++i)
         {
@@ -69,6 +134,10 @@ public class Lobby : MonoBehaviour
     public void HPUP()
     {
         _player._hp += 1;
+        if (_player._hp >= 5)
+        {
+            _player._hp = 5f;
+        }
         _player.Save();
         for (int i = 0; i < _player._hp; ++i)
         {
@@ -78,6 +147,10 @@ public class Lobby : MonoBehaviour
     public void MATKUP()
     {
         _player._matk += 1;
+        if (_player._matk >= 5)
+        {
+            _player._matk = 5f;
+        }
         _player.Save();
         for (int i = 0; i < _player._matk; ++i)
         {
@@ -87,6 +160,10 @@ public class Lobby : MonoBehaviour
     public void ATKSPEEDUP()
     {
         _player._atkSpeed += 1;
+        if (_player._atkSpeed >= 5)
+        {
+            _player._atkSpeed = 5f;
+        }
         _player.Save();
         for (int i = 0; i < _player._atkSpeed; ++i)
         {
@@ -96,6 +173,10 @@ public class Lobby : MonoBehaviour
     public void DEFUP()
     {
         _player._def += 1;
+        if (_player._def >= 5)
+        {
+            _player._def = 5f;
+        }
         _player.Save();
         for (int i = 0; i < _player._def; ++i)
         {
@@ -105,6 +186,11 @@ public class Lobby : MonoBehaviour
     public void SPEEDUP()
     {
         _player._speed += 1;
+
+        if (_player._speed >= 5)
+        {
+            _player._speed = 5f;
+        }
         _player.Save();
         for (int i = 0; i < _player._speed; ++i)
         {
@@ -114,6 +200,10 @@ public class Lobby : MonoBehaviour
     public void CRITICALUP()
     {
         _player._critical += 1;
+        if (_player._critical >= 5)
+        {
+            _player._critical = 5f;
+        }
         _player.Save();
         for (int i = 0; i < _player._critical; ++i)
         {
@@ -123,6 +213,10 @@ public class Lobby : MonoBehaviour
     public void HANDICRAFTUP()
     {
         _player._handicraft += 1;
+        if (_player._handicraft >= 5)
+        {
+            _player._handicraft = 5f;
+        }
         _player.Save();
         for (int i = 0; i < _player._handicraft; ++i)
         {
@@ -132,6 +226,10 @@ public class Lobby : MonoBehaviour
     public void CHARMUP()
     {
         _player._charm += 1;
+        if (_player._charm >= 5)
+        {
+            _player._charm = 5f;
+        }
         _player.Save();
         for (int i = 0; i < _player._charm; ++i)
         {

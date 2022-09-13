@@ -99,7 +99,7 @@ public class Player : BaseObject
     public Rigidbody rb;
     PlayerData _data;
     public List<Weapon> _myWeapon = new List<Weapon>();
-    public bool _isAttack;
+    
     public bool _isIdle = true;
     public PlayerTitle _playerTitle = PlayerTitle.StrongMan;
 

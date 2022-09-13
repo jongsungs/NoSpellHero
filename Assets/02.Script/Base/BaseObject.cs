@@ -53,6 +53,7 @@ public class BaseObject : MonoBehaviour
     public float _basicCharm;
     public float _criticalProbability;
 
+    public bool _isAttack;
     protected Animator _animator;
     protected Rigidbody _rigidbody;
     virtual public void Idle()

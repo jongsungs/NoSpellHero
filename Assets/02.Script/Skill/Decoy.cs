@@ -9,7 +9,7 @@ public class Decoy : BaseObject
     public Rigidbody rb;
     public NavMeshAgent _nav;
     public List<Weapon> _myWeapon = new List<Weapon>();
-    public bool _isAttack;
+    
     public bool _attackOnce;
     public float _attackDistance = 2f;
 

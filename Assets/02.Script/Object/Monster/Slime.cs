@@ -35,7 +35,7 @@ public class Slime : Monster
         }
         
 
-        _onHit = _player.GetComponent<Player>()._isAttack;
+        
        
 
         _navimeshAgent.SetDestination(_player.transform.position);
@@ -104,20 +104,27 @@ public class Slime : Monster
 
     private void OnTriggerEnter(Collider other)
     {
-
+        
+        
         if (other.CompareTag("Player"))
         {
             ChangeState(State.Attack);
         }
-        if (other.CompareTag("Weapon") && _onHit == true)
+        if (other.CompareTag("Weapon") )
         {
-            Debug.Log("여기여기");
-       
-            ChangeState(State.Hit);
-            _hp -= other.GetComponent<Weapon>()._damage;
-       
+            
+            if (other.GetComponent<Weapon>()._isOnce == true)
+            {
+
+                other.GetComponent<Weapon>()._isOnce = false;
+                Debug.Log("여기여기");
+
+                ChangeState(State.Hit);
+                _hp -= other.GetComponent<Weapon>()._damage;
+            }
+
         }
-       
+
         if (other.CompareTag("IceBall"))
         {
             int _30 = Random.Range(0, 3); // 30퍼확률로 빙결
