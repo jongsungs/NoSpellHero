@@ -77,6 +77,7 @@ public class Player : BaseObject
         Helen,//절세미인
         Slicker,//야바위꾼
         Idol,//아이돌
+        Swell, //달인
         Delivery,//배달부
         Repairman,//수리공
         Taoist,//전우치
@@ -102,6 +103,8 @@ public class Player : BaseObject
     
     public bool _isIdle = true;
     public PlayerTitle _playerTitle = PlayerTitle.StrongMan;
+    public List<float> _listState = new List<float>();
+
 
     /// --------------
     /// 확률
@@ -129,6 +132,18 @@ public class Player : BaseObject
         _basicCritical = _critical;
         _basicHandicraft = _handicraft;
         _basicCharm = _charm;
+
+        _listState.Add(_atk);
+        _listState.Add(_matk);
+        _listState.Add(_atkSpeed);
+        _listState.Add(_hp);
+        _listState.Add(_def);
+        _listState.Add(_speed);
+        _listState.Add(_critical);
+        _listState.Add(_handicraft);
+        _listState.Add(_charm);
+
+
 
     }
 
@@ -496,6 +511,20 @@ public class Player : BaseObject
     public void Idol() //아이돌
     {
         //죽인 몬스터 수 *  골드 획득
+    }
+
+    public void Swell() // 달인
+    {
+        _hp = _basicHp + (_basicHp * 0.2f);
+        _atk = _basicAtk + (_basicAtk * 0.2f);
+        _matk = _basicMatk + (_basicMatk * 0.2f);
+        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * 0.2f);
+        _def = _basicDef + (_basicDef * 0.2f);
+        _speed = _basicSpeed + (_basicSpeed * 0.2f);
+        _critical = _basicCritical + (_basicCritical * 0.2f);
+        _handicraft = _basicHandicraft + (_basicHandicraft * 0.2f);
+        _charm = _basicCharm + (_basicCharm * 0.2f);
+
     }
 
     public void Delivery() // 배달부

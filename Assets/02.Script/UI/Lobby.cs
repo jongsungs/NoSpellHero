@@ -11,7 +11,8 @@ public class Lobby : MonoBehaviour
     public GameObject _inGameTitlePopUp;
     public GameObject _achivementPopUp;
     public GameObject _playerTitleText;
-    
+    public bool _OnTitle;
+    public bool _isSet;
 
     public List<GameObject> _listStatSpace = new List<GameObject>();
 
@@ -60,60 +61,307 @@ public class Lobby : MonoBehaviour
     private void Update()
     {
 
+        #region PlayerTitle
+        if (_OnTitle == false)
+        {
+            
+            if (_player._atk == 5 && _player._matk == 5 && _player._hp == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.MagicalBlader;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._atk == 5 && _player._matk == 5 && _player._critical == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.MadMan;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._atk == 5 && _player._matk == 5 && _player._atkSpeed == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.StrongMan;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._atk == 5 && _player._hp == 5 && _player._atkSpeed == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Warrior;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._atk == 5 && _player._hp == 5 && _player._handicraft == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Dwarf;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._atk == 5 && _player._hp == 5 && _player._charm == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.JackFrost;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._atk == 5 && _player._hp == 5 && _player._speed == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.AssaultCaptain;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._atk == 5 && _player._hp == 5 && _player._def == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.ZhangFei;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._atk == 5 && _player._critical == 5 && _player._atkSpeed == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Berserker;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._atk == 5 && _player._critical == 5 && _player._handicraft == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Critialer;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._atk == 5 && _player._critical == 5 && _player._charm == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Druid;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._atk == 5 && _player._critical == 5 && _player._speed == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Assassin;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._atk == 5 && _player._atkSpeed == 5 && _player._handicraft == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Ambidextrous;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._atk == 5 && _player._handicraft == 5 && _player._charm == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.LuBu;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._atk == 5 && _player._speed == 5 && _player._def == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.HeavyCavalry;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._matk == 5 && _player._hp == 5 && _player._critical == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.HealthMagician;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._matk == 5 && _player._hp == 5 && _player._def == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Priest;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._matk == 5 && _player._critical == 5 && _player._atkSpeed == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Warlock;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._matk == 5 && _player._critical == 5 && _player._handicraft == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Salamander;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._matk == 5 && _player._critical == 5 && _player._charm == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Zeus;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._matk == 5 && _player._atkSpeed == 5 && _player._handicraft == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.PracticeBug;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._matk == 5 && _player._charm == 5 && _player._handicraft == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Stranger;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._matk == 5 && _player._handicraft == 5 && _player._def == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.GateKeeper;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._hp == 5 && _player._atkSpeed == 5 && _player._handicraft == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Cook;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._hp == 5 && _player._atkSpeed == 5 && _player._speed == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.QRF;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._hp == 5 && _player._handicraft == 5 && _player._charm == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Servant;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._hp == 5 && _player._handicraft == 5 && _player._charm == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Servant;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._hp == 5 && _player._handicraft == 5 && _player._speed == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Athlete;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._hp == 5 && _player._handicraft == 5 && _player._def == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Versatile;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._hp == 5 && _player._speed == 5 && _player._def == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Shieldbearer;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._critical == 5 && _player._atkSpeed == 5 && _player._handicraft == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Acupuncturist;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._critical == 5 && _player._speed == 5 && _player._atkSpeed == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.SpoonKiller;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._critical == 5 && _player._handicraft == 5 && _player._charm == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Helen;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._critical == 5 && _player._speed == 5 && _player._handicraft == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Slicker;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._critical == 5 && _player._speed == 5 && _player._charm == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Idol;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._atkSpeed == 5 && _player._handicraft == 5 && _player._charm == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Swell;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._atkSpeed == 5 && _player._handicraft == 5 && _player._speed == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Delivery;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._atkSpeed == 5 && _player._handicraft == 5 && _player._def == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Repairman;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._atkSpeed == 5 && _player._charm == 5 && _player._speed == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Taoist;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._handicraft == 5 && _player._charm == 5 && _player._speed == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Gambler;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._handicraft == 5 && _player._charm == 5 && _player._def == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.SlowStarter;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._handicraft == 5 && _player._def == 5 && _player._speed == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.Orpheus;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+            else if (_player._charm == 5 && _player._def == 5 && _player._speed == 5)
+            {
+                _OnTitle = true;
+                _player._playerTitle = Player.PlayerTitle.DokeV;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            }
+        }
+        #endregion
+        
+        if(_OnTitle == true)
+        {
+           if(_isSet == false)
+            {
+                ReState();
+            }
 
 
-        if(_player._atk == 5 && _player._matk == 5 && _player._hp == 5)
-        {
-            _player._playerTitle = Player.PlayerTitle.MagicalBlader;
-            _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
-        }
-        else if (_player._atk == 5 && _player._matk == 5 && _player._critical == 5)
-        {
-            _player._playerTitle = Player.PlayerTitle.MadMan;
-            _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
-        }
-        else if (_player._atk == 5 && _player._matk == 5 && _player._atkSpeed == 5)
-        {
-            _player._playerTitle = Player.PlayerTitle.StrongMan;
-            _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
-        }
-        else if (_player._atk == 5 && _player._hp == 5 && _player._atkSpeed == 5)
-        {
-            _player._playerTitle = Player.PlayerTitle.Warrior;
-            _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
-        }
-        else if (_player._atk == 5 && _player._hp == 5 && _player._handicraft == 5)
-        {
-            _player._playerTitle = Player.PlayerTitle.Dwarf;
-            _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
-        }
-        else if (_player._atk == 5 && _player._hp == 5 && _player._charm == 5)
-        {
-            _player._playerTitle = Player.PlayerTitle.JackFrost;
-            _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
-        }
-        else if (_player._atk == 5 && _player._hp == 5 && _player._speed == 5)
-        {
-            _player._playerTitle = Player.PlayerTitle.AssaultCaptain;
-            _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
-        }
-        else if (_player._atk == 5 && _player._hp == 5 && _player._def == 5)
-        {
-            _player._playerTitle = Player.PlayerTitle.ZhangFei;
-            _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
-        }
-        else if (_player._atk == 5 && _player._critical == 5 && _player._atkSpeed == 5)
-        {
-            _player._playerTitle = Player.PlayerTitle.Berserker;
-            _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
-        }
-        else if (_player._atk == 5 && _player._critical == 5 && _player._handicraft == 5)
-        {
-            _player._playerTitle = Player.PlayerTitle.Critialer;
-            _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
-        }
+
+            for(int i = 0; i < _player._listState.Count; ++i)
+            {
+
+                for (int z = 0;  z < _player._listState[i]; ++z)
+                {
+                    _listStatSpace[i].transform.GetChild((int)z).gameObject.SetActive(true);
+
+                }
 
 
+
+
+
+            }
+            if (_player._playerTitle != Player.PlayerTitle.Normal)
+            {
+                if (_player._hp >= 5)
+                {
+                    _player._hp = 5;
+                }
+                else if (_player._hp >= 3 && _player._hp != 5)
+                {
+                    _player._hp = 3;
+                    _listStatSpace[0].transform.GetChild(4).gameObject.SetActive(false);
+                }
+            }
+        }
     }
 
     public void ATKUP()
@@ -138,6 +386,7 @@ public class Lobby : MonoBehaviour
         {
             _player._hp = 5f;
         }
+        
         _player.Save();
         for (int i = 0; i < _player._hp; ++i)
         {
@@ -248,6 +497,16 @@ public class Lobby : MonoBehaviour
         _player._hp = 0;
         _player._matk = 0;
         _player._speed = 0;
+        _player._basicAtk = 0;
+        _player._basicAtkSpeed = 0;
+        _player._basicCharm = 0;
+        _player._basicCritical = 0;
+        _player._basicDef = 0;
+        _player._basicHandicraft = 0;
+        _player._basicHp = 0;
+        _player._basicMatk = 0;
+        _player._basicSpeed = 0;
+        _player._maxHp = 0;
         _player.Save();
         for(int i = 0; i <_listStatSpace.Count; ++i)
         {
@@ -256,7 +515,8 @@ public class Lobby : MonoBehaviour
                 _listStatSpace[i].transform.GetChild(j).gameObject.SetActive(false);
             }
         }
-
+        _player._playerTitle = Player.PlayerTitle.Normal;
+        _OnTitle = false;
     }
 
     public void EnterInGameTitlePopUP()
@@ -279,6 +539,17 @@ public class Lobby : MonoBehaviour
     {
         LoadSceneManager.LoadScene("GamePlay");
         GameFlowManager.Instance._isLobby = true;
+    }
+    public void ReState()
+    {
+        _isSet = true;
+        for (int i = 0; i < _listStatSpace.Count; ++i)
+        {
+            for (int z = 0; z < _listStatSpace[i].transform.childCount; ++z)
+            {
+                _listStatSpace[i].transform.GetChild(z).gameObject.SetActive(false);
+            }
+        }
     }
 
 
