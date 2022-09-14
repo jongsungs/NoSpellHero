@@ -13,6 +13,7 @@ public class Lobby : MonoBehaviour
     public GameObject _playerTitleText;
     public bool _OnTitle;
     public bool _isSet;
+    public int _3master;
 
     public List<GameObject> _listStatSpace = new List<GameObject>();
 
@@ -328,29 +329,59 @@ public class Lobby : MonoBehaviour
         
         if(_OnTitle == true)
         {
-           if(_isSet == false)
+            if (_isSet == false)
             {
-                ReState();
+                //ReState();
             }
 
 
 
-            for(int i = 0; i < _player._listState.Count; ++i)
-            {
-
-                for (int z = 0;  z < _player._listState[i]; ++z)
-                {
-                    _listStatSpace[i].transform.GetChild((int)z).gameObject.SetActive(true);
-
-                }
-
-
-
-
-
-            }
+            //for (int i = 0; i < _player._listState.Count; ++i)
+            //{
+            //
+            //    for (int z = 0;  z < _player._listState[i]; ++z)
+            //    {
+            //        _listStatSpace[i].transform.GetChild((int)z).gameObject.SetActive(true);
+            //
+            //    }
+            //
+            //}
             if (_player._playerTitle != Player.PlayerTitle.Normal)
             {
+
+                if (_player._atk >= 5)
+                {
+                    _player._atk = 5;
+                }
+                else if (_player._atk >= 3 && _player._atk != 5)
+                {
+                    _player._atk = 3;
+                    _listStatSpace[0].transform.GetChild(4).gameObject.SetActive(false);
+                    _listStatSpace[0].transform.GetChild(3).gameObject.SetActive(false);
+                }
+
+                if (_player._matk >= 5)
+                {
+                    _player._matk = 5;
+                }
+                else if (_player._matk >= 3 && _player._matk != 5)
+                {
+                    _player._matk = 3;
+                    _listStatSpace[1].transform.GetChild(4).gameObject.SetActive(false);
+                    _listStatSpace[1].transform.GetChild(3).gameObject.SetActive(false);
+                }
+
+                if (_player._atkSpeed >= 5)
+                {
+                    _player._atkSpeed = 5;
+                }
+                else if (_player._atkSpeed >= 3 && _player._atkSpeed != 5)
+                {
+                    _player._atkSpeed = 3;
+                    _listStatSpace[2].transform.GetChild(4).gameObject.SetActive(false);
+                    _listStatSpace[2].transform.GetChild(3).gameObject.SetActive(false);
+                }
+
                 if (_player._hp >= 5)
                 {
                     _player._hp = 5;
@@ -358,8 +389,64 @@ public class Lobby : MonoBehaviour
                 else if (_player._hp >= 3 && _player._hp != 5)
                 {
                     _player._hp = 3;
-                    _listStatSpace[0].transform.GetChild(4).gameObject.SetActive(false);
+                    _listStatSpace[3].transform.GetChild(4).gameObject.SetActive(false);
+                    _listStatSpace[3].transform.GetChild(3).gameObject.SetActive(false);
                 }
+
+                if (_player._def >= 5)
+                {
+                    _player._def = 5;
+                }
+                else if (_player._def >= 3 && _player._def != 5)
+                {
+                    _player._def = 3;
+                    _listStatSpace[4].transform.GetChild(4).gameObject.SetActive(false);
+                    _listStatSpace[4].transform.GetChild(3).gameObject.SetActive(false);
+                }
+
+                if (_player._speed >= 5)
+                {
+                    _player._speed = 5;
+                }
+                else if (_player._speed >= 3 && _player._speed != 5)
+                {
+                    _player._speed = 3;
+                    _listStatSpace[5].transform.GetChild(4).gameObject.SetActive(false);
+                    _listStatSpace[5].transform.GetChild(3).gameObject.SetActive(false);
+                }
+
+                if (_player._critical >= 5)
+                {
+                    _player._critical = 5;
+                }
+                else if (_player._critical >= 3 && _player._critical != 5)
+                {
+                    _player._critical = 3;
+                    _listStatSpace[6].transform.GetChild(4).gameObject.SetActive(false);
+                    _listStatSpace[6].transform.GetChild(3).gameObject.SetActive(false);
+                }
+
+                if (_player._handicraft >= 5)
+                {
+                    _player._handicraft = 5;
+                }
+                else if (_player._handicraft >= 3 && _player._handicraft != 5)
+                {
+                    _player._handicraft = 3;
+                    _listStatSpace[7].transform.GetChild(4).gameObject.SetActive(false);
+                    _listStatSpace[7].transform.GetChild(3).gameObject.SetActive(false);
+                }
+                if (_player._charm >= 5)
+                {
+                    _player._charm = 5;
+                }
+                else if (_player._charm >= 3 && _player._charm != 5)
+                {
+                    _player._charm = 3;
+                    _listStatSpace[8].transform.GetChild(4).gameObject.SetActive(false);
+                    _listStatSpace[8].transform.GetChild(3).gameObject.SetActive(false);
+                }
+
             }
         }
     }
@@ -516,6 +603,7 @@ public class Lobby : MonoBehaviour
             }
         }
         _player._playerTitle = Player.PlayerTitle.Normal;
+        _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
         _OnTitle = false;
     }
 
