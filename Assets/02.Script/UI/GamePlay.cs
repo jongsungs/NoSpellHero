@@ -21,8 +21,10 @@ public class GamePlay : MonoBehaviour
     public GameObject _spawnZone;
     public RespawnZone _randomSpawn;
 
+    public List<Material> _listStageGroundMaterial = new List<Material>();
 
-
+    public bool _islerp;
+    public float _lerp = 0; 
 
     public DamageText _damageText;
 
@@ -38,7 +40,10 @@ public class GamePlay : MonoBehaviour
 
         _slimePool = new ObjectPool<Monster>(CreatSlime,OngetMonster,OnReleaseMonster,OnDestroyMonster,maxSize:10);
         _wolfpool = new ObjectPool<Monster>(CreatWolf, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
-
+        for(int i = 0; i < _listStageGroundMaterial.Count; ++i)
+        {
+            _listStageGroundMaterial[i].SetFloat("_Dissolve", 0);
+        }
 
 
     }
@@ -53,7 +58,31 @@ public class GamePlay : MonoBehaviour
 
         }
         
-            DamageTextOn("10000", _slime.transform.position);
+        if(_islerp == true)
+        {
+            SetValue(Mathf.Lerp(0, 1, _lerp +=Time.deltaTime), _listStageGroundMaterial[0]);
+        }
+        
+
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            _islerp = true;
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            SetValue(Mathf.Lerp(0, 1, Time.deltaTime), _listStageGroundMaterial[1]);
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            SetValue(Mathf.Lerp(0, 1, Time.deltaTime), _listStageGroundMaterial[2]);
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            SetValue(Mathf.Lerp(0, 1, Time.deltaTime), _listStageGroundMaterial[3]);
+        }
+
+
+        DamageTextOn("10000", _slime.transform.position);
         
     }
 
@@ -140,5 +169,11 @@ public class GamePlay : MonoBehaviour
     {
         _damageText.RequestDamageText(str,worldPosition);
     }
+
+    public void SetValue(float value, Material materials)
+    {
+        materials.SetFloat("_Dissolve", value);
+    }
+
 
 }
