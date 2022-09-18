@@ -6,13 +6,23 @@ using UnityEngine.AI;
 
 public class Monster : BaseObject
 {
-    private IObjectPool<Monster> _monsterpool;
+    public enum MonsterKind : int
+    {
+        Slime,
+        Wolf,
+
+    }
+    
+
+
+    protected IObjectPool<Monster> _monsterpool;
     protected GameObject _player;
     protected NavMeshAgent _navimeshAgent;
     public bool _onHit;
     protected float _ccDurationTime;
     protected bool _ccOn = false;
-    
+    public MonsterKind _monster;
+   
     private void Start()
 
     {
@@ -106,6 +116,22 @@ public class Monster : BaseObject
         _ccOn = false;
     }
 
+    // 투명 -> 불투명
+    public void FadeIn()
+    {
+        var sr = this.gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
+        Color tempColor = sr.material.color;
+        while (tempColor.a < 1f)
+        {
+            tempColor.a += 1f;
+            sr.material.color = tempColor;
 
+            if (tempColor.a >= 1f) tempColor.a = 1f;
+
+
+        }
+
+        sr.material.color = tempColor;
+    }
 
 }

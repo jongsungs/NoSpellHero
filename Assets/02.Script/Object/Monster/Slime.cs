@@ -12,11 +12,12 @@ public class Slime : Monster
 
     private void Start()
     {
+        _monster = MonsterKind.Slime;
         _navimeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         _material = this.gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
         _tempMaterial = _material;
-        
+        FadeIn();
     }
 
     private void Update()
@@ -62,19 +63,19 @@ public class Slime : Monster
         {
             case State.Idle:
                 _navimeshAgent.speed = 0f;
-                FadeIn();
+                
                 break;
             case State.Walk:
                 _navimeshAgent.speed = 1f;
-                FadeIn();
+              
                 break;
             case State.Attack:
                 _navimeshAgent.speed = 0f;
-                FadeIn();
+            
                 break;
             case State.Hit:
                 _navimeshAgent.speed = 0f;
-                FadeIn();
+            
                 break;
             case State.Die:
                 _navimeshAgent.speed = 0f;
@@ -163,28 +164,12 @@ public class Slime : Monster
     {
         StartCoroutine(CoFadeOut(1f));
         yield return new WaitForSeconds(2f);
-        gameObject.SetActive(false);
+        _monsterpool.Release(this);
     }
 
 
 
-    // 투명 -> 불투명
-   public void  FadeIn()
-    {
-        var sr = this.gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
-        Color tempColor = sr.material.color;
-        while (tempColor.a < 1f)
-        {
-            tempColor.a += 1f;
-            sr.material.color = tempColor;
-
-            if (tempColor.a >= 1f) tempColor.a = 1f;
-
-            
-        }
-
-        sr.material.color = tempColor;
-    }
+   
 
     // 투명 -> 불투명
     IEnumerator CoFadeIn(float fadeOutTime, System.Action nextEvent = null)

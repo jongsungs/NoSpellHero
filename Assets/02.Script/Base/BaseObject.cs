@@ -6,7 +6,7 @@ public class BaseObject : MonoBehaviour
 {
     protected readonly int _aniHashKeyState = Animator.StringToHash("State");
 
-    protected enum State : int
+    public enum State : int
     {
         Idle = 0,
         Walk = 1,
@@ -27,7 +27,7 @@ public class BaseObject : MonoBehaviour
 
     }
 
-    [SerializeField]protected State _state = State.Idle;
+    public State _state = State.Idle;
     [SerializeField]protected CrowdControl _CC = CrowdControl.Normal;
 
     public float _hp;

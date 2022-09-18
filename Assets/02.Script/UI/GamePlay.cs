@@ -3,9 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.UI;
+using TMPro;
 
 public class GamePlay : MonoBehaviour
 {
+    public enum GameState : int
+    {
+        Start = 0,
+        Stage1 = 1,
+        Stage2 = 2,
+        Stage3 = 3,
+        Stage4 = 4,
+        Result = 5,
+    }
+
 
     static public GamePlay Instance { get; private set; }
 
@@ -15,21 +26,39 @@ public class GamePlay : MonoBehaviour
     public GameObject _choicePopUp;
     public GameObject _bossHPBar;
     public GameObject _resultPopUp;
+    public GameObject _creepScoreText;
     public Monster _wolf;
     public Monster _slime;
     public GameObject _objectPool;
+    public GameObject _damageTextPoolParent;
     public GameObject _spawnZone;
     public RespawnZone _randomSpawn;
 
     public List<Material> _listStageGroundMaterial = new List<Material>();
 
     public bool _islerp;
-    public float _lerp = 0; 
+    public float _lerp = 0;
+    public float _ReverseLerp = 1f;
+
+    public int _totalCreepScore;
+
+    public int _stage1CreepScore;
+    public int _stage2CreepScore;
+    public int _stage3CreepScore;
+    public int _stage4CreepScore;
+
 
     public DamageText _damageText;
 
     private IObjectPool<Monster> _wolfpool;
     private IObjectPool<Monster> _slimePool;
+    public IObjectPool<DamageText> _damageTextPool;
+
+
+    public GameState _currentStage;
+
+    public bool _collectionChecks = true;
+    public int _maxPoolSize = 5;
 
 
 
@@ -38,52 +67,45 @@ public class GamePlay : MonoBehaviour
     {
         Instance = this;
 
-        _slimePool = new ObjectPool<Monster>(CreatSlime,OngetMonster,OnReleaseMonster,OnDestroyMonster,maxSize:10);
+        _slimePool = new ObjectPool<Monster>(CreatSlime,OngetMonster,OnReleaseMonster,OnDestroyMonster,maxSize : 10);
         _wolfpool = new ObjectPool<Monster>(CreatWolf, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
-        for(int i = 0; i < _listStageGroundMaterial.Count; ++i)
-        {
-            _listStageGroundMaterial[i].SetFloat("_Dissolve", 0);
-        }
-
+        _damageTextPool = new ObjectPool<DamageText>(CreatDamageText, OngetDamageText, OnRelaseText, OnDestroyText, maxSize: 10);
+        _currentStage = GameState.Start;
+        StartCoroutine(CoStartStage());
+       
+        _totalCreepScore = _stage1CreepScore + _stage2CreepScore + _stage3CreepScore + _stage4CreepScore;
 
     }
 
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
 
-            _slimePool.Get();
-           // _wolfpool.Get();
-
-        }
-        
-        if(_islerp == true)
+        _creepScoreText.GetComponent<TextMeshProUGUI>().text = _totalCreepScore.ToString();
+      
+       
+        if(Input.GetKeyDown(KeyCode.G))
         {
-            SetValue(Mathf.Lerp(0, 1, _lerp +=Time.deltaTime), _listStageGroundMaterial[0]);
+            ChangeStage(GameState.Stage1);
         }
-        
-
-        if(Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.H))
         {
-            _islerp = true;
+            ChangeStage(GameState.Stage2);
         }
-        if (Input.GetKeyDown(KeyCode.W))
+        if (Input.GetKeyDown(KeyCode.J))
         {
-            SetValue(Mathf.Lerp(0, 1, Time.deltaTime), _listStageGroundMaterial[1]);
+            ChangeStage(GameState.Stage3);
         }
-        if (Input.GetKeyDown(KeyCode.E))
+        if (Input.GetKeyDown(KeyCode.K))
         {
-            SetValue(Mathf.Lerp(0, 1, Time.deltaTime), _listStageGroundMaterial[2]);
-        }
-        if (Input.GetKeyDown(KeyCode.R))
-        {
-            SetValue(Mathf.Lerp(0, 1, Time.deltaTime), _listStageGroundMaterial[3]);
+            ChangeStage(GameState.Stage4);
         }
 
 
-        DamageTextOn("10000", _slime.transform.position);
-        
+
+
+
+
+
     }
 
     private Monster CreatSlime()
@@ -98,12 +120,31 @@ public class GamePlay : MonoBehaviour
         monster.SetPool(_wolfpool);
         return monster;
     }
+    private DamageText CreatDamageText()
+    {
+        var damagetext = Instantiate(_damageText, _damageTextPoolParent.transform);
+        damagetext.SetPool(_damageTextPool);
+        return damagetext;
+    }
 
     // 새로 뽑을 때
     private void OngetMonster(Monster obj)
     {
         obj.gameObject.SetActive(true);
+        if(obj._monster == Monster.MonsterKind.Slime)
+        {
+            obj._hp = 10f;
+            obj._state = BaseObject.State.Idle;
+            obj.FadeIn();
+        }
         obj.transform.position = _randomSpawn.Return_RandomPosition();
+    }
+
+    private void OngetDamageText(DamageText text)
+    {
+        text.gameObject.SetActive(true);
+
+        
     }
 
     // 반환할때 사라질때
@@ -113,10 +154,20 @@ public class GamePlay : MonoBehaviour
         obj.gameObject.SetActive(false);
     }
 
+    private void OnRelaseText(DamageText text)
+    {
+        text.gameObject.SetActive(false);
+    }
+
     //풀이 꽉차서 없어질때
     private void OnDestroyMonster(Monster obj)
     {
         Destroy(obj.gameObject);
+    }
+
+    private void OnDestroyText(DamageText text)
+    {
+        Destroy(text.gameObject);
     }
 
 
@@ -165,9 +216,9 @@ public class GamePlay : MonoBehaviour
         _bossHPBar.gameObject.SetActive(false);
     }
 
-    public void DamageTextOn(string str, Vector3 worldPosition)
+    public void DamageTextOn(DamageText damagetext,string str, Vector3 worldPosition)
     {
-        _damageText.RequestDamageText(str,worldPosition);
+        damagetext.RequestDamageText(str,worldPosition);
     }
 
     public void SetValue(float value, Material materials)
@@ -175,5 +226,130 @@ public class GamePlay : MonoBehaviour
         materials.SetFloat("_Dissolve", value);
     }
 
+    public void ChangeStage(GameState stage)
+    {
+        _currentStage = stage;
 
+        switch(stage)
+        {
+            case GameState.Start:
+                
+                break;
+            case GameState.Stage1:
+                for(int i = 0; i < 5; ++i)
+                {
+                    _slimePool.Get();
+                }
+                StartCoroutine(CoStartStage1());
+                
+
+                break;
+            case GameState.Stage2:
+                StartCoroutine(CoStartStage2());
+                for (int i = 0; i < 5; ++i)
+                {
+                    _slimePool.Get();
+                }
+                break;
+            case GameState.Stage3:
+                StartCoroutine(CoStartStage3());
+                for (int i = 0; i < 5; ++i)
+                {
+                    _slimePool.Get();
+                }
+               
+                break;
+            case GameState.Stage4:
+                StartCoroutine(CoStartStage4());
+                for (int i = 0; i < 5; ++i)
+                {
+                    _slimePool.Get();
+                }
+                break;
+        }    
+
+    }
+    
+    IEnumerator CoStartStage()
+    {
+        _lerp = 0f;
+        SetValue(0f, _listStageGroundMaterial[0]);
+        for (int i = (int)GameState.Stage1; i < _listStageGroundMaterial.Count; ++i)
+        {
+            SetValue(1f, _listStageGroundMaterial[i]);
+        }
+        yield return new WaitForSeconds(1f);
+        ChangeStage(GameState.Stage1);
+        
+        
+    }
+    IEnumerator CoStartStage1()
+    {
+        _lerp = 0f;
+        SetValue(0f, _listStageGroundMaterial[0]);
+    
+        for(int i = (int)GameState.Stage1; i < _listStageGroundMaterial.Count; ++i)
+        {
+            SetValue(1f, _listStageGroundMaterial[i]);
+        }
+        yield return new WaitForSeconds(1f);
+        
+    }
+    IEnumerator CoStartStage2()
+    {
+        for (int i = (int)GameState.Stage2; i < _listStageGroundMaterial.Count; ++i)
+        {
+            SetValue(1f, _listStageGroundMaterial[i]);
+        }
+        _lerp = 0f;
+        _ReverseLerp = 1f;
+        while (_lerp <= 0.99f && _ReverseLerp >= 0.01f)
+        {
+            yield return new WaitForSeconds(0.05f);
+            _lerp += Time.deltaTime;
+            _ReverseLerp -= Time.deltaTime;
+            SetValue(_lerp, _listStageGroundMaterial[0]);
+            SetValue(_ReverseLerp, _listStageGroundMaterial[1]);
+        }
+        yield return new WaitForSeconds(1f);
+        
+    }
+    IEnumerator CoStartStage3()
+    {
+        for (int i = (int)GameState.Stage3; i < _listStageGroundMaterial.Count; ++i)
+        {
+            SetValue(1f, _listStageGroundMaterial[i]);
+        }
+        _lerp = 0f;
+        _ReverseLerp = 1f;
+        while (_lerp <= 0.99f && _ReverseLerp >= 0.01f)
+        {
+            yield return new WaitForSeconds(0.05f);
+            _lerp += Time.deltaTime;
+            _ReverseLerp -= Time.deltaTime;
+            SetValue(_lerp, _listStageGroundMaterial[1]);
+            SetValue(_ReverseLerp, _listStageGroundMaterial[2]);
+        }
+        yield return new WaitForSeconds(1f);
+
+    }
+    IEnumerator CoStartStage4()
+    {
+        for (int i = (int)GameState.Stage4; i < _listStageGroundMaterial.Count; ++i)
+        {
+            SetValue(1f, _listStageGroundMaterial[i]);
+        }
+        _lerp = 0f;
+        _ReverseLerp = 1f;
+        while (_lerp <= 0.99f && _ReverseLerp >= 0.01f)
+        {
+            yield return new WaitForSeconds(0.05f);
+            _lerp += Time.deltaTime;
+            _ReverseLerp -= Time.deltaTime;
+            SetValue(_lerp, _listStageGroundMaterial[2]);
+            SetValue(_ReverseLerp, _listStageGroundMaterial[3]);
+        }
+        yield return new WaitForSeconds(1f);
+
+    }
 }

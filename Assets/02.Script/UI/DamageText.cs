@@ -2,10 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using UnityEngine.Pool;
 
 public class DamageText : MonoBehaviour
 {
     //public GameObject _worldObject;
+    private IObjectPool<DamageText> _damageTextPool;
     RectTransform _ui_Elemnt;
     public RectTransform _canvasRect;
     TextMeshProUGUI _text;
@@ -29,6 +31,10 @@ public class DamageText : MonoBehaviour
     }
     public void TextDisable()
     {
-        gameObject.SetActive(false);
+        _damageTextPool.Release(this);
+    }
+    public void SetPool(IObjectPool<DamageText> pool)
+    {
+        _damageTextPool = pool;
     }
 }
