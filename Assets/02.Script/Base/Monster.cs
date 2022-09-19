@@ -4,12 +4,28 @@ using UnityEngine;
 using UnityEngine.Pool;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(NavMeshAgent))]
+[RequireComponent(typeof(Animator))]
+[RequireComponent(typeof(Rigidbody))]
 public class Monster : BaseObject
 {
+
+    public enum MonsterCategory : int
+    {
+        Common,
+        Boss,
+    }
+
     public enum MonsterKind : int
     {
-        Slime,
+        Slime = 0,
         Wolf,
+        CaptainSkull,
+        Skull,
+        DemonKing,
+        Golem,
+        Ork,
+        Dragon,
 
     }
     
@@ -17,18 +33,24 @@ public class Monster : BaseObject
 
     protected IObjectPool<Monster> _monsterpool;
     protected GameObject _player;
-    protected NavMeshAgent _navimeshAgent;
+    public NavMeshAgent _navimeshAgent;
     public bool _onHit;
     protected float _ccDurationTime;
     protected bool _ccOn = false;
+    public bool _isDead;
     public MonsterKind _monster;
-   
-    private void Start()
+    public MonsterCategory _category;
 
+    private void Awake()
     {
+        _player = GameObject.Find("Player");
         _navimeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
+    }
+    protected virtual void Start()
+    {
+        
         _maxHp = _hp;
         _basicAtk = _atk;
         _basicMatk = _matk;
@@ -38,6 +60,7 @@ public class Monster : BaseObject
         _basicCritical = _critical;
         _basicHandicraft = _handicraft;
         _basicCharm = _charm;
+        Debug.Log("몬스터 시작");
 
     }
 
@@ -62,10 +85,7 @@ public class Monster : BaseObject
 
     }
 
-    private void Awake()
-    {
-        _player = GameObject.Find("Player");
-    }
+    
    
 
     public void SetPool(IObjectPool<Monster> pool)
@@ -107,13 +127,18 @@ public class Monster : BaseObject
         _navimeshAgent.speed = 0f;
         _ccOn = true;
     }
-    protected virtual void CCrecovery()
+    public virtual void CCrecovery()
     {
         _CC = CrowdControl.Normal;
         _animator.speed = 1f;
         _navimeshAgent.speed = _speed;
         _atk = _basicAtk;
         _ccOn = false;
+    }
+
+    public virtual void MonsterRelease()
+    {
+       
     }
 
     // 투명 -> 불투명

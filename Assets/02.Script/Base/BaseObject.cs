@@ -27,7 +27,7 @@ public class BaseObject : MonoBehaviour
 
     }
 
-    public State _state = State.Idle;
+    public State _state;
     [SerializeField]protected CrowdControl _CC = CrowdControl.Normal;
 
     public float _hp;

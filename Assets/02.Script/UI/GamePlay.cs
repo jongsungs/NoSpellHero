@@ -29,10 +29,14 @@ public class GamePlay : MonoBehaviour
     public GameObject _creepScoreText;
     public Monster _wolf;
     public Monster _slime;
+    public Monster _captainSkull;
     public GameObject _objectPool;
     public GameObject _damageTextPoolParent;
     public GameObject _spawnZone;
     public RespawnZone _randomSpawn;
+
+
+    public bool _isBoss;
 
     public List<Material> _listStageGroundMaterial = new List<Material>();
 
@@ -52,13 +56,20 @@ public class GamePlay : MonoBehaviour
 
     private IObjectPool<Monster> _wolfpool;
     private IObjectPool<Monster> _slimePool;
+    private IObjectPool<Monster> _captainSkullPool;
     public IObjectPool<DamageText> _damageTextPool;
+
 
 
     public GameState _currentStage;
 
     public bool _collectionChecks = true;
     public int _maxPoolSize = 5;
+
+    public delegate void EventHandler();
+
+    public static event EventHandler _eventHandler;
+    
 
 
 
@@ -69,7 +80,9 @@ public class GamePlay : MonoBehaviour
 
         _slimePool = new ObjectPool<Monster>(CreatSlime,OngetMonster,OnReleaseMonster,OnDestroyMonster,maxSize : 10);
         _wolfpool = new ObjectPool<Monster>(CreatWolf, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
+        _captainSkullPool = new ObjectPool<Monster>(CreatCaptainSkull, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
         _damageTextPool = new ObjectPool<DamageText>(CreatDamageText, OngetDamageText, OnRelaseText, OnDestroyText, maxSize: 10);
+        _bossHPBar.SetActive(false);
         _currentStage = GameState.Start;
         StartCoroutine(CoStartStage());
        
@@ -82,8 +95,20 @@ public class GamePlay : MonoBehaviour
 
         _creepScoreText.GetComponent<TextMeshProUGUI>().text = _totalCreepScore.ToString();
       
-       
-        if(Input.GetKeyDown(KeyCode.G))
+        if(_stage1CreepScore >= 1 && _isBoss == false && _currentStage == GameState.Stage1)
+        {
+            BossSpawn(_captainSkullPool);
+        }
+
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            _eventHandler();
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            _stage1CreepScore += 1;
+        }
+        if (Input.GetKeyDown(KeyCode.G))
         {
             ChangeStage(GameState.Stage1);
         }
@@ -120,12 +145,19 @@ public class GamePlay : MonoBehaviour
         monster.SetPool(_wolfpool);
         return monster;
     }
+    private Monster CreatCaptainSkull()
+    {
+        var monster = Instantiate(_captainSkull, _randomSpawn.Return_RandomPosition(), Quaternion.identity, _objectPool.transform);
+        monster.SetPool(_captainSkullPool);
+        return monster;
+    }
     private DamageText CreatDamageText()
     {
         var damagetext = Instantiate(_damageText, _damageTextPoolParent.transform);
         damagetext.SetPool(_damageTextPool);
         return damagetext;
     }
+    
 
     // ªı∑Œ ªÃ¿ª ∂ß
     private void OngetMonster(Monster obj)
@@ -134,8 +166,16 @@ public class GamePlay : MonoBehaviour
         if(obj._monster == Monster.MonsterKind.Slime)
         {
             obj._hp = 10f;
-            obj._state = BaseObject.State.Idle;
+            obj._speed = 1f;
+            obj._state = BaseObject.State.Walk;
+         
             obj.FadeIn();
+        }
+        if(obj._monster == Monster.MonsterKind.CaptainSkull && _isBoss == false && _currentStage == GameState.Stage1 && obj._category == Monster.MonsterCategory.Boss)
+        {
+            obj._hp = 2f;
+            _isBoss = true;
+            
         }
         obj.transform.position = _randomSpawn.Return_RandomPosition();
     }
@@ -201,6 +241,11 @@ public class GamePlay : MonoBehaviour
         _choicePopUp.gameObject.SetActive(true);
         Time.timeScale = 0f;
 
+    }
+    public void SelectAbility()
+    {
+        _choicePopUp.gameObject.SetActive(false);
+        Time.timeScale = 1f;
     }
     public void ExitChoicePopUp()
     {
@@ -352,4 +397,17 @@ public class GamePlay : MonoBehaviour
         yield return new WaitForSeconds(1f);
 
     }
+
+    public void BossSpawn(IObjectPool<Monster> boss)
+    {
+        boss.Get();
+        ActiveBossHPBar();
+
+    }
+    public void BossDie()
+    {
+        DisableBossHPBar();
+        EnterChoicePopUp();
+    }
+    
 }

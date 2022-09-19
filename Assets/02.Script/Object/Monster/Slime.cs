@@ -10,14 +10,18 @@ public class Slime : Monster
     SkinnedMeshRenderer _tempMaterial;
 
 
-    private void Start()
+    protected override void Start()
     {
+        base.Start();
         _monster = MonsterKind.Slime;
-        _navimeshAgent = GetComponent<NavMeshAgent>();
-        _animator = GetComponent<Animator>();
+      //  _navimeshAgent = GetComponent<NavMeshAgent>();
+      //  _animator = GetComponent<Animator>();
         _material = this.gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
         _tempMaterial = _material;
         FadeIn();
+        GamePlay._eventHandler += MonsterRelease;
+        _state = State.Walk;
+        Debug.Log("슬라임 시작");
     }
 
     private void Update()
@@ -34,12 +38,13 @@ public class Slime : Monster
             ChangeState(State.Die);
 
         }
-        
 
-        
-       
 
+
+
+        _navimeshAgent.speed = _speed;
         _navimeshAgent.SetDestination(_player.transform.position);
+        
     }
 
 
@@ -62,23 +67,23 @@ public class Slime : Monster
         switch (_state)
         {
             case State.Idle:
-                _navimeshAgent.speed = 0f;
+                _speed = 0f;
                 
                 break;
             case State.Walk:
-                _navimeshAgent.speed = 1f;
+                _speed =  _basicSpeed;
               
                 break;
             case State.Attack:
-                _navimeshAgent.speed = 0f;
-            
+                _speed = 0f;
+
                 break;
             case State.Hit:
-                _navimeshAgent.speed = 0f;
-            
+                _speed = 0f;
+
                 break;
             case State.Die:
-                _navimeshAgent.speed = 0f;
+                _speed = 0f;
                 StartCoroutine(CoDie());
                 break;
         }
@@ -95,7 +100,7 @@ public class Slime : Monster
         _material.material.color = Color.blue;
     }
    
-    protected override void CCrecovery()
+    public override void CCrecovery()
     {
         base.CCrecovery();
         _material.material.color = Color.white; 
@@ -167,9 +172,12 @@ public class Slime : Monster
         _monsterpool.Release(this);
     }
 
+    public override void MonsterRelease()
+    {
+        _hp = 0f;
+    }
 
 
-   
 
     // 투명 -> 불투명
     IEnumerator CoFadeIn(float fadeOutTime, System.Action nextEvent = null)
