@@ -30,6 +30,9 @@ public class GamePlay : MonoBehaviour
     public Monster _wolf;
     public Monster _slime;
     public Monster _captainSkull;
+    public Monster _golem;
+    public Monster _dragon;
+    public Monster _demonKing;
     public GameObject _objectPool;
     public GameObject _damageTextPoolParent;
     public GameObject _spawnZone;
@@ -57,6 +60,10 @@ public class GamePlay : MonoBehaviour
     private IObjectPool<Monster> _wolfpool;
     private IObjectPool<Monster> _slimePool;
     private IObjectPool<Monster> _captainSkullPool;
+    private IObjectPool<Monster> _golemPool;
+    private IObjectPool<Monster> _dragonPool;
+    private IObjectPool<Monster> _demonkingPool;
+
     public IObjectPool<DamageText> _damageTextPool;
 
 
@@ -81,7 +88,12 @@ public class GamePlay : MonoBehaviour
         _slimePool = new ObjectPool<Monster>(CreatSlime,OngetMonster,OnReleaseMonster,OnDestroyMonster,maxSize : 10);
         _wolfpool = new ObjectPool<Monster>(CreatWolf, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
         _captainSkullPool = new ObjectPool<Monster>(CreatCaptainSkull, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
+        _golemPool = new ObjectPool<Monster>(CreatGolem, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
+        _dragonPool = new ObjectPool<Monster>(CreatDragon, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
+        _demonkingPool = new ObjectPool<Monster>(CreatDemonKing, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
+        
         _damageTextPool = new ObjectPool<DamageText>(CreatDamageText, OngetDamageText, OnRelaseText, OnDestroyText, maxSize: 10);
+        
         _bossHPBar.SetActive(false);
         _currentStage = GameState.Start;
         StartCoroutine(CoStartStage());
@@ -99,6 +111,19 @@ public class GamePlay : MonoBehaviour
         {
             BossSpawn(_captainSkullPool);
         }
+        if (_stage2CreepScore >= 1 && _isBoss == false && _currentStage == GameState.Stage2)
+        {
+            BossSpawn(_golemPool);
+        }
+        if (_stage3CreepScore >= 1 && _isBoss == false && _currentStage == GameState.Stage3)
+        {
+            BossSpawn(_dragonPool);
+        }
+        if (_stage4CreepScore >= 1 && _isBoss == false && _currentStage == GameState.Stage4)
+        {
+            BossSpawn(_demonkingPool);
+        }
+
 
         if (Input.GetKeyDown(KeyCode.R))
         {
@@ -108,6 +133,23 @@ public class GamePlay : MonoBehaviour
         {
             _stage1CreepScore += 1;
         }
+        if (Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            _stage2CreepScore += 1;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            _stage3CreepScore += 1;
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            _stage4CreepScore += 1;
+        }
+
+
+
+
+
         if (Input.GetKeyDown(KeyCode.G))
         {
             ChangeStage(GameState.Stage1);
@@ -151,6 +193,24 @@ public class GamePlay : MonoBehaviour
         monster.SetPool(_captainSkullPool);
         return monster;
     }
+    private Monster CreatGolem()
+    {
+        var monster = Instantiate(_golem, _randomSpawn.Return_RandomPosition(), Quaternion.identity, _objectPool.transform);
+        monster.SetPool(_golemPool);
+        return monster;
+    }
+    private Monster CreatDragon()
+    {
+        var monster = Instantiate(_dragon, _randomSpawn.Return_RandomPosition(), Quaternion.identity, _objectPool.transform);
+        monster.SetPool(_dragonPool);
+        return monster;
+    }
+    private Monster CreatDemonKing()
+    {
+        var monster = Instantiate(_demonKing, _randomSpawn.Return_RandomPosition(), Quaternion.identity, _objectPool.transform);
+        monster.SetPool(_demonkingPool);
+        return monster;
+    }
     private DamageText CreatDamageText()
     {
         var damagetext = Instantiate(_damageText, _damageTextPoolParent.transform);
@@ -167,8 +227,7 @@ public class GamePlay : MonoBehaviour
         {
             obj._hp = 10f;
             obj._speed = 1f;
-            obj._state = BaseObject.State.Walk;
-         
+            obj.StartCoroutine(obj.CoFindEnemy());
             obj.FadeIn();
         }
         if(obj._monster == Monster.MonsterKind.CaptainSkull && _isBoss == false && _currentStage == GameState.Stage1 && obj._category == Monster.MonsterCategory.Boss)
@@ -176,6 +235,24 @@ public class GamePlay : MonoBehaviour
             obj._hp = 2f;
             _isBoss = true;
             
+        }
+        if (obj._monster == Monster.MonsterKind.Golem && _isBoss == false && _currentStage == GameState.Stage2 && obj._category == Monster.MonsterCategory.Boss)
+        {
+            obj._hp = 2f;
+            _isBoss = true;
+
+        }
+        if (obj._monster == Monster.MonsterKind.Dragon && _isBoss == false && _currentStage == GameState.Stage3 && obj._category == Monster.MonsterCategory.Boss)
+        {
+            obj._hp = 2f;
+            _isBoss = true;
+
+        }
+        if (obj._monster == Monster.MonsterKind.DemonKing && _isBoss == false && _currentStage == GameState.Stage4 && obj._category == Monster.MonsterCategory.Boss)
+        {
+            obj._hp = 2f;
+            _isBoss = true;
+
         }
         obj.transform.position = _randomSpawn.Return_RandomPosition();
     }
@@ -281,35 +358,26 @@ public class GamePlay : MonoBehaviour
                 
                 break;
             case GameState.Stage1:
-                for(int i = 0; i < 5; ++i)
-                {
-                    _slimePool.Get();
-                }
+                
                 StartCoroutine(CoStartStage1());
                 
 
                 break;
             case GameState.Stage2:
                 StartCoroutine(CoStartStage2());
-                for (int i = 0; i < 5; ++i)
-                {
-                    _slimePool.Get();
-                }
+                
                 break;
             case GameState.Stage3:
                 StartCoroutine(CoStartStage3());
-                for (int i = 0; i < 5; ++i)
-                {
-                    _slimePool.Get();
-                }
+             
                
                 break;
             case GameState.Stage4:
                 StartCoroutine(CoStartStage4());
-                for (int i = 0; i < 5; ++i)
-                {
-                    _slimePool.Get();
-                }
+                
+                break;
+            case GameState.Result:
+                ActiveResultPopUp();
                 break;
         }    
 
@@ -338,7 +406,11 @@ public class GamePlay : MonoBehaviour
             SetValue(1f, _listStageGroundMaterial[i]);
         }
         yield return new WaitForSeconds(1f);
-        
+        for (int i = 0; i < 5; ++i)
+        {
+            _slimePool.Get();
+        }
+
     }
     IEnumerator CoStartStage2()
     {
@@ -357,7 +429,13 @@ public class GamePlay : MonoBehaviour
             SetValue(_ReverseLerp, _listStageGroundMaterial[1]);
         }
         yield return new WaitForSeconds(1f);
-        
+
+        for (int i = 0; i < 5; ++i)
+        {
+            _slimePool.Get();
+        }
+
+
     }
     IEnumerator CoStartStage3()
     {
@@ -376,6 +454,10 @@ public class GamePlay : MonoBehaviour
             SetValue(_ReverseLerp, _listStageGroundMaterial[2]);
         }
         yield return new WaitForSeconds(1f);
+        for (int i = 0; i < 5; ++i)
+        {
+            _slimePool.Get();
+        }
 
     }
     IEnumerator CoStartStage4()
@@ -395,6 +477,10 @@ public class GamePlay : MonoBehaviour
             SetValue(_ReverseLerp, _listStageGroundMaterial[3]);
         }
         yield return new WaitForSeconds(1f);
+        for (int i = 0; i < 5; ++i)
+        {
+            _slimePool.Get();
+        }
 
     }
 
@@ -404,10 +490,18 @@ public class GamePlay : MonoBehaviour
         ActiveBossHPBar();
 
     }
-    public void BossDie()
+    public void BossDie(GameState state)
     {
+        _isBoss = false;
+        _eventHandler();
         DisableBossHPBar();
-        EnterChoicePopUp();
+        if(state != GameState.Result)
+        {
+             EnterChoicePopUp();
+
+        }
+        
+        ChangeStage(state);
     }
     
 }

@@ -336,16 +336,7 @@ public class Lobby : MonoBehaviour
 
 
 
-            //for (int i = 0; i < _player._listState.Count; ++i)
-            //{
-            //
-            //    for (int z = 0;  z < _player._listState[i]; ++z)
-            //    {
-            //        _listStatSpace[i].transform.GetChild((int)z).gameObject.SetActive(true);
-            //
-            //    }
-            //
-            //}
+            
             if (_player._playerTitle != Player.PlayerTitle.Normal)
             {
 

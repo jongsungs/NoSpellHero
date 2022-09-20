@@ -9,7 +9,7 @@ public class CaptainSkull : Monster
     SkinnedMeshRenderer _tempMaterial;
 
 
-    private void Start()
+    protected override void Start()
     {
         _monster = MonsterKind.CaptainSkull;
         if(GamePlay.Instance._currentStage == GamePlay.GameState.Stage1)
@@ -88,7 +88,7 @@ public class CaptainSkull : Monster
             case State.Die:
                 if(_category == MonsterCategory.Boss)
                 {
-                    GamePlay.Instance.BossDie();
+                    GamePlay.Instance.BossDie(GamePlay.GameState.Stage2);
                     _navimeshAgent.speed = 0f;
                 }
                 else

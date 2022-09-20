@@ -9,14 +9,22 @@ public class DemonKing : Monster
     SkinnedMeshRenderer _tempMaterial;
 
 
-    private void Start()
+    protected override void Start()
     {
-        _monster = MonsterKind.Slime;
+        _monster = MonsterKind.CaptainSkull;
+        if (GamePlay.Instance._currentStage == GamePlay.GameState.Stage4)
+        {
+            _category = MonsterCategory.Boss;
+        }
+        else
+        {
+            _category = MonsterCategory.Common;
+        }
         _navimeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
-        _material = this.gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
         _tempMaterial = _material;
         FadeIn();
+        GamePlay._eventHandler += MonsterRelease;
     }
 
     private void Update()
@@ -28,8 +36,9 @@ public class DemonKing : Monster
 
         }
 
-        if (_hp <= 0f)
+        if (_hp <= 0f && _isDead == false)
         {
+            _isDead = true;
             ChangeState(State.Die);
 
         }
@@ -57,7 +66,7 @@ public class DemonKing : Monster
     {
         base.ChangeState(state);
         _animator.SetInteger(_aniHashKeyState, (int)_state);
-        Color _temp = _tempMaterial.material.color;
+        // Color _temp = _tempMaterial.material.color;
         switch (_state)
         {
             case State.Idle:
@@ -77,8 +86,17 @@ public class DemonKing : Monster
 
                 break;
             case State.Die:
-                _navimeshAgent.speed = 0f;
-                StartCoroutine(CoDie());
+                if (_category == MonsterCategory.Boss)
+                {
+                    GamePlay.Instance.BossDie(GamePlay.GameState.Result);
+                    _navimeshAgent.speed = 0f;
+                }
+                else
+                {
+                    _navimeshAgent.speed = 0f;
+
+                }
+                //StartCoroutine(CoDie());
                 break;
         }
     }
@@ -166,7 +184,10 @@ public class DemonKing : Monster
         _monsterpool.Release(this);
     }
 
-
+    public override void MonsterRelease()
+    {
+        _hp = 0f;
+    }
 
 
 
@@ -207,4 +228,5 @@ public class DemonKing : Monster
         sr.material.color = tempColor;
         if (nextEvent != null) nextEvent();
     }
+
 }

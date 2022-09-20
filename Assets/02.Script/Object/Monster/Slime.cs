@@ -14,8 +14,6 @@ public class Slime : Monster
     {
         base.Start();
         _monster = MonsterKind.Slime;
-      //  _navimeshAgent = GetComponent<NavMeshAgent>();
-      //  _animator = GetComponent<Animator>();
         _material = this.gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
         _tempMaterial = _material;
         FadeIn();
@@ -43,7 +41,7 @@ public class Slime : Monster
 
 
         _navimeshAgent.speed = _speed;
-        _navimeshAgent.SetDestination(_player.transform.position);
+      
         
     }
 
@@ -112,10 +110,7 @@ public class Slime : Monster
     {
         
         
-        if (other.CompareTag("Player"))
-        {
-            ChangeState(State.Attack);
-        }
+     
         if (other.CompareTag("Weapon") )
         {
             
@@ -155,10 +150,7 @@ public class Slime : Monster
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
-        {
-            ChangeState(State.Walk);
-        }
+        
         if (other.CompareTag("Weapon"))
         {
 
