@@ -72,6 +72,8 @@ public class GamePlay : MonoBehaviour
 
     public bool _collectionChecks = true;
     public int _maxPoolSize = 5;
+    public float[] _percent = {30,50,20};
+
 
     public delegate void EventHandler();
 
@@ -123,6 +125,9 @@ public class GamePlay : MonoBehaviour
         {
             BossSpawn(_demonkingPool);
         }
+
+        
+
 
 
         if (Input.GetKeyDown(KeyCode.R))
@@ -503,5 +508,5 @@ public class GamePlay : MonoBehaviour
         
         ChangeStage(state);
     }
-    
+  
 }

@@ -104,6 +104,17 @@ public class Player : BaseObject
     public bool _isIdle = true;
     public PlayerTitle _playerTitle = PlayerTitle.StrongMan;
     public List<float> _listState = new List<float>();
+    public float _spellCastProbability;
+    public float _fireBallProbability;
+    public float _iceBallProbability;
+    public float _chainLightProbability;
+
+
+    public int _skill1;
+    public int _skill2;
+    public int _skill3;
+
+
 
 
     /// --------------
@@ -112,6 +123,7 @@ public class Player : BaseObject
     public int _1_3;
     public int _quater;
     public int _1_5;
+    public int _strongManProbability;
 
 
     
@@ -132,6 +144,8 @@ public class Player : BaseObject
         _basicCritical = _critical;
         _basicHandicraft = _handicraft;
         _basicCharm = _charm;
+        _basicCriticalDamage = _criticalDamage;
+        
 
         _listState.Add(_atk);
         _listState.Add(_matk);
@@ -151,6 +165,9 @@ public class Player : BaseObject
     {
         
         _animator = GetComponent<Animator>();
+        _fireBallProbability = 30f;
+        _iceBallProbability = 30f;
+        _chainLightProbability = 30f;
         
     }
 
@@ -188,8 +205,9 @@ public class Player : BaseObject
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            Hit();
-            
+            Spell();
+
+
         }
 
     }
@@ -301,30 +319,65 @@ public class Player : BaseObject
         }
     }
     #region SKill
+
+    public void Spell()
+    {
+        float rand = UnityEngine.Random.Range(0, (_iceBallProbability + _fireBallProbability + _chainLightProbability));
+        Debug.Log(rand);
+        
+        if(rand <=_iceBallProbability)
+        {
+            //아이스볼
+            Debug.Log("아이스볼");
+        }
+        else if(rand <=_iceBallProbability + _fireBallProbability && rand > _iceBallProbability)
+        {
+            //파이어볼
+            Debug.Log("불공");
+        }
+        else if (rand >= _iceBallProbability + _fireBallProbability && rand <= _iceBallProbability + _fireBallProbability + _chainLightProbability)
+        {
+            Debug.Log("체라");
+
+        }
+
+    }
     public void MagicalBlader() //마검사 효과
     {
         if(_half == 0)
         {
-            _atk = _basicAtk * 2f;
-            _matk = 0f;
+            _atk = _basicAtk  + _basicAtk + (_basicAtk * _skill2/10f);
+            _matk = 0 + (_basicMatk * _skill1/10f);
+            if(_skill1 == 3)
+            {
+                _atk = _basicAtk + _basicAtk + (_basicAtk * 0.5f);
+            }
         }
         else if(_half == 1)
         {
-            _atk = 0f;
-            _matk = _basicMatk * 2f;
+            _atk = 0 + (_basicAtk * _skill2 / 10f);
+            _matk = _basicMatk + _basicMatk + (_basicMatk * _skill1 / 10f);
+            if(_skill2 == 3)
+            {
+                _matk = _basicMatk + _basicMatk + (_basicMatk * 0.5f);
+            }
         }
     }
 
     public void MadMan() // 광인 효과
     {
-        _atk = _basicAtk * 0.75f;
-        _matk = _basicMatk * 0.75f;
-        _criticalDamage = _criticalDamage * 2f;
+        _atk = (_basicAtk * 0.75f) + (_basicAtk * _skill1 / 10f); 
+        _matk = (_basicMatk * 0.75f) +(_basicMatk * _skill2 / 10f);
+        _criticalDamage = (_basicCriticalDamage * 2f) + (_basicCriticalDamage * _skill3/10f);
     }
     
     public void StrongMan() //괴력몬 효과
     {
-        if(_half == 0)
+        _strongManProbability = UnityEngine.Random.Range(0, 4);
+
+
+
+        if (_half == 0)
         {
             ChangeState(State.Attack2);
         }
@@ -406,7 +459,7 @@ public class Player : BaseObject
         {
             if (_myWeapon[i].gameObject.activeSelf == true)
             {
-                _myWeapon[i]._spellCastProbability = 0.5f;
+               // _myWeapon[i]._spellCastProbability = 0.5f;
             }
         }
     }
@@ -436,7 +489,7 @@ public class Player : BaseObject
         {
             if (_myWeapon[i].gameObject.activeSelf == true)
             {
-                _myWeapon[i]._spellCastProbability = 1f;
+               // _myWeapon[i]._spellCastProbability = 1f;
             }
         }
     }
@@ -623,4 +676,9 @@ public class Player : BaseObject
         return JsonConvert.DeserializeObject<T>(JsonData);
     }
     #endregion
+
+
+   
+
+
 }

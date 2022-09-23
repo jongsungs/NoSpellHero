@@ -51,7 +51,8 @@ public class BaseObject : MonoBehaviour
     public float _basicCritical;
     public float _basicHandicraft;
     public float _basicCharm;
-    public float _criticalProbability;
+    public float _basicCriticalDamage;
+    public float _criticalProbability; //치명타확률
 
     public bool _isAttack;
     protected Animator _animator;

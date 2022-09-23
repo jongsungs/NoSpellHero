@@ -7,7 +7,7 @@ public class Weapon : MonoBehaviour
     public Player _player;
     public bool _isDamage;
     public float _damage;
-    public float _spellCastProbability;
+    
     public bool _isOnce = true;
 
 
