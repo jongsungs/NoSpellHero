@@ -60,6 +60,7 @@
     <Compile Include="Assets\02.Script\UI\Title.cs" />
     <Compile Include="Assets\02.Script\Manager\TitleFlow.cs" />
     <Compile Include="Assets\02.Script\UI\DamageText.cs" />
+    <Compile Include="Assets\02.Script\Skill\ChainLightnig.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
     <Compile Include="Assets\02.Script\Object\Monster\Dragon.cs" />
     <Compile Include="Assets\02.Script\UI\Lobby.cs" />
@@ -136,6 +137,7 @@
     <Compile Include="Assets\02.Script\Base\Monster.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
     <Compile Include="Assets\ShaderGraph_Dissolve\Utility\Scripts\Rotator.cs" />
+    <Compile Include="Assets\LightningBolt\LightningBoltScript.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -151,6 +153,7 @@
     <None Include="Assets\Feel\readme.txt" />
     <None Include="Assets\JsonDotNet\Assemblies\Standalone\Newtonsoft.Json.XML" />
     <None Include="Assets\JsonDotNet\Assemblies\Standalone\Newtonsoft.Json.dll" />
+    <None Include="Assets\LightningBolt\Readme.txt" />
     <None Include="Assets\Feel\license.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Surface.shader" />
     <None Include="Assets\TextMesh Pro\Sprites\EmojiOne Attribution.txt" />

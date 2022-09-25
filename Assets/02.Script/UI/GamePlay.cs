@@ -38,6 +38,10 @@ public class GamePlay : MonoBehaviour
     public GameObject _spawnZone;
     public RespawnZone _randomSpawn;
 
+    public IceBall _iceball;
+    public FireBall _fireball;
+    
+
 
     public bool _isBoss;
 

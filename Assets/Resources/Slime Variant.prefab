@@ -11,6 +11,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Slime Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 1090219386143568, guid: a817c29ea6847604bb2c6c51d9a74bf1, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 4885079432260988, guid: a817c29ea6847604bb2c6c51d9a74bf1, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -110,6 +114,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4bec7280980be9240b05b266e4335598, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _state: 0
+  _CC: 0
   _hp: 1
   _atk: 0
   _matk: 0
@@ -119,7 +125,36 @@ MonoBehaviour:
   _critical: 0
   _handicraft: 0
   _charm: 0
-  m_spped: {x: 0, y: 0, z: 0}
+  _criticalDamage: 0
+  _maxHp: 0
+  _basicHp: 0
+  _basicAtk: 0
+  _basicMatk: 0
+  _basicAtkSpeed: 0
+  _basicDef: 0
+  _basicSpeed: 0
+  _basicCritical: 0
+  _basicHandicraft: 0
+  _basicCharm: 0
+  _basicCriticalDamage: 0
+  _criticalProbability: 0
+  _isAttack: 0
+  _navimeshAgent: {fileID: 0}
+  _onHit: 0
+  _isDead: 0
+  _monster: 0
+  _category: 0
+  m_speed: 0
+  m_viewAngle: 0
+  m_viewDistance: 0
+  m_targetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  m_obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
+  _attackOnce: 0
+  _attackDistance: 2
 --- !u!195 &923384724
 NavMeshAgent:
   m_ObjectHideFlags: 0
