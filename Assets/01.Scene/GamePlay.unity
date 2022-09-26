@@ -924,7 +924,7 @@ PrefabInstance:
     - target: {fileID: 7892928612139490496, guid: e776fa71a8227af4bbb5c16645c2e4c7,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7898141363670627052, guid: e776fa71a8227af4bbb5c16645c2e4c7,
         type: 3}
@@ -1526,7 +1526,7 @@ PrefabInstance:
     - target: {fileID: 7892928612139490496, guid: e776fa71a8227af4bbb5c16645c2e4c7,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7898141363670627052, guid: e776fa71a8227af4bbb5c16645c2e4c7,
         type: 3}
@@ -3131,12 +3131,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c564c8c0d0cdc45429417f315e9f3e41, type: 3}
---- !u!1 &779984909 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7892928612139490496, guid: e776fa71a8227af4bbb5c16645c2e4c7,
-    type: 3}
-  m_PrefabInstance: {fileID: 207340228}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &790531995
 GameObject:
   m_ObjectHideFlags: 0
@@ -4585,12 +4579,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 974802138}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &1001729058 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7892928612139490496, guid: e776fa71a8227af4bbb5c16645c2e4c7,
-    type: 3}
-  m_PrefabInstance: {fileID: 376962096}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1003149061
 GameObject:
   m_ObjectHideFlags: 0
@@ -7000,7 +6988,7 @@ PrefabInstance:
     - target: {fileID: 7892928612139490496, guid: e776fa71a8227af4bbb5c16645c2e4c7,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7898141363670627052, guid: e776fa71a8227af4bbb5c16645c2e4c7,
         type: 3}
@@ -8718,6 +8706,15 @@ MonoBehaviour:
   _isAttack: 0
   _preSpeed: 0
   _rotateSpeed: 0
+  m_viewDistance: 30
+  m_targetMask:
+    serializedVersion: 2
+    m_Bits: 64
+  _listMonster: []
+  _listMonsterPosition: []
+  _lightning: {fileID: 3461023355377288022}
+  _jumpStack: 0
+  _basicJumpStack: 0
   variableJoystick: {fileID: 498063751}
   rb: {fileID: 1867921290}
   _myWeapon:
@@ -9357,19 +9354,14 @@ MonoBehaviour:
   _skillDamage: 0
   _skillDurationTime: 0
   _skillSpeed: 0
-  m_speed: 0
-  m_viewAngle: 360
   m_viewDistance: 10
   m_targetMask:
     serializedVersion: 2
     m_Bits: 64
-  m_obstacleMask:
-    serializedVersion: 2
-    m_Bits: 0
   _listMonster: []
   _listMonsterPosition: []
   _lightning: {fileID: 3461023355377288022}
-  _jumpStack: 0
+  _jumpStack: 8
 --- !u!23 &2070878700
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -9668,9 +9660,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 946c0a34555a28e438f5da3cf715cd1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  StartObject: {fileID: 1001729058}
+  StartObject: {fileID: 0}
   StartPosition: {x: 0, y: 0, z: 0}
-  EndObject: {fileID: 779984909}
+  EndObject: {fileID: 0}
   EndPosition: {x: 0, y: 0, z: 0}
   Generations: 6
   Duration: 0.03

@@ -93,8 +93,20 @@ public class Player : BaseObject
     [SerializeField] float _preSpeed;
     [SerializeField] float _rotateSpeed;
     //---------------------------------
-    
-  
+    //체인라이트닝을 위한 곳
+    [SerializeField] float m_viewDistance; //시야거리
+    [SerializeField] LayerMask m_targetMask;  //Enemy 레이어마스크 지정을 위한 변수
+
+    public List<Monster> _listMonster = new List<Monster>();
+    public List<Vector3> _listMonsterPosition = new List<Vector3>();
+
+    public GameObject _lightning;
+
+    public int _jumpStack;
+    public int _basicJumpStack;
+
+    private Transform m_transform;
+
     //-----------------------------
     public VariableJoystick variableJoystick;
     public Rigidbody rb;
@@ -168,7 +180,10 @@ public class Player : BaseObject
         _fireBallProbability = 30f;
         _iceBallProbability = 30f;
         _chainLightProbability = 30f;
-        
+        m_transform = GetComponent<Transform>();
+        _jumpStack = 3;
+        _basicJumpStack = _jumpStack;
+
     }
 
     private void Update()
@@ -209,7 +224,11 @@ public class Player : BaseObject
 
 
         }
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            StartCoroutine(CoLightning());
 
+        }
     }
 
 
@@ -618,6 +637,59 @@ public class Player : BaseObject
         //공격시 10% 확률로 몬스터의 능력치를 랜덤으로 가져온다.
 
     }
+
+
+    public IEnumerator CoLightning()
+    {
+        Collider[] targets = Physics.OverlapSphere(m_transform.position, m_viewDistance, m_targetMask);
+
+        for (int i = 0; i < _jumpStack; ++i)
+        {
+            if (targets[i].GetComponent<Monster>() != null && targets.Length >=_jumpStack)
+            {
+                _listMonster.Add(targets[i].GetComponent<Monster>());
+                _listMonsterPosition.Add(_listMonster[i].transform.position);
+
+            }
+            else if(targets[i].GetComponent<Monster>() != null && targets.Length <_jumpStack)
+            {
+                _jumpStack = targets.Length;
+                _listMonster.Add(targets[i].GetComponent<Monster>());
+                _listMonsterPosition.Add(_listMonster[i].transform.position);
+
+            }
+
+            if (i == 0)
+            {
+                var obj = Instantiate(_lightning);
+                var light = obj.GetComponent<LightningBoltScript>();
+                light.StartObject = this.gameObject;
+                light.EndObject = _listMonster[i].gameObject;
+                light.EndObject.GetComponent<Monster>()._hp -= 1f;
+
+            }
+            else if (i != 0 && i < _jumpStack - 1)
+            {
+
+                yield return new WaitForSeconds(0.05f);
+                var obj = Instantiate(_lightning);
+                var light = obj.GetComponent<LightningBoltScript>();
+                light.StartObject = _listMonster[i - 1].gameObject;
+                light.EndObject = _listMonster[i].gameObject;
+                light.EndObject.GetComponent<Monster>()._hp -= 1f;
+            }
+
+
+        }
+
+        _listMonster.Clear();
+        _listMonsterPosition.Clear();
+
+        _jumpStack = _basicJumpStack;
+    }
+
+
+
 
     #endregion
 
