@@ -37,6 +37,8 @@ public class GamePlay : MonoBehaviour
     public GameObject _damageTextPoolParent;
     public GameObject _spawnZone;
     public RespawnZone _randomSpawn;
+    public LightningBoltScript _lightning;
+
 
     public IceBall _iceball;
     public FireBall _fireball;
@@ -70,6 +72,9 @@ public class GamePlay : MonoBehaviour
 
     public IObjectPool<DamageText> _damageTextPool;
 
+    public IObjectPool<LightningBoltScript> _lightningPool;
+
+
 
 
     public GameState _currentStage;
@@ -97,8 +102,9 @@ public class GamePlay : MonoBehaviour
         _golemPool = new ObjectPool<Monster>(CreatGolem, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
         _dragonPool = new ObjectPool<Monster>(CreatDragon, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
         _demonkingPool = new ObjectPool<Monster>(CreatDemonKing, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
-        
         _damageTextPool = new ObjectPool<DamageText>(CreatDamageText, OngetDamageText, OnRelaseText, OnDestroyText, maxSize: 10);
+
+        _lightningPool = new ObjectPool<LightningBoltScript>(CreateLightning, OngetLightningBolt, OnRelaseLightning, OnDestroyLightning, maxSize: 30);
         
         _bossHPBar.SetActive(false);
         _currentStage = GameState.Start;
@@ -153,6 +159,10 @@ public class GamePlay : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
             _stage4CreepScore += 1;
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            _slimePool.Get();
         }
 
 
@@ -226,12 +236,19 @@ public class GamePlay : MonoBehaviour
         damagetext.SetPool(_damageTextPool);
         return damagetext;
     }
+    private LightningBoltScript CreateLightning()
+    {
+        var lightning = Instantiate(_lightning, _randomSpawn.Return_RandomPosition(), Quaternion.identity, _objectPool.transform);
+        lightning.SetPool(_lightningPool);
+        return lightning;
+    }
     
 
     // 새로 뽑을 때
     private void OngetMonster(Monster obj)
     {
         obj.gameObject.SetActive(true);
+        obj._layerMask = 6;
         if(obj._monster == Monster.MonsterKind.Slime)
         {
             obj._hp = 10f;
@@ -269,8 +286,10 @@ public class GamePlay : MonoBehaviour
     private void OngetDamageText(DamageText text)
     {
         text.gameObject.SetActive(true);
-
-        
+    }
+    private void OngetLightningBolt(LightningBoltScript lightning)
+    {
+        lightning.gameObject.SetActive(true);
     }
 
     // 반환할때 사라질때
@@ -284,6 +303,10 @@ public class GamePlay : MonoBehaviour
     {
         text.gameObject.SetActive(false);
     }
+    private void OnRelaseLightning(LightningBoltScript lightning)
+    {
+        lightning.gameObject.SetActive(false);
+    }
 
     //풀이 꽉차서 없어질때
     private void OnDestroyMonster(Monster obj)
@@ -295,7 +318,10 @@ public class GamePlay : MonoBehaviour
     {
         Destroy(text.gameObject);
     }
-
+    private void OnDestroyLightning(LightningBoltScript lightning)
+    {
+        Destroy(lightning.gameObject);
+    }
 
 
 

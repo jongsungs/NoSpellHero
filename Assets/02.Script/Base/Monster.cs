@@ -40,6 +40,7 @@ public class Monster : BaseObject
     public bool _isDead;
     public MonsterKind _monster;
     public MonsterCategory _category;
+    public LayerMask _layerMask;
 
 
     protected Transform m_transform;

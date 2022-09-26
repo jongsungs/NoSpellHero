@@ -159,6 +159,7 @@ public class Slime : Monster
 
     IEnumerator CoDie()
     {
+        _layerMask = 0;
         StartCoroutine(CoFadeOut(1f));
         yield return new WaitForSeconds(2f);
         _monsterpool.Release(this);
