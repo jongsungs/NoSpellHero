@@ -662,13 +662,13 @@ public class Player : BaseObject
 
                     for (int i = 0; i < _jumpStack; ++i)
                     {
-                        if (targets[i].GetComponent<Monster>() != null && targets.Length >= _jumpStack)
+                        if (targets[i] != null && targets.Length >= _jumpStack)
                         {
                             _listMonster.Add(targets[i].GetComponent<Monster>());
 
 
                         }
-                        else if (targets[i].GetComponent<Monster>() != null && targets.Length < _jumpStack)
+                        else if (targets[i] != null && targets.Length < _jumpStack)
                         {
                             _jumpStack = targets.Length;
                             _listMonster.Add(targets[i].GetComponent<Monster>());
@@ -732,13 +732,13 @@ public class Player : BaseObject
                 {
                     for (int i = 0; i < targets.Length; ++i)
                     {
-                        if (targets[i].GetComponent<Monster>() != null && targets.Length >= _jumpStack)
+                        if (targets[i] != null && targets.Length >= _jumpStack)
                         {
                             _listMonster.Add(targets[i].GetComponent<Monster>());
 
 
                         }
-                        else if (targets[i].GetComponent<Monster>() != null && targets.Length < _jumpStack)
+                        else if (targets[i] != null && targets.Length < _jumpStack)
                         {
                             _jumpStack = targets.Length;
                             _listMonster.Add(targets[i].GetComponent<Monster>());
@@ -823,7 +823,7 @@ public class Player : BaseObject
 
                     for (int i = 0; i < _jumpStack; ++i)
                     {
-                        if (targets[i].GetComponent<Monster>() != null )
+                        if (targets[i] != null )
                         {
                             _listMonster2.Add(targets[i].GetComponent<Monster>());
 
@@ -857,7 +857,7 @@ public class Player : BaseObject
                         {
                             _listLightning[i].SetActive(true);
                             _listLightning[i].GetComponent<LightningBoltScript>().StartObject = this.gameObject;
-                            if (_listMonster2[i].gameObject != null)
+                            if (_listMonster2[i] != null)
                                 _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster2[i].gameObject;
                             if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
                                 _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
@@ -868,9 +868,9 @@ public class Player : BaseObject
                             _listLightning[i].SetActive(true);
                             Debug.Log("리스트 라이트닝 : " + _listLightning.Count);
                             Debug.Log("리스트 몬스터 : " + _listMonster2.Count);
-                            if (_listMonster2[i - 1].gameObject != null)
+                            if (_listMonster2[i - 1] != null)
                                 _listLightning[i].GetComponent<LightningBoltScript>().StartObject = _listMonster2[i - 1].gameObject;
-                            if (_listMonster2[i].gameObject != null)
+                            if (_listMonster2[i]  != null)
                                 _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster2[i].gameObject;
                             if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
                                 _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
@@ -887,7 +887,7 @@ public class Player : BaseObject
                 {
                     for (int i = 0; i < targets.Length; ++i)
                     {
-                        if (targets[i].GetComponent<Monster>() != null )
+                        if (targets[i] != null )
                         {
                             _listMonster2.Add(targets[i].GetComponent<Monster>());
 
@@ -932,9 +932,9 @@ public class Player : BaseObject
                             _listLightning[i].SetActive(true);
                             Debug.Log("리스트 라이트닝 : " + _listLightning.Count);
                             Debug.Log("리스트 몬스터 : " + _listMonster2.Count);
-                            if (_listMonster2[i - 1].gameObject != null)
+                            if (_listMonster2[i - 1] != null)
                                 _listLightning[i].GetComponent<LightningBoltScript>().StartObject = _listMonster2[i - 1].gameObject;
-                            if (_listMonster2[i].gameObject != null)
+                            if (_listMonster2[i] != null)
                                 _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster2[i].gameObject;
                             if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
                                 _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
