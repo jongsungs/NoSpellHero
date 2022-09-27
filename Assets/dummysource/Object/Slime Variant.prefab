@@ -120,7 +120,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _state: 0
   _CC: 0
-  _hp: 10
+  _hp: 2
   _atk: 0
   _matk: 0
   _atkSpeed: 0
@@ -140,9 +140,28 @@ MonoBehaviour:
   _basicCritical: 0
   _basicHandicraft: 0
   _basicCharm: 0
+  _basicCriticalDamage: 0
   _criticalProbability: 0
   _isAttack: 0
+  _navimeshAgent: {fileID: 0}
   _onHit: 0
+  _isDead: 0
+  _monster: 0
+  _category: 0
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  m_speed: 0
+  m_viewAngle: 0
+  m_viewDistance: 0
+  m_targetMask:
+    serializedVersion: 2
+    m_Bits: 0
+  m_obstacleMask:
+    serializedVersion: 2
+    m_Bits: 0
+  _attackOnce: 0
+  _attackDistance: 2
 --- !u!195 &1462379588
 NavMeshAgent:
   m_ObjectHideFlags: 0

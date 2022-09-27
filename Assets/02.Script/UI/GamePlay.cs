@@ -297,6 +297,7 @@ public class GamePlay : MonoBehaviour
     private void OnReleaseMonster(Monster obj)
     {
         obj.gameObject.SetActive(false);
+      
     }
 
     private void OnRelaseText(DamageText text)

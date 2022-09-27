@@ -647,6 +647,8 @@ public class Player : BaseObject
 
         Collider[] targets = Physics.OverlapSphere(m_transform.position, m_viewDistance, m_targetMask);
 
+        
+
         if (_count % 2 == 0 && _count != 0)//짝수
         {
             _listMonster.Clear();
@@ -654,71 +656,147 @@ public class Player : BaseObject
 
             if (targets.Length != 0 && targets != null)
             {
-
-                for (int i = 0; i < _jumpStack; ++i)
+                if (targets.Length > _jumpStack)
                 {
-                    if (targets[i].GetComponent<Monster>() != null && targets.Length >= _jumpStack)
+
+
+                    for (int i = 0; i < _jumpStack; ++i)
                     {
-                        _listMonster.Add(targets[i].GetComponent<Monster>());
+                        if (targets[i].GetComponent<Monster>() != null && targets.Length >= _jumpStack)
+                        {
+                            _listMonster.Add(targets[i].GetComponent<Monster>());
+
+
+                        }
+                        else if (targets[i].GetComponent<Monster>() != null && targets.Length < _jumpStack)
+                        {
+                            _jumpStack = targets.Length;
+                            _listMonster.Add(targets[i].GetComponent<Monster>());
+
+
+                        }
+
+                        if (i == 0 && _listLightning.Count < targets.Length)
+                        {
+                            var obj = Instantiate(_lightning);
+                            var light = obj.GetComponent<LightningBoltScript>();
+                            _listLightning.Add(obj);
+                            light.StartObject = this.gameObject;
+                            light.EndObject = _listMonster[i].gameObject;
+                            light.EndObject.GetComponent<Monster>()._hp -= 1f;
+
+                        }
+                        else if (i != 0 && i <= _jumpStack && _listLightning.Count < targets.Length)
+                        {
+
+                            yield return new WaitForSeconds(0.05f);
+                            var obj = Instantiate(_lightning);
+                            _listLightning.Add(obj);
+                            var light = obj.GetComponent<LightningBoltScript>();
+                            Debug.Log("리스트 몬스터 : " + _listMonster.Count);
+                            light.StartObject = _listMonster[i - 1].gameObject;
+                            light.EndObject = _listMonster[i].gameObject;
+                            light.EndObject.GetComponent<Monster>()._hp -= 1f;
+                        }
+                        else if (i == 0 && _listLightning.Count >= targets.Length)
+                        {
+                            _listLightning[i].SetActive(true);
+                            _listLightning[i].GetComponent<LightningBoltScript>().StartObject = this.gameObject;
+                            if (_listMonster[i] != null)
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster[i].gameObject;
+                            if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
+                        }
+                        else if (i != 0 && i <= _jumpStack && _listLightning.Count >= targets.Length && _listMonster.Count != 0)
+                        {
+                            yield return new WaitForSeconds(0.05f);
+                            _listLightning[i].SetActive(true);
+                            Debug.Log("리스트 라이트닝 : " + _listLightning.Count);
+                            Debug.Log("리스트 몬스터 : " + _listMonster.Count);
+                            if (_listMonster[i - 1] != null)
+                                _listLightning[i].GetComponent<LightningBoltScript>().StartObject = _listMonster[i - 1].gameObject;
+                            if (_listMonster[i] != null)
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster[i].gameObject;
+                            if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
+
+
+                        }
+
+
 
 
                     }
-                    else if (targets[i].GetComponent<Monster>() != null && targets.Length < _jumpStack)
+                }
+                else if(targets.Length <= _jumpStack)
+                {
+                    for (int i = 0; i < targets.Length; ++i)
                     {
-                        _jumpStack = targets.Length;
-                        _listMonster.Add(targets[i].GetComponent<Monster>());
+                        if (targets[i].GetComponent<Monster>() != null && targets.Length >= _jumpStack)
+                        {
+                            _listMonster.Add(targets[i].GetComponent<Monster>());
+
+
+                        }
+                        else if (targets[i].GetComponent<Monster>() != null && targets.Length < _jumpStack)
+                        {
+                            _jumpStack = targets.Length;
+                            _listMonster.Add(targets[i].GetComponent<Monster>());
+
+
+                        }
+
+                        if (i == 0 && _listLightning.Count < targets.Length)
+                        {
+                            var obj = Instantiate(_lightning);
+                            var light = obj.GetComponent<LightningBoltScript>();
+                            _listLightning.Add(obj);
+                            light.StartObject = this.gameObject;
+                            light.EndObject = _listMonster[i].gameObject;
+                            light.EndObject.GetComponent<Monster>()._hp -= 1f;
+
+                        }
+                        else if (i != 0  && _listLightning.Count < targets.Length)
+                        {
+
+                            yield return new WaitForSeconds(0.05f);
+                            var obj = Instantiate(_lightning);
+                            _listLightning.Add(obj);
+                            var light = obj.GetComponent<LightningBoltScript>();
+                            Debug.Log("리스트 몬스터 : " + _listMonster.Count);
+                            light.StartObject = _listMonster[i - 1].gameObject;
+                            light.EndObject = _listMonster[i].gameObject;
+                            light.EndObject.GetComponent<Monster>()._hp -= 1f;
+                        }
+                        else if (i == 0 && _listLightning.Count >= targets.Length)
+                        {
+                            _listLightning[i].SetActive(true);
+                            _listLightning[i].GetComponent<LightningBoltScript>().StartObject = this.gameObject;
+                            if (_listMonster[i] != null)
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster[i].gameObject;
+                            if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
+                        }
+                        else if (i != 0 && _listLightning.Count >= targets.Length && _listMonster.Count != 0)
+                        {
+                            yield return new WaitForSeconds(0.05f);
+                            _listLightning[i].SetActive(true);
+                            Debug.Log("리스트 라이트닝 : " + _listLightning.Count);
+                            Debug.Log("리스트 몬스터 : " + _listMonster.Count);
+                            if (_listMonster[i - 1] != null)
+                                _listLightning[i].GetComponent<LightningBoltScript>().StartObject = _listMonster[i - 1].gameObject;
+                            if (_listMonster[i] != null)
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster[i].gameObject;
+                            if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
+
+
+                        }
+
+
 
 
                     }
-
-                    if (i == 0 && _listLightning.Count < targets.Length)
-                    {
-                        var obj = Instantiate(_lightning);
-                        var light = obj.GetComponent<LightningBoltScript>();
-                        _listLightning.Add(obj);
-                        light.StartObject = this.gameObject;
-                        light.EndObject = _listMonster[i].gameObject;
-                        light.EndObject.GetComponent<Monster>()._hp -= 1f;
-
-                    }
-                    else if (i != 0 && i <= _jumpStack && _listLightning.Count < targets.Length)
-                    {
-
-                        yield return new WaitForSeconds(0.05f);
-                        var obj = Instantiate(_lightning);
-                        _listLightning.Add(obj);
-                        var light = obj.GetComponent<LightningBoltScript>();
-                        Debug.Log("리스트 몬스터 : " + _listMonster.Count);
-                        light.StartObject = _listMonster[i - 1].gameObject;
-                        light.EndObject = _listMonster[i].gameObject;
-                        light.EndObject.GetComponent<Monster>()._hp -= 1f;
-                    }
-                    else if (i == 0 && _listLightning.Count >= targets.Length)
-                    {
-                        _listLightning[i].SetActive(true);
-                        _listLightning[i].GetComponent<LightningBoltScript>().StartObject = this.gameObject;
-                        _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster[i].gameObject;
-                        _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
-                    }
-                    else if (i != 0 && i <= _jumpStack && _listLightning.Count >= targets.Length && _listMonster.Count != 0)
-                    {
-                        yield return new WaitForSeconds(0.05f);
-                        _listLightning[i].SetActive(true);
-                        Debug.Log("리스트 라이트닝 : " + _listLightning.Count);
-                        Debug.Log("리스트 몬스터 : " + _listMonster.Count);
-                        if(_listMonster[i-1] != null)
-                        _listLightning[i].GetComponent<LightningBoltScript>().StartObject = _listMonster[i - 1].gameObject;
-                        if(_listMonster[i] != null)
-                        _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster[i].gameObject;
-                        if(_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
-                        _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
-
-
-                    }
-
-                   
-
-
                 }
                 for (int i = 0; i < _listLightning.Count; ++i)
                 {
@@ -739,77 +817,139 @@ public class Player : BaseObject
             if (targets.Length != 0 && targets != null)
             {
 
-                for (int i = 0; i < _jumpStack; ++i)
+                if (targets.Length > _jumpStack)
                 {
-                    if (targets[i].GetComponent<Monster>() != null && targets.Length >= _jumpStack)
+
+
+                    for (int i = 0; i < _jumpStack; ++i)
                     {
-                        _listMonster2.Add(targets[i].GetComponent<Monster>());
-
-
-                    }
-                    else if (targets[i].GetComponent<Monster>() != null && targets.Length < _jumpStack)
-                    {
-                        _jumpStack = targets.Length;
-                        _listMonster2.Add(targets[i].GetComponent<Monster>());
-
-
-                    }
-
-                    if (i == 0 && _listLightning.Count < targets.Length)
-                    {
-                        var obj = Instantiate(_lightning);
-                        var light = obj.GetComponent<LightningBoltScript>();
-                        _listLightning.Add(obj);
-                        light.StartObject = this.gameObject;
-                        light.EndObject = _listMonster2[i].gameObject;
-                        light.EndObject.GetComponent<Monster>()._hp -= 1f;
-
-                    }
-                    else if (i != 0 && i <= _jumpStack && _listLightning.Count < targets.Length)
-                    {
-
-                        yield return new WaitForSeconds(0.05f);
-                        var obj = Instantiate(_lightning);
-                        _listLightning.Add(obj);
-                        var light = obj.GetComponent<LightningBoltScript>();
-                        Debug.Log("리스트 몬스터 : " + _listMonster2.Count);
-                        light.StartObject = _listMonster2[i - 1].gameObject;
-                        light.EndObject = _listMonster2[i].gameObject;
-                        light.EndObject.GetComponent<Monster>()._hp -= 1f;
-                    }
-                    else if (i == 0 && _listLightning.Count >= targets.Length)
-                    {
-                        _listLightning[i].SetActive(true);
-                        _listLightning[i].GetComponent<LightningBoltScript>().StartObject = this.gameObject;
-                        _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster2[i].gameObject;
-                        _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
-                    }
-                    else if (i != 0 && i <= _jumpStack && _listLightning.Count >= targets.Length && _listMonster2.Count != 0)
-                    {
-                        yield return new WaitForSeconds(0.05f);
-                        _listLightning[i].SetActive(true);
-                        Debug.Log("리스트 라이트닝 : " + _listLightning.Count);
-                        Debug.Log("리스트 몬스터 : " + _listMonster2.Count);
-                        if(_listMonster2[i-1].gameObject != null)
+                        if (targets[i].GetComponent<Monster>() != null )
                         {
-                            _listLightning[i].GetComponent<LightningBoltScript>().StartObject = _listMonster2[i - 1].gameObject;
+                            _listMonster2.Add(targets[i].GetComponent<Monster>());
 
-                        
+
                         }
-                        if (_listMonster2[i].gameObject != null)
+                      
+
+                        if (i == 0 && _listLightning.Count < targets.Length)
                         {
-                            _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster2[i].gameObject;
+                            var obj = Instantiate(_lightning);
+                            var light = obj.GetComponent<LightningBoltScript>();
+                            _listLightning.Add(obj);
+                            light.StartObject = this.gameObject;
+                            light.EndObject = _listMonster2[i].gameObject;
+                            light.EndObject.GetComponent<Monster>()._hp -= 1f;
+
                         }
-                        if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
-                            _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
+                        else if (i != 0 && i <= _jumpStack && _listLightning.Count < targets.Length)
+                        {
+
+                            yield return new WaitForSeconds(0.05f);
+                            var obj = Instantiate(_lightning);
+                            _listLightning.Add(obj);
+                            var light = obj.GetComponent<LightningBoltScript>();
+                            Debug.Log("리스트 몬스터 : " + _listMonster2.Count);
+                            light.StartObject = _listMonster2[i - 1].gameObject;
+                            light.EndObject = _listMonster2[i].gameObject;
+                            light.EndObject.GetComponent<Monster>()._hp -= 1f;
+                        }
+                        else if (i == 0 && _listLightning.Count >= targets.Length)
+                        {
+                            _listLightning[i].SetActive(true);
+                            _listLightning[i].GetComponent<LightningBoltScript>().StartObject = this.gameObject;
+                            if (_listMonster2[i].gameObject != null)
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster2[i].gameObject;
+                            if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
+                        }
+                        else if (i != 0 && i <= _jumpStack && _listLightning.Count >= targets.Length && _listMonster2.Count != 0)
+                        {
+                            yield return new WaitForSeconds(0.05f);
+                            _listLightning[i].SetActive(true);
+                            Debug.Log("리스트 라이트닝 : " + _listLightning.Count);
+                            Debug.Log("리스트 몬스터 : " + _listMonster2.Count);
+                            if (_listMonster2[i - 1].gameObject != null)
+                                _listLightning[i].GetComponent<LightningBoltScript>().StartObject = _listMonster2[i - 1].gameObject;
+                            if (_listMonster2[i].gameObject != null)
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster2[i].gameObject;
+                            if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
+
+
+                        }
+
+
 
 
                     }
-
-                   
-
-
                 }
+                else if (targets.Length <= _jumpStack)
+                {
+                    for (int i = 0; i < targets.Length; ++i)
+                    {
+                        if (targets[i].GetComponent<Monster>() != null )
+                        {
+                            _listMonster2.Add(targets[i].GetComponent<Monster>());
+
+
+                        }
+
+
+                        if (i == 0 && _listLightning.Count < targets.Length)
+                        {
+                            var obj = Instantiate(_lightning);
+                            var light = obj.GetComponent<LightningBoltScript>();
+                            _listLightning.Add(obj);
+                            light.StartObject = this.gameObject;
+                            light.EndObject = _listMonster2[i].gameObject;
+                            light.EndObject.GetComponent<Monster>()._hp -= 1f;
+
+                        }
+                        else if (i != 0  && _listLightning.Count < targets.Length)
+                        {
+
+                            yield return new WaitForSeconds(0.05f);
+                            var obj = Instantiate(_lightning);
+                            _listLightning.Add(obj);
+                            var light = obj.GetComponent<LightningBoltScript>();
+                            Debug.Log("리스트 몬스터 : " + _listMonster2.Count);
+                            light.StartObject = _listMonster2[i - 1].gameObject;
+                            light.EndObject = _listMonster2[i].gameObject;
+                            light.EndObject.GetComponent<Monster>()._hp -= 1f;
+                        }
+                        else if (i == 0 && _listLightning.Count >= targets.Length)
+                        {
+                            _listLightning[i].SetActive(true);
+                            _listLightning[i].GetComponent<LightningBoltScript>().StartObject = this.gameObject;
+                            if (_listMonster2[i].gameObject != null)
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster2[i].gameObject;
+                            if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
+                        }
+                        else if (i != 0  && _listLightning.Count >= targets.Length && _listMonster2.Count != 0)
+                        {
+                            yield return new WaitForSeconds(0.05f);
+                            _listLightning[i].SetActive(true);
+                            Debug.Log("리스트 라이트닝 : " + _listLightning.Count);
+                            Debug.Log("리스트 몬스터 : " + _listMonster2.Count);
+                            if (_listMonster2[i - 1].gameObject != null)
+                                _listLightning[i].GetComponent<LightningBoltScript>().StartObject = _listMonster2[i - 1].gameObject;
+                            if (_listMonster2[i].gameObject != null)
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster2[i].gameObject;
+                            if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
+
+
+                        }
+
+
+
+
+                    }
+                }
+
+
+
                 for (int i = 0; i < _listLightning.Count; ++i)
                 {
                     yield return new WaitForSeconds(0.05f);
