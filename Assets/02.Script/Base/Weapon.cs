@@ -7,6 +7,7 @@ public class Weapon : MonoBehaviour
     public Player _player;
     public bool _isDamage;
     public float _damage;
+    public float _basicDamage;
     
     public bool _isOnce = true;
 
@@ -14,6 +15,7 @@ public class Weapon : MonoBehaviour
     private void Awake()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
+        _basicDamage = _damage;
     }
 
     private void Update()

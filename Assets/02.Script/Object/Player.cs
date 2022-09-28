@@ -159,6 +159,7 @@ public class Player : BaseObject
         _basicHandicraft = _handicraft;
         _basicCharm = _charm;
         _basicCriticalDamage = _criticalDamage;
+        _criticalProbability = 3f;
         
 
         _listState.Add(_atk);
@@ -344,7 +345,7 @@ public class Player : BaseObject
     public void Spell()
     {
         float rand = UnityEngine.Random.Range(0, (_iceBallProbability + _fireBallProbability + _chainLightProbability));
-        Debug.Log(rand);
+     
         
         if(rand <=_iceBallProbability)
         {
@@ -378,7 +379,7 @@ public class Player : BaseObject
         {
             _atk = 0 + (_basicAtk * _skill2 / 10f);
             _matk = _basicMatk + _basicMatk + (_basicMatk * _skill1 / 10f);
-            if(_skill2 == 3)
+            if(_skill2 >= 3)
             {
                 _matk = _basicMatk + _basicMatk + (_basicMatk * 0.5f);
             }
@@ -394,9 +395,9 @@ public class Player : BaseObject
     
     public void StrongMan() //괴력몬 효과
     {
-        _strongManProbability = UnityEngine.Random.Range(0, 4);
+        _strongManProbability = UnityEngine.Random.Range(0, 4 - _skill2);
 
-
+        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill1 / 10f);
 
         if (_half == 0)
         {
@@ -405,28 +406,36 @@ public class Player : BaseObject
     }
     public void Warrior() // 전사 효과
     {
-        _atk = _atk + (_atk*0.1f);
+        _atk = _basicAtk + (_basicAtk * 0.3f ) + (_basicAtk * _skill1/10f);
+
     }
     public void Dwarf() // 난쟁이
     {
+        _atk = _basicAtk + _skill2 / 10f;
+
         for(int i = 0; i < _myWeapon.Count; ++i)
         {
             if(_myWeapon[i].gameObject.activeSelf == true)
             {
-                _myWeapon[i]._damage = _myWeapon[i]._damage + ( _myWeapon[i]._damage * 0.2f);
+                _myWeapon[i]._damage = _myWeapon[i]._basicDamage + ( _myWeapon[i]._basicDamage * 0.3f) + (_myWeapon[i]._basicDamage * _skill1/10f);
             }
         }
     }
     public void JackFrost() // 동장군
     {
-        if(_1_3 == 0)
-        {
-            //공격시 30 % 확률로 빙결 모든 스킬 얼음덩이으로 변경
-        }
+        // 눈보라 구현해라
+        _iceBallProbability = 100f;
+        _chainLightProbability = 0f;
+        _fireBallProbability = 0f;
+
+        _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
+        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill3 / 10f);
+        
     }
     public void AssaultCaptain() // 돌격대장
     {
-        _speed = _basicSpeed + (_basicSpeed * 0.2f);
+        _speed = _basicSpeed + (_basicSpeed * 0.3f) + (_basicSpeed * _skill1/10f);
+        _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
     }
 
     public void ZhangFei() // 삼국지 장비
@@ -436,14 +445,26 @@ public class Player : BaseObject
 
     public void Berserker() //광전사
     {
-        if(_hp <= _maxHp * 0.25f)
+        _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
+        if(_skill1 <=3)
         {
-            _atk = _basicAtk * 2f;
+            _maxHp = _basicHp * 0.2f;
+            _atk = (_basicAtk * 2f) + (_basicAtk * 2f);
         }
+        else if(_hp <= (_maxHp * (0.25f + _skill1/20f)))
+        {
+            _atk = (_basicAtk * 2f) + (_basicAtk * _skill2 / 10f); 
+        }
+        
+
+
     }
     public void Critialer() //급소쟁이
     {
         _criticalProbability = 1f;
+        _criticalDamage = _basicCriticalDamage + (_basicCriticalDamage * _skill1 / 10f);
+        _atk = (_basicAtk * 0.3f) + (_basicAtk * _skill2 / 10f);
+
     }
 
     public void Druid() //드루이드
@@ -453,36 +474,44 @@ public class Player : BaseObject
 
     public void Assassin() // 암살자
     {
-        _criticalDamage = _criticalDamage + (_criticalDamage * 0.2f);
+        float rand = UnityEngine.Random.Range(0, _criticalProbability - _skill1);
+        _criticalDamage = _basicCriticalDamage + (_basicCriticalDamage * 0.2f) + (_basicCriticalDamage * _skill1/10f);
+        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill3 / 10f);
     }
 
     public void Ambidextrous() //양손잡이
     {
-        _atkSpeed += _basicAtkSpeed+(_basicAtkSpeed * 0.5f);
+
+        _atkSpeed += _basicAtkSpeed+(_basicAtkSpeed * 0.5f) + (_basicAtkSpeed * _skill1/10f);
+        _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
 
     }
     public void LuBu() // 삼국지 여포
     {
-        _atk = _basicAtk * 4f;
-        _basicAtk = 2f;
+        _atk = (_basicAtk * 3f) + (_basicAtk * _skill1/10f);
+        _atkSpeed = 2f + (_skill2/10f);
         _speed = 2f;
+
+        //무기 창 추가
+        if(_skill3 >= 3)
+        {
+            _atk = (_basicAtk * 5f);
+        }
+        
+
+
     }
 
     public void HeavyCavalry() // 개마무사
     {
-        _atk = _basicAtk + (_basicAtk * 0.1f);
-        _speed = _basicSpeed + (_basicSpeed * 0.1f);
+        _atk = _basicAtk + (_basicAtk * 0.2f) + (_basicAtk * _skill1/10f);
+        _speed = _basicSpeed + (_basicSpeed * 0.2f) + (_basicSpeed * _skill2/10f);
     }
 
     public void HealthMagician() // 덩치법사
     {
-        for (int i = 0; i < _myWeapon.Count; ++i)
-        {
-            if (_myWeapon[i].gameObject.activeSelf == true)
-            {
-               // _myWeapon[i]._spellCastProbability = 0.5f;
-            }
-        }
+        _maxHp = _basicHp + (_basicHp * 0.3f) + (_basicHp * _skill1 / 5f);
+        //체력 풀스택시 체력비례 대미지 가격 및 주문확률증가 구현해야함
     }
     public void Priest() // 사제
     {
@@ -490,9 +519,16 @@ public class Player : BaseObject
     }
     public void Warlock() // 흑마법사
     {
-        if (_hp <= _maxHp * 0.25f)
+
+        if(_skill1 >= 3)
         {
-            _matk = _basicMatk * 2f;
+            _spellCastProbability = 7f;
+        }
+
+        _matk = _basicMatk + (_basicMatk * _skill2 / 10f);
+        if (_hp <= _maxHp * (0.20f+ _skill1/20f))
+        {
+            _matk = (_basicMatk * 2f) + (_basicMatk * _skill2 / 10f); 
         }
     }
     public void Salamander() // 불도마뱀
@@ -506,13 +542,13 @@ public class Player : BaseObject
 
     public void PracticeBug() //연습벌레
     {
-        for (int i = 0; i < _myWeapon.Count; ++i)
-        {
-            if (_myWeapon[i].gameObject.activeSelf == true)
-            {
-               // _myWeapon[i]._spellCastProbability = 1f;
-            }
-        }
+        _spellCastProbability = 10f;
+
+        _matk = _basicMatk + (_basicMatk * _skill1 / 10f);
+        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill2);
+
+
+
     }
    
     public void Stranger() // 스트레인저
@@ -532,21 +568,34 @@ public class Player : BaseObject
     }
     public void QRF() // 번개조
     {
-        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * 0.5f);
+        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * 0.5f) + (_basicAtkSpeed * _skill1/10f);
         _atk = _basicAtk + (_basicAtk * 0.1f);
+        _speed = _basicSpeed + (_basicSpeed * _skill2);
+
+        if(_skill2 >= 3)
+        {
+            //공격시 스턴
+        }
+
+
 
     }
 
     public void Servant() // 돌쇠
     {
-        _hp = _basicHp + _basicHp;
-        _basicHp = _hp;
+        _hp = _basicHp  * 2f + (_basicHp * _skill1/5f);
+        _atkSpeed = _basicAtkSpeed * (_basicAtkSpeed * _skill2 / 10f);
+        if(_skill1 >= 3)
+        {
+
+            //체력비례 대미지
+        }
 
     }
     public void Athlete() // 운동선수
     {
-        _hp = _basicHp + (_basicHp * 0.3f);
-        _speed = _basicSpeed + (_basicSpeed * 0.2f);
+        _hp = _basicHp + (_basicHp * 0.3f) + (_basicHp * _skill2/10f);
+        _speed = _basicSpeed + (_basicSpeed * 0.2f) + (_basicSpeed * _skill1/10f);
 
     }
     public void Versatile() // 다재다능
@@ -555,8 +604,14 @@ public class Player : BaseObject
         {
             if (_myWeapon[i].gameObject.activeSelf == true)
             {
-                _myWeapon[i]._damage = _myWeapon[i]._damage * 2f ;
+                _myWeapon[i]._damage = _myWeapon[i]._basicDamage * 2f +(_myWeapon[i]._basicDamage + _skill1/10f) ;
             }
+        }
+        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill2 / 10f);
+
+        if(_skill2 >= 3)
+        {
+            _spellCastProbability = 7f;
         }
     }
 
@@ -570,7 +625,9 @@ public class Player : BaseObject
     }
     public void SpoonKiller() //숟가락 살인마
     {
-        //공격력 50 % 감소 공격속도 200 % 증가
+        _atk = (_basicAtk * 0.5f) + (_basicAtk * _skill2/10f);
+        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill1 / 10f);
+
     }
 
     public void Helen() // 절세미인
@@ -584,31 +641,49 @@ public class Player : BaseObject
     }
     public void Idol() //아이돌
     {
+        _critical = _basicCritical + (_basicCritical * _skill1 / 10f);
+        _speed = _basicSpeed + (_basicSpeed * _skill2 / 10f);
+
         //죽인 몬스터 수 *  골드 획득
     }
 
     public void Swell() // 달인
     {
-        _hp = _basicHp + (_basicHp * 0.2f);
-        _atk = _basicAtk + (_basicAtk * 0.2f);
-        _matk = _basicMatk + (_basicMatk * 0.2f);
-        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * 0.2f);
-        _def = _basicDef + (_basicDef * 0.2f);
-        _speed = _basicSpeed + (_basicSpeed * 0.2f);
-        _critical = _basicCritical + (_basicCritical * 0.2f);
-        _handicraft = _basicHandicraft + (_basicHandicraft * 0.2f);
-        _charm = _basicCharm + (_basicCharm * 0.2f);
+        _hp = _basicHp + (_basicHp * 0.2f) + (_basicHp * _skill1 / 10f);
+        _atk = _basicAtk + (_basicAtk * 0.2f) + (_basicAtk * _skill1 / 10f);
+        _matk = _basicMatk + (_basicMatk * 0.2f) + (_basicMatk * _skill1/10f);
+        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * 0.2f) + (_basicAtkSpeed * _skill1 / 10f); ;
+        _def = _basicDef + (_basicDef * 0.2f) + (_basicDef * _skill1 / 10f); 
+        _speed = _basicSpeed + (_basicSpeed * 0.2f) + (_basicSpeed * _skill1 / 10f); 
+        _critical = _basicCritical + (_basicCritical * 0.2f) + (_basicCritical * _skill1 / 10f);
+        _handicraft = _basicHandicraft + (_basicHandicraft * 0.2f) + (_basicHandicraft * _skill1 / 10f); 
+        _charm = _basicCharm + (_basicCharm * 0.2f) + (_basicCharm * _skill1 / 10f); 
 
     }
 
     public void Delivery() // 배달부
     {
-        _speed = _basicSpeed + _basicSpeed;
+        _speed = _basicSpeed + _basicSpeed + (_basicSpeed * _skill1/10f);
+        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill2 / 10f);
+
+        if(_skill1 >= 3)
+        {
+            //충돌데미지 추가
+        }
+
     }
 
     public void RepairMan() //수리공
     {
         //5초마다 체력 재생력 +10;
+
+        _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
+
+        if(_skill1 >= 3)
+        {
+            //매 초마다 체력 회복
+        }
+
     }
 
     public void Taoist()//전우치
@@ -693,7 +768,6 @@ public class Player : BaseObject
                             var obj = Instantiate(_lightning);
                             _listLightning.Add(obj);
                             var light = obj.GetComponent<LightningBoltScript>();
-                            Debug.Log("리스트 몬스터 : " + _listMonster.Count);
                             light.StartObject = _listMonster[i - 1].gameObject;
                             light.EndObject = _listMonster[i].gameObject;
                             light.EndObject.GetComponent<Monster>()._hp -= 1f;
@@ -711,8 +785,6 @@ public class Player : BaseObject
                         {
                             yield return new WaitForSeconds(0.05f);
                             _listLightning[i].SetActive(true);
-                            Debug.Log("리스트 라이트닝 : " + _listLightning.Count);
-                            Debug.Log("리스트 몬스터 : " + _listMonster.Count);
                             if (_listMonster[i - 1] != null)
                                 _listLightning[i].GetComponent<LightningBoltScript>().StartObject = _listMonster[i - 1].gameObject;
                             if (_listMonster[i] != null)
@@ -763,7 +835,6 @@ public class Player : BaseObject
                             var obj = Instantiate(_lightning);
                             _listLightning.Add(obj);
                             var light = obj.GetComponent<LightningBoltScript>();
-                            Debug.Log("리스트 몬스터 : " + _listMonster.Count);
                             light.StartObject = _listMonster[i - 1].gameObject;
                             light.EndObject = _listMonster[i].gameObject;
                             light.EndObject.GetComponent<Monster>()._hp -= 1f;
@@ -781,8 +852,6 @@ public class Player : BaseObject
                         {
                             yield return new WaitForSeconds(0.05f);
                             _listLightning[i].SetActive(true);
-                            Debug.Log("리스트 라이트닝 : " + _listLightning.Count);
-                            Debug.Log("리스트 몬스터 : " + _listMonster.Count);
                             if (_listMonster[i - 1] != null)
                                 _listLightning[i].GetComponent<LightningBoltScript>().StartObject = _listMonster[i - 1].gameObject;
                             if (_listMonster[i] != null)
@@ -848,7 +917,6 @@ public class Player : BaseObject
                             var obj = Instantiate(_lightning);
                             _listLightning.Add(obj);
                             var light = obj.GetComponent<LightningBoltScript>();
-                            Debug.Log("리스트 몬스터 : " + _listMonster2.Count);
                             light.StartObject = _listMonster2[i - 1].gameObject;
                             light.EndObject = _listMonster2[i].gameObject;
                             light.EndObject.GetComponent<Monster>()._hp -= 1f;
@@ -866,8 +934,6 @@ public class Player : BaseObject
                         {
                             yield return new WaitForSeconds(0.05f);
                             _listLightning[i].SetActive(true);
-                            Debug.Log("리스트 라이트닝 : " + _listLightning.Count);
-                            Debug.Log("리스트 몬스터 : " + _listMonster2.Count);
                             if (_listMonster2[i - 1] != null)
                                 _listLightning[i].GetComponent<LightningBoltScript>().StartObject = _listMonster2[i - 1].gameObject;
                             if (_listMonster2[i]  != null)
@@ -912,7 +978,6 @@ public class Player : BaseObject
                             var obj = Instantiate(_lightning);
                             _listLightning.Add(obj);
                             var light = obj.GetComponent<LightningBoltScript>();
-                            Debug.Log("리스트 몬스터 : " + _listMonster2.Count);
                             light.StartObject = _listMonster2[i - 1].gameObject;
                             light.EndObject = _listMonster2[i].gameObject;
                             light.EndObject.GetComponent<Monster>()._hp -= 1f;
@@ -930,8 +995,6 @@ public class Player : BaseObject
                         {
                             yield return new WaitForSeconds(0.05f);
                             _listLightning[i].SetActive(true);
-                            Debug.Log("리스트 라이트닝 : " + _listLightning.Count);
-                            Debug.Log("리스트 몬스터 : " + _listMonster2.Count);
                             if (_listMonster2[i - 1] != null)
                                 _listLightning[i].GetComponent<LightningBoltScript>().StartObject = _listMonster2[i - 1].gameObject;
                             if (_listMonster2[i] != null)
