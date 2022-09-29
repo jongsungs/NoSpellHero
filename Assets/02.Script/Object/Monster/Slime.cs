@@ -39,8 +39,11 @@ public class Slime : Monster
 
 
 
+        if(_CC != CrowdControl.Freezing)
+        {
+            _navimeshAgent.speed = _speed;
 
-        _navimeshAgent.speed = _speed;
+        }
       
         
     }
@@ -86,12 +89,12 @@ public class Slime : Monster
                 break;
         }
     }
-    protected override void Burn()
+    public override void Burn()
     {
         base.Burn();
         _material.material.color = Color.red;
     }
-    protected override void Freezing()
+    public override void Freezing()
     {
         base.Freezing();
         
@@ -114,7 +117,33 @@ public class Slime : Monster
         if (other.CompareTag("Weapon") )
         {
             
-            if (other.GetComponent<Weapon>()._isOnce == true)
+            if(other.GetComponent<Weapon>()._isOnce == true && other.GetComponent<Weapon>()._player._playerTitle == Player.PlayerTitle.JackFrost)
+            {
+                other.GetComponent<Weapon>()._isOnce = false;
+                ChangeState(State.Hit);
+                int _30 = Random.Range(0, 3); // 30퍼확률로 빙결
+                if (_30 == 0)
+                {
+                    Freezing();
+                    Debug.Log("동장군 등장");
+
+                }
+
+                _hp -= other.GetComponent<Weapon>()._damage;
+            }
+            else if(other.GetComponent<Weapon>()._isOnce == true && other.GetComponent<Weapon>()._player._playerTitle == Player.PlayerTitle.Druid)
+            {
+                other.GetComponent<Weapon>()._isOnce = false;
+                ChangeState(State.Hit);
+                int rand = Random.Range(0, 10 - _player.GetComponent<Player>()._skill1);
+                if(rand == 0)
+                {
+                
+                    m_targetMask = 64;
+                }
+
+            }
+            else if (other.GetComponent<Weapon>()._isOnce == true)
             {
 
                 other.GetComponent<Weapon>()._isOnce = false;
@@ -135,7 +164,9 @@ public class Slime : Monster
        
             }
         }
-        if(other.CompareTag("FireBall"))
+        
+
+        if(other.CompareTag("FireBall") )
         {
             int _30 = Random.Range(0, 3);
             if(_30 == 0)

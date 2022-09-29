@@ -783,6 +783,77 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 136336095}
   m_Mesh: {fileID: 10209, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1001 &158121913
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1628098019}
+    m_Modifications:
+    - target: {fileID: 1188071699679046, guid: b216287c7b0df214682d7ed3030d9e99, type: 3}
+      propertyPath: m_Name
+      value: FX_Blizzard_Snow_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 1188071699679046, guid: b216287c7b0df214682d7ed3030d9e99, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346020420726312, guid: b216287c7b0df214682d7ed3030d9e99, type: 3}
+      propertyPath: m_RootOrder
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346020420726312, guid: b216287c7b0df214682d7ed3030d9e99, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346020420726312, guid: b216287c7b0df214682d7ed3030d9e99, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346020420726312, guid: b216287c7b0df214682d7ed3030d9e99, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346020420726312, guid: b216287c7b0df214682d7ed3030d9e99, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346020420726312, guid: b216287c7b0df214682d7ed3030d9e99, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346020420726312, guid: b216287c7b0df214682d7ed3030d9e99, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346020420726312, guid: b216287c7b0df214682d7ed3030d9e99, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346020420726312, guid: b216287c7b0df214682d7ed3030d9e99, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346020420726312, guid: b216287c7b0df214682d7ed3030d9e99, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4346020420726312, guid: b216287c7b0df214682d7ed3030d9e99, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 199349316277748168, guid: b216287c7b0df214682d7ed3030d9e99,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 199362116421442864, guid: b216287c7b0df214682d7ed3030d9e99,
+        type: 3}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b216287c7b0df214682d7ed3030d9e99, type: 3}
 --- !u!1 &177562706
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,6 +1313,8 @@ MonoBehaviour:
   _spawnZone: {fileID: 934767938}
   _randomSpawn: {fileID: 1087508769}
   _lightning: {fileID: 3461023355370980056}
+  _blizzard: {fileID: 1659255034}
+  _isBlizzard: 0
   _iceball: {fileID: 0}
   _fireball: {fileID: 0}
   _isBoss: 0
@@ -1607,6 +1680,7 @@ MonoBehaviour:
   _player: {fileID: 0}
   _isDamage: 0
   _damage: 0
+  _basicDamage: 0
   _isOnce: 1
 --- !u!65 &400920030
 BoxCollider:
@@ -7048,6 +7122,38 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e776fa71a8227af4bbb5c16645c2e4c7, type: 3}
+--- !u!1 &1628098018
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1628098019}
+  m_Layer: 0
+  m_Name: FiledSpell
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1628098019
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1628098018}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1659255035}
+  m_Father: {fileID: 0}
+  m_RootOrder: 22
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1633832606
 GameObject:
   m_ObjectHideFlags: 0
@@ -7193,6 +7299,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 654c28ae6839171408fa6333ce895684, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1659255034 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1188071699679046, guid: b216287c7b0df214682d7ed3030d9e99,
+    type: 3}
+  m_PrefabInstance: {fileID: 158121913}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &1659255035 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4346020420726312, guid: b216287c7b0df214682d7ed3030d9e99,
+    type: 3}
+  m_PrefabInstance: {fileID: 158121913}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1678939467
 GameObject:
   m_ObjectHideFlags: 0
@@ -8508,6 +8626,7 @@ MonoBehaviour:
   _player: {fileID: 0}
   _isDamage: 0
   _damage: 0
+  _basicDamage: 0
   _isOnce: 1
 --- !u!65 &1848106194
 BoxCollider:
@@ -8713,6 +8832,7 @@ MonoBehaviour:
     m_Bits: 64
   _listMonster: []
   _listMonster2: []
+  _listBlizzardMonster: []
   _listLightning: []
   _lightning: {fileID: 3461023355377288022}
   _jumpStack: 0
@@ -8723,7 +8843,7 @@ MonoBehaviour:
   _myWeapon:
   - {fileID: 1880770978}
   _isIdle: 1
-  _playerTitle: 0
+  _playerTitle: 11
   _listState: []
   _spellCastProbability: 0
   _fireBallProbability: 0
@@ -8737,6 +8857,7 @@ MonoBehaviour:
   _quater: 0
   _1_5: 0
   _strongManProbability: 0
+  m_viewAngle: 0
 --- !u!54 &1867921290
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -8864,6 +8985,7 @@ MonoBehaviour:
   _player: {fileID: 0}
   _isDamage: 0
   _damage: 0
+  _basicDamage: 0
   _isOnce: 1
 --- !u!1 &1886044297
 GameObject:

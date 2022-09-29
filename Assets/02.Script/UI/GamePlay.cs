@@ -39,6 +39,9 @@ public class GamePlay : MonoBehaviour
     public RespawnZone _randomSpawn;
     public LightningBoltScript _lightning;
 
+    public GameObject _blizzard;
+    public bool _isBlizzard;
+
 
     public IceBall _iceball;
     public FireBall _fireball;
@@ -538,6 +541,18 @@ public class GamePlay : MonoBehaviour
         }
         
         ChangeStage(state);
+    }
+    public void ActiveBlizzard()
+    {
+        _blizzard.SetActive(true);
+        _blizzard.GetComponent<ParticleSystem>().Play();
+        _isBlizzard = true;
+    }
+    public void DisableBlizzard()
+    {
+        _blizzard.SetActive(false);
+        _isBlizzard = false;
+        
     }
   
 }

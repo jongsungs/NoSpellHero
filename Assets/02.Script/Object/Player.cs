@@ -99,6 +99,7 @@ public class Player : BaseObject
 
     public List<Monster> _listMonster = new List<Monster>();
     public List<Monster> _listMonster2 = new List<Monster>();
+    public List<Monster> _listBlizzardMonster = new List<Monster>();
     public List<GameObject> _listLightning = new List<GameObject>();
 
     public GameObject _lightning;
@@ -139,8 +140,10 @@ public class Player : BaseObject
     public int _1_5;
     public int _strongManProbability;
 
+    [SerializeField] float m_viewAngle;    //시야각
 
-    
+
+
 
 
     private void Awake()
@@ -172,7 +175,7 @@ public class Player : BaseObject
         _listState.Add(_handicraft);
         _listState.Add(_charm);
 
-
+     
 
     }
 
@@ -229,11 +232,25 @@ public class Player : BaseObject
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
-            StartCoroutine(CoLightning());
+            
 
         }
+        DrawView();
+        
     }
-
+    public Vector3 DirFromAngle(float angleInDegrees)
+    {
+        // 좌우 회전값 갱신
+        angleInDegrees += transform.eulerAngles.y;
+        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
+    }
+    public void DrawView()
+    {
+        Vector3 leftBoundary = DirFromAngle(-m_viewAngle / 2);
+        Vector3 rightBoundary = DirFromAngle(m_viewAngle / 2);
+        Debug.DrawLine(transform.position, transform.position + leftBoundary * m_viewDistance, Color.blue);
+        Debug.DrawLine(transform.position, m_transform.position + rightBoundary * m_viewDistance, Color.blue);
+    }
 
     public void FixedUpdate()
     {
@@ -298,7 +315,26 @@ public class Player : BaseObject
 
     public void AttackOn()
     {
+        int rand;
         _isAttack = true;
+        if (_playerTitle == PlayerTitle.JackFrost)
+        {
+            rand = UnityEngine.Random.Range(0, 10);
+            Debug.Log(rand);
+            if (rand == 0 && GamePlay.Instance._isBlizzard == false)
+            {
+                StartCoroutine(Blizzard());
+            }
+        }
+        else if(_playerTitle == PlayerTitle.ZhangFei)
+        {
+            rand = UnityEngine.Random.Range(0, 5);
+            if(rand ==0)
+            {
+                Roar();
+            }
+        }
+
     }
     public void AttackOff()
     {
@@ -310,6 +346,7 @@ public class Player : BaseObject
     {
         base.ChangeState(state);
         _animator.SetInteger(_aniHashKeyState, (int)_state);
+        
         switch(_state)
         {
             case State.Idle:
@@ -329,6 +366,7 @@ public class Player : BaseObject
             case State.Attack:
                 _isAttack = true;
                 
+                
                 break;
             case State.Hit:
             
@@ -341,6 +379,9 @@ public class Player : BaseObject
         }
     }
     #region SKill
+
+    
+
 
     public void Spell()
     {
@@ -423,7 +464,7 @@ public class Player : BaseObject
     }
     public void JackFrost() // 동장군
     {
-        // 눈보라 구현해라
+        
         _iceBallProbability = 100f;
         _chainLightProbability = 0f;
         _fireBallProbability = 0f;
@@ -440,7 +481,7 @@ public class Player : BaseObject
 
     public void ZhangFei() // 삼국지 장비
     {
-        //공격시 20% 확률로 주변적에게 스턴주는 기합 발동
+        //완성
     }
 
     public void Berserker() //광전사
@@ -469,7 +510,9 @@ public class Player : BaseObject
 
     public void Druid() //드루이드
     {
-        // 공격시 10% 확률로 몬스터를 아군으로 만듬
+        _speed = _basicSpeed + (_basicSpeed * _skill2 / 10f);
+        
+        //완성
     }
 
     public void Assassin() // 암살자
@@ -1026,9 +1069,60 @@ public class Player : BaseObject
                 _jumpStack = _basicJumpStack;
             }
         }
+        
     }
+    public IEnumerator Blizzard()
+    {
+        GamePlay.Instance.ActiveBlizzard();
+        Collider[] targets = Physics.OverlapSphere(m_transform.position, m_viewDistance, m_targetMask);
 
 
+        for(int i = 0; i < targets.Length; ++i)
+        {
+            _listBlizzardMonster.Add(targets[i].GetComponent<Monster>());
+        }
+
+        for(int i = 0; i < _listBlizzardMonster.Count; ++i)
+        {
+            _listBlizzardMonster[i].Freezing();
+            _listBlizzardMonster[i]._hp -= 5;
+        }
+
+        yield return new WaitForSeconds(4f);
+
+        GamePlay.Instance.DisableBlizzard();
+        _listBlizzardMonster.Clear();
+
+    }
+    public void Roar()
+    {
+
+        m_viewDistance = 2 + _skill2;
+
+        if (_skill2 >= 3)
+        {
+            m_viewDistance = 60f;
+        }
+
+
+        Collider[] targets = Physics.OverlapSphere(m_transform.position, m_viewDistance, m_targetMask);
+
+        for(int i = 0; i < targets.Length; ++i)
+        {
+            _listBlizzardMonster.Add(targets[i].GetComponent<Monster>());
+        }
+
+        for(int i = 0; i < _listBlizzardMonster.Count; ++i)
+        {
+            _listBlizzardMonster[i]._ccDurationTime = 1 + _skill1;
+            _listBlizzardMonster[i].Roar();
+
+        }
+
+
+        _listBlizzardMonster.Clear();
+
+    }
 
 
     #endregion

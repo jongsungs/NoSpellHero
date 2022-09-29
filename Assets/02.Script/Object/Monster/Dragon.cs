@@ -99,12 +99,12 @@ public class Dragon : Monster
                 break;
         }
     }
-    protected override void Burn()
+    public override void Burn()
     {
         base.Burn();
         _material.material.color = Color.red;
     }
-    protected override void Freezing()
+    public override void Freezing()
     {
         base.Freezing();
 

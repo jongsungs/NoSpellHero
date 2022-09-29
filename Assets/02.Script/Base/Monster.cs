@@ -35,7 +35,7 @@ public class Monster : BaseObject
     protected GameObject _player;
     public NavMeshAgent _navimeshAgent;
     public bool _onHit;
-    protected float _ccDurationTime;
+    public float _ccDurationTime;
     protected bool _ccOn = false;
     public bool _isDead;
     public MonsterKind _monster;
@@ -48,8 +48,8 @@ public class Monster : BaseObject
     [SerializeField] float m_viewAngle;    //시야각
     [SerializeField] float m_viewDistance; //시야거리
 
-    [SerializeField] LayerMask m_targetMask;  //Enemy 레이어마스크 지정을 위한 변수
-    [SerializeField] LayerMask m_obstacleMask; //Obstacle 레이어마스크 지정을 위한 변수
+    public LayerMask m_targetMask;  //Enemy 레이어마스크 지정을 위한 변수
+    public LayerMask m_obstacleMask; //Obstacle 레이어마스크 지정을 위한 변수
 
     public bool _attackOnce;
     public float _attackDistance = 2f;
@@ -121,7 +121,7 @@ public class Monster : BaseObject
 
     
 
-    protected virtual void Freezing()
+    public virtual void Freezing()
     {
         _CC = CrowdControl.Freezing;
         Debug.Log("얼었다");
@@ -131,7 +131,7 @@ public class Monster : BaseObject
         _ccOn = true;
 
     }
-    protected virtual void Burn()
+    public virtual void Burn()
     {
         _CC = CrowdControl.Burn;
         _ccDurationTime += 3f;
@@ -140,10 +140,10 @@ public class Monster : BaseObject
         _ccOn = true;
 
     }
-    protected virtual void Roar()
+    public virtual void Roar()
     {
         _CC = CrowdControl.Stun;
-        _ccDurationTime += 3f;
+        //_ccDurationTime += 1f;
         _animator.speed = 0f;
         _navimeshAgent.speed = 0f;
         _ccOn = true;
