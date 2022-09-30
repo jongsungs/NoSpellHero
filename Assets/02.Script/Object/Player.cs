@@ -103,7 +103,7 @@ public class Player : BaseObject
     public List<GameObject> _listLightning = new List<GameObject>();
 
     public GameObject _lightning;
-
+    public GameObject _meteorPoint;
     public int _jumpStack;
     public int _basicJumpStack;
 
@@ -555,10 +555,30 @@ public class Player : BaseObject
     {
         _maxHp = _basicHp + (_basicHp * 0.3f) + (_basicHp * _skill1 / 5f);
         //체력 풀스택시 체력비례 대미지 가격 및 주문확률증가 구현해야함
+        _spellCastProbability = 5f;
+        if(_skill1 >= 3)
+        {
+            //체력비례 데미지 공식 만들것
+        }
+
+
     }
     public void Priest() // 사제
     {
-        //스킬 사용시 20% 확률로 최대 체력의 10% 회복
+        int rand;
+        rand = UnityEngine.Random.Range(0, 5 - _skill2);
+        if(rand == 0)
+        {
+            _hp += _maxHp / 10f + (_maxHp /(10 - (_skill1 * 2)) );
+        }
+
+        if(_skill1 >= 3 && _hp >= _maxHp)
+        {
+            _atk = _basicAtk * 2f;
+        }
+
+
+        
     }
     public void Warlock() // 흑마법사
     {
@@ -569,6 +589,7 @@ public class Player : BaseObject
         }
 
         _matk = _basicMatk + (_basicMatk * _skill2 / 10f);
+
         if (_hp <= _maxHp * (0.20f+ _skill1/20f))
         {
             _matk = (_basicMatk * 2f) + (_basicMatk * _skill2 / 10f); 
@@ -576,6 +597,13 @@ public class Player : BaseObject
     }
     public void Salamander() // 불도마뱀
     {
+        _iceBallProbability = 0f;
+        _chainLightProbability = 0f;
+        _fireBallProbability = 100f;
+
+
+
+
         //모슨 스킬 불덩이로 스킬 변경 스킬 사용시 5 % 확률로 운석 소환
     }
     public void Zeus() //제우스

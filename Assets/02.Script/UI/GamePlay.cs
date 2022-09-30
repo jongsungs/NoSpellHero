@@ -21,7 +21,7 @@ public class GamePlay : MonoBehaviour
     static public GamePlay Instance { get; private set; }
 
 
-    [SerializeField] Player _player;
+    public Player _player;
     public GameObject _pausePopUp;
     public GameObject _choicePopUp;
     public GameObject _bossHPBar;
