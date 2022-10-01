@@ -1313,6 +1313,8 @@ MonoBehaviour:
   _spawnZone: {fileID: 934767938}
   _randomSpawn: {fileID: 1087508769}
   _lightning: {fileID: 3461023355370980056}
+  _meteorTarget: {fileID: 1851968935}
+  _meteor: {fileID: 1472860442}
   _blizzard: {fileID: 1659255034}
   _isBlizzard: 0
   _iceball: {fileID: 0}
@@ -1323,6 +1325,8 @@ MonoBehaviour:
   - {fileID: 2100000, guid: 23f7e1199d9ebff4082f9410875f876c, type: 2}
   - {fileID: 2100000, guid: 2ba4e5e42aa83bf47862baa1116669d9, type: 2}
   - {fileID: 2100000, guid: 07d053cfc078fea448fc73987dccaef9, type: 2}
+  _listMeteorTarget: []
+  _listMeteor: []
   _islerp: 0
   _lerp: 0
   _ReverseLerp: 1
@@ -3336,6 +3340,7 @@ MonoBehaviour:
   _skillDamage: 0
   _skillDurationTime: 0
   _skillSpeed: 0
+  _target: {fileID: 0}
 --- !u!1 &807842663
 GameObject:
   m_ObjectHideFlags: 0
@@ -6527,6 +6532,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1436310581}
   m_CullTransparentMesh: 1
+--- !u!114 &1472860442 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7697462231169606242, guid: c8eddcb2a8adbb949a5af0d6d1cc01f1,
+    type: 3}
+  m_PrefabInstance: {fileID: 7697462231950919792}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2019cfeb9e5425941b6a380deb860fe3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1530157387
 GameObject:
   m_ObjectHideFlags: 0

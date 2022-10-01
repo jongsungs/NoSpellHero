@@ -4,15 +4,19 @@ using UnityEngine;
 
 public class Meteor : SkillBase
 {
-    public GameObject _target;
 
-    private void Awake()
-    {
-        _target = GamePlay.Instance._player.transform.GetChild(5).gameObject;
-    }
 
-    private void Update()
+
+
+
+
+    public IEnumerator Target(GameObject obj)
     {
-        transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, Time.deltaTime) ;
+        while(transform.position.z != obj.transform.position.z)
+        {
+            yield return new WaitForSeconds(0.1f);
+            transform.position = Vector3.MoveTowards(transform.position, obj.transform.position, 2 * Time.deltaTime);
+        }
+
     }
 }

@@ -38,7 +38,8 @@ public class GamePlay : MonoBehaviour
     public GameObject _spawnZone;
     public RespawnZone _randomSpawn;
     public LightningBoltScript _lightning;
-
+    public GameObject _meteorTarget;
+    public SkillBase _meteor;
     public GameObject _blizzard;
     public bool _isBlizzard;
 
@@ -51,6 +52,9 @@ public class GamePlay : MonoBehaviour
     public bool _isBoss;
 
     public List<Material> _listStageGroundMaterial = new List<Material>();
+    public List<GameObject> _listMeteorTarget = new List<GameObject>();
+    public List<SkillBase> _listMeteor = new List<SkillBase>();
+
 
     public bool _islerp;
     public float _lerp = 0;
@@ -72,10 +76,10 @@ public class GamePlay : MonoBehaviour
     private IObjectPool<Monster> _golemPool;
     private IObjectPool<Monster> _dragonPool;
     private IObjectPool<Monster> _demonkingPool;
-
     public IObjectPool<DamageText> _damageTextPool;
-
     public IObjectPool<LightningBoltScript> _lightningPool;
+    public IObjectPool<GameObject> _meteorTargetPool;
+    public IObjectPool<SkillBase> _meteorPool;
 
 
 
@@ -106,9 +110,13 @@ public class GamePlay : MonoBehaviour
         _dragonPool = new ObjectPool<Monster>(CreatDragon, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
         _demonkingPool = new ObjectPool<Monster>(CreatDemonKing, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
         _damageTextPool = new ObjectPool<DamageText>(CreatDamageText, OngetDamageText, OnRelaseText, OnDestroyText, maxSize: 10);
-
         _lightningPool = new ObjectPool<LightningBoltScript>(CreateLightning, OngetLightningBolt, OnRelaseLightning, OnDestroyLightning, maxSize: 30);
-        
+        _meteorTargetPool = new ObjectPool<GameObject>(CreatMeteorTarget, OngetMeteorTarget, OnReleaseMeteorTarget, OnDestroyMeteorTarget, maxSize: 10);
+        _meteorPool = new ObjectPool<SkillBase>(CreateMeteor, OngetMeteor, OnReleaseMeteor, OnDestroyMeteor, maxSize: 10);
+
+
+
+
         _bossHPBar.SetActive(false);
         _currentStage = GameState.Start;
         StartCoroutine(CoStartStage());
@@ -167,7 +175,10 @@ public class GamePlay : MonoBehaviour
         {
             _slimePool.Get();
         }
-
+        if(Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            _meteorTargetPool.Get();
+        }
 
 
 
@@ -245,6 +256,22 @@ public class GamePlay : MonoBehaviour
         lightning.SetPool(_lightningPool);
         return lightning;
     }
+    private GameObject CreatMeteorTarget()
+    {
+        var target = Instantiate(_meteorTarget, _player._meteorPoint.transform.position, Quaternion.identity, _objectPool.transform);
+        _listMeteorTarget.Add(target);
+        _meteorPool.Get();
+        StartCoroutine(_listMeteor[0].GetComponent<Meteor>().Target(target));
+        
+        
+        return target;
+    }
+    private SkillBase CreateMeteor()
+    {
+        var meteor = Instantiate(_meteor, _player.transform.position,Quaternion.identity, _objectPool.transform);
+        meteor.SetPool(_meteorPool);
+        return meteor;
+    }
     
 
     // 새로 뽑을 때
@@ -294,6 +321,29 @@ public class GamePlay : MonoBehaviour
     {
         lightning.gameObject.SetActive(true);
     }
+    private void OngetMeteorTarget(GameObject obj)
+    {
+        obj.gameObject.SetActive(true);
+        
+    }
+    private void OngetMeteor(SkillBase meteor)
+    {
+        meteor.gameObject.SetActive(true);
+        if(_listMeteor.Count <= 1)
+        {
+            _listMeteor.Add(meteor);
+        }
+        else if(_listMeteor.Count >=2)
+        {
+            _listMeteor.Add(meteor);
+            var temp = _listMeteor[0];
+            _listMeteor[0] = _listMeteor[_listMeteor.Count - 1];
+            _listMeteor[_listMeteor.Count - 1] = temp;
+
+        }
+        
+        
+    }
 
     // 반환할때 사라질때
 
@@ -311,6 +361,15 @@ public class GamePlay : MonoBehaviour
     {
         lightning.gameObject.SetActive(false);
     }
+    private void OnReleaseMeteorTarget(GameObject obj)
+    {
+        obj.gameObject.SetActive(false);
+    }
+
+    private void OnReleaseMeteor(SkillBase meteor)
+    {
+        meteor.gameObject.SetActive(false);
+    }
 
     //풀이 꽉차서 없어질때
     private void OnDestroyMonster(Monster obj)
@@ -326,7 +385,14 @@ public class GamePlay : MonoBehaviour
     {
         Destroy(lightning.gameObject);
     }
-
+    private void OnDestroyMeteorTarget(GameObject obj)
+    {
+        Destroy(obj.gameObject);
+    }
+    private void OnDestroyMeteor(SkillBase meteor)
+    {
+        Destroy(meteor.gameObject);
+    }
 
 
 
@@ -522,6 +588,8 @@ public class GamePlay : MonoBehaviour
         }
 
     }
+
+    
 
     public void BossSpawn(IObjectPool<Monster> boss)
     {
