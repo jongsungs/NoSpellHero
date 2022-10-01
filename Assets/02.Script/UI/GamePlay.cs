@@ -268,7 +268,7 @@ public class GamePlay : MonoBehaviour
     }
     private SkillBase CreateMeteor()
     {
-        var meteor = Instantiate(_meteor, _player.transform.position,Quaternion.identity, _objectPool.transform);
+        var meteor = Instantiate(_meteor, _player.transform.position + new Vector3(0,10,0),Quaternion.identity, _objectPool.transform);
         meteor.SetPool(_meteorPool);
         return meteor;
     }
