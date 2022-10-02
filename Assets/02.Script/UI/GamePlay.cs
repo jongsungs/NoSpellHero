@@ -175,10 +175,7 @@ public class GamePlay : MonoBehaviour
         {
             _slimePool.Get();
         }
-        if(Input.GetKeyDown(KeyCode.Alpha5))
-        {
-            _meteorTargetPool.Get();
-        }
+        
 
 
 

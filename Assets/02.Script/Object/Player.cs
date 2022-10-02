@@ -232,7 +232,7 @@ public class Player : BaseObject
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
-            
+            StartCoroutine(Immolation());
 
         }
         DrawView();
@@ -604,7 +604,12 @@ public class Player : BaseObject
 
 
 
+
+
         //모슨 스킬 불덩이로 스킬 변경 스킬 사용시 5 % 확률로 운석 소환
+
+
+
     }
     public void Zeus() //제우스
     {
@@ -1152,6 +1157,25 @@ public class Player : BaseObject
 
     }
 
+    public void Meteor()
+    {
+        GamePlay.Instance._meteorTargetPool.Get();
+    }
+    public IEnumerator Immolation()
+    {
+        while(true)
+        {
+            var obj = Physics.OverlapSphere(m_transform.position, m_viewDistance, m_targetMask);
+            for(int i = 0; i < obj.Length; ++i)
+            {
+                obj[i].GetComponent<Monster>()._hp -= 1f;
+            }
+
+            yield return new WaitForSeconds(1f);
+            
+
+        }
+    }
 
     #endregion
 
