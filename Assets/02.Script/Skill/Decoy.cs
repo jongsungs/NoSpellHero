@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Pool;
 
 public class Decoy : BaseObject
 {
@@ -25,6 +26,8 @@ public class Decoy : BaseObject
     Vector3 m_destination;
     private Transform m_transform;
 
+
+    private IObjectPool<Decoy> _decoypool;
 
     private void Start()
     {
@@ -175,6 +178,10 @@ public class Decoy : BaseObject
                 _isAttack = true;
                 break;
         }
+    }
+    public void SetPool(IObjectPool<Decoy> pool)
+    {
+        _decoypool = pool;
     }
     IEnumerator CoFindEnemy()
     {

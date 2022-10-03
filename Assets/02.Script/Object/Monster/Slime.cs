@@ -135,13 +135,25 @@ public class Slime : Monster
             {
                 other.GetComponent<Weapon>()._isOnce = false;
                 ChangeState(State.Hit);
+                _hp -= other.GetComponent<Weapon>()._damage;
                 int rand = Random.Range(0, 10 - _player.GetComponent<Player>()._skill1);
+
                 if(rand == 0)
                 {
                 
                     m_targetMask = 64;
                 }
 
+            }
+            else if(other.GetComponent<Weapon>()._isOnce == true && other.GetComponent<Weapon>()._player._playerTitle == Player.PlayerTitle.QRF && other.GetComponent<Weapon>()._player._skill2 >= 3f)
+            {
+                other.GetComponent<Weapon>()._isOnce = false;
+                ChangeState(State.Hit);
+                int rand = Random.Range(0, 3);
+                if(rand == 0)
+                {
+                    Roar();
+                }
             }
             else if (other.GetComponent<Weapon>()._isOnce == true)
             {

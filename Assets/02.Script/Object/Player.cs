@@ -80,7 +80,7 @@ public class Player : BaseObject
         Swell, //달인
         Delivery,//배달부
         Repairman,//수리공
-        Taoist,//전우치
+        Dosa,//전우치
         Gambler,//도박사
         SlowStarter,//슬로우스타터
         Orpheus,//오르페우스
@@ -332,6 +332,101 @@ public class Player : BaseObject
             if(rand ==0)
             {
                 Roar();
+            }
+        }
+        else if(_playerTitle == PlayerTitle.Dosa)
+        {
+            rand = UnityEngine.Random.Range(0, 10);
+            if(rand >= 0 + _skill1)
+            {
+                GamePlay.Instance._decoyPool.Get();
+            }
+        }
+        else if (_playerTitle == PlayerTitle.Gambler)
+        {
+            rand = UnityEngine.Random.Range(1, 101);
+            if(rand <= 50 + _skill2) 
+            {
+                int rand2 = UnityEngine.Random.Range(0, 9);
+
+                if(rand2 == 0)
+                {
+                    _hp = _basicHp + (_basicHp * (0.1f + _skill1 / 10f));
+                }
+                if (rand2 == 1)
+                {
+                    _atk = _basicAtk + (_basicAtk * (0.1f + _skill1/10f));
+                }
+                if (rand2 == 2)
+                {
+                    _matk = _basicMatk + (_basicMatk * (0.1f + _skill1 / 10f));
+                }
+                if (rand2 == 3)
+                {
+                    _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * (0.1f + _skill1 / 10f));
+                }
+                if (rand2 == 4)
+                {
+                    _def = _basicDef + (_basicDef * (0.1f + _skill1 / 10f));
+                }
+                if (rand2 == 5)
+                {
+                    _speed = _basicSpeed + (_basicSpeed * (0.1f + _skill1 / 10f));
+                }
+                if (rand2 == 6)
+                {
+                    _critical = _basicCritical + (_basicCritical * (0.1f + _skill1 / 10f));
+                }
+                if (rand2 == 7)
+                {
+                    _handicraft = _basicHandicraft + (_basicHandicraft * (0.1f + _skill1 / 10f));
+                }
+                if (rand2 == 8)
+                {
+                    _charm = _basicCharm + (_basicCharm * (0.1f + _skill1 / 10f));
+                }
+        
+            }
+            else if (rand > 50 + _skill2)
+            {
+                int rand2 = UnityEngine.Random.Range(0, 9);
+
+                if (rand2 == 0)
+                {
+                    _hp = _basicHp - (_basicHp * (0.1f + _skill1 / 10f));
+                }
+                if (rand2 == 1)
+                {
+                    _atk = _basicAtk - (_basicAtk * (0.1f + _skill1 / 10f));
+                }
+                if (rand2 == 2)
+                {
+                    _matk = _basicMatk - (_basicMatk * (0.1f + _skill1 / 10f));
+                }
+                if (rand2 == 3)
+                {
+                    _atkSpeed = _basicAtkSpeed - (_basicAtkSpeed * (0.1f + _skill1 / 10f));
+                }
+                if (rand2 == 4)
+                {
+                    _def = _basicDef - (_basicDef * (0.1f + _skill1 / 10f));
+                }
+                if (rand2 == 5)
+                {
+                    _speed = _basicSpeed - (_basicSpeed * (0.1f + _skill1 / 10f));
+                }
+                if (rand2 == 6)
+                {
+                    _critical = _basicCritical - (_basicCritical * (0.1f + _skill1 / 10f));
+                }
+                if (rand2 == 7)
+                {
+                    _handicraft = _basicHandicraft - (_basicHandicraft * (0.1f + _skill1 / 10f));
+                }
+                if (rand2 == 8)
+                {
+                    _charm = _basicCharm - (_basicCharm * (0.1f + _skill1 / 10f));
+                }
             }
         }
 
@@ -602,18 +697,24 @@ public class Player : BaseObject
         _fireBallProbability = 100f;
 
 
-
-
-
-
-        //모슨 스킬 불덩이로 스킬 변경 스킬 사용시 5 % 확률로 운석 소환
+        if(_skill2 >= 3)
+        {
+            StartCoroutine(Immolation());
+        }
 
 
 
     }
     public void Zeus() //제우스
     {
-        //모든 마법을 연쇄번개로 바꾸고 전이 횟수가 5회 늘어난다.
+        _jumpStack = 3 + _skill1;
+        _matk = _basicMatk + (_basicMatk * _skill2 / 10f);
+
+
+        if(_skill1 >= 3)
+        {
+            Thunder();
+        }
     }
 
     public void PracticeBug() //연습벌레
@@ -639,8 +740,14 @@ public class Player : BaseObject
     }
     public void Cook() //요리사
     {
-        //몬스터 피해의 30 % 를 체력으로 전환
+        _atk = _basicAtk + (_basicAtk * _skill1 / 10f);
 
+        //체력전환 공식 만들기
+
+        if(_skill2 >= 3)
+        {
+            _atk = _basicAtk * 2f;
+        }
     }
     public void QRF() // 번개조
     {
@@ -650,7 +757,7 @@ public class Player : BaseObject
 
         if(_skill2 >= 3)
         {
-            //공격시 스턴
+            //공격시 스턴 구현 완료
         }
 
 
@@ -663,8 +770,7 @@ public class Player : BaseObject
         _atkSpeed = _basicAtkSpeed * (_basicAtkSpeed * _skill2 / 10f);
         if(_skill1 >= 3)
         {
-
-            //체력비례 대미지
+            //체력 비례 데미지 공식 만들것
         }
 
     }
@@ -708,7 +814,7 @@ public class Player : BaseObject
 
     public void Helen() // 절세미인
     {
-        //주변적 80% 확률로 빙결
+        StartCoroutine(IceAge());
     }
 
     public void Slicker() // 야바위꾼
@@ -754,7 +860,7 @@ public class Player : BaseObject
         //5초마다 체력 재생력 +10;
 
         _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
-
+        //체력에대한 공식 성립되면 추가
         if(_skill1 >= 3)
         {
             //매 초마다 체력 회복
@@ -762,27 +868,35 @@ public class Player : BaseObject
 
     }
 
-    public void Taoist()//전우치
+    public void Dosa()//전우치
     {
         //공격시 10% 확률로 분신 소환 분신은 스테이지가 종료되면 사라짐
+        //지능 추가할것 스테이지 종료시 없어지는거 추가 할 것
 
     }
 
     public void Gambler() //도박사
     {
-        //공격시 50 % 확률로 자신의 능력치 중 하나를 10 % 증가시키거나 10 % 감소한다.
-
+        //완료
     }
 
     public void SlowStarter() // 슬로우 스타터
     {
-        //스테이지 종료마다 모든능력치 20% 상승
+        _hp = _basicHp + (_basicHp * 0.2f) + (_basicHp * _skill1 / 10f);
+        _atk = _basicAtk + (_basicAtk * 0.2f) + (_basicAtk * _skill1 / 10f);
+        _matk = _basicMatk + (_basicMatk * 0.2f) + (_basicMatk * _skill1 / 10f);
+        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * 0.2f) + (_basicAtkSpeed * _skill1 / 10f); ;
+        _def = _basicDef + (_basicDef * 0.2f) + (_basicDef * _skill1 / 10f);
+        _speed = _basicSpeed + (_basicSpeed * 0.2f) + (_basicSpeed * _skill1 / 10f);
+        _critical = _basicCritical + (_basicCritical * 0.2f) + (_basicCritical * _skill1 / 10f);
+        _handicraft = _basicHandicraft + (_basicHandicraft * 0.2f) + (_basicHandicraft * _skill1 / 10f);
+        _charm = _basicCharm + (_basicCharm * 0.2f) + (_basicCharm * _skill1 / 10f);
 
     }
     
     public void Orpheus() // 오르페우스
     {
-        //주변 몬스터의 공격력을 70% 감소시킨다.
+        _atk = _basicAtk + (_basicAtk + _skill2 / 10f);
     }
 
     public void DokeV() //도꺠비
@@ -1176,6 +1290,72 @@ public class Player : BaseObject
 
         }
     }
+    public void Thunder()
+    {
+        var obj = Physics.OverlapSphere(m_transform.position, m_viewDistance, m_targetMask);
+
+        obj[0].GetComponent<Monster>()._hp -= 1f;
+        
+
+    }
+    public void Wall()
+    {
+        GamePlay.Instance._wallPool.Get();
+    }
+
+    public IEnumerator IceAge()
+    {
+        while (true)
+        {
+
+            var obj = Physics.OverlapSphere(m_transform.position, m_viewDistance, m_targetMask);
+            for (int i = 0; i < obj.Length; ++i)
+            {
+                int rand = UnityEngine.Random.Range(0, 10);
+                if (rand >= 2 - _skill1)
+                {
+                    obj[i].GetComponent<Monster>().Freezing();
+                }
+                if(_skill2 >= 3)
+                {
+                    obj[i].GetComponent<Monster>()._hp -= _atk/3;
+                }
+
+            }
+
+            yield return new WaitForSeconds(1f);
+
+
+        }
+    }
+
+    public IEnumerator Slow()
+    {
+        while (true)
+        {
+
+            var obj = Physics.OverlapSphere(m_transform.position, m_viewDistance, m_targetMask);
+            for (int i = 0; i < obj.Length; ++i)
+            {
+
+
+                obj[i].GetComponent<Monster>()._atk = obj[i].GetComponent<Monster>()._atk * (0.7f + _skill2 / 10f);
+
+
+
+            }
+
+            yield return new WaitForSeconds(1f);
+
+
+        }
+    }
+
+
+
+
+
+
 
     #endregion
 

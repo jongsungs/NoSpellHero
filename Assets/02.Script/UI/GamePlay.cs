@@ -40,7 +40,14 @@ public class GamePlay : MonoBehaviour
     public LightningBoltScript _lightning;
     public GameObject _meteorTarget;
     public SkillBase _meteor;
+    public SkillBase _wall;
+    public Decoy _decoy;
+    
+    
+    
+    
     public GameObject _blizzard;
+
     public bool _isBlizzard;
 
 
@@ -80,7 +87,8 @@ public class GamePlay : MonoBehaviour
     public IObjectPool<LightningBoltScript> _lightningPool;
     public IObjectPool<GameObject> _meteorTargetPool;
     public IObjectPool<SkillBase> _meteorPool;
-
+    public IObjectPool<SkillBase> _wallPool;
+    public IObjectPool<Decoy> _decoyPool;
 
 
 
@@ -112,9 +120,9 @@ public class GamePlay : MonoBehaviour
         _damageTextPool = new ObjectPool<DamageText>(CreatDamageText, OngetDamageText, OnRelaseText, OnDestroyText, maxSize: 10);
         _lightningPool = new ObjectPool<LightningBoltScript>(CreateLightning, OngetLightningBolt, OnRelaseLightning, OnDestroyLightning, maxSize: 30);
         _meteorTargetPool = new ObjectPool<GameObject>(CreatMeteorTarget, OngetMeteorTarget, OnReleaseMeteorTarget, OnDestroyMeteorTarget, maxSize: 10);
-        _meteorPool = new ObjectPool<SkillBase>(CreateMeteor, OngetMeteor, OnReleaseMeteor, OnDestroyMeteor, maxSize: 10);
-
-
+        _meteorPool = new ObjectPool<SkillBase>(CreateMeteor, OngetMeteor, OnReleaseSkill, OnDestroySkill, maxSize: 10);
+        _wallPool = new ObjectPool<SkillBase>(CreateWall, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 20);
+        _decoyPool = new ObjectPool<Decoy>(CreateDecoy, OngetDecoy, OnReleaseDecoy, OnDestroyDecoy, maxSize: 20);
 
 
         _bossHPBar.SetActive(false);
@@ -269,6 +277,19 @@ public class GamePlay : MonoBehaviour
         meteor.SetPool(_meteorPool);
         return meteor;
     }
+    private SkillBase CreateWall()
+    {
+        var wall = Instantiate(_wall, _player._meteorPoint.transform.position, Quaternion.identity, _objectPool.transform);
+        wall.SetPool(_wallPool);
+        return wall;
+
+    }
+    private Decoy CreateDecoy()
+    {
+        var decoy = Instantiate(_decoy, _randomSpawn.Return_RandomPosition(), Quaternion.identity, _objectPool.transform);
+        decoy.SetPool(_decoyPool);
+        return decoy;
+    }
     
 
     // 새로 뽑을 때
@@ -337,11 +358,16 @@ public class GamePlay : MonoBehaviour
             _listMeteor[0] = _listMeteor[_listMeteor.Count - 1];
             _listMeteor[_listMeteor.Count - 1] = temp;
 
-        }
-        
-        
+        }   
     }
-
+    private void OngetSkill(SkillBase skill)
+    {
+        skill.gameObject.SetActive(true);
+    }
+    private void OngetDecoy(Decoy decoy)
+    {
+        decoy.gameObject.SetActive(true);
+    }
     // 반환할때 사라질때
 
     private void OnReleaseMonster(Monster obj)
@@ -363,10 +389,15 @@ public class GamePlay : MonoBehaviour
         obj.gameObject.SetActive(false);
     }
 
-    private void OnReleaseMeteor(SkillBase meteor)
+    private void OnReleaseSkill(SkillBase skill)
     {
-        meteor.gameObject.SetActive(false);
+        skill.gameObject.SetActive(false);
     }
+    private void OnReleaseDecoy(Decoy decoy)
+    {
+        decoy.gameObject.SetActive(false);
+    }
+
 
     //풀이 꽉차서 없어질때
     private void OnDestroyMonster(Monster obj)
@@ -386,11 +417,14 @@ public class GamePlay : MonoBehaviour
     {
         Destroy(obj.gameObject);
     }
-    private void OnDestroyMeteor(SkillBase meteor)
+    private void OnDestroySkill(SkillBase skill)
     {
-        Destroy(meteor.gameObject);
+        Destroy(skill.gameObject);
     }
-
+    private void OnDestroyDecoy(Decoy decoy)
+    {
+        Destroy(decoy.gameObject);
+    }
 
 
     public void EnterLobby()

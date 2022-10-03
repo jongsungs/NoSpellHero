@@ -6,11 +6,19 @@ public class Wall : SkillBase
 {
 
     [SerializeField] bool _end = false;
+    public Transform m_transform;
+    [SerializeField] float m_viewDistance; //시야거리
+    public LayerMask m_targetMask;  //Enemy 레이어마스크 지정을 위한 변수
+
 
     private void Start()
     {
+        m_transform = GetComponent<Transform>();
+        m_viewDistance = 2f;
+
+
         StartCoroutine(CoCreatWall());
-        Debug.Log("시작");
+        StartCoroutine(Immolation());
     }
 
 
@@ -29,7 +37,24 @@ public class Wall : SkillBase
         }
 
         yield return new WaitForSeconds(2f);
-        this.gameObject.SetActive(false);
 
+        _skillPool.Release(this);
     }
+    public IEnumerator Immolation()
+    {
+        while (true)
+        {
+            var obj = Physics.OverlapSphere(m_transform.position, m_viewDistance, m_targetMask);
+            for (int i = 0; i < obj.Length; ++i)
+            {
+                obj[i].GetComponent<Monster>()._hp -= 1f - GamePlay.Instance._player._skill1;
+            }
+
+            yield return new WaitForSeconds(1f);
+
+
+        }
+    }
+
+
 }

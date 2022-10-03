@@ -113,4 +113,10 @@ MonoBehaviour:
   _skillDamage: 0
   _skillDurationTime: 0
   _skillSpeed: 0
+  _target: {fileID: 0}
   _end: 0
+  m_transform: {fileID: 0}
+  m_viewDistance: 0
+  m_targetMask:
+    serializedVersion: 2
+    m_Bits: 64
