@@ -10044,6 +10044,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: LightningBolt
       objectReference: {fileID: 0}
+    - target: {fileID: 5040858633399319455, guid: 64dc71fd9b925a74786a296feb8452ae,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5040858633399492635, guid: 64dc71fd9b925a74786a296feb8452ae,
         type: 3}
       propertyPath: m_RootOrder

@@ -232,7 +232,7 @@ public class Player : BaseObject
         }
         if (Input.GetKeyDown(KeyCode.I))
         {
-            StartCoroutine(Immolation());
+            StartCoroutine(CoLightning());
 
         }
         DrawView();

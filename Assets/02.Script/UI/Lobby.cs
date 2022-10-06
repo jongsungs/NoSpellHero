@@ -297,7 +297,7 @@ public class Lobby : MonoBehaviour
             else if (_player._atkSpeed == 5 && _player._charm == 5 && _player._speed == 5)
             {
                 _OnTitle = true;
-                _player._playerTitle = Player.PlayerTitle.Taoist;
+                _player._playerTitle = Player.PlayerTitle.Dosa;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
             }
             else if (_player._handicraft == 5 && _player._charm == 5 && _player._speed == 5)
