@@ -65,11 +65,19 @@ public class RFX4_PhysicsForceCurves : MonoBehaviour
                     distVector = (hitCollider.transform.position - t.position);
                     dist = 1 - distVector.magnitude / ForceRadius;
                 }
-                if(UseDistanceScale) hitCollider.transform.localScale = DistanceScaleCurve.Evaluate(dist) * hitCollider.transform.localScale;
+                if(UseDistanceScale && hitCollider.CompareTag("Enemy"))
+                {
+                    hitCollider.transform.localScale = DistanceScaleCurve.Evaluate(dist) * hitCollider.transform.localScale;
+
+                }
               
                 if (DestoryDistance > 0 && distVector.magnitude < DestoryDistance)
                 {
-                    Destroy(hitCollider.gameObject);
+                    if(hitCollider.CompareTag("Enemy"))
+                    {
+                        hitCollider.GetComponent<Monster>().MonsterRelease();
+                    }
+                    //Destroy(hitCollider.gameObject);
                 }
                 rig.AddForce(distVector.normalized * dist * ForceMultiplier * eval * forceAdditionalMultiplier, ForceMode);
                 if (DragGraphTimeMultiplier > 0) {
