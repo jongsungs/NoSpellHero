@@ -42,7 +42,8 @@ public class GamePlay : MonoBehaviour
     public SkillBase _meteor;
     public SkillBase _wall;
     public Decoy _decoy;
-    
+
+    public GameObject _blackHole;
     
     
     
@@ -163,26 +164,33 @@ public class GamePlay : MonoBehaviour
         {
             _eventHandler();
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+
+        if(Input.GetKeyDown(KeyCode.Space))
         {
-            _stage1CreepScore += 1;
+            Instantiate(_blackHole.gameObject, _player._meteorPoint.transform.position + new Vector3(0,1f,0),_player.transform.rotation, _objectPool.transform);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
-        {
-            _stage2CreepScore += 1;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            _stage3CreepScore += 1;
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            _stage4CreepScore += 1;
-        }
+        //if (Input.GetKeyDown(KeyCode.Space))
+        //{
+        //    _stage1CreepScore += 1;
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha1))
+        //{
+        //    _stage2CreepScore += 1;
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha2))
+        //{
+        //    _stage3CreepScore += 1;
+        //}
+        //if (Input.GetKeyDown(KeyCode.Alpha3))
+        //{
+        //    _stage4CreepScore += 1;
+        //}
         if(Input.GetKeyDown(KeyCode.Alpha4))
         {
             _slimePool.Get();
         }
+
+
         
 
 

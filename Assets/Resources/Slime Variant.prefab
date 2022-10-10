@@ -15,6 +15,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 1090219386143568, guid: a817c29ea6847604bb2c6c51d9a74bf1, type: 3}
+      propertyPath: m_TagString
+      value: Enemy
+      objectReference: {fileID: 0}
     - target: {fileID: 4885079432260988, guid: a817c29ea6847604bb2c6c51d9a74bf1, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -141,9 +145,13 @@ MonoBehaviour:
   _isAttack: 0
   _navimeshAgent: {fileID: 0}
   _onHit: 0
+  _ccDurationTime: 0
   _isDead: 0
   _monster: 0
   _category: 0
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 0
   m_speed: 0
   m_viewAngle: 0
   m_viewDistance: 0

@@ -8,6 +8,7 @@ TagManager:
   - FireBall
   - Roar
   - Weapon
+  - Enemy
   layers:
   - Default
   - TransparentFX
