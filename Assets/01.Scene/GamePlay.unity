@@ -1322,11 +1322,11 @@ MonoBehaviour:
   _meteor: {fileID: 1472860442}
   _wall: {fileID: 1702659639}
   _decoy: {fileID: 0}
-  _blackHole: {fileID: 559111490}
+  _blackHole: {fileID: 559111491}
   _blizzard: {fileID: 1659255034}
   _isBlizzard: 0
-  _iceball: {fileID: 0}
-  _fireball: {fileID: 0}
+  _iceBall: {fileID: 0}
+  _fireBall: {fileID: 1794376349}
   _isBoss: 0
   _listStageGroundMaterial:
   - {fileID: 2100000, guid: 1a50a9ace93fd614db63694d201e262b, type: 2}
@@ -1560,6 +1560,68 @@ Transform:
   m_Father: {fileID: 1633832607}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &351492042
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 119242, guid: 4bc451a9c5656db4794e16cdecbabbac, type: 3}
+      propertyPath: m_Name
+      value: Effect23
+      objectReference: {fileID: 0}
+    - target: {fileID: 459914, guid: 4bc451a9c5656db4794e16cdecbabbac, type: 3}
+      propertyPath: m_RootOrder
+      value: 26
+      objectReference: {fileID: 0}
+    - target: {fileID: 459914, guid: 4bc451a9c5656db4794e16cdecbabbac, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 459914, guid: 4bc451a9c5656db4794e16cdecbabbac, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 459914, guid: 4bc451a9c5656db4794e16cdecbabbac, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 459914, guid: 4bc451a9c5656db4794e16cdecbabbac, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 459914, guid: 4bc451a9c5656db4794e16cdecbabbac, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 459914, guid: 4bc451a9c5656db4794e16cdecbabbac, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 459914, guid: 4bc451a9c5656db4794e16cdecbabbac, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 459914, guid: 4bc451a9c5656db4794e16cdecbabbac, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 459914, guid: 4bc451a9c5656db4794e16cdecbabbac, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 459914, guid: 4bc451a9c5656db4794e16cdecbabbac, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114153433710859902, guid: 4bc451a9c5656db4794e16cdecbabbac,
+        type: 3}
+      propertyPath: FreezeRotation
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 4bc451a9c5656db4794e16cdecbabbac, type: 3}
 --- !u!1001 &376962096
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1569,11 +1631,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 923384721, guid: e776fa71a8227af4bbb5c16645c2e4c7, type: 3}
       propertyPath: m_Radius
-      value: 1.25
+      value: 0.54
       objectReference: {fileID: 0}
     - target: {fileID: 923384721, guid: e776fa71a8227af4bbb5c16645c2e4c7, type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 923384723, guid: e776fa71a8227af4bbb5c16645c2e4c7, type: 3}
       propertyPath: _hp
@@ -2243,12 +2305,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 558903674}
   m_CullTransparentMesh: 1
---- !u!1 &559111490 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1520786051656894, guid: 60f067005042016479e156d2700edf0c,
+--- !u!114 &559111491 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114992862451545696, guid: 60f067005042016479e156d2700edf0c,
     type: 3}
   m_PrefabInstance: {fileID: 1480390138}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97fa9d480f3b21744a9ed30ffa97c4d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &570052119
 GameObject:
   m_ObjectHideFlags: 0
@@ -6750,6 +6818,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Effect6
       objectReference: {fileID: 0}
+    - target: {fileID: 1520786051656894, guid: 60f067005042016479e156d2700edf0c, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4884733473879942, guid: 60f067005042016479e156d2700edf0c, type: 3}
       propertyPath: m_RootOrder
       value: 25
@@ -6811,12 +6883,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 114026583668987328, guid: 60f067005042016479e156d2700edf0c,
         type: 3}
+      propertyPath: UseCollisionDetect
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114026583668987328, guid: 60f067005042016479e156d2700edf0c,
+        type: 3}
       propertyPath: UseTargetPositionAfterCollision
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 114992862451545696, guid: 60f067005042016479e156d2700edf0c,
         type: 3}
       propertyPath: UseGravity
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114992862451545696, guid: 60f067005042016479e156d2700edf0c,
+        type: 3}
+      propertyPath: UseCustomColor
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -7314,11 +7396,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 923384721, guid: e776fa71a8227af4bbb5c16645c2e4c7, type: 3}
       propertyPath: m_Radius
-      value: 1.25
+      value: 0.59
       objectReference: {fileID: 0}
     - target: {fileID: 923384721, guid: e776fa71a8227af4bbb5c16645c2e4c7, type: 3}
       propertyPath: m_IsTrigger
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 923384723, guid: e776fa71a8227af4bbb5c16645c2e4c7, type: 3}
       propertyPath: _hp
@@ -8253,6 +8335,18 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1761720530}
   m_CullTransparentMesh: 1
+--- !u!114 &1794376349 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114898057786261324, guid: 4bc451a9c5656db4794e16cdecbabbac,
+    type: 3}
+  m_PrefabInstance: {fileID: 351492042}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 97fa9d480f3b21744a9ed30ffa97c4d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1800143135
 GameObject:
   m_ObjectHideFlags: 0
@@ -9550,7 +9644,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_RenderShadows: 1
-  m_RequiresDepthTextureOption: 2
+  m_RequiresDepthTextureOption: 1
   m_RequiresOpaqueTextureOption: 2
   m_CameraType: 0
   m_Cameras: []

@@ -6,7 +6,7 @@ using UnityEditor;
 #endif
 using UnityEngine;
 
-public class RFX4_EffectSettings : MonoBehaviour
+public class RFX4_EffectSettings : SkillBase
 {
     [Range(0.1f, 1)] public float ParticlesBudget = 1;
     public bool UseLightShadows;
@@ -49,6 +49,8 @@ public class RFX4_EffectSettings : MonoBehaviour
         if(UseCustomColor) ChangeParticleColor();
         if (UseFastFlatDecalsForMobiles) SetFlatDecals();
         if (!UseLightShadows || IsMobilePlatform()) DisableShadows();
+
+        StartCoroutine(CoRelease());
     }
 
     void Update()
@@ -60,6 +62,7 @@ public class RFX4_EffectSettings : MonoBehaviour
                 StartCoroutine(Fadeout());
             else Fadein();
         }
+        
     }
 
     void ChangeParticlesBudget(float particlesMul)
@@ -249,4 +252,10 @@ public class RFX4_EffectSettings : MonoBehaviour
         }
     }
 #endregion
+
+    IEnumerator CoRelease()
+    {
+        yield return new WaitForSeconds(5f);
+        _skillPool.Release(this);
+    }
 }

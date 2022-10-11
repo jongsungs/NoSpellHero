@@ -43,7 +43,7 @@ public class GamePlay : MonoBehaviour
     public SkillBase _wall;
     public Decoy _decoy;
 
-    public GameObject _blackHole;
+    public SkillBase _blackHole;
     
     
     
@@ -52,8 +52,8 @@ public class GamePlay : MonoBehaviour
     public bool _isBlizzard;
 
 
-    public IceBall _iceball;
-    public FireBall _fireball;
+    public SkillBase _iceBall;
+    public SkillBase _fireBall;
     
 
 
@@ -90,6 +90,8 @@ public class GamePlay : MonoBehaviour
     public IObjectPool<SkillBase> _meteorPool;
     public IObjectPool<SkillBase> _wallPool;
     public IObjectPool<Decoy> _decoyPool;
+    public IObjectPool<SkillBase> _blackHolePool;
+    public IObjectPool<SkillBase> _fireBallPool;
 
 
 
@@ -124,7 +126,8 @@ public class GamePlay : MonoBehaviour
         _meteorPool = new ObjectPool<SkillBase>(CreateMeteor, OngetMeteor, OnReleaseSkill, OnDestroySkill, maxSize: 10);
         _wallPool = new ObjectPool<SkillBase>(CreateWall, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 20);
         _decoyPool = new ObjectPool<Decoy>(CreateDecoy, OngetDecoy, OnReleaseDecoy, OnDestroyDecoy, maxSize: 20);
-
+        _blackHolePool = new ObjectPool<SkillBase>(CreateBlackHole, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 10);
+        _fireBallPool = new ObjectPool<SkillBase>(CreateFireBall, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 10);
 
         _bossHPBar.SetActive(false);
         _currentStage = GameState.Start;
@@ -167,7 +170,7 @@ public class GamePlay : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            Instantiate(_blackHole.gameObject, _player._meteorPoint.transform.position + new Vector3(0,1f,0),_player.transform.rotation, _objectPool.transform);
+            _fireBallPool.Get();
         }
         //if (Input.GetKeyDown(KeyCode.Space))
         //{
@@ -298,7 +301,19 @@ public class GamePlay : MonoBehaviour
         decoy.SetPool(_decoyPool);
         return decoy;
     }
-    
+    private SkillBase CreateBlackHole()
+    {
+        var blackHole = Instantiate(_blackHole, _player._meteorPoint.transform.position + new Vector3(0, 0.5f, 0), _player.transform.rotation, _objectPool.transform);
+        blackHole.SetPool(_blackHolePool);
+        return blackHole;
+    }
+    private SkillBase CreateFireBall()
+    {
+        var blackHole = Instantiate(_fireBall, _player._meteorPoint.transform.position + new Vector3(0, 0.5f, 0), _player.transform.rotation, _objectPool.transform);
+        blackHole.SetPool(_fireBallPool);
+        return blackHole;
+    }
+
 
     // ªı∑Œ ªÃ¿ª ∂ß
     private void OngetMonster(Monster obj)
@@ -370,6 +385,8 @@ public class GamePlay : MonoBehaviour
     }
     private void OngetSkill(SkillBase skill)
     {
+        skill.transform.position = _player._meteorPoint.transform.position + new Vector3(0, 0.5f, 0);
+        skill.transform.rotation = _player.transform.rotation;
         skill.gameObject.SetActive(true);
     }
     private void OngetDecoy(Decoy decoy)
