@@ -18,6 +18,8 @@ public class RFX4_EffectSettingsInspector : Editor
         script.ParticlesBudget = EditorGUILayout.Slider("Particles Budget", script.ParticlesBudget, 0.1f, 1);
         if(!isMobilePlatfrom) script.UseLightShadows = EditorGUILayout.Toggle("Use Light Shadows", script.UseLightShadows);
 
+        script._startRelease = EditorGUILayout.Toggle("StartRelease",script._startRelease);
+
         if (script.GetComponentInChildren<RFX4_Decal>() != null)
             script.UseFastFlatDecalsForMobiles = EditorGUILayout.Toggle("Use Fast Flat Decals", script.UseFastFlatDecalsForMobiles);
 

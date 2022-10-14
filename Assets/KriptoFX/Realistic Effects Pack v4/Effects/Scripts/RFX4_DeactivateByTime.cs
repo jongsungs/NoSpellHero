@@ -7,7 +7,7 @@ public class RFX4_DeactivateByTime : MonoBehaviour {
     public float DeactivateTime = 3;
 
     private bool isActiveState;
-    private float currentTime;
+    public float currentTime;
 	
 	void OnEnable ()
 	{
@@ -18,12 +18,18 @@ public class RFX4_DeactivateByTime : MonoBehaviour {
 
     private void Update()
     {
-        currentTime += Time.deltaTime;
-        if (isActiveState && currentTime >= DeactivateTime)
+        DeactivateTime -= Time.deltaTime;
+
+        if(DeactivateTime <= 0)
+        {
+            DeactivateTime = 0f;
+        }
+
+        if (isActiveState && 0 >= DeactivateTime)
         {
             isActiveState = false;
             DeactivatedGameObject.SetActive(false);
-           
+            Debug.Log(currentTime);
         }
 
     }

@@ -42,9 +42,10 @@ public class GamePlay : MonoBehaviour
     public SkillBase _meteor;
     public SkillBase _wall;
     public Decoy _decoy;
-
     public SkillBase _blackHole;
-    
+    public SkillBase _frozen;
+
+
     
     
     public GameObject _blizzard;
@@ -92,6 +93,7 @@ public class GamePlay : MonoBehaviour
     public IObjectPool<Decoy> _decoyPool;
     public IObjectPool<SkillBase> _blackHolePool;
     public IObjectPool<SkillBase> _fireBallPool;
+    public IObjectPool<SkillBase> _frozenPool;
 
 
 
@@ -128,6 +130,7 @@ public class GamePlay : MonoBehaviour
         _decoyPool = new ObjectPool<Decoy>(CreateDecoy, OngetDecoy, OnReleaseDecoy, OnDestroyDecoy, maxSize: 20);
         _blackHolePool = new ObjectPool<SkillBase>(CreateBlackHole, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 10);
         _fireBallPool = new ObjectPool<SkillBase>(CreateFireBall, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 10);
+        _frozenPool = new ObjectPool<SkillBase>(CreateFrozen, OngetFrozen, OnReleaseSkill, OnDestroySkill, maxSize: 30);
 
         _bossHPBar.SetActive(false);
         _currentStage = GameState.Start;
@@ -170,7 +173,7 @@ public class GamePlay : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            _fireBallPool.Get();
+            _frozenPool.Get();
         }
         //if (Input.GetKeyDown(KeyCode.Space))
         //{
@@ -282,6 +285,12 @@ public class GamePlay : MonoBehaviour
         
         return target;
     }
+    private SkillBase CreateFrozen()
+    {
+        var target = Instantiate(_frozen, _player._meteorPoint.transform.position, Quaternion.identity, _objectPool.transform);
+        target.SetPool(_frozenPool);        
+        return target;
+    }
     private SkillBase CreateMeteor()
     {
         var meteor = Instantiate(_meteor, _player.transform.position + new Vector3(0,10,0),Quaternion.identity, _objectPool.transform);
@@ -366,6 +375,10 @@ public class GamePlay : MonoBehaviour
     {
         obj.gameObject.SetActive(true);
         
+    }
+    private void OngetFrozen(SkillBase obj)
+    {
+        obj.gameObject.SetActive(true);
     }
     private void OngetMeteor(SkillBase meteor)
     {

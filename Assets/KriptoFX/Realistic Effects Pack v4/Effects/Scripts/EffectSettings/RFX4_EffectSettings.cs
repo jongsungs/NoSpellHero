@@ -8,6 +8,7 @@ using UnityEngine;
 
 public class RFX4_EffectSettings : SkillBase
 {
+    public bool _startRelease = false;
     [Range(0.1f, 1)] public float ParticlesBudget = 1;
     public bool UseLightShadows;
     public bool UseFastFlatDecalsForMobiles = true;
@@ -31,6 +32,8 @@ public class RFX4_EffectSettings : SkillBase
     private bool prevIsVisible;
     private float currentFadeoutTime;
 
+   
+
     Renderer[] renderers;
     Renderer[] skinRenderers;
     Light[] lights;
@@ -50,6 +53,7 @@ public class RFX4_EffectSettings : SkillBase
         if (UseFastFlatDecalsForMobiles) SetFlatDecals();
         if (!UseLightShadows || IsMobilePlatform()) DisableShadows();
 
+        if(_startRelease == true )
         StartCoroutine(CoRelease());
     }
 

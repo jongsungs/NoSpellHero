@@ -22,11 +22,7 @@ public class Ork : Monster
     private void Update()
     {
 
-        if (_ccOn == true)
-        {
-            _ccDurationTime -= Time.deltaTime;
-
-        }
+        
 
         if (_hp <= 0f)
         {

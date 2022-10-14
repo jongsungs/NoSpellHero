@@ -13,6 +13,7 @@ public class Slime : Monster
     protected override void Start()
     {
         base.Start();
+
         _monster = MonsterKind.Slime;
         _material = this.gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
         _tempMaterial = _material;
@@ -25,11 +26,7 @@ public class Slime : Monster
     private void Update()
     {
         
-        if(_ccOn == true)
-        {
-            _ccDurationTime -= Time.deltaTime;
-
-        }
+        
         
         if(_hp <= 0f)
         {

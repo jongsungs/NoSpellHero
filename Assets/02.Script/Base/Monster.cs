@@ -36,11 +36,14 @@ public class Monster : BaseObject
     public NavMeshAgent _navimeshAgent;
     public bool _onHit;
     public float _ccDurationTime;
+    public float _currentTime;
     protected bool _ccOn = false;
     public bool _isDead;
     public MonsterKind _monster;
     public MonsterCategory _category;
     public LayerMask _layerMask;
+    public GameObject _frozen;
+    public GameObject _burn;
 
 
     protected Transform m_transform;
@@ -62,7 +65,8 @@ public class Monster : BaseObject
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
         m_transform = GetComponent<Transform>();
-
+        _burn.SetActive(false);
+        _frozen.SetActive(false);
         _navimeshAgent.stoppingDistance = 2f;
         _attackOnce = true;
     }
@@ -87,15 +91,28 @@ public class Monster : BaseObject
 
     private void LateUpdate()
     {
+        if (_ccOn == true)
+        {
+            _ccDurationTime -= Time.deltaTime;
 
-       
+        }
+
         if (_ccDurationTime <= 0)
         {
             _ccDurationTime = 0f;
         }
         if (_ccDurationTime <= 0 && _ccOn == true)
         {
-            CCrecovery();
+            if(_CC == CrowdControl.Freezing)
+            {
+                _frozen.SetActive(false);
+                CCrecovery();
+            }
+            else if (_CC == CrowdControl.Burn)
+            {
+                _burn.SetActive(false);
+                CCrecovery();
+            }
         }
         if(_CC == CrowdControl.Burn)
         {
@@ -128,6 +145,11 @@ public class Monster : BaseObject
         _animator.speed = 0f;
         _navimeshAgent.speed = 0f;
         _ccDurationTime += 3f;
+        _frozen.SetActive(true);
+        _frozen.transform.GetChild(2).GetComponent<RFX4_StartDelay>().Delay = _ccDurationTime;
+        _frozen.transform.GetChild(2).GetComponent<RFX4_DeactivateByTime>().DeactivateTime = _ccDurationTime;
+        _frozen.transform.GetChild(2).GetComponent<RFX4_DeactivateByTime>().currentTime = 0;
+        _frozen.transform.GetChild(2).GetComponent<RFX4_DeactivateByTime>().DeactivatedGameObject.SetActive(true);
         _ccOn = true;
 
     }
@@ -138,6 +160,7 @@ public class Monster : BaseObject
         Debug.Log("으이구 이 화상아");
         _atk = _basicAtk / 2;
         _ccOn = true;
+        _burn.SetActive(true);
 
     }
     public virtual void Roar()
