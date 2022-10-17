@@ -382,8 +382,12 @@ public class GamePlay : MonoBehaviour
     }
     private void OngetMeteor(SkillBase meteor)
     {
+
         meteor.gameObject.SetActive(true);
-        if(_listMeteor.Count <= 1)
+        meteor.transform.position = _player.transform.position + new Vector3(0, 10, 0);
+
+
+        if (_listMeteor.Count <= 1)
         {
             _listMeteor.Add(meteor);
         }
