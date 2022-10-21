@@ -4,21 +4,53 @@ using UnityEngine;
 
 public class Roar : SkillBase
 {
+    public List<Monster> _listBlizzardMonster = new List<Monster>();
+    private Transform m_transform;
+    [SerializeField] float m_viewDistance; //시야거리
+    [SerializeField] LayerMask m_targetMask;  //Enemy 레이어마스크 지정을 위한 변수
+
+   
 
 
-    private void Update()
+
+    public void RoarOn(int skill1, int skill2 )
     {
-        
+        StartCoroutine(RoarOff());
 
-        if(transform.localScale.x <= 9f && transform.localScale.z <= 9f)
+        m_viewDistance = 2 + skill2;
+
+        if (skill2 >= 3)
         {
-            this.transform.localScale += new Vector3(25f*Time.deltaTime,0,25f*Time.deltaTime);
+            m_viewDistance = 60f;
+        }
+
+
+
+        Collider[] targets = Physics.OverlapSphere(m_transform.position, m_viewDistance, m_targetMask);
+
+        for (int i = 0; i < targets.Length; ++i)
+        {
+            _listBlizzardMonster.Add(targets[i].GetComponent<Monster>());
+        }
+
+        for (int i = 0; i < _listBlizzardMonster.Count; ++i)
+        {
+            _listBlizzardMonster[i]._ccDurationTime = 1 + skill1;
+            _listBlizzardMonster[i].Roar();
 
         }
-        else if(transform.localScale.x >=9f && transform.localScale.z >= 9f)
-        {
-            gameObject.SetActive(false);
-            transform.localScale = new Vector3(0f, 0.1f, 0f);
-        }
+
+
+        _listBlizzardMonster.Clear();
+
     }
+    public IEnumerator RoarOff()
+    {
+        GamePlay.Instance._roarPool.Get();
+
+        yield return new WaitForSeconds(4f);
+        GamePlay.Instance._roarPool.Release(this);
+    }
+
+   
 }

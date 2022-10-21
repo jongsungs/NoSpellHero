@@ -44,6 +44,7 @@ public class GamePlay : MonoBehaviour
     public Decoy _decoy;
     public SkillBase _blackHole;
     public SkillBase _frozen;
+    public SkillBase _roar;
 
 
     
@@ -94,6 +95,7 @@ public class GamePlay : MonoBehaviour
     public IObjectPool<SkillBase> _blackHolePool;
     public IObjectPool<SkillBase> _fireBallPool;
     public IObjectPool<SkillBase> _frozenPool;
+    public IObjectPool<SkillBase> _roarPool;
 
 
 
@@ -131,6 +133,9 @@ public class GamePlay : MonoBehaviour
         _blackHolePool = new ObjectPool<SkillBase>(CreateBlackHole, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 10);
         _fireBallPool = new ObjectPool<SkillBase>(CreateFireBall, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 10);
         _frozenPool = new ObjectPool<SkillBase>(CreateFrozen, OngetFrozen, OnReleaseSkill, OnDestroySkill, maxSize: 30);
+        _roarPool = new ObjectPool<SkillBase>(CreateRoar, OngetRoar, OnReleaseRoar, OnDestroySkill, maxSize: 10);
+
+
 
         _bossHPBar.SetActive(false);
         _currentStage = GameState.Start;
@@ -285,6 +290,7 @@ public class GamePlay : MonoBehaviour
         
         return target;
     }
+   
     private SkillBase CreateFrozen()
     {
         var target = Instantiate(_frozen, _player._meteorPoint.transform.position, Quaternion.identity, _objectPool.transform);
@@ -321,6 +327,12 @@ public class GamePlay : MonoBehaviour
         var blackHole = Instantiate(_fireBall, _player._meteorPoint.transform.position + new Vector3(0, 0.5f, 0), _player.transform.rotation, _objectPool.transform);
         blackHole.SetPool(_fireBallPool);
         return blackHole;
+    }
+    private SkillBase CreateRoar()
+    {
+        var roar = Instantiate(_roar, _player._meteorPoint.transform.position, Quaternion.identity, _player.transform);
+        roar.SetPool(_roarPool);
+        return roar;
     }
 
 
@@ -400,6 +412,12 @@ public class GamePlay : MonoBehaviour
 
         }   
     }
+    private void OngetRoar(SkillBase skill)
+    {
+        skill.transform.position = _player._meteorPoint.transform.position ;
+        
+        skill.gameObject.SetActive(true);
+    }
     private void OngetSkill(SkillBase skill)
     {
         skill.transform.position = _player._meteorPoint.transform.position + new Vector3(0, 0.5f, 0);
@@ -439,7 +457,10 @@ public class GamePlay : MonoBehaviour
     {
         decoy.gameObject.SetActive(false);
     }
-
+    private void OnReleaseRoar(SkillBase skill)
+    {
+        skill.gameObject.SetActive(false);
+    }
 
     //풀이 꽉차서 없어질때
     private void OnDestroyMonster(Monster obj)
@@ -467,6 +488,7 @@ public class GamePlay : MonoBehaviour
     {
         Destroy(decoy.gameObject);
     }
+    
 
 
     public void EnterLobby()

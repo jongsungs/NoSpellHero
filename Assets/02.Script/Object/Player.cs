@@ -110,6 +110,8 @@ public class Player : BaseObject
     private Transform m_transform;
     public int _count;
 
+    public GameObject _roar;
+
     //-----------------------------
     public VariableJoystick variableJoystick;
     public Rigidbody rb;
@@ -1250,6 +1252,7 @@ public class Player : BaseObject
         {
             m_viewDistance = 60f;
         }
+        
 
 
         Collider[] targets = Physics.OverlapSphere(m_transform.position, m_viewDistance, m_targetMask);
@@ -1329,7 +1332,7 @@ public class Player : BaseObject
         }
     }
 
-    public IEnumerator Slow()
+    public IEnumerator MonsterAtkDown()
     {
         while (true)
         {
@@ -1339,7 +1342,7 @@ public class Player : BaseObject
             {
 
 
-                obj[i].GetComponent<Monster>()._atk = obj[i].GetComponent<Monster>()._atk * (0.7f + _skill2 / 10f);
+                obj[i].GetComponent<Monster>()._atk = obj[i].GetComponent<Monster>()._basicAtk * (0.7f + _skill2 / 10f);
 
 
 
@@ -1350,7 +1353,7 @@ public class Player : BaseObject
 
         }
     }
-
+    
 
 
 
