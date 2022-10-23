@@ -58,7 +58,7 @@ public class DemonKing : Monster
 
 
 
-    protected override void ChangeState(State state)
+    public override void ChangeState(State state)
     {
         base.ChangeState(state);
         _animator.SetInteger(_aniHashKeyState, (int)_state);

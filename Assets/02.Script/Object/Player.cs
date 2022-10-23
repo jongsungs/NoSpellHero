@@ -40,6 +40,8 @@ public class PlayerData
 public class Player : BaseObject
 {
 
+    static public Player Instance { get; private set; }
+
     public enum PlayerTitle : int
     {
         Normal = 0,
@@ -107,14 +109,15 @@ public class Player : BaseObject
     public int _jumpStack;
     public int _basicJumpStack;
 
-    private Transform m_transform;
+    public Transform m_transform;
     public int _count;
 
     public GameObject _roar;
 
     //-----------------------------
     public VariableJoystick variableJoystick;
-    public Rigidbody rb;
+    public FollowCamera2 _followCamera;
+    
     PlayerData _data;
     public List<Weapon> _myWeapon = new List<Weapon>();
     
@@ -125,11 +128,19 @@ public class Player : BaseObject
     public float _fireBallProbability;
     public float _iceBallProbability;
     public float _chainLightProbability;
+    public bool _isWalk;
 
 
     public int _skill1;
     public int _skill2;
     public int _skill3;
+
+
+    public GameObject _avatar1;
+    public GameObject _avatar2;
+
+    public List<Animator> _listAnimator = new List<Animator>();
+    public List<Rigidbody> _listRigidBody = new List<Rigidbody>();
 
 
 
@@ -150,6 +161,7 @@ public class Player : BaseObject
 
     private void Awake()
     {
+        Instance = this;
         Load();
         _data = new PlayerData(_hp, _atk, _matk, _atkSpeed, _def, _speed, _critical, _handicraft, _charm,_criticalDamage);
         
@@ -176,7 +188,7 @@ public class Player : BaseObject
         _listState.Add(_critical);
         _listState.Add(_handicraft);
         _listState.Add(_charm);
-
+        
      
 
     }
@@ -184,13 +196,16 @@ public class Player : BaseObject
     private void Start()
     {
         
-        _animator = GetComponent<Animator>();
+        //_animator = GetComponent<Animator>();
         _fireBallProbability = 30f;
         _iceBallProbability = 30f;
         _chainLightProbability = 30f;
-        m_transform = GetComponent<Transform>();
+       // m_transform = GetComponent<Transform>();
         _jumpStack = 3;
         _basicJumpStack = _jumpStack;
+        GamePlay.Instance.ChangeStage();
+        
+        
 
     }
 
@@ -228,7 +243,7 @@ public class Player : BaseObject
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            Spell();
+            SetPositionB();
 
 
         }
@@ -237,7 +252,7 @@ public class Player : BaseObject
             Meteor();
 
         }
-        DrawView();
+        //DrawView();
         
     }
     public Vector3 DirFromAngle(float angleInDegrees)
@@ -259,7 +274,7 @@ public class Player : BaseObject
         if (variableJoystick != null)
         {
 
-            if (variableJoystick._isStop)
+            if (variableJoystick._isStop && _isIdle == true)
             {
                 _basicSpeed = 0f;
                ChangeState(State.Idle);
@@ -439,7 +454,7 @@ public class Player : BaseObject
     }
 
 
-    protected override void ChangeState(State state)
+    public override void ChangeState(State state)
     {
         base.ChangeState(state);
         _animator.SetInteger(_aniHashKeyState, (int)_state);
@@ -448,33 +463,57 @@ public class Player : BaseObject
         {
             case State.Idle:
                 Vector3 direction = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
-                rb.velocity = (direction * (_basicSpeed * 50f) * Time.fixedDeltaTime);
-                transform.rotation = Quaternion.LookRotation(direction);
-                transform.Translate(Vector3.forward * _rotateSpeed * Time.deltaTime);
+                _rigidbody.velocity = (direction * (_basicSpeed * 50f) * Time.fixedDeltaTime);
+                m_transform.transform.rotation = Quaternion.LookRotation(direction);
+                m_transform.transform.Translate(Vector3.forward * _rotateSpeed * Time.deltaTime);
                
                 break;
             case State.Walk:
-                Vector3 direction2 = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
-                rb.velocity = (direction2 * (_basicSpeed * 50f) * Time.fixedDeltaTime);
-                transform.rotation = Quaternion.LookRotation(direction2);
-                transform.Translate(Vector3.forward * _rotateSpeed * Time.deltaTime);
-                
+                if (GamePlay.Instance._listPlayers[0].gameObject.activeSelf== true)
+                {
+                    Vector3 direction2 = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
+                    _rigidbody.velocity = (direction2 * (_basicSpeed * 50f) * Time.fixedDeltaTime);
+                    m_transform.transform.rotation = Quaternion.LookRotation(direction2);
+                    m_transform.transform.Translate(Vector3.forward * _rotateSpeed * Time.deltaTime);
+                }
+                else if (GamePlay.Instance._listPlayers[1].gameObject.activeSelf == true)
+                {
+                    Vector3 direction2 = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
+                    _rigidbody.velocity = (direction2 * (_basicSpeed * 50f) * Time.fixedDeltaTime);
+                    m_transform.transform.rotation = Quaternion.LookRotation(direction2); 
+                    m_transform.transform.Translate(Vector3.forward * _rotateSpeed * Time.deltaTime);
+                }
+                _isIdle = true;
+
                 break;
             case State.Attack:
                 _isAttack = true;
-                
-                
+                _isIdle = true;
+
                 break;
             case State.Hit:
-            
+                _isIdle = true;
                 break;
             case State.Die:
                 break;
             case State.Attack2:
                 _isAttack = true;
+                _isIdle = true;
+                break;
+            case State.None:
+                _isIdle = false;
                 break;
         }
     }
+
+    public void ChangeComponent(GameObject obj)
+    {
+        _animator = obj.GetComponent<Animator>();
+        _rigidbody = obj.GetComponent<Rigidbody>();
+        m_transform = obj.GetComponent<Transform>();
+    }
+
+
     #region SKill
 
     
@@ -1353,7 +1392,32 @@ public class Player : BaseObject
 
         }
     }
-    
+
+
+    public void SetPositionA()
+    {
+        _avatar1.transform.position = new Vector3(0, 0, 0);
+        _animator = _listAnimator[0];
+        _rigidbody = _listRigidBody[0];
+        m_transform = _avatar1.GetComponent<Transform>();
+        _avatar1.SetActive(true);
+        _avatar2.SetActive(false);
+        ChangeState(State.None);
+        _followCamera._target = _avatar1;
+    }
+    public void SetPositionB()
+    {
+        _avatar2.transform.position = new Vector3(0, 0f, 0);
+        _avatar2.transform.rotation = Quaternion.Euler(0, -180f, 180f);
+        _animator = _listAnimator[1];
+        _rigidbody = _listRigidBody[1];
+        m_transform = _avatar2.GetComponent<Transform>();
+        _avatar2.SetActive(true);
+        _avatar1.SetActive(false);
+        ChangeState(State.None);
+        _followCamera._target = _avatar2;
+    }
+
 
 
 

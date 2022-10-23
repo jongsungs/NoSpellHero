@@ -46,6 +46,8 @@ public class GamePlay : MonoBehaviour
     public SkillBase _frozen;
     public SkillBase _roar;
 
+    public List<GameObject> _listPlayers = new List<GameObject>();
+
 
     
     
@@ -56,6 +58,10 @@ public class GamePlay : MonoBehaviour
 
     public SkillBase _iceBall;
     public SkillBase _fireBall;
+
+
+
+    public GameObject _ground;
     
 
 
@@ -198,11 +204,12 @@ public class GamePlay : MonoBehaviour
         //}
         if(Input.GetKeyDown(KeyCode.Alpha4))
         {
-            _slimePool.Get();
+            ChangeStage();
         }
+       
 
 
-        
+
 
 
 
@@ -704,6 +711,28 @@ public class GamePlay : MonoBehaviour
         }
         
         ChangeStage(state);
+        
+    }
+
+    public IEnumerator ReverseGround()
+    {
+        while(_ground.transform.rotation.z < 1f)
+        {
+            yield return new WaitForSeconds(0.05f);
+            _ground.transform.Rotate(Vector3.forward * 5f);
+        }
+
+        
+    }
+    public IEnumerator GetBackGround()
+    {
+        while (_ground.transform.rotation.z > 0f)
+        {
+            yield return new WaitForSeconds(0.05f);
+            _ground.transform.Rotate(Vector3.forward * -5f);
+        }
+
+
     }
     public void ActiveBlizzard()
     {
@@ -717,5 +746,50 @@ public class GamePlay : MonoBehaviour
         _isBlizzard = false;
         
     }
+
+    public void ChangeStage()
+    {
+        if((int)_currentStage % 2 == 0 && (int)_currentStage != 0) //Â¦¼ö
+        {
+            StartCoroutine(GetBackGround());
+            _listPlayers[0].transform.position = new Vector3(0, 0, 0);
+            _listPlayers[0].gameObject.SetActive(true);
+            _listPlayers[1].gameObject.SetActive(false);
+            Player.Instance._animator = _listPlayers[0].GetComponent<Animator>();
+            Player.Instance._rigidbody = _listPlayers[0].GetComponent<Rigidbody>();
+            Player.Instance.m_transform = _listPlayers[0].GetComponent<Transform>();
+            Player.Instance.ChangeState(BaseObject.State.None);
+            Player.Instance._followCamera._target = _listPlayers[0].gameObject;
+            _currentStage = (int)_currentStage + (GameState)1;
+        }
+        else if((int)_currentStage %2 == 1) // È¦¼ö
+        {
+            
+            StartCoroutine(ReverseGround());
+            _listPlayers[1].transform.position = new Vector3(0, 0, 0);
+            _listPlayers[1].gameObject.SetActive(true);
+            _listPlayers[0].gameObject.SetActive(false);
+            Player.Instance._animator = _listPlayers[1].GetComponent<Animator>();
+            Player.Instance._rigidbody = _listPlayers[1].GetComponent<Rigidbody>();
+            Player.Instance.m_transform = _listPlayers[1].GetComponent<Transform>();
+            Player.Instance.ChangeState(BaseObject.State.None);
+            Player.Instance._followCamera._target = _listPlayers[1].gameObject;
+            _currentStage = (int)_currentStage + (GameState)1;
+        }
+        else
+        {
+           
+            _listPlayers[0].transform.position = new Vector3(0, 0, 0);
+            _listPlayers[0].gameObject.SetActive(true);
+            _listPlayers[1].gameObject.SetActive(false);
+            Player.Instance.ChangeComponent(_listPlayers[0].gameObject);
+            Player.Instance.ChangeState(BaseObject.State.None);
+           // Player.Instance._followCamera._target = _listPlayers[0].gameObject;
+            _currentStage = (int)_currentStage + (GameState)1;
+        }
+        
+
+    }
+
   
 }

@@ -14,6 +14,8 @@ public class BaseObject : MonoBehaviour
         Hit = 3,
         Die = 4,
         Attack2 = 5,
+        None = 6,
+
 
     }
     protected enum CrowdControl : int
@@ -55,8 +57,8 @@ public class BaseObject : MonoBehaviour
     public float _criticalProbability; //치명타확률
 
     public bool _isAttack;
-    protected Animator _animator;
-    protected Rigidbody _rigidbody;
+    public Animator _animator;
+    public Rigidbody _rigidbody;
     virtual public void Idle()
     {
 
@@ -88,7 +90,7 @@ public class BaseObject : MonoBehaviour
         return _state == state;
     }
 
-    virtual protected void ChangeState(State state)
+    virtual public void ChangeState(State state)
     {
         if (IsState(state))
             return;
