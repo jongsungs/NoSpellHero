@@ -136,9 +136,7 @@ public class Player : BaseObject
     public int _skill3;
 
 
-    public GameObject _avatar1;
-    public GameObject _avatar2;
-
+    public List<GameObject> _listMeteorPoint = new List<GameObject>();
     public List<Animator> _listAnimator = new List<Animator>();
     public List<Rigidbody> _listRigidBody = new List<Rigidbody>();
 
@@ -196,11 +194,9 @@ public class Player : BaseObject
     private void Start()
     {
         
-        //_animator = GetComponent<Animator>();
         _fireBallProbability = 30f;
         _iceBallProbability = 30f;
         _chainLightProbability = 30f;
-       // m_transform = GetComponent<Transform>();
         _jumpStack = 3;
         _basicJumpStack = _jumpStack;
         GamePlay.Instance.ChangeStage();
@@ -241,12 +237,8 @@ public class Player : BaseObject
             Die();
             GamePlay.Instance.ActiveResultPopUp();
         }
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            SetPositionB();
-
-
-        }
+       
+        
         if (Input.GetKeyDown(KeyCode.I))
         {
             Meteor();
@@ -1394,30 +1386,7 @@ public class Player : BaseObject
     }
 
 
-    public void SetPositionA()
-    {
-        _avatar1.transform.position = new Vector3(0, 0, 0);
-        _animator = _listAnimator[0];
-        _rigidbody = _listRigidBody[0];
-        m_transform = _avatar1.GetComponent<Transform>();
-        _avatar1.SetActive(true);
-        _avatar2.SetActive(false);
-        ChangeState(State.None);
-        _followCamera._target = _avatar1;
-    }
-    public void SetPositionB()
-    {
-        _avatar2.transform.position = new Vector3(0, 0f, 0);
-        _avatar2.transform.rotation = Quaternion.Euler(0, -180f, 180f);
-        _animator = _listAnimator[1];
-        _rigidbody = _listRigidBody[1];
-        m_transform = _avatar2.GetComponent<Transform>();
-        _avatar2.SetActive(true);
-        _avatar1.SetActive(false);
-        ChangeState(State.None);
-        _followCamera._target = _avatar2;
-    }
-
+   
 
 
 

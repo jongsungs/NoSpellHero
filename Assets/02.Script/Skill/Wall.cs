@@ -47,7 +47,7 @@ public class Wall : SkillBase
             var obj = Physics.OverlapSphere(m_transform.position, m_viewDistance, m_targetMask);
             for (int i = 0; i < obj.Length; ++i)
             {
-                obj[i].GetComponent<Monster>()._hp -= 1f - GamePlay.Instance._player._skill1;
+                obj[i].GetComponent<Monster>()._hp -= 1f - Player.Instance._skill1;
             }
 
             yield return new WaitForSeconds(1f);

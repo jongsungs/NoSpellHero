@@ -114,7 +114,7 @@ public class Slime : Monster
         if (other.CompareTag("Weapon") )
         {
             
-            if(other.GetComponent<Weapon>()._isOnce == true && other.GetComponent<Weapon>()._player._playerTitle == Player.PlayerTitle.JackFrost)
+            if(other.GetComponent<Weapon>()._isOnce == true && Player.Instance._playerTitle == Player.PlayerTitle.JackFrost)
             {
                 other.GetComponent<Weapon>()._isOnce = false;
                 ChangeState(State.Hit);
@@ -128,7 +128,7 @@ public class Slime : Monster
 
                 _hp -= other.GetComponent<Weapon>()._damage;
             }
-            else if(other.GetComponent<Weapon>()._isOnce == true && other.GetComponent<Weapon>()._player._playerTitle == Player.PlayerTitle.Druid)
+            else if(other.GetComponent<Weapon>()._isOnce == true && Player.Instance._playerTitle == Player.PlayerTitle.Druid)
             {
                 other.GetComponent<Weapon>()._isOnce = false;
                 ChangeState(State.Hit);
@@ -142,7 +142,7 @@ public class Slime : Monster
                 }
 
             }
-            else if(other.GetComponent<Weapon>()._isOnce == true && other.GetComponent<Weapon>()._player._playerTitle == Player.PlayerTitle.QRF && other.GetComponent<Weapon>()._player._skill2 >= 3f)
+            else if(other.GetComponent<Weapon>()._isOnce == true && Player.Instance._playerTitle == Player.PlayerTitle.QRF && Player.Instance._skill2 >= 3f)
             {
                 other.GetComponent<Weapon>()._isOnce = false;
                 ChangeState(State.Hit);

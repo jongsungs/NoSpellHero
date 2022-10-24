@@ -21,7 +21,7 @@ public class GamePlay : MonoBehaviour
     static public GamePlay Instance { get; private set; }
 
 
-    public Player _player;
+    
     public GameObject _pausePopUp;
     public GameObject _choicePopUp;
     public GameObject _bossHPBar;
@@ -45,6 +45,8 @@ public class GamePlay : MonoBehaviour
     public SkillBase _blackHole;
     public SkillBase _frozen;
     public SkillBase _roar;
+    public SkillBase _heal;
+    public SkillBase _meteorEffect;
 
     public List<GameObject> _listPlayers = new List<GameObject>();
 
@@ -102,6 +104,8 @@ public class GamePlay : MonoBehaviour
     public IObjectPool<SkillBase> _fireBallPool;
     public IObjectPool<SkillBase> _frozenPool;
     public IObjectPool<SkillBase> _roarPool;
+    public IObjectPool<SkillBase> _healPool;
+    public IObjectPool<SkillBase> _meteorEffectPool;
 
 
 
@@ -140,8 +144,8 @@ public class GamePlay : MonoBehaviour
         _fireBallPool = new ObjectPool<SkillBase>(CreateFireBall, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 10);
         _frozenPool = new ObjectPool<SkillBase>(CreateFrozen, OngetFrozen, OnReleaseSkill, OnDestroySkill, maxSize: 30);
         _roarPool = new ObjectPool<SkillBase>(CreateRoar, OngetRoar, OnReleaseRoar, OnDestroySkill, maxSize: 10);
-
-
+        _healPool = new ObjectPool<SkillBase>(CreateHeal, OngetEffectSkill, OnReleaseSkill, OnDestroySkill, maxSize: 20);
+        _meteorEffectPool = new ObjectPool<SkillBase>(CreateMeteorEffect, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 20);
 
         _bossHPBar.SetActive(false);
         _currentStage = GameState.Start;
@@ -184,7 +188,7 @@ public class GamePlay : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            _frozenPool.Get();
+            _meteorEffectPool.Get();
         }
         //if (Input.GetKeyDown(KeyCode.Space))
         //{
@@ -289,7 +293,7 @@ public class GamePlay : MonoBehaviour
     }
     private GameObject CreatMeteorTarget()
     {
-        var target = Instantiate(_meteorTarget, _player._meteorPoint.transform.position, Quaternion.identity, _objectPool.transform);
+        var target = Instantiate(_meteorTarget, Player.Instance._meteorPoint.transform.position, Quaternion.identity, _objectPool.transform);
         _listMeteorTarget.Add(target);
         _meteorPool.Get();
         StartCoroutine(_listMeteor[0].GetComponent<Meteor>().Target(target));
@@ -300,19 +304,19 @@ public class GamePlay : MonoBehaviour
    
     private SkillBase CreateFrozen()
     {
-        var target = Instantiate(_frozen, _player._meteorPoint.transform.position, Quaternion.identity, _objectPool.transform);
+        var target = Instantiate(_frozen, Player.Instance.m_transform.position, Quaternion.identity, _objectPool.transform);
         target.SetPool(_frozenPool);        
         return target;
     }
     private SkillBase CreateMeteor()
     {
-        var meteor = Instantiate(_meteor, _player.transform.position + new Vector3(0,10,0),Quaternion.identity, _objectPool.transform);
+        var meteor = Instantiate(_meteor, Player.Instance.m_transform.position + new Vector3(0,10,0),Quaternion.identity, _objectPool.transform);
         meteor.SetPool(_meteorPool);
         return meteor;
     }
     private SkillBase CreateWall()
     {
-        var wall = Instantiate(_wall, _player._meteorPoint.transform.position, Quaternion.identity, _objectPool.transform);
+        var wall = Instantiate(_wall, Player.Instance.m_transform.position, Quaternion.identity, _objectPool.transform);
         wall.SetPool(_wallPool);
         return wall;
 
@@ -325,22 +329,35 @@ public class GamePlay : MonoBehaviour
     }
     private SkillBase CreateBlackHole()
     {
-        var blackHole = Instantiate(_blackHole, _player._meteorPoint.transform.position + new Vector3(0, 0.5f, 0), _player.transform.rotation, _objectPool.transform);
+        var blackHole = Instantiate(_blackHole, Player.Instance._meteorPoint.transform.position + new Vector3(0, 0.5f, 0), Player.Instance.m_transform.rotation, _objectPool.transform);
         blackHole.SetPool(_blackHolePool);
         return blackHole;
     }
     private SkillBase CreateFireBall()
     {
-        var blackHole = Instantiate(_fireBall, _player._meteorPoint.transform.position + new Vector3(0, 0.5f, 0), _player.transform.rotation, _objectPool.transform);
+        var blackHole = Instantiate(_fireBall, Player.Instance._meteorPoint.transform.position + new Vector3(0, 0.5f, 0), Player.Instance.m_transform.rotation, _objectPool.transform);
         blackHole.SetPool(_fireBallPool);
         return blackHole;
     }
     private SkillBase CreateRoar()
     {
-        var roar = Instantiate(_roar, _player._meteorPoint.transform.position, Quaternion.identity, _player.transform);
+        var roar = Instantiate(_roar, Player.Instance.m_transform.position, Quaternion.identity, Player.Instance.m_transform);
         roar.SetPool(_roarPool);
         return roar;
     }
+    private SkillBase CreateHeal()
+    {
+        var heal = Instantiate(_heal, Player.Instance.m_transform.position, Quaternion.identity, Player.Instance.m_transform);
+        heal.SetPool(_healPool);
+        return heal;
+    }
+    private SkillBase CreateMeteorEffect()
+    {
+        var meteorEffect = Instantiate(_meteorEffect, Player.Instance.m_transform.position, Quaternion.identity, _objectPool.transform);
+        meteorEffect.SetPool(_meteorEffectPool);
+        return meteorEffect;
+    }
+
 
 
     // 새로 뽑을 때
@@ -403,7 +420,7 @@ public class GamePlay : MonoBehaviour
     {
 
         meteor.gameObject.SetActive(true);
-        meteor.transform.position = _player.transform.position + new Vector3(0, 10, 0);
+        meteor.transform.position = Player.Instance.m_transform.position + new Vector3(0, 10, 0);
 
 
         if (_listMeteor.Count <= 1)
@@ -421,19 +438,25 @@ public class GamePlay : MonoBehaviour
     }
     private void OngetRoar(SkillBase skill)
     {
-        skill.transform.position = _player._meteorPoint.transform.position ;
+        skill.transform.position = Player.Instance._meteorPoint.transform.position ;
         
         skill.gameObject.SetActive(true);
     }
     private void OngetSkill(SkillBase skill)
     {
-        skill.transform.position = _player._meteorPoint.transform.position + new Vector3(0, 0.5f, 0);
-        skill.transform.rotation = _player.transform.rotation;
+        skill.transform.position = Player.Instance._meteorPoint.transform.position + new Vector3(0, 0.5f, 0);
+        skill.transform.rotation = Player.Instance.m_transform.rotation;
         skill.gameObject.SetActive(true);
     }
     private void OngetDecoy(Decoy decoy)
     {
         decoy.gameObject.SetActive(true);
+    }
+    private void OngetEffectSkill(SkillBase skill)
+    {
+        skill.transform.position = Player.Instance.m_transform.position + new Vector3(0, 0.5f, 0);
+        skill.transform.rotation = Quaternion.Euler(30, 0, 0);
+        skill.gameObject.SetActive(true);
     }
     // 반환할때 사라질때
 
@@ -716,22 +739,27 @@ public class GamePlay : MonoBehaviour
 
     public IEnumerator ReverseGround()
     {
+        _listPlayers[0].GetComponent<Rigidbody>().isKinematic = true;
         while(_ground.transform.rotation.z < 1f)
         {
             yield return new WaitForSeconds(0.05f);
             _ground.transform.Rotate(Vector3.forward * 5f);
         }
 
-        
+        Player.Instance._rigidbody.isKinematic = false;
+        _listPlayers[0].gameObject.SetActive(false);
+
     }
     public IEnumerator GetBackGround()
     {
+        _listPlayers[1].GetComponent<Rigidbody>().isKinematic = true;
         while (_ground.transform.rotation.z > 0f)
         {
             yield return new WaitForSeconds(0.05f);
             _ground.transform.Rotate(Vector3.forward * -5f);
         }
-
+        Player.Instance._rigidbody.isKinematic = false;
+        _listPlayers[1].gameObject.SetActive(false);
 
     }
     public void ActiveBlizzard()
@@ -751,12 +779,15 @@ public class GamePlay : MonoBehaviour
     {
         if((int)_currentStage % 2 == 0 && (int)_currentStage != 0) //짝수
         {
+
+            _listPlayers[0].gameObject.SetActive(true);
+            Player.Instance._rigidbody = _listPlayers[0].GetComponent<Rigidbody>();
+            Player.Instance._rigidbody.isKinematic = true;
+            Player.Instance._meteorPoint = Player.Instance._listMeteorPoint[0];
             StartCoroutine(GetBackGround());
             _listPlayers[0].transform.position = new Vector3(0, 0, 0);
-            _listPlayers[0].gameObject.SetActive(true);
-            _listPlayers[1].gameObject.SetActive(false);
+            _listPlayers[0].transform.rotation = Quaternion.Euler(0, -180, 180);
             Player.Instance._animator = _listPlayers[0].GetComponent<Animator>();
-            Player.Instance._rigidbody = _listPlayers[0].GetComponent<Rigidbody>();
             Player.Instance.m_transform = _listPlayers[0].GetComponent<Transform>();
             Player.Instance.ChangeState(BaseObject.State.None);
             Player.Instance._followCamera._target = _listPlayers[0].gameObject;
@@ -765,12 +796,14 @@ public class GamePlay : MonoBehaviour
         else if((int)_currentStage %2 == 1) // 홀수
         {
             
+            _listPlayers[1].gameObject.SetActive(true);
+            Player.Instance._rigidbody = _listPlayers[1].GetComponent<Rigidbody>();
+            Player.Instance._rigidbody.isKinematic = true;
+            Player.Instance._meteorPoint = Player.Instance._listMeteorPoint[1];
             StartCoroutine(ReverseGround());
             _listPlayers[1].transform.position = new Vector3(0, 0, 0);
-            _listPlayers[1].gameObject.SetActive(true);
-            _listPlayers[0].gameObject.SetActive(false);
+            _listPlayers[1].transform.rotation = Quaternion.Euler(0, -180, 180);
             Player.Instance._animator = _listPlayers[1].GetComponent<Animator>();
-            Player.Instance._rigidbody = _listPlayers[1].GetComponent<Rigidbody>();
             Player.Instance.m_transform = _listPlayers[1].GetComponent<Transform>();
             Player.Instance.ChangeState(BaseObject.State.None);
             Player.Instance._followCamera._target = _listPlayers[1].gameObject;
@@ -780,8 +813,10 @@ public class GamePlay : MonoBehaviour
         {
            
             _listPlayers[0].transform.position = new Vector3(0, 0, 0);
+            _listPlayers[0].transform.rotation = Quaternion.Euler(0, -180, 0);
             _listPlayers[0].gameObject.SetActive(true);
             _listPlayers[1].gameObject.SetActive(false);
+            Player.Instance._meteorPoint = Player.Instance._listMeteorPoint[0];
             Player.Instance.ChangeComponent(_listPlayers[0].gameObject);
             Player.Instance.ChangeState(BaseObject.State.None);
            // Player.Instance._followCamera._target = _listPlayers[0].gameObject;
