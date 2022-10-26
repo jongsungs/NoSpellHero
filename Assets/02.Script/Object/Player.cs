@@ -164,7 +164,7 @@ public class Player : BaseObject
         _data = new PlayerData(_hp, _atk, _matk, _atkSpeed, _def, _speed, _critical, _handicraft, _charm,_criticalDamage);
         
         _preSpeed = _speed;
-        _maxHp = _hp;
+        _maxHp = 50 + (_hp * 10);
         _basicAtk = _atk;
         _basicMatk = _matk;
         _basicAtkSpeed = _atkSpeed;
@@ -186,6 +186,8 @@ public class Player : BaseObject
         _listState.Add(_critical);
         _listState.Add(_handicraft);
         _listState.Add(_charm);
+        
+
         
      
 
@@ -241,7 +243,7 @@ public class Player : BaseObject
         
         if (Input.GetKeyDown(KeyCode.I))
         {
-            Meteor();
+            Play(25);
 
         }
         //DrawView();
@@ -686,7 +688,8 @@ public class Player : BaseObject
         _spellCastProbability = 5f;
         if(_skill1 >= 3)
         {
-            //체력비례 데미지 공식 만들것
+            _matk = (_maxHp / 10f) + _basicMatk;
+            _atk = (_maxHp / 10f) + _basicAtk;
         }
 
 
@@ -702,7 +705,7 @@ public class Player : BaseObject
 
         if(_skill1 >= 3 && _hp >= _maxHp)
         {
-            _atk = _basicAtk * 2f;
+            _matk = _basicMatk * 3f;
         }
 
 

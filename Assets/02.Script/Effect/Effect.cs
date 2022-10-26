@@ -4,5 +4,15 @@ using UnityEngine;
 
 public class Effect : SkillBase
 {
-    
+    private void OnEnable()
+    {
+        StartCoroutine(CoRelease());
+    }
+
+
+    public IEnumerator CoRelease()
+    {
+        yield return new WaitForSeconds(_skillDurationTime);
+        _skillPool.Release(this);
+    }
 }

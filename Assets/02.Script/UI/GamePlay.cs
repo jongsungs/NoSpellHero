@@ -188,7 +188,7 @@ public class GamePlay : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            _meteorEffectPool.Get();
+            _healPool.Get();
         }
         //if (Input.GetKeyDown(KeyCode.Space))
         //{

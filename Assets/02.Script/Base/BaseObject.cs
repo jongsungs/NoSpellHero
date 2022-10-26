@@ -31,6 +31,8 @@ public class BaseObject : MonoBehaviour
 
     public State _state;
     [SerializeField]protected CrowdControl _CC = CrowdControl.Normal;
+    public MoreMountains.Feedbacks.MMFeedbacks _feedBack;
+
 
     public float _hp;
     public float _atk;
@@ -97,6 +99,12 @@ public class BaseObject : MonoBehaviour
         _state = state;
 
 
+    }
+
+    public virtual void Play(int i)
+    {
+        _feedBack?.PlayFeedbacks(this.transform.position, i);
+       
     }
 
   
