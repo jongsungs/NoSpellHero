@@ -119,7 +119,8 @@ public class GamePlay : MonoBehaviour
     public delegate void EventHandler();
 
     public static event EventHandler _eventHandler;
-    
+
+    public MoreMountains.Tools.MMProgressBar _test;
 
 
 
@@ -188,7 +189,7 @@ public class GamePlay : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            _healPool.Get();
+            _test.Minus10Percent(200f,5f);
         }
         //if (Input.GetKeyDown(KeyCode.Space))
         //{

@@ -539,9 +539,9 @@ namespace MoreMountains.Tools
 		/// <summary>
 		/// Test method
 		/// </summary>
-		public virtual void Minus10Percent()
+		public virtual void Minus10Percent(float Maxhp,float hitdamage)
 		{
-			float newProgress = BarTarget - 0.1f;
+			float newProgress = BarTarget - hitdamage/Maxhp;
 			newProgress = Mathf.Clamp(newProgress, 0f, 1f);
 			UpdateBar01(newProgress);
 		}
