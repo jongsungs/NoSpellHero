@@ -1,14 +1,39 @@
 fileFormatVersion: 2
-guid: 4ff91d980d3c8b3499e2ea5df5af4c68
+guid: b22a00eaad6168f41a7777a6213e9395
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Map_desert_s
+    second: {fileID: 2100000, guid: 8ffc7df36103d98439a045f32d1e0f01, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Map_devil_s
+    second: {fileID: 2100000, guid: 609c84d7623769643850cedb0d2a9f1f, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Map_dungeon_s
+    second: {fileID: 2100000, guid: ffde2c1117a8c0f41a5a77f8119cbe12, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Map_grass_s
+    second: {fileID: 2100000, guid: 58dbe11288309ec428fc5a6f7769343d, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: VRayMtl17
+    second: {fileID: 2100000, guid: 71eea7e95b8b5a14c8e48f3aaef866e4, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
     materialSearch: 1
-    materialLocation: 0
+    materialLocation: 1
   animations:
     legacyGenerateAnimations: 4
     bakeSimulation: 0
@@ -35,7 +60,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 5
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -88,7 +113,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 5
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
