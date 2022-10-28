@@ -201,6 +201,7 @@ public class Player : BaseObject
         _chainLightProbability = 30f;
         _jumpStack = 3;
         _basicJumpStack = _jumpStack;
+        if(GamePlay.Instance != null)
         GamePlay.Instance.ChangeStage();
         
         
@@ -481,7 +482,7 @@ public class Player : BaseObject
 
                 break;
             case State.Attack:
-                _isAttack = true;
+               
                 _isIdle = true;
 
                 break;
@@ -491,7 +492,7 @@ public class Player : BaseObject
             case State.Die:
                 break;
             case State.Attack2:
-                _isAttack = true;
+              
                 _isIdle = true;
                 break;
             case State.None:

@@ -126,7 +126,10 @@ public class Slime : Monster
 
                 }
 
-                _hp -= other.GetComponent<Weapon>()._damage;
+                var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
+                _hp -= damage;
+                _feedBack.PlayFeedbacks(this.transform.position,damage);
+                Debug.Log("여기도 깎여?");
             }
             else if(other.GetComponent<Weapon>()._isOnce == true && Player.Instance._playerTitle == Player.PlayerTitle.Druid)
             {
@@ -159,7 +162,9 @@ public class Slime : Monster
                 Debug.Log("여기여기");
 
                 ChangeState(State.Hit);
-                _hp -= other.GetComponent<Weapon>()._damage;
+                var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
+                _hp -= damage;
+                _feedBack.PlayFeedbacks(this.transform.position, damage);
             }
 
         }

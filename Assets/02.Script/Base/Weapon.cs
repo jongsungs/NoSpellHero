@@ -20,16 +20,16 @@ public class Weapon : MonoBehaviour
 
     private void Update()
     {
-        if( Player.Instance._isAttack == true )
-        {
-            _isOnce = true;
-            _isDamage = true;
-        }
-        else if(Player.Instance._isAttack == false)
-        {
-            _isDamage = false;
-            _isOnce = false;
-        }
+       if( Player.Instance._isAttack == true )
+       {
+           _isOnce = true;
+           _isDamage = true;
+       }
+       else if(Player.Instance._isAttack == false)
+       {
+           _isDamage = false;
+           _isOnce = false;
+       }
     }
 
 
