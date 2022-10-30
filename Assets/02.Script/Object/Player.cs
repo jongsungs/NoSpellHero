@@ -464,20 +464,13 @@ public class Player : BaseObject
                
                 break;
             case State.Walk:
-                if (GamePlay.Instance._listPlayers[0].gameObject.activeSelf== true)
-                {
+              
                     Vector3 direction2 = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
                     _rigidbody.velocity = (direction2 * (_basicSpeed * 50f) * Time.fixedDeltaTime);
                     m_transform.transform.rotation = Quaternion.LookRotation(direction2);
                     m_transform.transform.Translate(Vector3.forward * _rotateSpeed * Time.deltaTime);
-                }
-                else if (GamePlay.Instance._listPlayers[1].gameObject.activeSelf == true)
-                {
-                    Vector3 direction2 = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
-                    _rigidbody.velocity = (direction2 * (_basicSpeed * 50f) * Time.fixedDeltaTime);
-                    m_transform.transform.rotation = Quaternion.LookRotation(direction2); 
-                    m_transform.transform.Translate(Vector3.forward * _rotateSpeed * Time.deltaTime);
-                }
+               
+
                 _isIdle = true;
 
                 break;

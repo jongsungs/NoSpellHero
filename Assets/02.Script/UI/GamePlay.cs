@@ -9,12 +9,11 @@ public class GamePlay : MonoBehaviour
 {
     public enum GameState : int
     {
-        Start = 0,
-        Stage1 = 1,
-        Stage2 = 2,
-        Stage3 = 3,
-        Stage4 = 4,
-        Result = 5,
+        Stage1 = 0,
+        Stage2 = 1,
+        Stage3 = 2,
+        Stage4 = 3,
+        Result = 4,
     }
 
 
@@ -69,9 +68,10 @@ public class GamePlay : MonoBehaviour
 
     public bool _isBoss;
 
-    public List<Material> _listStageGroundMaterial = new List<Material>();
     public List<GameObject> _listMeteorTarget = new List<GameObject>();
     public List<SkillBase> _listMeteor = new List<SkillBase>();
+    public List<GameObject> _listStage = new List<GameObject>();
+
 
 
     public bool _islerp;
@@ -149,9 +149,11 @@ public class GamePlay : MonoBehaviour
         _meteorEffectPool = new ObjectPool<SkillBase>(CreateMeteorEffect, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 20);
 
         _bossHPBar.SetActive(false);
-        _currentStage = GameState.Start;
-        StartCoroutine(CoStartStage());
-       
+        
+       for(int i = 1; i < _listStage.Count; ++i)
+        {
+            _listStage[i].SetActive(false);
+        }
         _totalCreepScore = _stage1CreepScore + _stage2CreepScore + _stage3CreepScore + _stage4CreepScore;
 
     }
@@ -585,26 +587,20 @@ public class GamePlay : MonoBehaviour
 
         switch(stage)
         {
-            case GameState.Start:
-                
-                break;
+           
             case GameState.Stage1:
                 
-                StartCoroutine(CoStartStage1());
                 
 
                 break;
             case GameState.Stage2:
-                StartCoroutine(CoStartStage2());
                 
                 break;
             case GameState.Stage3:
-                StartCoroutine(CoStartStage3());
              
                
                 break;
             case GameState.Stage4:
-                StartCoroutine(CoStartStage4());
                 
                 break;
             case GameState.Result:
@@ -614,106 +610,7 @@ public class GamePlay : MonoBehaviour
 
     }
     
-    IEnumerator CoStartStage()
-    {
-        _lerp = 0f;
-        SetValue(0f, _listStageGroundMaterial[0]);
-        for (int i = (int)GameState.Stage1; i < _listStageGroundMaterial.Count; ++i)
-        {
-            SetValue(1f, _listStageGroundMaterial[i]);
-        }
-        yield return new WaitForSeconds(1f);
-        ChangeStage(GameState.Stage1);
-        
-        
-    }
-    IEnumerator CoStartStage1()
-    {
-        _lerp = 0f;
-        SetValue(0f, _listStageGroundMaterial[0]);
-    
-        for(int i = (int)GameState.Stage1; i < _listStageGroundMaterial.Count; ++i)
-        {
-            SetValue(1f, _listStageGroundMaterial[i]);
-        }
-        yield return new WaitForSeconds(1f);
-        for (int i = 0; i < 5; ++i)
-        {
-            _slimePool.Get();
-        }
-
-    }
-    IEnumerator CoStartStage2()
-    {
-        for (int i = (int)GameState.Stage2; i < _listStageGroundMaterial.Count; ++i)
-        {
-            SetValue(1f, _listStageGroundMaterial[i]);
-        }
-        _lerp = 0f;
-        _ReverseLerp = 1f;
-        while (_lerp <= 0.99f && _ReverseLerp >= 0.01f)
-        {
-            yield return new WaitForSeconds(0.05f);
-            _lerp += Time.deltaTime;
-            _ReverseLerp -= Time.deltaTime;
-            SetValue(_lerp, _listStageGroundMaterial[0]);
-            SetValue(_ReverseLerp, _listStageGroundMaterial[1]);
-        }
-        yield return new WaitForSeconds(1f);
-
-        for (int i = 0; i < 5; ++i)
-        {
-            _slimePool.Get();
-        }
-
-
-    }
-    IEnumerator CoStartStage3()
-    {
-        for (int i = (int)GameState.Stage3; i < _listStageGroundMaterial.Count; ++i)
-        {
-            SetValue(1f, _listStageGroundMaterial[i]);
-        }
-        _lerp = 0f;
-        _ReverseLerp = 1f;
-        while (_lerp <= 0.99f && _ReverseLerp >= 0.01f)
-        {
-            yield return new WaitForSeconds(0.05f);
-            _lerp += Time.deltaTime;
-            _ReverseLerp -= Time.deltaTime;
-            SetValue(_lerp, _listStageGroundMaterial[1]);
-            SetValue(_ReverseLerp, _listStageGroundMaterial[2]);
-        }
-        yield return new WaitForSeconds(1f);
-        for (int i = 0; i < 5; ++i)
-        {
-            _slimePool.Get();
-        }
-
-    }
-    IEnumerator CoStartStage4()
-    {
-        for (int i = (int)GameState.Stage4; i < _listStageGroundMaterial.Count; ++i)
-        {
-            SetValue(1f, _listStageGroundMaterial[i]);
-        }
-        _lerp = 0f;
-        _ReverseLerp = 1f;
-        while (_lerp <= 0.99f && _ReverseLerp >= 0.01f)
-        {
-            yield return new WaitForSeconds(0.05f);
-            _lerp += Time.deltaTime;
-            _ReverseLerp -= Time.deltaTime;
-            SetValue(_lerp, _listStageGroundMaterial[2]);
-            SetValue(_ReverseLerp, _listStageGroundMaterial[3]);
-        }
-        yield return new WaitForSeconds(1f);
-        for (int i = 0; i < 5; ++i)
-        {
-            _slimePool.Get();
-        }
-
-    }
+   
 
     
 
@@ -740,7 +637,23 @@ public class GamePlay : MonoBehaviour
 
     public IEnumerator ReverseGround()
     {
-        _listPlayers[0].GetComponent<Rigidbody>().isKinematic = true;
+        if ((int)_currentStage >= 2)
+            _listStage[(int)_currentStage - 2].SetActive(false);
+        if ((int)_currentStage < 4)
+            _listStage[(int)_currentStage].SetActive(true);
+        _listPlayers[(int)_currentStage].gameObject.SetActive(true);
+        Player.Instance._rigidbody = _listPlayers[(int)_currentStage].GetComponent<Rigidbody>();
+        Player.Instance._rigidbody.isKinematic = true;
+        Player.Instance._meteorPoint = Player.Instance._listMeteorPoint[(int)_currentStage];
+        _listPlayers[(int)_currentStage].transform.position = new Vector3(0, 0, 0);
+        _listPlayers[(int)_currentStage].transform.rotation = Quaternion.Euler(0, -180, 180);
+        Player.Instance._animator = _listPlayers[(int)_currentStage].GetComponent<Animator>();
+        Player.Instance.m_transform = _listPlayers[(int)_currentStage].GetComponent<Transform>();
+        Player.Instance.ChangeState(BaseObject.State.None);
+        Player.Instance._followCamera._target = _listPlayers[(int)_currentStage].gameObject;
+
+        _listPlayers[(int)_currentStage].GetComponent<Rigidbody>().isKinematic = true;
+        Debug.Log("리버스그라운드");
         while(_ground.transform.rotation.z < 1f)
         {
             yield return new WaitForSeconds(0.05f);
@@ -748,19 +661,40 @@ public class GamePlay : MonoBehaviour
         }
 
         Player.Instance._rigidbody.isKinematic = false;
-        _listPlayers[0].gameObject.SetActive(false);
+        _listPlayers[(int)_currentStage - 1].gameObject.SetActive(false);
+       
+
+        
 
     }
     public IEnumerator GetBackGround()
     {
-        _listPlayers[1].GetComponent<Rigidbody>().isKinematic = true;
+        _listStage[(int)_currentStage].SetActive(true);
+        _listPlayers[(int)_currentStage].gameObject.SetActive(true);
+        Player.Instance._rigidbody = _listPlayers[(int)_currentStage].GetComponent<Rigidbody>();
+        Player.Instance._rigidbody.isKinematic = true;
+        Player.Instance._meteorPoint = Player.Instance._listMeteorPoint[(int)_currentStage];
+        _listPlayers[(int)_currentStage].transform.position = new Vector3(0, 0, 0);
+        _listPlayers[(int)_currentStage].transform.rotation = Quaternion.Euler(0, -180, 180);
+        Player.Instance._animator = _listPlayers[(int)_currentStage].GetComponent<Animator>();
+        Player.Instance.m_transform = _listPlayers[(int)_currentStage].GetComponent<Transform>();
+        Player.Instance.ChangeState(BaseObject.State.None);
+        Player.Instance._followCamera._target = _listPlayers[(int)_currentStage].gameObject;
+        _listStage[(int)_currentStage - 2].SetActive(false);
+        _listStage[(int)_currentStage].SetActive(true);
+        _listPlayers[(int)_currentStage].GetComponent<Rigidbody>().isKinematic = true;
+        Debug.Log("겟백");
         while (_ground.transform.rotation.z > 0f)
         {
             yield return new WaitForSeconds(0.05f);
             _ground.transform.Rotate(Vector3.forward * -5f);
         }
         Player.Instance._rigidbody.isKinematic = false;
-        _listPlayers[1].gameObject.SetActive(false);
+        _listPlayers[(int)_currentStage -1].gameObject.SetActive(false);
+  
+
+        
+        
 
     }
     public void ActiveBlizzard()
@@ -778,50 +712,47 @@ public class GamePlay : MonoBehaviour
 
     public void ChangeStage()
     {
-        if((int)_currentStage % 2 == 0 && (int)_currentStage != 0) //짝수
+        if((int)_currentStage % 2 == 0 && (int)_currentStage != 0) //3라운드
         {
-
-            _listPlayers[0].gameObject.SetActive(true);
-            Player.Instance._rigidbody = _listPlayers[0].GetComponent<Rigidbody>();
+            Debug.Log("3라");
+            _listStage[(int)_currentStage].SetActive(true);
+            _listPlayers[(int)_currentStage].gameObject.SetActive(true);
+            Player.Instance._rigidbody = _listPlayers[(int)_currentStage].GetComponent<Rigidbody>();
             Player.Instance._rigidbody.isKinematic = true;
-            Player.Instance._meteorPoint = Player.Instance._listMeteorPoint[0];
+            Player.Instance._meteorPoint = Player.Instance._listMeteorPoint[(int)_currentStage];
             StartCoroutine(GetBackGround());
-            _listPlayers[0].transform.position = new Vector3(0, 0, 0);
-            _listPlayers[0].transform.rotation = Quaternion.Euler(0, -180, 180);
-            Player.Instance._animator = _listPlayers[0].GetComponent<Animator>();
-            Player.Instance.m_transform = _listPlayers[0].GetComponent<Transform>();
+            _listPlayers[(int)_currentStage].transform.position = new Vector3(0, 0, 0);
+            _listPlayers[(int)_currentStage].transform.rotation = Quaternion.Euler(0, -180, 180);
+            Player.Instance._animator = _listPlayers[(int)_currentStage].GetComponent<Animator>();
+            Player.Instance.m_transform = _listPlayers[(int)_currentStage].GetComponent<Transform>();
             Player.Instance.ChangeState(BaseObject.State.None);
-            Player.Instance._followCamera._target = _listPlayers[0].gameObject;
-            _currentStage = (int)_currentStage + (GameState)1;
+            Player.Instance._followCamera._target = _listPlayers[(int)_currentStage].gameObject;
+            
+            
+
         }
-        else if((int)_currentStage %2 == 1) // 홀수
+        else if((int)_currentStage %2 == 1) // 홀수 2라운드 4라운드
         {
             
-            _listPlayers[1].gameObject.SetActive(true);
-            Player.Instance._rigidbody = _listPlayers[1].GetComponent<Rigidbody>();
-            Player.Instance._rigidbody.isKinematic = true;
-            Player.Instance._meteorPoint = Player.Instance._listMeteorPoint[1];
             StartCoroutine(ReverseGround());
-            _listPlayers[1].transform.position = new Vector3(0, 0, 0);
-            _listPlayers[1].transform.rotation = Quaternion.Euler(0, -180, 180);
-            Player.Instance._animator = _listPlayers[1].GetComponent<Animator>();
-            Player.Instance.m_transform = _listPlayers[1].GetComponent<Transform>();
-            Player.Instance.ChangeState(BaseObject.State.None);
-            Player.Instance._followCamera._target = _listPlayers[1].gameObject;
-            _currentStage = (int)_currentStage + (GameState)1;
+            
+            Debug.Log("24라");
+
         }
-        else
+        else // 시작 1라운드
         {
            
-            _listPlayers[0].transform.position = new Vector3(0, 0, 0);
-            _listPlayers[0].transform.rotation = Quaternion.Euler(0, -180, 0);
-            _listPlayers[0].gameObject.SetActive(true);
-            _listPlayers[1].gameObject.SetActive(false);
+            _listPlayers[(int)_currentStage].transform.position = new Vector3(0, 0, 0);
+            _listPlayers[(int)_currentStage].transform.rotation = Quaternion.Euler(0, -180, 0);
+            _listPlayers[(int)_currentStage].gameObject.SetActive(true);
+            _listPlayers[(int)_currentStage + 1].gameObject.SetActive(false);
             Player.Instance._meteorPoint = Player.Instance._listMeteorPoint[0];
-            Player.Instance.ChangeComponent(_listPlayers[0].gameObject);
+            Player.Instance.ChangeComponent(_listPlayers[(int)_currentStage].gameObject);
             Player.Instance.ChangeState(BaseObject.State.None);
            // Player.Instance._followCamera._target = _listPlayers[0].gameObject;
-            _currentStage = (int)_currentStage + (GameState)1;
+            _listStage[(int)_currentStage].SetActive(true);
+           
+            Debug.Log("1라");
         }
         
 
