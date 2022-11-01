@@ -7,6 +7,57 @@ using Newtonsoft.Json;
 using System.Text;
 using System;
 
+public enum EquipmentWeapon : int
+{
+    Stick = 0,
+    Sward1,
+    Sward2,
+    Broom,
+    Club,
+    ShortSward,
+    Hanger,
+    Mace,
+    Shield,
+    Spear,
+    Umbrella,
+    Waldo,
+
+
+}
+public enum Hair : int
+{
+    NormalHair = 0,
+    SkinHead,
+}
+public enum Helmet : int
+{
+    Empty = 0,
+    KnightHelmet,
+    MasicianHat,
+    Gat,
+}
+public enum Top : int
+{
+    Normal = 0,
+    KnightTop,
+    MasicianTop,
+    Durumagi,
+}
+public enum Bottom : int
+{
+    Trunk = 0,
+    KnightBottom,
+    MasicianBottom,
+    DurumagiBottom,
+}
+public enum Shoes : int
+{
+    Normal = 0,
+    KnightShoes,
+    Sandal,
+    OldShoes,
+}
+
 
 #region PlayerData
 public class PlayerData
@@ -22,7 +73,45 @@ public class PlayerData
     public float m_charm;
     public float m_criticalDamage;
 
-    public PlayerData(float hp, float atk, float matk, float atkspeed, float def, float speed, float critical, float handicraft, float charm,float criticalDamage)
+    public bool m_isStick;
+    public bool m_isSward1;
+    public bool m_isSward2;
+    public bool m_isBroom;
+    public bool m_isClub;
+    public bool m_isShortSward;
+    public bool m_isHanger;
+    public bool m_isMace;
+    public bool m_isShield;
+    public bool m_isSpear;
+    public bool m_isUmbrella;
+    public bool m_isWaldo;
+
+    public bool m_isKightHelmet;
+    public bool m_isMasicianHat;
+    public bool m_isGat;
+    public bool m_isSkinHead;
+    public bool m_isnormalHair;
+    public bool m_isKnightTop;
+    public bool m_isMasicianTop;
+    public bool m_isDurumagiTop;
+    public bool m_isKnightBottom;
+    public bool m_isMasicianBottom;
+    public bool m_isdurumagiBottom;
+    public bool m_isKnightShoes;
+    public bool m_isSandal;
+    public bool m_isOldShoes;
+    
+
+    public bool m_isEmptyHelmet;
+    public bool m_isNormalTop;
+    public bool m_isTrunkBottom;
+    public bool m_isnormalShoes;
+
+
+
+    public PlayerData(float hp, float atk, float matk, float atkspeed, float def, float speed, float critical, float handicraft, float charm,float criticalDamage,bool kighthelmet,bool masicianhat, bool gat, bool skinhead, bool normalhair,
+        bool knighttop,bool masiciantop,bool durumagitop, bool knightbottom,bool masicianbottom,bool durumagibottom,bool knightshoes,bool sandal, bool oldshoes,bool emptyhelmet,bool normaltop,bool trunkbottom,bool normalshoes,
+        bool stick,bool sward1,bool sward2,bool broom,bool club, bool shortsward,bool hanger,bool mace,bool shield,bool spear,bool umbrella, bool waldo)
     {
         m_hp = hp;
         m_atk = atk;
@@ -34,6 +123,41 @@ public class PlayerData
         m_handicraft = handicraft;
         m_charm = charm;
         m_criticalDamage = criticalDamage;
+
+        m_isStick = stick;
+        m_isSward1 = sward1;
+        m_isSward2 = sward2;
+        m_isBroom = broom;
+        m_isClub = club;
+        m_isShortSward = shortsward;
+        m_isHanger = hanger;
+        m_isMace = mace;
+        m_isShield = shield;
+        m_isSpear = spear;
+        m_isUmbrella = umbrella;
+        m_isWaldo = waldo;
+
+        m_isKightHelmet = kighthelmet;
+        m_isMasicianHat = masicianhat;
+        m_isGat = gat;
+        m_isSkinHead = skinhead;
+        m_isnormalHair = normalhair;
+        m_isKnightTop = knighttop;
+        m_isMasicianTop = masiciantop;
+        m_isDurumagiTop = durumagitop;
+        m_isKnightBottom = durumagibottom;
+        m_isMasicianBottom = masicianbottom;
+        m_isdurumagiBottom = durumagibottom;
+        m_isKnightShoes = knightshoes;
+        m_isSandal = sandal;
+        m_isOldShoes = oldshoes;
+
+        m_isEmptyHelmet = emptyhelmet;
+        m_isNormalTop = normaltop;
+        m_isTrunkBottom = trunkbottom;
+        m_isnormalShoes = normalshoes;
+
+
     }
 }
 #endregion
@@ -139,9 +263,86 @@ public class Player : BaseObject
     public List<GameObject> _listMeteorPoint = new List<GameObject>();
     public List<Animator> _listAnimator = new List<Animator>();
     public List<Rigidbody> _listRigidBody = new List<Rigidbody>();
+    //////옷----------------------------------------
+    
+    //무기
+    public GameObject _stick;   //막대기
+    public GameObject _sward1;   //한손검
+    public GameObject _sward2;  //한손검2
+    public GameObject _broom;   //빗자루
+    public GameObject _club;    //나무몽둥이
+    public GameObject _shortSward;  //단도
+    public GameObject _hanger;  //옷걸이
+    public GameObject _mace;    //메이스
+    public GameObject _shield;  //방패
+    public GameObject _spear;   //창
+    public GameObject _umbrella;    //우산
+    public GameObject _waldo;   //월도
+
+    public bool _isStick;
+    public bool _isSward1;
+    public bool _isSward2;
+    public bool _isBroom;
+    public bool _isClub;
+    public bool _isShortSward;
+    public bool _isHanger;
+    public bool _isMace;
+    public bool _isShield;
+    public bool _isSpear;
+    public bool _isUmbrella;
+    public bool _isWaldo;
 
 
+    //투구
+    public GameObject _knightHelmet;    //기사 투구
+    public GameObject _masicianHat;     //마법사모자
+    public GameObject _gat; //갓
+    public GameObject _emptyHelmet;
 
+    public bool _isKightHelmet;
+    public bool _isMasicianHat;
+    public bool _isGat;
+    public bool _isEmptyHelmet;
+
+    //머리
+    public GameObject _skinHead;//민머리
+    public GameObject _normalHair;
+
+    public bool _isSkinHead;
+    public bool _isnormalHair;
+
+    //상의
+    public GameObject _knightTop;   //기사 상의
+    public GameObject _masicianTop; //마법사 상의
+    public GameObject _durumagiTop; //두루마기
+    public GameObject _normalTop; // 나시티
+
+    public bool _isKnightTop;
+    public bool _isMasicianTop;
+    public bool _isDurumagiTop;
+    public bool _isNormalTop;
+
+    //하의
+    public GameObject _knightBottom;    //기사 하의
+    public GameObject _masicianBottom;  //마법사 하의
+    public GameObject _durumagiBottom;  //두루마기 하의
+    public GameObject _trunkBottom; // 반바지
+
+    public bool _isKnightBottom;
+    public bool _isMasicianBottom;
+    public bool _isdurumagiBottom;
+    public bool _isTrunkBottom;
+
+    //신발
+    public GameObject _knightShoes; //기사 신발
+    public GameObject _sandal;  //샌달
+    public GameObject _oldShoes;    //옛날 신발
+    public GameObject _normalShoes;// 맨발
+
+    public bool _isKnightShoes;
+    public bool _isSandal;
+    public bool _isOldShoes;
+    public bool _isnormalShoes;
 
     /// --------------
     /// 확률
@@ -161,7 +362,8 @@ public class Player : BaseObject
     {
         Instance = this;
         Load();
-        _data = new PlayerData(_hp, _atk, _matk, _atkSpeed, _def, _speed, _critical, _handicraft, _charm,_criticalDamage);
+        _data = new PlayerData(_hp, _atk, _matk, _atkSpeed, _def, _speed, _critical, _handicraft, _charm,_criticalDamage,
+            _isKightHelmet,_isMasicianHat,_isGat,_isSkinHead,_isnormalHair,_isKnightTop,_isMasicianTop,_isDurumagiTop,_isKnightBottom,_isMasicianBottom,_isdurumagiBottom,_isKnightShoes,_isSandal,_isOldShoes,_isEmptyHelmet,_isNormalTop,_isTrunkBottom,_isnormalShoes,_isStick,_isSward1,_isSward2,_isBroom,_isClub,_isShortSward,_isHanger,_isMace,_isShield,_isSpear,_isUmbrella,_isWaldo);
         
         _preSpeed = _speed;
         _maxHp = 50 + (_hp * 10);
@@ -175,6 +377,15 @@ public class Player : BaseObject
         _basicCharm = _charm;
         _basicCriticalDamage = _criticalDamage;
         _criticalProbability = 3f;
+
+        
+
+
+
+
+
+
+
         
 
         _listState.Add(_atk);
@@ -1423,6 +1634,43 @@ public class Player : BaseObject
         _handicraft = data.m_handicraft;
         _charm = data.m_charm;
         _criticalDamage = data.m_criticalDamage;
+
+
+
+
+        _isStick = data.m_isStick;
+        _isSward1 = data.m_isSward1;
+        _isSward2 = data.m_isSward2;
+        _isBroom = data.m_isBroom;
+        _isClub = data.m_isClub;
+        _isShortSward = data.m_isShortSward;
+        _isHanger = data.m_isHanger;
+        _isMace = data.m_isMace;
+        _isShield = data.m_isShield;
+        _isSpear = data.m_isSpear;
+        _isUmbrella = data.m_isUmbrella;
+        _isWaldo = data.m_isWaldo;
+
+        _isKightHelmet = data.m_isKightHelmet;
+        _isMasicianHat = data.m_isMasicianHat;
+        _isGat = data.m_isGat;
+        _isSkinHead = data.m_isSkinHead;
+        _isnormalHair = data.m_isnormalHair;
+        _isKnightTop = data.m_isKnightTop;
+        _isMasicianTop = data.m_isMasicianTop;
+        _isDurumagiTop = data.m_isDurumagiTop;
+        _isKnightBottom = data.m_isKnightBottom;
+        _isMasicianBottom = data.m_isMasicianBottom;
+        _isdurumagiBottom = data.m_isdurumagiBottom;
+        _isKnightShoes = data.m_isKnightShoes;
+        _isSandal = data.m_isSandal;
+        _isOldShoes = data.m_isOldShoes;
+        _isEmptyHelmet = data.m_isEmptyHelmet;
+        _isNormalTop = data.m_isNormalTop;
+        _isTrunkBottom = data.m_isTrunkBottom;
+        _isnormalShoes = data.m_isnormalShoes;
+
+
     }
     public void DataSave()
     {
@@ -1436,6 +1684,41 @@ public class Player : BaseObject
         _data.m_handicraft = _handicraft;
         _data.m_charm = _charm;
         _data.m_criticalDamage = _criticalDamage;
+
+        _data.m_isStick = _isStick;
+        _data.m_isSward1 = _isSward1;
+        _data.m_isSward2 = _isSward2;
+        _data.m_isBroom = _isBroom;
+        _data.m_isClub = _isClub;
+        _data.m_isShortSward = _isShortSward;
+        _data.m_isHanger = _isHanger;
+        _data.m_isMace = _isMace;
+        _data.m_isShield = _isShield;
+        _data.m_isSpear = _isSpear;
+        _data.m_isUmbrella = _isUmbrella;
+        _data.m_isWaldo = _isWaldo;
+
+
+        _data.m_isKightHelmet = _isKightHelmet;
+        _data.m_isMasicianHat = _isMasicianHat;
+        _data.m_isGat = _isGat;
+        _data.m_isSkinHead = _isSkinHead;
+        _data.m_isnormalHair = _isnormalHair;
+        _data.m_isKnightTop = _isKnightTop;
+        _data.m_isMasicianTop = _isMasicianTop;
+        _data.m_isDurumagiTop = _isDurumagiTop;
+        _data.m_isKnightBottom = _isKnightBottom;
+        _data.m_isMasicianBottom = _isMasicianBottom;
+        _data.m_isdurumagiBottom = _isdurumagiBottom;
+        _data.m_isKnightShoes = _isKnightShoes;
+        _data.m_isSandal = _isSandal;
+        _data.m_isOldShoes = _isOldShoes;
+        _data.m_isEmptyHelmet = _isEmptyHelmet;
+        _data.m_isNormalTop = _isNormalTop;
+        _data.m_isTrunkBottom = _isTrunkBottom;
+        _data.m_isnormalShoes = _isnormalShoes;
+
+
 
     }
     string ObjectToJason(object data)

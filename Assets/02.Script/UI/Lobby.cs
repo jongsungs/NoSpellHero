@@ -8,17 +8,31 @@ using TMPro;
 public class Lobby : MonoBehaviour
 {
     [SerializeField] Player _player;
-    public GameObject _inGameTitlePopUp;
+    public GameObject _closetPopUp;
     public GameObject _achivementPopUp;
     public GameObject _playerTitleText;
+    public GameObject _statePopUp;
+
+    public List<GameObject> _listWeapon = new List<GameObject>();
+    public List<GameObject> _listHelmet = new List<GameObject>();
+    public List<GameObject> _listHair = new List<GameObject>();
+    public List<GameObject> _listTop = new List<GameObject>();
+    public List<GameObject> _listBottom = new List<GameObject>();
+    public List<GameObject> _listShoes = new List<GameObject>();
+
     public bool _OnTitle;
     public bool _isSet;
     public int _3master;
 
     public List<GameObject> _listStatSpace = new List<GameObject>();
-
-    private void Start()
+    
+    private void OnEnable()
     {
+
+        _statePopUp.SetActive(true);
+        _achivementPopUp.SetActive(false);
+        _closetPopUp.SetActive(false);
+
         for (int i = 0; i < _player._atk; ++i)
         {
             _listStatSpace[0].transform.GetChild(i).gameObject.SetActive(true);
@@ -55,6 +69,7 @@ public class Lobby : MonoBehaviour
         {
             _listStatSpace[8].transform.GetChild(i).gameObject.SetActive(true);
         }
+        
 
     }
 
@@ -440,6 +455,281 @@ public class Lobby : MonoBehaviour
 
             }
         }
+        #region Weapon
+        if (_player._isStick == true)
+        {
+            _listWeapon[0].SetActive(true);
+        }
+        else if (_player._isStick == false)
+        {
+            _listWeapon[0].SetActive(false);
+        }
+
+        if (_player._isSward1 == true)
+        {
+            _listWeapon[1].SetActive(true);
+        }
+        else if (_player._isSward1 == false)
+        {
+            _listWeapon[1].SetActive(false);
+        }
+
+        if (_player._isSward2 == true)
+        {
+            _listWeapon[2].SetActive(true);
+        }
+        else if (_player._isSward2 == false)
+        {
+            _listWeapon[2].SetActive(false);
+        }
+
+        if (_player._isBroom == true)
+        {
+            _listWeapon[3].SetActive(true);
+        }
+        else if (_player._isBroom == false)
+        {
+            _listWeapon[3].SetActive(false);
+        }
+
+        if (_player._isClub == true)
+        {
+            _listWeapon[4].SetActive(true);
+        }
+        else if (_player._isClub == false)
+        {
+            _listWeapon[4].SetActive(false);
+        }
+        if (_player._isShortSward == true)
+        {
+            _listWeapon[5].SetActive(true);
+        }
+        else if (_player._isShortSward == false)
+        {
+            _listWeapon[5].SetActive(false);
+        }
+        if (_player._isHanger == true)
+        {
+            _listWeapon[6].SetActive(true);
+        }
+        else if (_player._isHanger == false)
+        {
+            _listWeapon[6].SetActive(false);
+        }
+        if (_player._isMace == true)
+        {
+            _listWeapon[7].SetActive(true);
+        }
+        else if (_player._isMace == false)
+        {
+            _listWeapon[7].SetActive(false);
+        }
+        if (_player._isShield == true)
+        {
+            _listWeapon[8].SetActive(true);
+        }
+        else if (_player._isShield == false)
+        {
+            _listWeapon[8].SetActive(false);
+        }
+        if (_player._isSpear == true)
+        {
+            _listWeapon[9].SetActive(true);
+        }
+        else if (_player._isSpear == false)
+        {
+            _listWeapon[9].SetActive(false);
+        }
+        if (_player._isUmbrella == true)
+        {
+            _listWeapon[10].SetActive(true);
+        }
+        else if (_player._isUmbrella == false)
+        {
+            _listWeapon[10].SetActive(false);
+        }
+        if (_player._isWaldo == true)
+        {
+            _listWeapon[11].SetActive(true);
+        }
+        else if (_player._isWaldo == false)
+        {
+            _listWeapon[11].SetActive(false);
+        }
+        
+
+
+        #endregion
+        #region Hair
+        if (_player._isnormalHair == true)
+        {
+            _listHair[0].SetActive(true);
+        }
+        else if (_player._isnormalHair == false)
+        {
+            _listHair[0].SetActive(false);
+        }
+
+        if (_player._isSkinHead == true)
+        {
+            _listHair[1].SetActive(true);
+        }
+        else if (_player._isSkinHead == false)
+        {
+            _listHair[1].SetActive(false);
+        }
+
+        
+        #endregion
+        #region Helmet
+        if (_player._isEmptyHelmet == true)
+        {
+            _listHelmet[0].SetActive(true);
+        }
+        else if (_player._isEmptyHelmet == false)
+        {
+            _listHelmet[0].SetActive(false);
+        }
+
+        if (_player._isKightHelmet == true)
+        {
+            _listHelmet[1].SetActive(true);
+        }
+        else if (_player._isKightHelmet == false)
+        {
+            _listHelmet[1].SetActive(false);
+        }
+
+        if (_player._masicianHat == true)
+        {
+            _listHelmet[2].SetActive(true);
+        }
+        else if (_player._masicianHat == false)
+        {
+            _listHelmet[2].SetActive(false);
+        }
+
+        if (_player._isGat == true)
+        {
+            _listHelmet[3].SetActive(true);
+        }
+        else if (_player._isGat == false)
+        {
+            _listHelmet[3].SetActive(false);
+        }
+        #endregion
+        #region Top
+        if (_player._isNormalTop == true)
+        {
+            _listTop[0].SetActive(true);
+        }
+        else if(_player._isNormalTop == false)
+        {
+            _listTop[0].SetActive(false);
+        }
+
+        if (_player._isKnightTop == true)
+        {
+            _listTop[1].SetActive(true);
+        }
+        else if (_player._isKnightTop == false)
+        {
+            _listTop[1].SetActive(false);
+        }
+
+        if (_player._isMasicianTop == true)
+        {
+            _listTop[2].SetActive(true);
+        }
+        else if (_player._isMasicianTop == false)
+        {
+            _listTop[2].SetActive(false);
+        }
+
+        if (_player._isDurumagiTop == true)
+        {
+            _listTop[3].SetActive(true);
+        }
+        else if (_player._isDurumagiTop == false)
+        {
+            _listTop[3].SetActive(false);
+        }
+        #endregion
+        #region Bottom
+        if (_player._isTrunkBottom == true)
+        {
+            _listBottom[0].SetActive(true);
+        }
+        else if (_player._isTrunkBottom == false)
+        {
+            _listBottom[0].SetActive(false);
+        }
+
+        if (_player._isKnightBottom == true)
+        {
+            _listBottom[1].SetActive(true);
+        }
+        else if (_player._isKnightBottom == false)
+        {
+            _listBottom[1].SetActive(false);
+        }
+
+        if (_player._isMasicianBottom == true)
+        {
+            _listBottom[2].SetActive(true);
+        }
+        else if (_player._isMasicianBottom == false)
+        {
+            _listBottom[2].SetActive(false);
+        }
+
+        if (_player._isdurumagiBottom == true)
+        {
+            _listBottom[3].SetActive(true);
+        }
+        else if (_player._isdurumagiBottom == false)
+        {
+            _listBottom[3].SetActive(false);
+        }
+        #endregion
+        #region Shoes
+        if (_player._isnormalShoes == true)
+        {
+            _listShoes[0].SetActive(true);
+        }
+        else if (_player._isnormalShoes == false)
+        {
+            _listShoes[0].SetActive(false);
+        }
+
+        if (_player._isKnightShoes == true)
+        {
+            _listShoes[1].SetActive(true);
+        }
+        else if (_player._isKnightShoes == false)
+        {
+            _listShoes[1].SetActive(false);
+        }
+
+        if (_player._isSandal == true)
+        {
+            _listShoes[2].SetActive(true);
+        }
+        else if (_player._isSandal == false)
+        {
+            _listShoes[2].SetActive(false);
+        }
+
+        if (_player._isOldShoes == true)
+        {
+            _listShoes[3].SetActive(true);
+        }
+        else if (_player._isOldShoes == false)
+        {
+            _listShoes[3].SetActive(false);
+        }
+        #endregion
+
     }
 
     public void ATKUP()
@@ -598,13 +888,15 @@ public class Lobby : MonoBehaviour
         _OnTitle = false;
     }
 
-    public void EnterInGameTitlePopUP()
+    public void EnterClosetPopUP()
     {
-        _inGameTitlePopUp.SetActive(true);
+        _closetPopUp.SetActive(true);
+        _statePopUp.SetActive(false);
     }
-    public void ExitInGameTitlePopUP()
+    public void ExitClosetPopUP()
     {
-        _inGameTitlePopUp.SetActive(false);
+        _closetPopUp.SetActive(false);
+        _statePopUp.SetActive(true);
     }
     public void EnterAchivementPopUp()
     {
@@ -613,6 +905,341 @@ public class Lobby : MonoBehaviour
     public void ExitAchivemntPopUp()
     {
         _achivementPopUp.SetActive(false);
+    }
+
+    public void ChoiceWeapon(int cnt)
+    {
+        if (cnt == 0)
+        {
+            _player._isStick = true;
+            _player._isSward1 = false;
+            _player._isSward2 = false;
+            _player._isBroom = false;
+            _player._isClub = false;
+            _player._isShortSward = false;
+            _player._isHanger = false;
+            _player._isMace = false;
+            _player._isShield = false;
+            _player._isSpear = false;
+            _player._isUmbrella = false;
+            _player._isWaldo = false;
+
+        }
+        else if (cnt == 1)
+        {
+            _player._isStick = false;
+            _player._isSward1 = true;
+            _player._isSward2 = false;
+            _player._isBroom = false;
+            _player._isClub = false;
+            _player._isShortSward = false;
+            _player._isHanger = false;
+            _player._isMace = false;
+            _player._isShield = false;
+            _player._isSpear = false;
+            _player._isUmbrella = false;
+            _player._isWaldo = false;
+        }
+        else if (cnt == 2)
+        {
+            _player._isStick = false;
+            _player._isSward1 = false;
+            _player._isSward2 = true;
+            _player._isBroom = false;
+            _player._isClub = false;
+            _player._isShortSward = false;
+            _player._isHanger = false;
+            _player._isMace = false;
+            _player._isShield = false;
+            _player._isSpear = false;
+            _player._isUmbrella = false;
+            _player._isWaldo = false;
+        }
+        else if (cnt == 3)
+        {
+            _player._isStick = false;
+            _player._isSward1 = false;
+            _player._isSward2 = false;
+            _player._isBroom = true;
+            _player._isClub = false;
+            _player._isShortSward = false;
+            _player._isHanger = false;
+            _player._isMace = false;
+            _player._isShield = false;
+            _player._isSpear = false;
+            _player._isUmbrella = false;
+            _player._isWaldo = false;
+        }
+        else if (cnt == 4)
+        {
+            _player._isStick = false;
+            _player._isSward1 = false;
+            _player._isSward2 = false;
+            _player._isBroom = false;
+            _player._isClub = true;
+            _player._isShortSward = false;
+            _player._isHanger = false;
+            _player._isMace = false;
+            _player._isShield = false;
+            _player._isSpear = false;
+            _player._isUmbrella = false;
+            _player._isWaldo = false;
+        }
+        else if (cnt == 5)
+        {
+            _player._isStick = false;
+            _player._isSward1 = false;
+            _player._isSward2 = false;
+            _player._isBroom = false;
+            _player._isClub = false;
+            _player._isShortSward = true;
+            _player._isHanger = false;
+            _player._isMace = false;
+            _player._isShield = false;
+            _player._isSpear = false;
+            _player._isUmbrella = false;
+            _player._isWaldo = false;
+        }
+        else if (cnt == 6)
+        {
+            _player._isStick = false;
+            _player._isSward1 = false;
+            _player._isSward2 = false;
+            _player._isBroom = false;
+            _player._isClub = false;
+            _player._isShortSward = false;
+            _player._isHanger = true;
+            _player._isMace = false;
+            _player._isShield = false;
+            _player._isSpear = false;
+            _player._isUmbrella = false;
+            _player._isWaldo = false;
+        }
+        else if (cnt == 7)
+        {
+            _player._isStick = false;
+            _player._isSward1 = false;
+            _player._isSward2 = false;
+            _player._isBroom = false;
+            _player._isClub = false;
+            _player._isShortSward = false;
+            _player._isHanger = false;
+            _player._isMace = true;
+            _player._isShield = false;
+            _player._isSpear = false;
+            _player._isUmbrella = false;
+            _player._isWaldo = false;
+        }
+        else if (cnt == 8)
+        {
+            _player._isStick = false;
+            _player._isSward1 = false;
+            _player._isSward2 = false;
+            _player._isBroom = false;
+            _player._isClub = false;
+            _player._isShortSward = false;
+            _player._isHanger = false;
+            _player._isMace = false;
+            _player._isShield = true;
+            _player._isSpear = false;
+            _player._isUmbrella = false;
+            _player._isWaldo = false;
+        }
+        else if (cnt == 9)
+        {
+            _player._isStick = false;
+            _player._isSward1 = false;
+            _player._isSward2 = false;
+            _player._isBroom = false;
+            _player._isClub = false;
+            _player._isShortSward = false;
+            _player._isHanger = false;
+            _player._isMace = false;
+            _player._isShield = false;
+            _player._isSpear = true;
+            _player._isUmbrella = false;
+            _player._isWaldo = false;
+        }
+        else if (cnt == 10)
+        {
+            _player._isStick = false;
+            _player._isSward1 = false;
+            _player._isSward2 = false;
+            _player._isBroom = false;
+            _player._isClub = false;
+            _player._isShortSward = false;
+            _player._isHanger = false;
+            _player._isMace = false;
+            _player._isShield = false;
+            _player._isSpear = false;
+            _player._isUmbrella = true;
+            _player._isWaldo = false;
+        }
+        else if (cnt == 11)
+        {
+            _player._isStick = false;
+            _player._isSward1 = false;
+            _player._isSward2 = false;
+            _player._isBroom = false;
+            _player._isClub = false;
+            _player._isShortSward = false;
+            _player._isHanger = false;
+            _player._isMace = false;
+            _player._isShield = false;
+            _player._isSpear = false;
+            _player._isUmbrella = false;
+            _player._isWaldo = true;
+        }
+        _player.Save();
+    }
+    public void ChoiceHelmet(int cnt)
+    {
+        if (cnt == 0)
+        {
+            _player._isEmptyHelmet = true;
+            _player._isKightHelmet = false;
+            _player._isMasicianHat = false;
+            _player._isGat = false;
+
+        }
+        else if (cnt == 1)
+        {
+            _player._isEmptyHelmet = false;
+            _player._isKightHelmet = true;
+            _player._isMasicianHat = false;
+            _player._isGat = false;
+        }
+        else if (cnt == 2)
+        {
+            _player._isEmptyHelmet = false;
+            _player._isKightHelmet = false;
+            _player._isMasicianHat = true;
+            _player._isGat = false;
+        }
+        else if (cnt == 3)
+        {
+            _player._isEmptyHelmet = false;
+            _player._isKightHelmet = false;
+            _player._isMasicianHat = false;
+            _player._isGat = true;
+        }
+        _player.Save();
+    }
+    public void ChoiceHair(int cnt)
+    {
+        if (cnt == 0)
+        {
+            _player._isnormalHair = true;
+            _player._isSkinHead = false;
+
+
+        }
+        else if (cnt == 1)
+        {
+            _player._isnormalHair = false;
+            _player._isSkinHead = true;
+        }
+        _player.Save();
+
+    }
+
+    public void ChoiceTop(int cnt)
+    {
+        if(cnt == 0)
+        {
+            _player._isNormalTop = true;
+            _player._isKnightTop = false;
+            _player._isMasicianTop = false;
+            _player._isDurumagiTop = false;
+
+        }
+        else if(cnt == 1)
+        {
+            _player._isNormalTop = false;
+            _player._isKnightTop = true;
+            _player._isMasicianTop = false;
+            _player._isDurumagiTop = false;
+        }
+        else if(cnt == 2)
+        {
+            _player._isNormalTop = false;
+            _player._isKnightTop = false;
+            _player._isMasicianTop = true;
+            _player._isDurumagiTop = false;
+        }
+        else if (cnt == 3)
+        {
+            _player._isNormalTop = false;
+            _player._isKnightTop = false;
+            _player._isMasicianTop = false;
+            _player._isDurumagiTop = true;
+        }
+        _player.Save();
+    }
+    public void ChoiceBottom(int cnt)
+    {
+        if (cnt == 0)
+        {
+            _player._isTrunkBottom = true;
+            _player._isKnightBottom = false;
+            _player._isMasicianBottom = false;
+            _player._isdurumagiBottom = false;
+
+        }
+        else if (cnt == 1)
+        {
+            _player._isTrunkBottom = false;
+            _player._isKnightBottom = true;
+            _player._isMasicianBottom = false;
+            _player._isdurumagiBottom = false;
+        }
+        else if (cnt == 2)
+        {
+            _player._isTrunkBottom = false;
+            _player._isKnightBottom = false;
+            _player._isMasicianBottom = true;
+            _player._isdurumagiBottom = false;
+        }
+        else if (cnt == 3)
+        {
+            _player._isTrunkBottom = false;
+            _player._isKnightBottom = false;
+            _player._isMasicianBottom = false;
+            _player._isdurumagiBottom = true;
+        }
+        _player.Save();
+    }
+    public void ChoiceShoes(int cnt)
+    {
+        if (cnt == 0)
+        {
+            _player._isnormalShoes = true;
+            _player._isKnightShoes = false;
+            _player._isSandal = false;
+            _player._isOldShoes = false;
+
+        }
+        else if (cnt == 1)
+        {
+            _player._isnormalShoes = false;
+            _player._isKnightShoes = true;
+            _player._isSandal = false;
+            _player._isOldShoes = false;
+        }
+        else if (cnt == 2)
+        {
+            _player._isnormalShoes = false;
+            _player._isKnightShoes = false;
+            _player._isSandal = true;
+            _player._isOldShoes = false;
+        }
+        else if (cnt == 3)
+        {
+            _player._isnormalShoes = false;
+            _player._isKnightShoes = false;
+            _player._isSandal = false;
+            _player._isOldShoes = true;
+        }
     }
     public void StartGame()
     {
