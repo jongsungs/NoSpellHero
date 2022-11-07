@@ -12,6 +12,8 @@ public class Lobby : MonoBehaviour
     public GameObject _achivementPopUp;
     public GameObject _playerTitleText;
     public GameObject _statePopUp;
+    public GameObject _checkOutPopUp;
+    public GameObject _alarmPopUp;
 
     public List<GameObject> _listWeapon = new List<GameObject>();
     public List<GameObject> _listHelmet = new List<GameObject>();
@@ -20,9 +22,14 @@ public class Lobby : MonoBehaviour
     public List<GameObject> _listBottom = new List<GameObject>();
     public List<GameObject> _listShoes = new List<GameObject>();
 
+    public List<GameObject> _listScreen = new List<GameObject>();
+
     public bool _OnTitle;
     public bool _isSet;
     public int _3master;
+
+    public int _choiceNumber;
+
 
     public List<GameObject> _listStatSpace = new List<GameObject>();
     
@@ -30,9 +37,9 @@ public class Lobby : MonoBehaviour
     {
 
         _statePopUp.SetActive(true);
-        _achivementPopUp.SetActive(false);
         _closetPopUp.SetActive(false);
-
+        _checkOutPopUp.SetActive(false);
+        _alarmPopUp.SetActive(false);
         for (int i = 0; i < _player._atk; ++i)
         {
             _listStatSpace[0].transform.GetChild(i).gameObject.SetActive(true);
@@ -729,6 +736,280 @@ public class Lobby : MonoBehaviour
             _listShoes[3].SetActive(false);
         }
         #endregion
+        #region Screen
+        if(Player.Instance._buyStick == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[0].SetActive(true);
+        }
+        else if(Player.Instance._buyStick == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[0].SetActive(false);
+        }
+
+        if (Player.Instance._buySward1 == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[1].SetActive(true);
+        }
+        else if (Player.Instance._buySward1 == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[1].SetActive(false);
+        }
+
+        if (Player.Instance._buySward2 == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[2].SetActive(true);
+        }
+        else if (Player.Instance._buySward2 == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[2].SetActive(false);
+        }
+
+        if (Player.Instance._buyBroom == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[3].SetActive(true);
+        }
+        else if (Player.Instance._buyBroom == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[3].SetActive(false);
+        }
+
+        if (Player.Instance._buyClub == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[4].SetActive(true);
+        }
+        else if (Player.Instance._buyClub == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[4].SetActive(false);
+        }
+
+        if (Player.Instance._buyShortSward == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[5].SetActive(true);
+        }
+        else if (Player.Instance._buyShortSward == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[5].SetActive(false);
+        }
+
+        if (Player.Instance._buyHanger == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[6].SetActive(true);
+        }
+        else if (Player.Instance._buyHanger == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[6].SetActive(false);
+        }
+
+        if (Player.Instance._buyMace == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[7].SetActive(true);
+        }
+        else if (Player.Instance._buyMace == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[7].SetActive(false);
+        }
+
+        if (Player.Instance._buyShield == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[8].SetActive(true);
+        }
+        else if (Player.Instance._buyShield == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[8].SetActive(false);
+        }
+
+        if (Player.Instance._buySpear == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[9].SetActive(true);
+        }
+        else if (Player.Instance._buySpear == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[9].SetActive(false);
+        }
+
+        if (Player.Instance._buyUmbrella == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[10].SetActive(true);
+        }
+        else if (Player.Instance._buyUmbrella == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[10].SetActive(false);
+        }
+
+        if (Player.Instance._buyWaldo == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[11].SetActive(true);
+        }
+        else if (Player.Instance._buyWaldo == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[11].SetActive(false);
+        }
+
+        if (Player.Instance._buyEmptyHelmet == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[12].SetActive(true);
+        }
+        else if (Player.Instance._buyEmptyHelmet == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[12].SetActive(false);
+        }
+
+        if (Player.Instance._buyKightHelmet == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[13].SetActive(true);
+        }
+        else if (Player.Instance._buyKightHelmet == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[13].SetActive(false);
+        }
+
+        if (Player.Instance._buyMasicianHat == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[14].SetActive(true);
+        }
+        else if (Player.Instance._buyMasicianHat == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[14].SetActive(false);
+        }
+
+        if (Player.Instance._buyGat == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[15].SetActive(true);
+        }
+        else if (Player.Instance._buyGat == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[15].SetActive(false);
+        }
+
+        if (Player.Instance._buynormalHair == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[16].SetActive(true);
+        }
+        else if (Player.Instance._buynormalHair == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[16].SetActive(false);
+        }
+
+        if (Player.Instance._buySkinHead == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[17].SetActive(true);
+        }
+        else if (Player.Instance._buySkinHead == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[17].SetActive(false);
+        }
+
+        if (Player.Instance._buyNormalTop == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[18].SetActive(true);
+        }
+        else if (Player.Instance._buyNormalTop == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[18].SetActive(false);
+        }
+
+        if (Player.Instance._buyKnightTop == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[19].SetActive(true);
+        }
+        else if (Player.Instance._buyKnightTop == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[19].SetActive(false);
+        }
+
+        if (Player.Instance._buyMasicianTop == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[20].SetActive(true);
+        }
+        else if (Player.Instance._buyMasicianTop == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[20].SetActive(false);
+        }
+
+        if (Player.Instance._buyDurumagiTop == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[21].SetActive(true);
+        }
+        else if (Player.Instance._buyDurumagiTop == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[21].SetActive(false);
+        }
+
+        if (Player.Instance._buyTrunkBottom == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[22].SetActive(true);
+        }
+        else if (Player.Instance._buyTrunkBottom == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[22].SetActive(false);
+        }
+
+        if (Player.Instance._buyKnightBottom == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[23].SetActive(true);
+        }
+        else if (Player.Instance._buyKnightBottom == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[23].SetActive(false);
+        }
+
+        if (Player.Instance._buyMasicianBottom == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[24].SetActive(true);
+        }
+        else if (Player.Instance._buyMasicianBottom == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[24].SetActive(false);
+        }
+
+        if (Player.Instance._buydurumagiBottom == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[25].SetActive(true);
+        }
+        else if (Player.Instance._buydurumagiBottom == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[25].SetActive(false);
+        }
+
+        if (Player.Instance._buynormalShoes == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[26].SetActive(true);
+        }
+        else if (Player.Instance._buynormalShoes == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[26].SetActive(false);
+        }
+
+        if (Player.Instance._buyKnightShoes == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[27].SetActive(true);
+        }
+        else if (Player.Instance._buyKnightShoes == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[27].SetActive(false);
+        }
+
+        if (Player.Instance._buySandal == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[28].SetActive(true);
+        }
+        else if (Player.Instance._buySandal == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[28].SetActive(false);
+        }
+
+        if (Player.Instance._buyOldShoes == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[29].SetActive(true);
+        }
+        else if (Player.Instance._buyOldShoes == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[29].SetActive(false);
+        }
+
+
+
+        #endregion
 
     }
 
@@ -909,7 +1190,8 @@ public class Lobby : MonoBehaviour
 
     public void ChoiceWeapon(int cnt)
     {
-        if (cnt == 0)
+        _choiceNumber = cnt;
+        if (cnt == 0 && _listScreen[0].activeSelf == false)
         {
             _player._isStick = true;
             _player._isSward1 = false;
@@ -925,7 +1207,11 @@ public class Lobby : MonoBehaviour
             _player._isWaldo = false;
 
         }
-        else if (cnt == 1)
+        else if(cnt == 0 && _listScreen[0].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 1&& _listScreen[1].activeSelf == false)
         {
             _player._isStick = false;
             _player._isSward1 = true;
@@ -940,7 +1226,11 @@ public class Lobby : MonoBehaviour
             _player._isUmbrella = false;
             _player._isWaldo = false;
         }
-        else if (cnt == 2)
+        else if (cnt == 1 && _listScreen[1].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 2 && _listScreen[2].activeSelf == false)
         {
             _player._isStick = false;
             _player._isSward1 = false;
@@ -955,7 +1245,11 @@ public class Lobby : MonoBehaviour
             _player._isUmbrella = false;
             _player._isWaldo = false;
         }
-        else if (cnt == 3)
+        else if (cnt == 2 && _listScreen[2].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 3 && _listScreen[3].activeSelf == false)
         {
             _player._isStick = false;
             _player._isSward1 = false;
@@ -970,7 +1264,11 @@ public class Lobby : MonoBehaviour
             _player._isUmbrella = false;
             _player._isWaldo = false;
         }
-        else if (cnt == 4)
+        else if (cnt == 3 && _listScreen[3].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 4 && _listScreen[4].activeSelf == false)
         {
             _player._isStick = false;
             _player._isSward1 = false;
@@ -985,7 +1283,11 @@ public class Lobby : MonoBehaviour
             _player._isUmbrella = false;
             _player._isWaldo = false;
         }
-        else if (cnt == 5)
+        else if (cnt == 4 && _listScreen[4].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 5 && _listScreen[5].activeSelf == false)
         {
             _player._isStick = false;
             _player._isSward1 = false;
@@ -1000,7 +1302,11 @@ public class Lobby : MonoBehaviour
             _player._isUmbrella = false;
             _player._isWaldo = false;
         }
-        else if (cnt == 6)
+        else if (cnt == 5 && _listScreen[5].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 6 && _listScreen[6].activeSelf == false)
         {
             _player._isStick = false;
             _player._isSward1 = false;
@@ -1015,7 +1321,11 @@ public class Lobby : MonoBehaviour
             _player._isUmbrella = false;
             _player._isWaldo = false;
         }
-        else if (cnt == 7)
+        else if (cnt == 6 && _listScreen[6].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 7 && _listScreen[7].activeSelf == false)
         {
             _player._isStick = false;
             _player._isSward1 = false;
@@ -1030,7 +1340,11 @@ public class Lobby : MonoBehaviour
             _player._isUmbrella = false;
             _player._isWaldo = false;
         }
-        else if (cnt == 8)
+        else if (cnt == 7 && _listScreen[7].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 8 && _listScreen[8].activeSelf == false)
         {
             _player._isStick = false;
             _player._isSward1 = false;
@@ -1045,7 +1359,11 @@ public class Lobby : MonoBehaviour
             _player._isUmbrella = false;
             _player._isWaldo = false;
         }
-        else if (cnt == 9)
+        else if (cnt == 8 && _listScreen[8].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 9 && _listScreen[9].activeSelf == false)
         {
             _player._isStick = false;
             _player._isSward1 = false;
@@ -1060,7 +1378,11 @@ public class Lobby : MonoBehaviour
             _player._isUmbrella = false;
             _player._isWaldo = false;
         }
-        else if (cnt == 10)
+        else if (cnt == 9 && _listScreen[9].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 10 && _listScreen[10].activeSelf == false)
         {
             _player._isStick = false;
             _player._isSward1 = false;
@@ -1075,7 +1397,11 @@ public class Lobby : MonoBehaviour
             _player._isUmbrella = true;
             _player._isWaldo = false;
         }
-        else if (cnt == 11)
+        else if (cnt == 10 && _listScreen[10].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 11 && _listScreen[11].activeSelf == false)
         {
             _player._isStick = false;
             _player._isSward1 = false;
@@ -1090,11 +1416,16 @@ public class Lobby : MonoBehaviour
             _player._isUmbrella = false;
             _player._isWaldo = true;
         }
+        else if (cnt == 11 && _listScreen[11].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
         _player.Save();
     }
     public void ChoiceHelmet(int cnt)
     {
-        if (cnt == 0)
+        _choiceNumber = cnt;
+        if (cnt == 26 && _listScreen[12].activeSelf == false )
         {
             _player._isEmptyHelmet = true;
             _player._isKightHelmet = false;
@@ -1102,50 +1433,77 @@ public class Lobby : MonoBehaviour
             _player._isGat = false;
 
         }
-        else if (cnt == 1)
+        else if(cnt == 26 && _listScreen[12].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 12 && _listScreen[13].activeSelf == false)
         {
             _player._isEmptyHelmet = false;
             _player._isKightHelmet = true;
             _player._isMasicianHat = false;
             _player._isGat = false;
         }
-        else if (cnt == 2)
+        else if (cnt == 12 && _listScreen[13].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 13 && _listScreen[14].activeSelf == false)
         {
             _player._isEmptyHelmet = false;
             _player._isKightHelmet = false;
             _player._isMasicianHat = true;
             _player._isGat = false;
         }
-        else if (cnt == 3)
+        else if (cnt == 13 && _listScreen[14].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 14 && _listScreen[15].activeSelf == false)
         {
             _player._isEmptyHelmet = false;
             _player._isKightHelmet = false;
             _player._isMasicianHat = false;
             _player._isGat = true;
         }
+        else if (cnt == 14 && _listScreen[15].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
         _player.Save();
     }
     public void ChoiceHair(int cnt)
     {
-        if (cnt == 0)
+        _choiceNumber = cnt;
+
+        if (cnt == 16 &&_listScreen[16].activeSelf == false)
         {
             _player._isnormalHair = true;
             _player._isSkinHead = false;
-
-
         }
-        else if (cnt == 1)
+        else if (cnt == 16 && _listScreen[16].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 15 && _listScreen[17].activeSelf == false)
         {
             _player._isnormalHair = false;
             _player._isSkinHead = true;
         }
+        else if(cnt == 15 && _listScreen[17].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+
         _player.Save();
 
     }
 
     public void ChoiceTop(int cnt)
     {
-        if(cnt == 0)
+        _choiceNumber = cnt;
+
+        if (cnt == 27 && _listScreen[18].activeSelf == false)
         {
             _player._isNormalTop = true;
             _player._isKnightTop = false;
@@ -1153,32 +1511,50 @@ public class Lobby : MonoBehaviour
             _player._isDurumagiTop = false;
 
         }
-        else if(cnt == 1)
+        else if (cnt == 27 && _listScreen[18].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if(cnt == 17 && _listScreen[19].activeSelf == false)
         {
             _player._isNormalTop = false;
             _player._isKnightTop = true;
             _player._isMasicianTop = false;
             _player._isDurumagiTop = false;
         }
-        else if(cnt == 2)
+        else if (cnt == 17 && _listScreen[19].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if(cnt == 18 && _listScreen[20].activeSelf == false)
         {
             _player._isNormalTop = false;
             _player._isKnightTop = false;
             _player._isMasicianTop = true;
             _player._isDurumagiTop = false;
         }
-        else if (cnt == 3)
+        else if (cnt == 18 && _listScreen[20].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 19 && _listScreen[21].activeSelf == false)
         {
             _player._isNormalTop = false;
             _player._isKnightTop = false;
             _player._isMasicianTop = false;
             _player._isDurumagiTop = true;
         }
+        else if (cnt == 19 && _listScreen[21].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
         _player.Save();
     }
     public void ChoiceBottom(int cnt)
     {
-        if (cnt == 0)
+        _choiceNumber = cnt;
+
+        if (cnt == 28 && _listScreen[22].activeSelf == false)
         {
             _player._isTrunkBottom = true;
             _player._isKnightBottom = false;
@@ -1186,32 +1562,50 @@ public class Lobby : MonoBehaviour
             _player._isdurumagiBottom = false;
 
         }
-        else if (cnt == 1)
+        else if (cnt == 28 && _listScreen[22].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 20 && _listScreen[23].activeSelf == false)
         {
             _player._isTrunkBottom = false;
             _player._isKnightBottom = true;
             _player._isMasicianBottom = false;
             _player._isdurumagiBottom = false;
         }
-        else if (cnt == 2)
+        else if (cnt == 20 && _listScreen[23].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 21 && _listScreen[24].activeSelf == false)
         {
             _player._isTrunkBottom = false;
             _player._isKnightBottom = false;
             _player._isMasicianBottom = true;
             _player._isdurumagiBottom = false;
         }
-        else if (cnt == 3)
+        else if (cnt == 21 && _listScreen[24].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 22 && _listScreen[25].activeSelf == false)
         {
             _player._isTrunkBottom = false;
             _player._isKnightBottom = false;
             _player._isMasicianBottom = false;
             _player._isdurumagiBottom = true;
         }
+        else if (cnt == 22 && _listScreen[25].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
         _player.Save();
     }
     public void ChoiceShoes(int cnt)
     {
-        if (cnt == 0)
+        _choiceNumber = cnt;
+
+        if (cnt == 29 && _listScreen[26].activeSelf == false)
         {
             _player._isnormalShoes = true;
             _player._isKnightShoes = false;
@@ -1219,28 +1613,197 @@ public class Lobby : MonoBehaviour
             _player._isOldShoes = false;
 
         }
-        else if (cnt == 1)
+        else if (cnt == 29 && _listScreen[26].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 23 && _listScreen[27].activeSelf == false)
         {
             _player._isnormalShoes = false;
             _player._isKnightShoes = true;
             _player._isSandal = false;
             _player._isOldShoes = false;
         }
-        else if (cnt == 2)
+        else if (cnt == 23 && _listScreen[27].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 24 && _listScreen[28].activeSelf == false)
         {
             _player._isnormalShoes = false;
             _player._isKnightShoes = false;
             _player._isSandal = true;
             _player._isOldShoes = false;
         }
-        else if (cnt == 3)
+        else if (cnt == 24 && _listScreen[28].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 25 && _listScreen[29].activeSelf == false)
         {
             _player._isnormalShoes = false;
             _player._isKnightShoes = false;
             _player._isSandal = false;
             _player._isOldShoes = true;
         }
+        else if (cnt == 25 && _listScreen[29].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
     }
+
+    public int SelectNumber(int i)
+    {
+        _choiceNumber = i;
+        return _choiceNumber;
+    }
+    public void EnterCheckOutPopUp()
+    {
+        _checkOutPopUp.SetActive(true);
+    }
+    public void ExitCheckOutPopUp()
+    {
+        _checkOutPopUp.SetActive(false);
+    }
+    public void CheckOutPopUpYes()
+    {
+        if(_choiceNumber  == 0)
+        {
+            Player.Instance._buyStick = true;
+        }
+        else if (_choiceNumber == 1)
+        {
+            Player.Instance._buySward1 = true;
+        }
+        else if (_choiceNumber == 2)
+        {
+            Player.Instance._buySward2 = true;
+        }
+        else if (_choiceNumber == 3)
+        {
+            Player.Instance._buyBroom = true;
+        }
+        else if (_choiceNumber == 4)
+        {
+            Player.Instance._buyClub = true;
+        }
+        else if (_choiceNumber == 5)
+        {
+            Player.Instance._buyShortSward = true;
+        }
+        else if (_choiceNumber == 6)
+        {
+            Player.Instance._buyHanger = true;
+        }
+        else if (_choiceNumber == 7)
+        {
+            Player.Instance._buyMace = true;
+        }
+        else if (_choiceNumber == 8)
+        {
+            Player.Instance._buyShield = true;
+        }
+        else if (_choiceNumber == 9)
+        {
+            Player.Instance._buySpear = true;
+        }
+        else if (_choiceNumber == 10)
+        {
+            Player.Instance._buyUmbrella = true;
+        }
+        else if (_choiceNumber == 11)
+        {
+            Player.Instance._buyWaldo = true;
+        }
+        else if (_choiceNumber == 12)
+        {
+            Player.Instance._buyKightHelmet = true;
+        }
+        else if (_choiceNumber == 13)
+        {
+            Player.Instance._buyMasicianHat = true;
+        }
+        else if (_choiceNumber == 14)
+        {
+            Player.Instance._buyGat = true;
+        }
+        else if (_choiceNumber == 15)
+        {
+            Player.Instance._buySkinHead = true;
+        }
+        else if (_choiceNumber == 16)
+        {
+            Player.Instance._buynormalHair = true;
+        }
+        else if (_choiceNumber == 17)
+        {
+            Player.Instance._buyKnightTop = true;
+        }
+        else if (_choiceNumber == 18)
+        {
+            Player.Instance._buyMasicianTop = true;
+        }
+        else if (_choiceNumber == 19)
+        {
+            Player.Instance._buyDurumagiTop = true;
+        }
+        else if (_choiceNumber == 20)
+        {
+            Player.Instance._buyKnightBottom = true;
+        }
+        else if (_choiceNumber == 21)
+        {
+            Player.Instance._buyMasicianBottom = true;
+        }
+        else if (_choiceNumber == 22)
+        {
+            Player.Instance._buydurumagiBottom = true;
+        }
+        else if (_choiceNumber == 23)
+        {
+            Player.Instance._buyKnightShoes = true;
+        }
+        else if (_choiceNumber == 24)
+        {
+            Player.Instance._buySandal = true;
+        }
+        else if (_choiceNumber == 25)
+        {
+            Player.Instance._buyOldShoes = true;
+        }
+        else if (_choiceNumber == 26)
+        {
+            Player.Instance._buyEmptyHelmet = true;
+        }
+        else if (_choiceNumber == 27)
+        {
+            Player.Instance._buyNormalTop = true;
+        }
+        else if (_choiceNumber == 28)
+        {
+            Player.Instance._buyTrunkBottom = true;
+        }
+        else if (_choiceNumber == 29)
+        {
+            Player.Instance._buynormalShoes = true;
+        }
+        ExitCheckOutPopUp();
+
+    }
+    public void CheckOutPopUpNo()
+    {
+        ExitCheckOutPopUp();
+    }
+    public void EnterAlarmPopUp()
+    {
+        _alarmPopUp.SetActive(true);
+    }
+    public void ExitAlarmPopUp()
+    {
+        _alarmPopUp.SetActive(false);
+    }
+
+
     public void StartGame()
     {
         LoadSceneManager.LoadScene("GamePlay");

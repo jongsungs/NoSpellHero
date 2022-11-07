@@ -108,10 +108,47 @@ public class PlayerData
     public bool m_isnormalShoes;
 
 
+    public bool m_buyStick;
+    public bool m_buySward1;
+    public bool m_buySward2;
+    public bool m_buyBroom;
+    public bool m_buyClub;
+    public bool m_buyShortSward;
+    public bool m_buyHanger;
+    public bool m_buyMace;
+    public bool m_buyShield;
+    public bool m_buySpear;
+    public bool m_buyUmbrella;
+    public bool m_buyWaldo;
+                  
+    public bool m_buyKightHelmet;
+    public bool m_buyMasicianHat;
+    public bool m_buyGat;
+    public bool m_buySkinHead;
+    public bool m_buynormalHair;
+    public bool m_buyKnightTop;
+    public bool m_buyMasicianTop;
+    public bool m_buyDurumagiTop;
+    public bool m_buyKnightBottom;
+    public bool m_buyMasicianBottom;
+    public bool m_buydurumagiBottom;
+    public bool m_buyKnightShoes;
+    public bool m_buySandal;
+    public bool m_buyOldShoes;
+                  
+                  
+    public bool m_buyEmptyHelmet;
+    public bool m_buyNormalTop;
+    public bool m_buyTrunkBottom;
+    public bool m_buynormalShoes;
+
+
 
     public PlayerData(float hp, float atk, float matk, float atkspeed, float def, float speed, float critical, float handicraft, float charm,float criticalDamage,bool kighthelmet,bool masicianhat, bool gat, bool skinhead, bool normalhair,
         bool knighttop,bool masiciantop,bool durumagitop, bool knightbottom,bool masicianbottom,bool durumagibottom,bool knightshoes,bool sandal, bool oldshoes,bool emptyhelmet,bool normaltop,bool trunkbottom,bool normalshoes,
-        bool stick,bool sward1,bool sward2,bool broom,bool club, bool shortsward,bool hanger,bool mace,bool shield,bool spear,bool umbrella, bool waldo)
+        bool stick,bool sward1,bool sward2,bool broom,bool club, bool shortsward,bool hanger,bool mace,bool shield,bool spear,bool umbrella, bool waldo,
+        bool buystick, bool buysward1, bool buysward2, bool buybroom, bool buyclub, bool buyshortsward, bool buyhanger, bool buymace, bool buyshield, bool buyspear, bool buyumbrella, bool buywaldo,
+        bool buyknighthelmet, bool buymasicianhat, bool buygat, bool buyskinhead, bool buynormalhair, bool buyknighttop, bool buymasiciantop, bool buydurumagitop, bool buyknightbottom, bool buymasicianbottom, bool buydurumagibottom, bool buyknightshoes, bool buysandal, bool buyoldshoes, bool buyemptyhelmet,bool buynormaltop,bool buytrunkbottom,bool buynormalshoes)
     {
         m_hp = hp;
         m_atk = atk;
@@ -156,6 +193,41 @@ public class PlayerData
         m_isNormalTop = normaltop;
         m_isTrunkBottom = trunkbottom;
         m_isnormalShoes = normalshoes;
+
+        m_buyStick = buystick;
+        m_buySward1 = buysward1;
+        m_buySward2 = buysward2;
+        m_buyBroom = buybroom;
+        m_buyClub = buyclub;
+        m_buyShortSward = buyshortsward;
+        m_buyHanger = buyhanger;
+        m_buyMace = buymace;
+        m_buyShield = buyshield;
+        m_buySpear = buyspear;
+        m_buyUmbrella = buyumbrella;
+        m_buyWaldo = buywaldo;
+
+        m_buyKightHelmet = buyknighthelmet;
+        m_buyMasicianHat = buymasicianhat;
+        m_buyGat = buygat;
+        m_buySkinHead = buyskinhead;
+        m_buynormalHair = buynormalhair;
+        m_buyKnightTop = buyknighttop;
+        m_buyMasicianTop = buymasiciantop;
+        m_buyDurumagiTop = buydurumagitop;
+        m_buyKnightBottom = buyknightbottom;
+        m_buyMasicianBottom = buymasicianbottom;
+        m_buydurumagiBottom = buydurumagibottom;
+        m_buyKnightShoes = buyknightshoes;
+        m_buySandal = buysandal;
+        m_buyOldShoes = buyoldshoes;
+
+
+        m_buyEmptyHelmet = buyemptyhelmet;
+        m_buyNormalTop = buynormaltop;
+        m_buyTrunkBottom = buytrunkbottom;
+        m_buynormalShoes = buynormalshoes;
+
 
 
     }
@@ -292,6 +364,19 @@ public class Player : BaseObject
     public bool _isUmbrella;
     public bool _isWaldo;
 
+    public bool _buyStick;
+    public bool _buySward1;
+    public bool _buySward2;
+    public bool _buyBroom;
+    public bool _buyClub;
+    public bool _buyShortSward;
+    public bool _buyHanger;
+    public bool _buyMace;
+    public bool _buyShield;
+    public bool _buySpear;
+    public bool _buyUmbrella;
+    public bool _buyWaldo;
+
 
     //투구
     public GameObject _knightHelmet;    //기사 투구
@@ -304,12 +389,20 @@ public class Player : BaseObject
     public bool _isGat;
     public bool _isEmptyHelmet;
 
+    public bool _buyKightHelmet;
+    public bool _buyMasicianHat;
+    public bool _buyGat;
+    public bool _buyEmptyHelmet;
+
     //머리
     public GameObject _skinHead;//민머리
     public GameObject _normalHair;
 
     public bool _isSkinHead;
     public bool _isnormalHair;
+
+    public bool _buySkinHead;
+    public bool _buynormalHair;
 
     //상의
     public GameObject _knightTop;   //기사 상의
@@ -322,6 +415,11 @@ public class Player : BaseObject
     public bool _isDurumagiTop;
     public bool _isNormalTop;
 
+    public bool _buyKnightTop;
+    public bool _buyMasicianTop;
+    public bool _buyDurumagiTop;
+    public bool _buyNormalTop;
+
     //하의
     public GameObject _knightBottom;    //기사 하의
     public GameObject _masicianBottom;  //마법사 하의
@@ -333,6 +431,11 @@ public class Player : BaseObject
     public bool _isdurumagiBottom;
     public bool _isTrunkBottom;
 
+    public bool _buyKnightBottom;
+    public bool _buyMasicianBottom;
+    public bool _buydurumagiBottom;
+    public bool _buyTrunkBottom;
+
     //신발
     public GameObject _knightShoes; //기사 신발
     public GameObject _sandal;  //샌달
@@ -343,6 +446,11 @@ public class Player : BaseObject
     public bool _isSandal;
     public bool _isOldShoes;
     public bool _isnormalShoes;
+
+    public bool _buyKnightShoes;
+    public bool _buySandal;
+    public bool _buyOldShoes;
+    public bool _buynormalShoes;
 
     /// --------------
     /// 확률
@@ -362,8 +470,10 @@ public class Player : BaseObject
     {
         Instance = this;
         Load();
-        _data = new PlayerData(_hp, _atk, _matk, _atkSpeed, _def, _speed, _critical, _handicraft, _charm,_criticalDamage,
-            _isKightHelmet,_isMasicianHat,_isGat,_isSkinHead,_isnormalHair,_isKnightTop,_isMasicianTop,_isDurumagiTop,_isKnightBottom,_isMasicianBottom,_isdurumagiBottom,_isKnightShoes,_isSandal,_isOldShoes,_isEmptyHelmet,_isNormalTop,_isTrunkBottom,_isnormalShoes,_isStick,_isSward1,_isSward2,_isBroom,_isClub,_isShortSward,_isHanger,_isMace,_isShield,_isSpear,_isUmbrella,_isWaldo);
+        _data = new PlayerData(_hp, _atk, _matk, _atkSpeed, _def, _speed, _critical, _handicraft, _charm, _criticalDamage,
+            _isKightHelmet, _isMasicianHat, _isGat, _isSkinHead, _isnormalHair, _isKnightTop, _isMasicianTop, _isDurumagiTop, _isKnightBottom, _isMasicianBottom, _isdurumagiBottom, _isKnightShoes, _isSandal, _isOldShoes, _isEmptyHelmet, _isNormalTop, _isTrunkBottom, _isnormalShoes, _isStick, _isSward1, _isSward2, _isBroom, _isClub, _isShortSward, _isHanger, _isMace, _isShield, _isSpear, _isUmbrella, _isWaldo, _buyStick, _buySward1, _buySward2, _buyBroom, _buyClub, _buyShortSward, _buyHanger, _buyMace, _buyShield, _buySpear, _buyUmbrella, _buyWaldo, _buyKightHelmet, _buyMasicianHat, _buyGat,
+            _buySkinHead, _buynormalHair, _buyKnightTop, _buyMasicianTop, _buyDurumagiTop, _buyKnightBottom, _buyMasicianBottom, _buydurumagiBottom, _buyKnightShoes, _buySandal, _buyOldShoes, _buyEmptyHelmet, _buyNormalTop, _buyTrunkBottom, _buynormalShoes
+            );
         
         _preSpeed = _speed;
         _maxHp = 50 + (_hp * 10);
@@ -1671,6 +1781,43 @@ public class Player : BaseObject
         _isnormalShoes = data.m_isnormalShoes;
 
 
+        _buyStick = data.m_buyStick;
+        _buySward1 = data.m_buySward1;
+        _buySward2 = data.m_buySward2;
+        _buyBroom = data.m_buyBroom;
+        _buyClub = data.m_buyClub;
+        _buyShortSward = data.m_buyShortSward;
+        _buyHanger = data.m_buyHanger;
+        _buyMace = data.m_buyMace;
+        _buyShield = data.m_buyShield;
+        _buySpear = data.m_buySpear;
+        _buyUmbrella = data.m_buyUmbrella;
+        _buyWaldo = data.m_buyWaldo;
+
+        _buyKightHelmet = data.m_buyKightHelmet;
+        _buyMasicianHat = data.m_buyMasicianHat;
+        _buyGat = data.m_buyGat;
+        _buySkinHead = data.m_buySkinHead;
+        _buynormalHair = data.m_buynormalHair;
+        _buyKnightTop = data.m_buyKnightTop;
+        _buyMasicianTop = data.m_buyMasicianTop;
+        _buyDurumagiTop = data.m_buyDurumagiTop;
+        _buyKnightBottom = data.m_buyKnightBottom;
+        _buyMasicianBottom = data.m_buyMasicianBottom;
+        _buydurumagiBottom = data.m_buydurumagiBottom;
+        _buyKnightShoes = data.m_buyKnightShoes;
+        _buySandal = data.m_buySandal;
+        _buyOldShoes = data.m_buyOldShoes;
+
+
+        _buyEmptyHelmet = data.m_buyEmptyHelmet;
+        _buyNormalTop = data.m_buyNormalTop;
+        _buyTrunkBottom = data.m_buyTrunkBottom;
+        _buynormalShoes = data.m_buynormalShoes;
+
+
+
+
     }
     public void DataSave()
     {
@@ -1717,6 +1864,40 @@ public class Player : BaseObject
         _data.m_isNormalTop = _isNormalTop;
         _data.m_isTrunkBottom = _isTrunkBottom;
         _data.m_isnormalShoes = _isnormalShoes;
+
+        _data.m_buyStick = _buyStick;
+        _data.m_buySward1 = _buySward1;
+        _data.m_buySward2 = _buySward2;
+        _data.m_buyBroom = _buyBroom;
+        _data.m_buyClub = _buyClub;
+        _data.m_buyShortSward = _buyShortSward;
+        _data.m_buyHanger = _buyHanger;
+        _data.m_buyMace = _buyMace;
+        _data.m_buyShield = _buyShield;
+        _data.m_buySpear = _buySpear;
+        _data.m_buyUmbrella = _buyUmbrella;
+        _data.m_buyWaldo = _buyWaldo;
+
+        _data.m_buyKightHelmet = _buyKightHelmet;
+        _data.m_buyMasicianHat = _buyMasicianHat;
+        _data.m_buyGat = _buyGat;
+        _data.m_buySkinHead = _buySkinHead;
+        _data.m_buynormalHair = _buynormalHair;
+        _data.m_buyKnightTop = _buyKnightTop;
+        _data.m_buyMasicianTop = _buyMasicianTop;
+        _data.m_buyDurumagiTop = _buyDurumagiTop;
+        _data.m_buyKnightBottom = _buyKnightBottom;
+        _data.m_buyMasicianBottom = _buyMasicianBottom;
+        _data.m_buydurumagiBottom = _buydurumagiBottom;
+        _data.m_buyKnightShoes = _buyKnightShoes;
+        _data.m_buySandal = _buySandal;
+        _data.m_buyOldShoes = _buyOldShoes;
+
+
+        _data.m_buyEmptyHelmet = _buyEmptyHelmet;
+        _data.m_buyNormalTop = _buyNormalTop;
+        _data.m_buyTrunkBottom = _buyTrunkBottom;
+        _data.m_buynormalShoes = _buynormalShoes;
 
 
 
