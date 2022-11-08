@@ -15,7 +15,7 @@ public class Title : MonoBehaviour,IPointerDownHandler
     public void OnPointerDown(PointerEventData eventData)
     {
         
-        LoadSceneManager.LoadScene("Lobby");
+        LoadSceneManager.LoadScene("InAppPur");
     }
 
    
