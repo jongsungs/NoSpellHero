@@ -78,12 +78,7 @@ public class GamePlay : MonoBehaviour
     public float _lerp = 0;
     public float _ReverseLerp = 1f;
 
-    public int _totalCreepScore;
-
-    public int _stage1CreepScore;
-    public int _stage2CreepScore;
-    public int _stage3CreepScore;
-    public int _stage4CreepScore;
+   
 
 
     public DamageText _damageText;
@@ -149,36 +144,36 @@ public class GamePlay : MonoBehaviour
         _meteorEffectPool = new ObjectPool<SkillBase>(CreateMeteorEffect, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 20);
 
         _bossHPBar.SetActive(false);
-        
-       for(int i = 1; i < _listStage.Count; ++i)
+
+        for (int i = 1; i < _listStage.Count; ++i)
         {
             _listStage[i].SetActive(false);
         }
-        _totalCreepScore = _stage1CreepScore + _stage2CreepScore + _stage3CreepScore + _stage4CreepScore;
+       // _totalCreepScore = _stage1CreepScore + _stage2CreepScore + _stage3CreepScore + _stage4CreepScore;
 
     }
 
     private void Update()
     {
 
-        _creepScoreText.GetComponent<TextMeshProUGUI>().text = _totalCreepScore.ToString();
+      //  _creepScoreText.GetComponent<TextMeshProUGUI>().text = _totalCreepScore.ToString();
       
-        if(_stage1CreepScore >= 1 && _isBoss == false && _currentStage == GameState.Stage1)
-        {
-            BossSpawn(_captainSkullPool);
-        }
-        if (_stage2CreepScore >= 1 && _isBoss == false && _currentStage == GameState.Stage2)
-        {
-            BossSpawn(_golemPool);
-        }
-        if (_stage3CreepScore >= 1 && _isBoss == false && _currentStage == GameState.Stage3)
-        {
-            BossSpawn(_dragonPool);
-        }
-        if (_stage4CreepScore >= 1 && _isBoss == false && _currentStage == GameState.Stage4)
-        {
-            BossSpawn(_demonkingPool);
-        }
+      //  if(_stage1CreepScore >= 1 && _isBoss == false && _currentStage == GameState.Stage1)
+      //  {
+      //      BossSpawn(_captainSkullPool);
+      //  }
+      //  if (_stage2CreepScore >= 1 && _isBoss == false && _currentStage == GameState.Stage2)
+      //  {
+      //      BossSpawn(_golemPool);
+      //  }
+      //  if (_stage3CreepScore >= 1 && _isBoss == false && _currentStage == GameState.Stage3)
+      //  {
+      //      BossSpawn(_dragonPool);
+      //  }
+      //  if (_stage4CreepScore >= 1 && _isBoss == false && _currentStage == GameState.Stage4)
+      //  {
+      //      BossSpawn(_demonkingPool);
+      //  }
 
         
 

@@ -8,7 +8,9 @@ public class Weapon : MonoBehaviour
     public bool _isDamage;
     public float _damage;
     public float _basicDamage;
-    
+    public int _spellProbability;
+
+
     public bool _isOnce = true;
 
 

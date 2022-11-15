@@ -93,263 +93,373 @@ public class Lobby : MonoBehaviour
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.MagicalBlader;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getmagicalblader, "getmagicalblader");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._atk == 5 && _player._matk == 5 && _player._critical == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.MadMan;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getmadman, "getmadman");
+                achivementCheck(_player.firstjob, "firstjob");
+
+
+
             }
             else if (_player._atk == 5 && _player._matk == 5 && _player._atkSpeed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.StrongMan;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                
+                achivementCheck(_player.getstrongman, "getstrongman");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._atk == 5 && _player._hp == 5 && _player._atkSpeed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Warrior;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+               
+                achivementCheck(_player.getwarrior, "getwarrior");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._atk == 5 && _player._hp == 5 && _player._handicraft == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Dwarf;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+           
+                achivementCheck(_player.getdwarf, "getdwarf");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._atk == 5 && _player._hp == 5 && _player._charm == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.JackFrost;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                
+                achivementCheck(_player.getjackfrost, "getjackfrost");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._atk == 5 && _player._hp == 5 && _player._speed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.AssaultCaptain;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+               
+                achivementCheck(_player.getassaultcaptain, "getassaultcaptain");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._atk == 5 && _player._hp == 5 && _player._def == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.ZhangFei;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+               
+                achivementCheck(_player.getzhangfei, "getzhangfei");
+                achivementCheck(_player.firstjob, "firstjob");
+
             }
             else if (_player._atk == 5 && _player._critical == 5 && _player._atkSpeed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Berserker;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                
+                achivementCheck(_player.getberserker, "getberserker");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._atk == 5 && _player._critical == 5 && _player._handicraft == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Critialer;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+               
+                achivementCheck(_player.getcriticaler, "getcriticaler");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._atk == 5 && _player._critical == 5 && _player._charm == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Druid;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                
+                achivementCheck(_player.getdruid, "getdruid");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._atk == 5 && _player._critical == 5 && _player._speed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Assassin;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+               
+                achivementCheck(_player.getassassin,"getassassin");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._atk == 5 && _player._atkSpeed == 5 && _player._handicraft == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Ambidextrous;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+               
+                achivementCheck(_player.getambidextrous, "getambidextrous");
+                achivementCheck(_player.firstjob, "firstjob");
+
             }
             else if (_player._atk == 5 && _player._handicraft == 5 && _player._charm == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.LuBu;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+               
+                achivementCheck(_player.getlubu, "getlubu");
+                achivementCheck(_player.firstjob, "firstjob");
+
             }
             else if (_player._atk == 5 && _player._speed == 5 && _player._def == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.HeavyCavalry;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getheavycavalry, "getheavycavalry");
+                achivementCheck(_player.firstjob, "firstjob");
+
             }
             else if (_player._matk == 5 && _player._hp == 5 && _player._critical == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.HealthMagician;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.gethealthmagician, "gethealthmagician");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._matk == 5 && _player._hp == 5 && _player._def == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Priest;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getprist, "getprist");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._matk == 5 && _player._critical == 5 && _player._atkSpeed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Warlock;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getwarlock, "getwarlock");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._matk == 5 && _player._critical == 5 && _player._handicraft == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Salamander;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getsalamander, "getsalamander");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._matk == 5 && _player._critical == 5 && _player._charm == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Zeus;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getzeus, "getzeus");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._matk == 5 && _player._atkSpeed == 5 && _player._handicraft == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.PracticeBug;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getpracticebug, "getpracticebug");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._matk == 5 && _player._charm == 5 && _player._handicraft == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Stranger;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getstranger, "getstranger");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._matk == 5 && _player._handicraft == 5 && _player._def == 5)
             {
-                _OnTitle = true;
-                _player._playerTitle = Player.PlayerTitle.GateKeeper;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                //아직 미구현
+              //  _OnTitle = true;
+              //  _player._playerTitle = Player.PlayerTitle.GateKeeper;
+              //  _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                
             }
             else if (_player._hp == 5 && _player._atkSpeed == 5 && _player._handicraft == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Cook;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getcook, "getcook");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._hp == 5 && _player._atkSpeed == 5 && _player._speed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.QRF;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getqrf, "getqrf");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._hp == 5 && _player._handicraft == 5 && _player._charm == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Servant;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getservant, "getservant");
+                achivementCheck(_player.firstjob, "firstjob");
             }
-            else if (_player._hp == 5 && _player._handicraft == 5 && _player._charm == 5)
-            {
-                _OnTitle = true;
-                _player._playerTitle = Player.PlayerTitle.Servant;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
-            }
+            
             else if (_player._hp == 5 && _player._handicraft == 5 && _player._speed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Athlete;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getathlete, "getathlete");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._hp == 5 && _player._handicraft == 5 && _player._def == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Versatile;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getversatile, "getversatile");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._hp == 5 && _player._speed == 5 && _player._def == 5)
             {
-                _OnTitle = true;
-                _player._playerTitle = Player.PlayerTitle.Shieldbearer;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                //미구현
+               // _OnTitle = true;
+               // _player._playerTitle = Player.PlayerTitle.Shieldbearer;
+               // _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+               // achivementCheck(_player.getshield)
             }
             else if (_player._critical == 5 && _player._atkSpeed == 5 && _player._handicraft == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Acupuncturist;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getacupuncturist, "getacupuncturist");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._critical == 5 && _player._speed == 5 && _player._atkSpeed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.SpoonKiller;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getspoonkiller, "getspoonkiller");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._critical == 5 && _player._handicraft == 5 && _player._charm == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Helen;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.gethelen, "gethelen");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._critical == 5 && _player._speed == 5 && _player._handicraft == 5)
             {
-                _OnTitle = true;
-                _player._playerTitle = Player.PlayerTitle.Slicker;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+               //미구현
+               // _OnTitle = true;
+               // _player._playerTitle = Player.PlayerTitle.Slicker;
+               // _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+               // achivementCheck(_player.getsli)
             }
             else if (_player._critical == 5 && _player._speed == 5 && _player._charm == 5)
             {
                 _OnTitle = true;
-                _player._playerTitle = Player.PlayerTitle.Idol;
+                _player._playerTitle = Player.PlayerTitle.Rich;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getrich, "getrich");
+                achivementCheck(_player.firstjob, "firstjob");
+
             }
             else if (_player._atkSpeed == 5 && _player._handicraft == 5 && _player._charm == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Swell;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getswell, "getswell");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._atkSpeed == 5 && _player._handicraft == 5 && _player._speed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Delivery;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getdelivery, "getdelivery");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._atkSpeed == 5 && _player._handicraft == 5 && _player._def == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Repairman;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getrepairman, "getrepairman");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._atkSpeed == 5 && _player._charm == 5 && _player._speed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Dosa;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getdosa, "getdosa");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._handicraft == 5 && _player._charm == 5 && _player._speed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Gambler;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getgambler, "getgambler");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._handicraft == 5 && _player._charm == 5 && _player._def == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.SlowStarter;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getslowstarter, "getslowstarter");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._handicraft == 5 && _player._def == 5 && _player._speed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Orpheus;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getorpheus, "getorpheus");
+                achivementCheck(_player.firstjob, "firstjob");
             }
             else if (_player._charm == 5 && _player._def == 5 && _player._speed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.DokeV;
                 _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                achivementCheck(_player.getdokev, "getdokev");
+                achivementCheck(_player.firstjob, "firstjob");
             }
         }
         #endregion
         
-        if(_OnTitle == true)
+        if ((_player._hp > 0 || _player._atk > 0 || _player._matk > 0 || _player._atkSpeed > 0 || _player._def > 0 || _player._speed > 0 || _player._critical > 0 || _player._handicraft > 0 || _player._charm > 0) &&
+            _player.firststat == false)
+        {
+            achivementCheck(_player.firststat, "firststat");
+        }
+        if ((_player._hp > 4 || _player._atk > 4 || _player._matk > 4 || _player._atkSpeed > 4 || _player._def > 4 || _player._speed > 4 || _player._critical > 4 || _player._handicraft > 4 || _player._charm > 4) &&
+            _player.firstmaster == false)
+        {
+            achivementCheck(_player.firststat, "firstmaster");
+        }
+
+        if (_OnTitle == true)
         {
             if (_isSet == false)
             {
@@ -366,7 +476,7 @@ public class Lobby : MonoBehaviour
                 {
                     _player._atk = 5;
                 }
-                else if (_player._atk >= 3 && _player._atk != 5)
+                else if (_player._atk >= 3 /*&& _player._atk != 5*/)
                 {
                     _player._atk = 3;
                     _listStatSpace[0].transform.GetChild(4).gameObject.SetActive(false);
@@ -377,7 +487,7 @@ public class Lobby : MonoBehaviour
                 {
                     _player._matk = 5;
                 }
-                else if (_player._matk >= 3 && _player._matk != 5)
+                else if (_player._matk >= 3 /*&& _player._matk != 5*/)
                 {
                     _player._matk = 3;
                     _listStatSpace[1].transform.GetChild(4).gameObject.SetActive(false);
@@ -388,7 +498,7 @@ public class Lobby : MonoBehaviour
                 {
                     _player._atkSpeed = 5;
                 }
-                else if (_player._atkSpeed >= 3 && _player._atkSpeed != 5)
+                else if (_player._atkSpeed >= 3 /*&& _player._atkSpeed != 5*/)
                 {
                     _player._atkSpeed = 3;
                     _listStatSpace[2].transform.GetChild(4).gameObject.SetActive(false);
@@ -399,7 +509,7 @@ public class Lobby : MonoBehaviour
                 {
                     _player._hp = 5;
                 }
-                else if (_player._hp >= 3 && _player._hp != 5)
+                else if (_player._hp >= 3 /*&& _player._hp != 5*/)
                 {
                     _player._hp = 3;
                     _listStatSpace[3].transform.GetChild(4).gameObject.SetActive(false);
@@ -410,7 +520,7 @@ public class Lobby : MonoBehaviour
                 {
                     _player._def = 5;
                 }
-                else if (_player._def >= 3 && _player._def != 5)
+                else if (_player._def >= 3 /*&& _player._def != 5*/)
                 {
                     _player._def = 3;
                     _listStatSpace[4].transform.GetChild(4).gameObject.SetActive(false);
@@ -421,7 +531,7 @@ public class Lobby : MonoBehaviour
                 {
                     _player._speed = 5;
                 }
-                else if (_player._speed >= 3 && _player._speed != 5)
+                else if (_player._speed >= 3 /*&& _player._speed != 5*/)
                 {
                     _player._speed = 3;
                     _listStatSpace[5].transform.GetChild(4).gameObject.SetActive(false);
@@ -432,7 +542,7 @@ public class Lobby : MonoBehaviour
                 {
                     _player._critical = 5;
                 }
-                else if (_player._critical >= 3 && _player._critical != 5)
+                else if (_player._critical >= 3 /*&& _player._critical != 5*/)
                 {
                     _player._critical = 3;
                     _listStatSpace[6].transform.GetChild(4).gameObject.SetActive(false);
@@ -443,7 +553,7 @@ public class Lobby : MonoBehaviour
                 {
                     _player._handicraft = 5;
                 }
-                else if (_player._handicraft >= 3 && _player._handicraft != 5)
+                else if (_player._handicraft >= 3 /*&& _player._handicraft != 5*/)
                 {
                     _player._handicraft = 3;
                     _listStatSpace[7].transform.GetChild(4).gameObject.SetActive(false);
@@ -453,7 +563,7 @@ public class Lobby : MonoBehaviour
                 {
                     _player._charm = 5;
                 }
-                else if (_player._charm >= 3 && _player._charm != 5)
+                else if (_player._charm >= 3 /*&& _player._charm != 5*/)
                 {
                     _player._charm = 3;
                     _listStatSpace[8].transform.GetChild(4).gameObject.SetActive(false);
@@ -736,7 +846,7 @@ public class Lobby : MonoBehaviour
             _listShoes[3].SetActive(false);
         }
         #endregion
-        #region Screen
+        #region UnpackItem
         if(Player.Instance._buyStick == false && _closetPopUp.activeSelf == true)
         {
             _listScreen[0].SetActive(true);
@@ -1803,7 +1913,14 @@ public class Lobby : MonoBehaviour
         _alarmPopUp.SetActive(false);
     }
 
-
+    public void achivementCheck(bool check,string str)
+    {
+        if (check == false)
+        {
+            check = true;
+            AchievementManager.instance.Unlock(str);
+        }
+    }
     public void StartGame()
     {
         LoadSceneManager.LoadScene("GamePlay");
