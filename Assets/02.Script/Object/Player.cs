@@ -194,7 +194,7 @@ public class PlayerData
     public bool m_pristjesus;
     public bool m_pristhidden;
     public bool m_getwarlock;
-    public bool m_warlockhidden;
+    public bool m_warlockskill1full;
     public bool m_warlockclear;
     public bool m_warlcokhidden;
     public bool m_getsalamander;
@@ -470,6 +470,8 @@ public class Player : BaseObject
     public List<GameObject> _listMeteorPoint = new List<GameObject>();
     public List<Animator> _listAnimator = new List<Animator>();
     public List<Rigidbody> _listRigidBody = new List<Rigidbody>();
+
+    
     #region Cloth
     //////옷----------------------------------------
 
@@ -644,7 +646,7 @@ public class Player : BaseObject
     public bool pristjesus;
     public bool pristhidden;
     public bool getwarlock;
-    public bool warlockhidden;
+    public bool warlockskill1full;
     public bool warlockclear;
     public bool warlcokhidden;
     public bool getsalamander;
@@ -810,6 +812,12 @@ public class Player : BaseObject
         _quater = UnityEngine.Random.Range(0, 4);
 
         
+        //사제 히든
+        if(_playerTitle == PlayerTitle.Priest)
+        {
+            HiddenSkill(_playerTitle);
+        }
+
         if(_animator != null)
         {
             _animator.speed = 0.5f + (_atkSpeed / 10f);
@@ -959,17 +967,28 @@ public class Player : BaseObject
         }
         else if (_playerTitle == PlayerTitle.JackFrost)
         {
-            rand = UnityEngine.Random.Range(0, 10);
-            Debug.Log(rand);
-            if (rand == 0 && GamePlay.Instance._isBlizzard == false)
+            //동장군 히든
+            if(_skill1 >= 3)
             {
-                StartCoroutine(Blizzard());
+                achivementCheck(jackfrosthidden, "jackfrosthidden");
+                rand = UnityEngine.Random.Range(0, 10);
+                Debug.Log(rand);
+                if (rand == 0 && GamePlay.Instance._isBlizzard == false)
+                {
+                    StartCoroutine(Blizzard());
+                }
             }
         }
         else if(_playerTitle == PlayerTitle.ZhangFei)
         {
+            
             rand = UnityEngine.Random.Range(0, 5);
-            if(rand ==0)
+            if(rand == 0 && _hp <= (_maxHp * 0.2f))
+            {
+                Roar();
+                achivementCheck(zhangfeirowhp, "zhangfeirowhp");
+            }
+            else if(rand ==0)
             {
                 Roar();
             }
@@ -1163,27 +1182,25 @@ public class Player : BaseObject
         switch(_playerTitle)
         {
             case PlayerTitle.Normal:
+                _atk = _basicAtk + (_basicAtk * _skill1 / 10f);
+                _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill2 / 10f);
                 break;
+
             case PlayerTitle.MagicalBlader:
                 rand = UnityEngine.Random.Range(0, 2);
 
                 if (rand == 0)
                 {
+
                     _atk = _basicAtk + _basicAtk + (_basicAtk * _skill2 / 10f);
                     _matk = 0 + (_basicMatk * _skill1 / 10f);
-                    if (_skill1 == 3)
-                    {
-                        _atk = _basicAtk + _basicAtk + (_basicAtk * 0.5f);
-                    }
+                    
                 }
                 else if (rand == 1)
                 {
                     _atk = 0 + (_basicAtk * _skill2 / 10f);
                     _matk = _basicMatk + _basicMatk + (_basicMatk * _skill1 / 10f);
-                    if (_skill2 >= 3)
-                    {
-                        _matk = _basicMatk + _basicMatk + (_basicMatk * 0.5f);
-                    }
+                    
                 }
 
                 break;
@@ -1197,16 +1214,27 @@ public class Player : BaseObject
             case PlayerTitle.StrongMan:
 
                 _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill1 / 10f);
+                if(_skill1 >= 3)
+                {
+                    achivementCheck(strongmanskill1full, "strongmanskill1full");
+                }
 
                 break;
             case PlayerTitle.Warrior:
                 _atk = _basicAtk + (_basicAtk * 0.3f) + (_basicAtk * _skill1 / 10f);
+                if(_skill1 >=3 )
+                {
+                    achivementCheck(warriorskill1full, "warriorskill1full");
+                }
 
                 break;
             case PlayerTitle.Dwarf:
                 _atk = _basicAtk + _skill2 / 10f;
                 _weapon._damage = _weapon._basicDamage + (_weapon._basicDamage * 0.3f) + (_weapon._basicDamage * _skill1 / 10f);
-
+                if(_skill1 >= 3)
+                {
+                    achivementCheck(dwarfskill1full, "dwarfskill1full");
+                }
                 break;
             case PlayerTitle.JackFrost:
                 _iceBallProbability = 100f;
@@ -1220,87 +1248,113 @@ public class Player : BaseObject
             case PlayerTitle.AssaultCaptain:
                 _speed = _basicSpeed + (_basicSpeed * 0.3f) + (_basicSpeed * _skill1 / 10f);
                 _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
+                if(_skill1 >= 3 || _skill2 >= 3)
+                {
+                    achivementCheck(assaultcaptainfull, "assaultcaptainfull");
+                }
+
 
                 break;
             case PlayerTitle.ZhangFei:
                 break;
             case PlayerTitle.Berserker:
+                //업데이트
+
 
                 _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
-                if (_skill1 <= 3)
+                if(_skill1 >= 3)
                 {
+                    achivementCheck(berserkerskill1full, "berserkerskill1full");
+                }
+
+                if (_skill2 >= 3)
+                {
+                    achivementCheck(berserkerhidden, "berserkerhidden");
                     _maxHp = _basicHp * 0.2f;
                     _atk = (_basicAtk * 2f) + (_basicAtk * 2f);
                 }
                 else if (_hp <= (_maxHp * (0.25f + _skill1 / 20f)))
                 {
+
                     _atk = (_basicAtk * 2f) + (_basicAtk * _skill2 / 10f);
                 }
 
 
                 break;
             case PlayerTitle.Critialer:
+                if(_skill1 >= 3)
+                {
+                    achivementCheck(criticalerskill1full, "criticalerskill1full");
+                }
+                
+                
                 _criticalProbability = 1f;
                 _criticalDamage = _basicCriticalDamage + (_basicCriticalDamage * _skill1 / 10f);
                 _atk = (_basicAtk * 0.3f) + (_basicAtk * _skill2 / 10f);
+
 
                 break;
             case PlayerTitle.Druid:
                 _speed = _basicSpeed + (_basicSpeed * _skill2 / 10f);
                 break;
             case PlayerTitle.Assassin:
-               // float rand = UnityEngine.Random.Range(0, _criticalProbability - _skill1);
+                if (_skill2 >= 3)
+                {
+                    achivementCheck(assassinskill2full, "assassinskill2full");
+                }
+
                 _criticalDamage = _basicCriticalDamage + (_basicCriticalDamage * 0.2f) + (_basicCriticalDamage * _skill1 / 10f);
                 _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill3 / 10f);
+                
+                
                 break;
+
             case PlayerTitle.Ambidextrous:
                 _atkSpeed += _basicAtkSpeed + (_basicAtkSpeed * 0.5f) + (_basicAtkSpeed * _skill1 / 10f);
                 _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
                 break;
             case PlayerTitle.LuBu:
+
+                if(_skill1 >= 3)
+                {
+                    achivementCheck(lubuskill1full, "lubuskill1full");
+                }
                 _atk = (_basicAtk * 3f) + (_basicAtk * _skill1 / 10f);
                 _atkSpeed = 2f + (_skill2 / 10f);
                 _speed = 2f;
-                //무기 창 추가
-                if (_skill3 >= 3)
-                {
-                    _atk = (_basicAtk * 5f);
-                }
+            
                 break;
+
             case PlayerTitle.HeavyCavalry:
+
+                
                 _atk = _basicAtk + (_basicAtk * 0.2f) + (_basicAtk * _skill1 / 10f);
                 _speed = _basicSpeed + (_basicSpeed * 0.2f) + (_basicSpeed * _skill2 / 10f);
                 break;
             case PlayerTitle.HealthMagician:
                 _maxHp = _basicHp + (_basicHp * 0.3f) + (_basicHp * _skill1 / 5f);
-                //체력 풀스택시 체력비례 대미지 가격 및 주문확률증가 구현해야함
-                _spellCastProbability = 5;
-                if (_skill1 >= 3)
+
+                if (_skill2 >= 3)
                 {
-                    _matk = (_maxHp / 10f) + _basicMatk;
-                    _atk = (_maxHp / 10f) + _basicAtk;
+                    achivementCheck(healthmagicianskill2full, "healthmagicianskill2full");
                 }
+
+                //체력 풀스택시 체력비례 대미지 가격 및 주문확률증가 구현해야함
+                _spellCastProbability = 50;
+       
                 break;
             case PlayerTitle.Priest:
-                
-                
-                
-                //프리스트 히든
-                if (_skill1 >= 3 && _hp >= _maxHp)
-                {
-                    _matk = _basicMatk * 3f;
-                }
+        
                 break;
             case PlayerTitle.Warlock:
 
-                _matk = _basicMatk + (_basicMatk * _skill2 / 10f);
-
-
-                //히든
-                if (_skill1 >= 3)
+                if(_skill1>= 3)
                 {
-                    _spellCastProbability = 7;
+                    achivementCheck(warlockskill1full, "warlockskill1full");
                 }
+
+                _matk = _basicMatk + (_basicMatk * _skill2 / 10f);
+          
                 if (_hp <= _maxHp * (0.20f + _skill1 / 20f))
                 {
                     _matk = (_basicMatk * 2f) + (_basicMatk * _skill2 / 10f);
@@ -1316,28 +1370,29 @@ public class Player : BaseObject
                 _fireBallProbability = 100f;
                 _spellCastProbability += _skill1 * 10;
                 _meteorProbablility = 10 + _skill2 * 5;
-
-                //히든
-                if (_skill2 >= 3)
-                {
-                    StartCoroutine(Immolation());
-                }
-
-
                 break;
             case PlayerTitle.Zeus:
-                _jumpStack = 3 + _skill1;
-                _matk = _basicMatk + (_basicMatk * _skill2 / 10f);
-
-
-                //히든
-                if (_skill1 >= 3)
+                if(_skill1>= 1)
                 {
-                    Thunder();
+                    achivementCheck(zeusskill1first, "zeusskill1first");
                 }
+
+
+                _jumpStack = 5 + _skill1;
+                _matk = _basicMatk + (_basicMatk * _skill2 / 10f);
 
                 break;
             case PlayerTitle.PracticeBug:
+
+                if(_skill1 >= 3)
+                {
+                    achivementCheck(practicebugskill1full, "practicebugskill1full");
+                }
+                if(_skill2 >= 3)
+                {
+                    achivementCheck(practicebugskill2full, "practicebugskill2full");
+                }
+
                 _spellCastProbability = 100;
 
                 _matk = _basicMatk + (_basicMatk * _skill1 / 10f);
@@ -1355,15 +1410,7 @@ public class Player : BaseObject
             case PlayerTitle.Cook:
                 _atk = _basicAtk + (_basicAtk * _skill1 / 10f);
 
-
-
-
-                //체력전환 공식 만들기
-                //히든
-                if (_skill2 >= 3)
-                {
-                    _atk = _basicAtk * 2f;
-                }
+               
                 break;
             case PlayerTitle.QRF:
                 _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * 0.5f) + (_basicAtkSpeed * _skill1 / 10f);
@@ -1379,16 +1426,22 @@ public class Player : BaseObject
                 break;
             case PlayerTitle.Servant:
 
+                if(_skill1 >=1)
+                {
+                    achivementCheck(servantskill1first, "sercantskill1first");
+                }
+
                 _hp = _basicHp * 2f + (_basicHp * _skill1 / 5f);
                 _atkSpeed = _basicAtkSpeed * (_basicAtkSpeed * _skill2 / 10f);
 
-                //히든
-                if (_skill1 >= 3)
-                {
-                    //체력 비례 데미지 공식 만들것
-                }
+               
                 break;
             case PlayerTitle.Athlete:
+
+                if(_skill2 >= 3)
+                {
+                    achivementCheck(ahleteskill2full, "ahleteskill2full");
+                }
 
                 _hp = _basicHp + (_basicHp * 0.3f) + (_basicHp * _skill2 / 10f);
                 _speed = _basicSpeed + (_basicSpeed * 0.2f) + (_basicSpeed * _skill1 / 10f);
@@ -1400,27 +1453,40 @@ public class Player : BaseObject
 
 
                 _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill2 / 10f);
-                //히든
-                if (_skill2 >= 3)
-                {
-                    _spellCastProbability = 70;
-                }
+                
 
                 break;
             case PlayerTitle.Shieldbearer:
                 break;
             case PlayerTitle.Acupuncturist:
+                if(_skill2 >= 3)
+                {
+                    achivementCheck(acupuncturistskill2full, "acupuncturistskill2full");
+                }
+
 
                 _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill2 / 10f);
 
                 //즉사 구현해라
                 break;
             case PlayerTitle.SpoonKiller:
+
+                if(_skill1 >= 3)
+                {
+                    achivementCheck(spoonkillerskill1full, "spoonkillerskill1full");
+                }
+                if(_skill2 >= 3)
+                {
+                    achivementCheck(spoonkillerskill2full, "spoonkillerskill2full");
+                }
+
                 _atk = (_basicAtk * 0.5f) + (_basicAtk * _skill2 / 10f);
                 _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill1 / 10f);
 
                 break;
             case PlayerTitle.Helen:
+                StopCoroutine(IceAge());
+
 
                 StartCoroutine(IceAge());
 
@@ -1434,6 +1500,13 @@ public class Player : BaseObject
                 //죽인 몬스터 수 *  골드 획득 나중에 만들 것
                 break;
             case PlayerTitle.Swell:
+
+                if(_skill1 >= 3)
+                {
+                    achivementCheck(swellskill1full, "swellskill1full");
+                }
+
+
                 _hp = _basicHp + (_basicHp * 0.2f) + (_basicHp * _skill1 / 10f);
                 _atk = _basicAtk + (_basicAtk * 0.2f) + (_basicAtk * _skill1 / 10f);
                 _matk = _basicMatk + (_basicMatk * 0.2f) + (_basicMatk * _skill1 / 10f);
@@ -1445,6 +1518,14 @@ public class Player : BaseObject
                 _charm = _basicCharm + (_basicCharm * 0.2f) + (_basicCharm * _skill1 / 10f);
                 break;
             case PlayerTitle.Delivery:
+                
+                if(_skill1 >= 3)
+                {
+                    achivementCheck(deliveryskill1full, "deliverryskill1full");
+                }
+                
+                
+                
                 _speed = _basicSpeed + _basicSpeed + (_basicSpeed * _skill1 / 10f);
                 _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill2 / 10f);
 
@@ -1455,15 +1536,13 @@ public class Player : BaseObject
                 }
                 break;
             case PlayerTitle.Repairman:
-
-                //5초마다 체력 재생력 +10;
+                StopCoroutine(HealingFactor());
+                
 
                 _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
                 //체력에대한 공식 성립되면 추가
-                if (_skill1 >= 3)
-                {
-                    //매 초마다 체력 회복
-                }
+               
+                    StartCoroutine(HealingFactor());
 
                 break;
             case PlayerTitle.Dosa:
@@ -1472,7 +1551,10 @@ public class Player : BaseObject
                 //지능 추가할것 스테이지 종료시 없어지는거 추가 할 것
                 break;
             case PlayerTitle.Gambler:
-
+                if(_skill2 >= 3)
+                {
+                    achivementCheck(gamblerskill2, "gamblerskill2");
+                }
                 //완료
                 break;
             case PlayerTitle.SlowStarter:
@@ -1487,7 +1569,10 @@ public class Player : BaseObject
                 _charm = _basicCharm + (_basicCharm * 0.2f) + (_basicCharm * _skill1 / 10f);
                 break;
             case PlayerTitle.Orpheus:
+                StopCoroutine(MonsterAtkDown());
+
                 _atk = _basicAtk + (_basicAtk + _skill2 / 10f);
+                StartCoroutine(MonsterAtkDown());
                 break;
             case PlayerTitle.DokeV:
                 //공격시 10% 확률로 몬스터의 능력치를 랜덤으로 가져온다.
@@ -1503,21 +1588,52 @@ public class Player : BaseObject
         {
             case PlayerTitle.Normal:
                 break;
+            case PlayerTitle.MagicalBlader:
+                
+                //한번
+                if (_skill1 == 3)
+                {
+                    achivementCheck(magicalbladerhidden,"magicalbladerhidden");
+                    _atk = _basicAtk + _basicAtk + (_basicAtk * 0.5f);
+                }
+                else if (_skill2 >= 3)
+                {
+                    achivementCheck(magicalbladerhidden, "magicalbladerhidden");
+                    _matk = _basicMatk + _basicMatk + (_basicMatk * 0.5f);
+                }
+                break;
             case PlayerTitle.MadMan:
                 break;
             case PlayerTitle.StrongMan:
+                if(_skill2 >= 3)
+                {
+                    achivementCheck(strongmanhidden, "strongmanhidden");
+                }
                 break;
             case PlayerTitle.Warrior:
                 break;
             case PlayerTitle.Dwarf:
                 break;
             case PlayerTitle.JackFrost:
+                //완료
                 break;
             case PlayerTitle.AssaultCaptain:
                 break;
             case PlayerTitle.ZhangFei:
+                //한번
+                if (_skill2 >= 3)
+                {
+                    achivementCheck(zhangfeihidden, "zhangfeihidden");
+                    m_viewDistance = 60f;
+                }
                 break;
             case PlayerTitle.Berserker:
+                //한번
+                if(_skill2 >= 3)
+                {
+                    _maxHp = _basicHp * 0.2f;
+                    _atk = (_basicAtk * 2f) + (_basicAtk * 2f);
+                }
                 break;
             case PlayerTitle.Critialer:
                 break;
@@ -1528,18 +1644,60 @@ public class Player : BaseObject
             case PlayerTitle.Ambidextrous:
                 break;
             case PlayerTitle.LuBu:
+                //한번
+                if (_skill3 >= 3)
+                {
+                    achivementCheck(lubuhidden, "lubuhidden");
+                    _atk = (_basicAtk * 5f);
+                }
                 break;
             case PlayerTitle.HeavyCavalry:
                 break;
             case PlayerTitle.HealthMagician:
+                //한번
+                if (_skill1 >= 3)
+                {
+                    achivementCheck(healthmagicianhidden, "healthmagicianhidden");
+                    _matk = (_maxHp / 10f) + _basicMatk;
+                    _atk = (_maxHp / 10f) + _basicAtk;
+                   
+                }
                 break;
             case PlayerTitle.Priest:
+                //업데이트
+                if (_skill1 >= 3 && _hp >= _maxHp)
+                {
+                    achivementCheck(pristhidden, "pristhidden");
+                    _matk = _basicMatk * 3f;
+                }
+                else if(_skill1 >= 3 && _hp < _maxHp)
+                {
+                    _matk = _basicMatk;
+                }
                 break;
             case PlayerTitle.Warlock:
+                //한번
+                if (_skill2 >= 3)
+                {
+                    achivementCheck(warlcokhidden, "warlcokhidden");
+                    _spellCastProbability = 70;
+                }
                 break;
             case PlayerTitle.Salamander:
+                //한번
+                if (_skill2 >= 3)
+                {
+                    achivementCheck(salamanderhidden, "salamanderhidden");
+                    StartCoroutine(Immolation());
+                }
                 break;
             case PlayerTitle.Zeus:
+                //한번
+                if (_skill1 >= 3)
+                {
+                    achivementCheck(zeushidden, "zeushidden");
+                    Thunder();
+                }
                 break;
             case PlayerTitle.PracticeBug:
                 break;
@@ -1548,14 +1706,38 @@ public class Player : BaseObject
             case PlayerTitle.GateKeeper:
                 break;
             case PlayerTitle.Cook:
+                //한번
+                if (_skill2 >= 3)
+                {
+                    achivementCheck(cookhidden, "cookhidden");
+                    _atk = _basicAtk * 2f;
+                }
                 break;
             case PlayerTitle.QRF:
+                if (_skill2 >= 3)
+                {
+                    //공격시 스턴 구현 완료
+                }
+
                 break;
             case PlayerTitle.Servant:
+                //한번
+                if (_skill1 >= 3)
+                {
+                    achivementCheck(servanthidden, "servanthidden");
+                    _matk = (_maxHp / 10f) + _basicMatk;
+                    _atk = (_maxHp / 10f) + _basicAtk;
+                }
                 break;
             case PlayerTitle.Athlete:
                 break;
             case PlayerTitle.Versatile:
+                //한번
+                if (_skill2 >= 3)
+                {
+                    achivementCheck(versatilehidden, "versatilehidden");
+                    _spellCastProbability = 70;
+                }
                 break;
             case PlayerTitle.Shieldbearer:
                 break;
@@ -1564,6 +1746,10 @@ public class Player : BaseObject
             case PlayerTitle.SpoonKiller:
                 break;
             case PlayerTitle.Helen:
+                if(_skill2 >= 3)
+                {
+                    achivementCheck(helenhidden, "helenhidden");
+                }
                 break;
             case PlayerTitle.Slicker:
                 break;
@@ -1574,8 +1760,14 @@ public class Player : BaseObject
             case PlayerTitle.Delivery:
                 break;
             case PlayerTitle.Repairman:
+                
+                if (_skill1 >= 3)
+                {
+                    achivementCheck(repairmanhidden, "repairmanhidden");
+                }
                 break;
             case PlayerTitle.Dosa:
+                //분신 스크립트에서 만질예정
                 break;
             case PlayerTitle.Gambler:
                 break;
@@ -1636,411 +1828,7 @@ public class Player : BaseObject
         }
 
     }
-    public void MagicalBlader() //마검사 효과
-    {
-        if(_half == 0)
-        {
-            _atk = _basicAtk  + _basicAtk + (_basicAtk * _skill2/10f);
-            _matk = 0 + (_basicMatk * _skill1/10f);
-            if(_skill1 == 3)
-            {
-                _atk = _basicAtk + _basicAtk + (_basicAtk * 0.5f);
-            }
-        }
-        else if(_half == 1)
-        {
-            _atk = 0 + (_basicAtk * _skill2 / 10f);
-            _matk = _basicMatk + _basicMatk + (_basicMatk * _skill1 / 10f);
-            if(_skill2 >= 3)
-            {
-                _matk = _basicMatk + _basicMatk + (_basicMatk * 0.5f);
-            }
-        }
-    }
-
-    public void MadMan() // 광인 효과
-    {
-        _atk = (_basicAtk * 0.75f) + (_basicAtk * _skill1 / 10f); 
-        _matk = (_basicMatk * 0.75f) +(_basicMatk * _skill2 / 10f);
-        _criticalDamage = (_basicCriticalDamage * 2f) + (_basicCriticalDamage * _skill3/10f);
-    }
     
-    public void StrongMan() //괴력몬 효과
-    {
-        _strongManProbability = UnityEngine.Random.Range(0, 4 - _skill2);
-
-        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill1 / 10f);
-
-        if (_half == 0)
-        {
-            ChangeState(State.Attack2);
-        }
-    }
-    public void Warrior() // 전사 효과
-    {
-        _atk = _basicAtk + (_basicAtk * 0.3f ) + (_basicAtk * _skill1/10f);
-
-    }
-    public void Dwarf() // 난쟁이
-    {
-        _atk = _basicAtk + _skill2 / 10f;
-
-        for(int i = 0; i < _listWeapon.Count; ++i)
-        {
-            if(_listWeapon[i].gameObject.activeSelf == true)
-            {
-                _listWeapon[i]._damage = _listWeapon[i]._basicDamage + (_listWeapon[i]._basicDamage * 0.3f) + (_listWeapon[i]._basicDamage * _skill1/10f);
-            }
-        }
-    }
-    public void JackFrost() // 동장군
-    {
-        
-        _iceBallProbability = 100f;
-        _chainLightProbability = 0f;
-        _fireBallProbability = 0f;
-
-        _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
-        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill3 / 10f);
-        
-    }
-    public void AssaultCaptain() // 돌격대장
-    {
-        _speed = _basicSpeed + (_basicSpeed * 0.3f) + (_basicSpeed * _skill1/10f);
-        _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
-    }
-
-    public void ZhangFei() // 삼국지 장비
-    {
-        //완성
-    }
-
-    public void Berserker() //광전사
-    {
-        _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
-        if(_skill1 <=3)
-        {
-            _maxHp = _basicHp * 0.2f;
-            _atk = (_basicAtk * 2f) + (_basicAtk * 2f);
-        }
-        else if(_hp <= (_maxHp * (0.25f + _skill1/20f)))
-        {
-            _atk = (_basicAtk * 2f) + (_basicAtk * _skill2 / 10f); 
-        }
-        
-
-
-    }
-    public void Critialer() //급소쟁이
-    {
-        _criticalProbability = 1f;
-        _criticalDamage = _basicCriticalDamage + (_basicCriticalDamage * _skill1 / 10f);
-        _atk = (_basicAtk * 0.3f) + (_basicAtk * _skill2 / 10f);
-
-    }
-
-    public void Druid() //드루이드
-    {
-        _speed = _basicSpeed + (_basicSpeed * _skill2 / 10f);
-        
-        //완성
-    }
-
-    public void Assassin() // 암살자
-    {
-        float rand = UnityEngine.Random.Range(0, _criticalProbability - _skill1);
-        _criticalDamage = _basicCriticalDamage + (_basicCriticalDamage * 0.2f) + (_basicCriticalDamage * _skill1/10f);
-        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill3 / 10f);
-    }
-
-    public void Ambidextrous() //양손잡이
-    {
-
-        _atkSpeed += _basicAtkSpeed+(_basicAtkSpeed * 0.5f) + (_basicAtkSpeed * _skill1/10f);
-        _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
-
-    }
-    public void LuBu() // 삼국지 여포
-    {
-        _atk = (_basicAtk * 3f) + (_basicAtk * _skill1/10f);
-        _atkSpeed = 2f + (_skill2/10f);
-        _speed = 2f;
-
-        //무기 창 추가
-        if(_skill3 >= 3)
-        {
-            _atk = (_basicAtk * 5f);
-        }
-        
-
-
-    }
-
-    public void HeavyCavalry() // 개마무사
-    {
-        _atk = _basicAtk + (_basicAtk * 0.2f) + (_basicAtk * _skill1/10f);
-        _speed = _basicSpeed + (_basicSpeed * 0.2f) + (_basicSpeed * _skill2/10f);
-    }
-
-    public void HealthMagician() // 덩치법사
-    {
-        _maxHp = _basicHp + (_basicHp * 0.3f) + (_basicHp * _skill1 / 5f);
-        //체력 풀스택시 체력비례 대미지 가격 및 주문확률증가 구현해야함
-        _spellCastProbability = 5;
-        if(_skill1 >= 3)
-        {
-            _matk = (_maxHp / 10f) + _basicMatk;
-            _atk = (_maxHp / 10f) + _basicAtk;
-        }
-
-
-    }
-    public void Priest() // 사제
-    {
-        int rand;
-        rand = UnityEngine.Random.Range(0, 5 - _skill2);
-        if(rand == 0)
-        {
-            _hp += _maxHp / 10f + (_maxHp /(10 - (_skill1 * 2)) );
-        }
-
-        if(_skill1 >= 3 && _hp >= _maxHp)
-        {
-            _matk = _basicMatk * 3f;
-        }
-
-
-        
-    }
-    public void Warlock() // 흑마법사
-    {
-
-        if(_skill1 >= 3)
-        {
-            _spellCastProbability = 7;
-        }
-
-        _matk = _basicMatk + (_basicMatk * _skill2 / 10f);
-
-        if (_hp <= _maxHp * (0.20f+ _skill1/20f))
-        {
-            _matk = (_basicMatk * 2f) + (_basicMatk * _skill2 / 10f); 
-        }
-    }
-    public void Salamander() // 불도마뱀
-    {
-        _iceBallProbability = 0f;
-        _chainLightProbability = 0f;
-        _fireBallProbability = 100f;
-
-
-        if(_skill2 >= 3)
-        {
-            StartCoroutine(Immolation());
-        }
-
-
-
-    }
-    public void Zeus() //제우스
-    {
-        _jumpStack = 3 + _skill1;
-        _matk = _basicMatk + (_basicMatk * _skill2 / 10f);
-
-
-        if(_skill1 >= 3)
-        {
-            Thunder();
-        }
-    }
-
-    public void PracticeBug() //연습벌레
-    {
-        _spellCastProbability = 10;
-
-        _matk = _basicMatk + (_basicMatk * _skill1 / 10f);
-        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill2);
-
-
-
-    }
-   
-    public void Stranger() // 스트레인저
-    {
-        //스킬 사용시 5% 확률로 블랙홀 소환
-
-    }
-
-    public void GateKeeper() // 문지기
-    {
-        //스킬 사용시 20%로 벽 소환
-    }
-    public void Cook() //요리사
-    {
-        _atk = _basicAtk + (_basicAtk * _skill1 / 10f);
-
-        //체력전환 공식 만들기
-
-        if(_skill2 >= 3)
-        {
-            _atk = _basicAtk * 2f;
-        }
-    }
-    public void QRF() // 번개조
-    {
-        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * 0.5f) + (_basicAtkSpeed * _skill1/10f);
-        _atk = _basicAtk + (_basicAtk * 0.1f);
-        _speed = _basicSpeed + (_basicSpeed * _skill2);
-
-        if(_skill2 >= 3)
-        {
-            //공격시 스턴 구현 완료
-        }
-
-
-
-    }
-
-    public void Servant() // 돌쇠
-    {
-        _hp = _basicHp  * 2f + (_basicHp * _skill1/5f);
-        _atkSpeed = _basicAtkSpeed * (_basicAtkSpeed * _skill2 / 10f);
-        if(_skill1 >= 3)
-        {
-            //체력 비례 데미지 공식 만들것
-        }
-
-    }
-    public void Athlete() // 운동선수
-    {
-        _hp = _basicHp + (_basicHp * 0.3f) + (_basicHp * _skill2/10f);
-        _speed = _basicSpeed + (_basicSpeed * 0.2f) + (_basicSpeed * _skill1/10f);
-
-    }
-    public void Versatile() // 다재다능
-    {
-        for (int i = 0; i < _listWeapon.Count; ++i)
-        {
-            if (_listWeapon[i].gameObject.activeSelf == true)
-            {
-                _listWeapon[i]._damage = _listWeapon[i]._basicDamage * 2f +(_listWeapon[i]._basicDamage + _skill1/10f) ;
-            }
-        }
-        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill2 / 10f);
-
-        if(_skill2 >= 3)
-        {
-            _spellCastProbability = 7;
-        }
-    }
-
-    public void Shieldbearer() // 방패병
-    {
-        //휠윈드 애니메이션 만들기
-    }
-    public void Acupuncturist() // 침술사
-    {
-        //10% 확률로 공격한 적 즉사
-    }
-    public void SpoonKiller() //숟가락 살인마
-    {
-        _atk = (_basicAtk * 0.5f) + (_basicAtk * _skill2/10f);
-        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill1 / 10f);
-
-    }
-
-    public void Helen() // 절세미인
-    {
-        StartCoroutine(IceAge());
-    }
-
-    public void Slicker() // 야바위꾼
-    {
-        //죽었을때 30%확률로 부활
-    }
-    public void Idol() //아이돌
-    {
-        _critical = _basicCritical + (_basicCritical * _skill1 / 10f);
-        _speed = _basicSpeed + (_basicSpeed * _skill2 / 10f);
-
-        //죽인 몬스터 수 *  골드 획득
-    }
-
-    public void Swell() // 달인
-    {
-        _hp = _basicHp + (_basicHp * 0.2f) + (_basicHp * _skill1 / 10f);
-        _atk = _basicAtk + (_basicAtk * 0.2f) + (_basicAtk * _skill1 / 10f);
-        _matk = _basicMatk + (_basicMatk * 0.2f) + (_basicMatk * _skill1/10f);
-        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * 0.2f) + (_basicAtkSpeed * _skill1 / 10f); ;
-        _def = _basicDef + (_basicDef * 0.2f) + (_basicDef * _skill1 / 10f); 
-        _speed = _basicSpeed + (_basicSpeed * 0.2f) + (_basicSpeed * _skill1 / 10f); 
-        _critical = _basicCritical + (_basicCritical * 0.2f) + (_basicCritical * _skill1 / 10f);
-        _handicraft = _basicHandicraft + (_basicHandicraft * 0.2f) + (_basicHandicraft * _skill1 / 10f); 
-        _charm = _basicCharm + (_basicCharm * 0.2f) + (_basicCharm * _skill1 / 10f); 
-
-    }
-
-    public void Delivery() // 배달부
-    {
-        _speed = _basicSpeed + _basicSpeed + (_basicSpeed * _skill1/10f);
-        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill2 / 10f);
-
-        if(_skill1 >= 3)
-        {
-            //충돌데미지 추가
-        }
-
-    }
-
-    public void RepairMan() //수리공
-    {
-        //5초마다 체력 재생력 +10;
-
-        _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
-        //체력에대한 공식 성립되면 추가
-        if(_skill1 >= 3)
-        {
-            //매 초마다 체력 회복
-        }
-
-    }
-
-    public void Dosa()//전우치
-    {
-        //공격시 10% 확률로 분신 소환 분신은 스테이지가 종료되면 사라짐
-        //지능 추가할것 스테이지 종료시 없어지는거 추가 할 것
-
-    }
-
-    public void Gambler() //도박사
-    {
-        //완료
-    }
-
-    public void SlowStarter() // 슬로우 스타터
-    {
-        _hp = _basicHp + (_basicHp * 0.2f) + (_basicHp * _skill1 / 10f);
-        _atk = _basicAtk + (_basicAtk * 0.2f) + (_basicAtk * _skill1 / 10f);
-        _matk = _basicMatk + (_basicMatk * 0.2f) + (_basicMatk * _skill1 / 10f);
-        _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * 0.2f) + (_basicAtkSpeed * _skill1 / 10f); ;
-        _def = _basicDef + (_basicDef * 0.2f) + (_basicDef * _skill1 / 10f);
-        _speed = _basicSpeed + (_basicSpeed * 0.2f) + (_basicSpeed * _skill1 / 10f);
-        _critical = _basicCritical + (_basicCritical * 0.2f) + (_basicCritical * _skill1 / 10f);
-        _handicraft = _basicHandicraft + (_basicHandicraft * 0.2f) + (_basicHandicraft * _skill1 / 10f);
-        _charm = _basicCharm + (_basicCharm * 0.2f) + (_basicCharm * _skill1 / 10f);
-
-    }
-    
-    public void Orpheus() // 오르페우스
-    {
-        _atk = _basicAtk + (_basicAtk + _skill2 / 10f);
-    }
-
-    public void DokeV() //도꺠비
-    {
-        //공격시 10% 확률로 몬스터의 능력치를 랜덤으로 가져온다.
-
-    }
 
 
     public IEnumerator CoLightning()
@@ -2381,12 +2169,12 @@ public class Player : BaseObject
     public void Roar()
     {
 
+        achivementCheck(zhangfeiroar, "zhangfeiroar");
+
+
         m_viewDistance = 2 + _skill2;
 
-        if (_skill2 >= 3)
-        {
-            m_viewDistance = 60f;
-        }
+      
         
 
 
@@ -2400,7 +2188,7 @@ public class Player : BaseObject
         for(int i = 0; i < _listBlizzardMonster.Count; ++i)
         {
             _listBlizzardMonster[i]._ccDurationTime = 1 + _skill1;
-            _listBlizzardMonster[i].Roar();
+            _listBlizzardMonster[i].Stun();
 
         }
 
@@ -2411,6 +2199,7 @@ public class Player : BaseObject
 
     public void Meteor()
     {
+        achivementCheck(salamandermeteor, "salamandermeteor");
         GamePlay.Instance._meteorTargetPool.Get();
     }
     public IEnumerator Immolation()
@@ -2456,6 +2245,7 @@ public class Player : BaseObject
                 }
                 if(_skill2 >= 3)
                 {
+
                     obj[i].GetComponent<Monster>()._hp -= _atk/3;
                 }
 
@@ -2489,8 +2279,34 @@ public class Player : BaseObject
         }
     }
 
+    public IEnumerator HealingFactor()
+    {
+        int time = 5;
+        while (true)
+        {
 
-   
+            if(_skill1 <3)
+            {
+                _hp += 10f + _skill1 * 10f;
+
+            }
+            else if (_skill1 >= 3)
+            {
+                _hp += _maxHp * 0.1f;
+                time = 1;
+            }
+            
+            if(_hp >= _maxHp)
+            {
+                _hp = _maxHp;
+            }
+            yield return new WaitForSeconds(time);
+
+
+        }
+    }
+
+
 
 
 
@@ -2652,9 +2468,9 @@ public class Player : BaseObject
         pristjesus = data.m_pristjesus;
         pristhidden = data.m_pristhidden;
         getwarlock = data.m_getwarlock;
-        warlockhidden = data.m_warlockhidden;
+        warlockskill1full = data.m_warlockskill1full;
         warlockclear = data.m_warlockclear;
-        warlcokhidden = data.m_warlockhidden;
+        warlcokhidden = data.m_warlcokhidden;
         getsalamander = data.m_getsalamander;
         salamandermeteor = data.m_salamandermeteor;
         salamandermeteor3 = data.m_salamandermeteor3;
@@ -2866,9 +2682,9 @@ public class Player : BaseObject
         _data.m_pristjesus = pristjesus;
         _data.m_pristhidden = pristhidden;
         _data.m_getwarlock = getwarlock;
-        _data.m_warlockhidden = warlockhidden;
+        _data.m_warlockskill1full = warlockskill1full;
         _data.m_warlockclear = warlockclear;
-        _data.m_warlockhidden = warlockhidden;
+        _data.m_warlcokhidden = warlcokhidden;
         _data.m_getsalamander = getsalamander;
         _data.m_salamandermeteor = salamandermeteor;
         _data.m_salamandermeteor3 = salamandermeteor3;

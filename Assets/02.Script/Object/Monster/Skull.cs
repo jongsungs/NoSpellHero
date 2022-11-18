@@ -140,7 +140,7 @@ public class Skull : Monster
         }
         if (other.CompareTag("Roar"))
         {
-            Roar();
+            
         }
     }
     private void OnTriggerExit(Collider other)

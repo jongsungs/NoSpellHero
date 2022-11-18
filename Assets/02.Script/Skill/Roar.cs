@@ -36,7 +36,7 @@ public class Roar : SkillBase
         for (int i = 0; i < _listBlizzardMonster.Count; ++i)
         {
             _listBlizzardMonster[i]._ccDurationTime = 1 + skill1;
-            _listBlizzardMonster[i].Roar();
+            _listBlizzardMonster[i].Stun();
 
         }
 

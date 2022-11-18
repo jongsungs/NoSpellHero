@@ -5766,18 +5766,24 @@ MonoBehaviour:
   _roar: {fileID: 0}
   variableJoystick: {fileID: 0}
   _followCamera: {fileID: 0}
-  _myWeapon: []
+  _listWeapon: []
+  _weapon: {fileID: 0}
   _isIdle: 1
   _playerTitle: 3
   _listState: []
-  _spellCastProbability: 0
-  _fireBallProbability: 0
-  _iceBallProbability: 0
-  _chainLightProbability: 0
   _isWalk: 0
   _skill1: 0
   _skill2: 0
   _skill3: 0
+  _totalCreepScore: 0
+  _jackfrostScore: 0
+  _druidScore: 0
+  _strangerblackholeScore: 0
+  _helenScore: 0
+  _getGold: 0
+  _dosaDieAvatar: 0
+  _dokevHiddenSkillScore: 0
+  _spellScore: 0
   _listMeteorPoint: []
   _listAnimator: []
   _listRigidBody: []
@@ -5922,7 +5928,7 @@ MonoBehaviour:
   pristjesus: 0
   pristhidden: 0
   getwarlock: 0
-  warlockhidden: 0
+  warlockskill1full: 0
   warlockclear: 0
   warlcokhidden: 0
   getsalamander: 0
@@ -6003,6 +6009,11 @@ MonoBehaviour:
   _quater: 0
   _1_5: 0
   _strongManProbability: 0
+  _spellCastProbability: 0
+  _fireBallProbability: 0
+  _iceBallProbability: 0
+  _chainLightProbability: 0
+  _meteorProbablility: 0
   m_viewAngle: 0
 --- !u!4 &361980305
 Transform:
@@ -36546,13 +36557,13 @@ MonoBehaviour:
   States:
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
@@ -36567,7 +36578,7 @@ MonoBehaviour:
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
@@ -36816,7 +36827,7 @@ MonoBehaviour:
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
@@ -36897,7 +36908,7 @@ MonoBehaviour:
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
@@ -37164,9 +37175,9 @@ MonoBehaviour:
     LockOverlay: 0
     AchievedIcon: {fileID: 0}
     Spoiler: 0
-    Progression: 0
-    ProgressGoal: 0
-    NotificationFrequency: 0
+    Progression: 1
+    ProgressGoal: 1000
+    NotificationFrequency: 100
     ProgressSuffix: 
   - Key: getassaultcaptain
     DisplayName: "\uB098\uB97C \uB530\uB974\uB77C!"
@@ -37340,9 +37351,9 @@ MonoBehaviour:
     LockOverlay: 0
     AchievedIcon: {fileID: 0}
     Spoiler: 0
-    Progression: 0
-    ProgressGoal: 0
-    NotificationFrequency: 0
+    Progression: 1
+    ProgressGoal: 100
+    NotificationFrequency: 10
     ProgressSuffix: 
   - Key: getassassin
     DisplayName: "\uC2A4\uC2A4\uC2A5"
@@ -37514,7 +37525,7 @@ MonoBehaviour:
     ProgressGoal: 0
     NotificationFrequency: 0
     ProgressSuffix: 
-  - Key: warlockhidden
+  - Key: warlockskill1full
     DisplayName: "\uB098\uB294 \uC18C\uC911\uD558\uB2C8\uAE50\u2026"
     Description: "\uD751\uB9C8\uBC95\uC0AC \uC870\uAC74\uBD80 \uCCB4\uB825 \uC99D\uAC00
       \uD480\uC2A4\uD0DD\uC77C \uB54C"

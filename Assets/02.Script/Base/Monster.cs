@@ -131,10 +131,7 @@ public class Monster : BaseObject
         _monsterpool = pool;
     }
 
-    private void OnBecameInvisible()
-    {
-        _monsterpool.Release(this);
-    }
+    
 
     
 
@@ -163,7 +160,7 @@ public class Monster : BaseObject
         _burn.SetActive(true);
 
     }
-    public virtual void Roar()
+    public virtual void Stun()
     {
         _CC = CrowdControl.Stun;
         //_ccDurationTime += 1f;

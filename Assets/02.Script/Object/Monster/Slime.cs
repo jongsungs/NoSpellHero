@@ -129,7 +129,7 @@ public class Slime : Monster
                 var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
                 _hp -= damage;
                 _feedBack.PlayFeedbacks(this.transform.position,damage);
-                Debug.Log("여기도 깎여?");
+              
             }
             else if(other.GetComponent<Weapon>()._isOnce == true && Player.Instance._playerTitle == Player.PlayerTitle.Druid)
             {
@@ -142,17 +142,31 @@ public class Slime : Monster
                 {
                 
                     m_targetMask = 64;
+                    if(Player.Instance.druidfirstskill == false)
+                    {
+                        Player.Instance.druidfirstskill = true;
+                    }
+                    Player.Instance._druidScore++;
+                    AchievementManager.instance.AddAchievementProgress("druidskill100", Player.Instance._druidScore);
+
+                  //  if (Player.Instance._druidScore >= 100 && Player.Instance.druidskill100 == false)
+                  //  {
+                  //      Player.Instance.druidskill100 = true;
+                  //      AchievementManager.instance.Unlock("druidskill100");
+                  //  }
+
+
                 }
 
             }
-            else if(other.GetComponent<Weapon>()._isOnce == true && Player.Instance._playerTitle == Player.PlayerTitle.QRF && Player.Instance._skill2 >= 3f)
+            else if(other.GetComponent<Weapon>()._isOnce == true && Player.Instance._playerTitle == Player.PlayerTitle.QRF && Player.Instance._skill2 >= 3f &&Player.Instance._isHanger == true)
             {
                 other.GetComponent<Weapon>()._isOnce = false;
                 ChangeState(State.Hit);
                 int rand = Random.Range(0, 3);
                 if(rand == 0)
                 {
-                    Roar();
+                    Stun();
                 }
             }
             else if (other.GetComponent<Weapon>()._isOnce == true)
@@ -188,10 +202,7 @@ public class Slime : Monster
                 Burn();
             }
         }
-        if(other.CompareTag("Roar"))
-        {
-            Roar();
-        }
+        
     }
     private void OnTriggerExit(Collider other)
     {
@@ -202,11 +213,25 @@ public class Slime : Monster
         }
     }
 
-    IEnumerator CoDie()
+   public IEnumerator CoDie()
     {
         _layerMask = 0;
         StartCoroutine(CoFadeOut(1f));
         yield return new WaitForSeconds(2f);
+        if(_CC == CrowdControl.Freezing && Player.Instance._playerTitle == Player.PlayerTitle.JackFrost)
+        {
+            Player.Instance._jackfrostScore++;
+            AchievementManager.instance.AddAchievementProgress("jackfrosttuna", Player.Instance._jackfrostScore);
+            
+        }
+       // if(Player.Instance._jackfrostScore >= 1000 && Player.Instance.jackfrosttuna == false)
+       // {
+       //     Player.Instance.jackfrosttuna = true;
+       //     AchievementManager.instance.Unlock("jackfrosttuna");
+       // }
+
+
+
         _monsterpool.Release(this);
     }
 

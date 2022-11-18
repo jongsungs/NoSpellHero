@@ -157,7 +157,7 @@ public class Dragon : Monster
         }
         if (other.CompareTag("Roar"))
         {
-            Roar();
+            
         }
     }
     private void OnTriggerExit(Collider other)

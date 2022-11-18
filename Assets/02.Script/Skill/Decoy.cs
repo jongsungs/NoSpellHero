@@ -32,7 +32,7 @@ public class Decoy : BaseObject
     private void Start()
     {
         _player = GameObject.Find("Player").GetComponent<Player>();
-        _myWeapon = _player._myWeapon;
+       // _myWeapon = _player._myWeapon;
         _animator = GetComponent<Animator>();
         _nav = GetComponent<NavMeshAgent>();
         m_transform = GetComponent<Transform>();
