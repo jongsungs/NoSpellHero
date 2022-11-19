@@ -75,7 +75,16 @@ public class RFX4_PhysicsForceCurves : MonoBehaviour
                 {
                     if(hitCollider.CompareTag("Enemy"))
                     {
+                        //∫Ì∑¢»¶ ¥Ÿ¿Ã
                         hitCollider.GetComponent<Monster>().MonsterRelease();
+                        Player.Instance._strangerblackholeScore++;
+                        AchievementManager.instance.AddAchievementProgress("stangerskill100", Player.Instance._strangerblackholeScore);
+
+                       // if(Player.Instance.stangerskill100 == false && Player.Instance._strangerblackholeScore >= 100)
+                       // {
+                       //     Player.Instance.stangerskill100 = true;
+                       // }
+
                     }
                     //Destroy(hitCollider.gameObject);
                 }

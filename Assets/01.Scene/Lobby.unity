@@ -5772,6 +5772,7 @@ MonoBehaviour:
   _playerTitle: 3
   _listState: []
   _isWalk: 0
+  _ishalfHp: 0
   _skill1: 0
   _skill2: 0
   _skill3: 0
@@ -5784,6 +5785,8 @@ MonoBehaviour:
   _dosaDieAvatar: 0
   _dokevHiddenSkillScore: 0
   _spellScore: 0
+  _comboPristHeal: 
+  _comboMeteor: 
   _listMeteorPoint: []
   _listAnimator: []
   _listRigidBody: []
@@ -37739,9 +37742,9 @@ MonoBehaviour:
     LockOverlay: 0
     AchievedIcon: {fileID: 0}
     Spoiler: 0
-    Progression: 0
-    ProgressGoal: 0
-    NotificationFrequency: 0
+    Progression: 1
+    ProgressGoal: 100
+    NotificationFrequency: 10
     ProgressSuffix: 
   - Key: getqrf
     DisplayName: "\uC0E4\uC6CC\uB098 \uD558\uB7EC \uAC00\uC57C\uC9C0"

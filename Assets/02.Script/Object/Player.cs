@@ -451,7 +451,7 @@ public class Player : BaseObject
     public List<float> _listState = new List<float>();
   
     public bool _isWalk;
-
+    public bool _ishalfHp;
 
     public int _skill1;
     public int _skill2;
@@ -466,6 +466,9 @@ public class Player : BaseObject
     public int _dosaDieAvatar;
     public int _dokevHiddenSkillScore;
     public int _spellScore;
+
+    public List<int> _comboPristHeal = new List<int>();
+    public List<int> _comboMeteor = new List<int>();
 
     public List<GameObject> _listMeteorPoint = new List<GameObject>();
     public List<Animator> _listAnimator = new List<Animator>();
@@ -736,6 +739,8 @@ public class Player : BaseObject
     public float _iceBallProbability;
     public float _chainLightProbability;
     public int _meteorProbablility;
+    public int _instantDeathProbablility;
+    public int _blackholeProbablility;
     [SerializeField] float m_viewAngle;    //시야각
 
 
@@ -816,16 +821,36 @@ public class Player : BaseObject
         if(_playerTitle == PlayerTitle.Priest)
         {
             HiddenSkill(_playerTitle);
+            if(_hp <= _maxHp * 0.5f && _ishalfHp == false)
+            {
+                _ishalfHp = true;
+            }
+            if(_hp >= _maxHp && _ishalfHp == true)
+            {
+                achivementCheck(pristhpfull, "pristhpfull");
+            }
+        }
+        if (_playerTitle == PlayerTitle.Cook)
+        {
+            
+            if (_hp <= _maxHp * 0.5f && _ishalfHp == false)
+            {
+                _ishalfHp = true;
+            }
+            if (_hp >= _maxHp && _ishalfHp == true)
+            {
+                achivementCheck(cookfullhp, "cookfullhp");
+            }
         }
 
-        if(_animator != null)
+        if (_animator != null)
         {
             _animator.speed = 0.5f + (_atkSpeed / 10f);
             _animator.SetFloat("AtkSpeed", _animator.speed);
         }
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+        if (Input.GetKeyDown(KeyCode.D))
         {
-            Save();
+            BlackHole();
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -1091,9 +1116,20 @@ public class Player : BaseObject
         else if (_playerTitle == PlayerTitle.Priest)
         {
             rand = UnityEngine.Random.Range(0, 5 - _skill2);
+            _comboPristHeal.Add(rand);
             if (rand == 0)
             {
                 _hp += _maxHp / 10f + (_maxHp / (10 - (_skill1 * 2)));
+            }
+          
+            
+            if(_comboPristHeal.Count >=5 && _comboPristHeal.Exists(x => x != 0) == false)
+            {
+                achivementCheck(pristjesus, "pristjesus");
+            }
+            if (_comboPristHeal.Exists(x => x == 0) == true)
+            {
+                _comboPristHeal.Clear();
             }
         }
         
@@ -1402,7 +1438,7 @@ public class Player : BaseObject
 
                 _matk = _basicMatk + (_basicMatk * _skill2 / 10f);
 
-                //확률에 따른 블랙홀 추가
+                _blackholeProbablility = 5 + (_skill1 * 5);
 
                 break;
             case PlayerTitle.GateKeeper:
@@ -1467,7 +1503,7 @@ public class Player : BaseObject
 
                 _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill2 / 10f);
 
-                //즉사 구현해라
+                _instantDeathProbablility = 5 + (_skill1 * 5);
                 break;
             case PlayerTitle.SpoonKiller:
 
@@ -1803,7 +1839,11 @@ public class Player : BaseObject
     public void Spell(float ice,float fire,float light)
     {
         float rand = UnityEngine.Random.Range(0, (ice + fire + light));
-     
+        int blackhole = UnityEngine.Random.Range(0, 100);
+        if(_playerTitle == PlayerTitle.Stranger && blackhole < _blackholeProbablility)
+        {
+            BlackHole();
+        }
         
         if(rand <=_iceBallProbability)
         {
@@ -1812,6 +1852,27 @@ public class Player : BaseObject
         }
         else if(rand <=_iceBallProbability + _fireBallProbability && rand > _iceBallProbability)
         {
+            if(_playerTitle == PlayerTitle.Salamander)
+            {
+                int rand2 = UnityEngine.Random.Range(0, 100);
+                _comboMeteor.Add(rand2);
+                if(rand2 < _meteorProbablility)
+                {
+                    Meteor();
+                }
+                if (_comboMeteor.Count >= 3 && _comboPristHeal.Exists(x => x < _meteorProbablility) == false)
+                {
+                    achivementCheck(salamandermeteor3, "salamandermeteor3");
+                }
+                if (_comboPristHeal.Exists(x => x > _meteorProbablility) == true)
+                {
+                    _comboPristHeal.Clear();
+                }
+
+
+
+            }
+
             //파이어볼
             Debug.Log("불공");
         }
@@ -2201,6 +2262,12 @@ public class Player : BaseObject
     {
         achivementCheck(salamandermeteor, "salamandermeteor");
         GamePlay.Instance._meteorTargetPool.Get();
+    }
+
+    public void BlackHole()
+    {
+        //achivementCheck(strangerfirstskill, "strangerfirstskill");
+        GamePlay.Instance._blackHolePool.Get();
     }
     public IEnumerator Immolation()
     {

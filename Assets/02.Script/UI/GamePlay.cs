@@ -1718,7 +1718,7 @@ public class GamePlay : MonoBehaviour
                 _timer = 0;
                 _timerMin.text = 0.ToString();
                 _timerSec.text = 0.ToString();
-                Debug.Log("브레이크");
+               
                 break;
                 
             }
@@ -1733,7 +1733,7 @@ public class GamePlay : MonoBehaviour
                 {
                     _timerMin.text = _min.ToString();
                     _timerSec.text = _sec.ToString();
-                    Debug.Log("작동했다2");
+                    
                 }
             }
 

@@ -169,6 +169,25 @@ public class Slime : Monster
                     Stun();
                 }
             }
+            else if (other.GetComponent<Weapon>()._isOnce == true && Player.Instance._playerTitle == Player.PlayerTitle.Acupuncturist)
+            {
+                other.GetComponent<Weapon>()._isOnce = false;
+                ChangeState(State.Hit);
+                int rand = Random.Range(0, 100);
+                if(rand <Player.Instance._instantDeathProbablility)
+                {
+                    int damage = 999999;
+                    _hp -= damage;
+                    _feedBack.PlayFeedbacks(this.transform.position, damage);
+                }
+                else if(rand >= Player.Instance._instantDeathProbablility)
+                {
+                    var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
+                    _hp -= damage;
+                    _feedBack.PlayFeedbacks(this.transform.position, damage);
+                }
+
+            }
             else if (other.GetComponent<Weapon>()._isOnce == true)
             {
 
@@ -185,7 +204,12 @@ public class Slime : Monster
 
         if (other.CompareTag("IceBall"))
         {
+
+            ChangeState(State.Hit);
+            var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._matk * 5) - (_def * 3);
+
             int _30 = Random.Range(0, 3); // 30퍼확률로 빙결
+
             if (_30 == 0)
             {
                 Freezing();
@@ -196,6 +220,8 @@ public class Slime : Monster
 
         if(other.CompareTag("FireBall") )
         {
+            ChangeState(State.Hit);
+            var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._matk * 5) - (_def * 3);
             int _30 = Random.Range(0, 3);
             if(_30 == 0)
             {

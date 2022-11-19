@@ -260,6 +260,7 @@ public class RFX4_EffectSettings : SkillBase
     IEnumerator CoRelease()
     {
         yield return new WaitForSeconds(5f);
+        Debug.Log("사라진다");
         _skillPool.Release(this);
     }
 }
