@@ -249,7 +249,6 @@ public class PlayerData
     public bool m_getrepairman;
     public bool m_repairmanhidden;
     public bool m_repairmanclear;
-    public bool m_repairmanfullhp;
     public bool m_getdosa;
     public bool m_dosafirstskill;
     public bool m_dosaskilldie20;
@@ -469,6 +468,7 @@ public class Player : BaseObject
 
     public List<int> _comboPristHeal = new List<int>();
     public List<int> _comboMeteor = new List<int>();
+    public List<int> _comboInstantDie = new List<int>();
 
     public List<GameObject> _listMeteorPoint = new List<GameObject>();
     public List<Animator> _listAnimator = new List<Animator>();
@@ -704,7 +704,6 @@ public class Player : BaseObject
     public bool getrepairman;
     public bool repairmanhidden;
     public bool repairmanclear;
-    public bool repairmanfullhp;
     public bool getdosa;
     public bool dosafirstskill;
     public bool dosaskilldie20;
@@ -741,6 +740,8 @@ public class Player : BaseObject
     public int _meteorProbablility;
     public int _instantDeathProbablility;
     public int _blackholeProbablility;
+    public int _decoyProbability;
+    public int _dokevSkillProbability;
     [SerializeField] float m_viewAngle;    //시야각
 
 
@@ -1112,6 +1113,24 @@ public class Player : BaseObject
                     _charm = _basicCharm - (_basicCharm * (0.1f + _skill1 / 10f));
                 }
             }
+
+
+            if(_hp <= _basicHp* 0.5f &&_atk <= _basicAtk*0.5f && _matk <= _basicMatk*0.5f && _speed <= _basicSpeed * 0.5f && 
+                _def <= _basicDef *0.5f && _atkSpeed <= _basicAtkSpeed * 0.5f && _critical <= _basicCritical * 0.5f && _handicraft <= _basicHandicraft*0.5f && _charm <= _basicCharm * 0.5
+                && gamblerlose == false)
+            {
+                achivementCheck(gamblerlose, "gamblerlose");
+            }
+            if (_hp >= _basicHp + (_basicHp * 0.5f) && _atk >= _basicAtk + (_basicAtk * 0.5f) && _matk >= _basicMatk+(_basicMatk * 0.5f) && _speed >= _basicSpeed+(_basicSpeed * 0.5f) &&
+                _def >= _basicDef+(_basicDef * 0.5f) && _atkSpeed >= _basicAtkSpeed+(_basicAtkSpeed * 0.5f) && _critical >= _basicCritical+(_basicCritical * 0.5f) && _handicraft >= _basicHandicraft+(_basicHandicraft * 0.5f) && _charm >= _basicCharm+(_basicCharm * 0.5)
+                && gamblerwin == false)
+            {
+                achivementCheck(gamblerwin, "gamblerwin");
+            }
+
+
+
+
         }
         else if (_playerTitle == PlayerTitle.Priest)
         {
@@ -1123,13 +1142,46 @@ public class Player : BaseObject
             }
           
             
-            if(_comboPristHeal.Count >=5 && _comboPristHeal.Exists(x => x != 0) == false)
+            if(_comboPristHeal.Count >=5 && _comboPristHeal.Exists(x => x != 0) == false && pristjesus == false)
             {
                 achivementCheck(pristjesus, "pristjesus");
             }
             if (_comboPristHeal.Exists(x => x == 0) == true)
             {
                 _comboPristHeal.Clear();
+            }
+        }
+        else if (_playerTitle == PlayerTitle.Dosa)
+        {
+            rand = UnityEngine.Random.Range(0, 100);
+
+            if(rand < _decoyProbability)
+            {
+                DecoySpawn();
+                achivementCheck(dosafirstskill, "dosafirstskill");
+                
+
+            }
+        }
+        else if (_playerTitle == PlayerTitle.DokeV)
+        {
+            rand = UnityEngine.Random.Range(0, 100);
+            if(rand < _dokevSkillProbability)
+            {
+                //몬스터 마법 실행
+
+
+
+
+
+
+                _dokevHiddenSkillScore++;
+                achivementCheck(dokevhidden, "dokevhidden");
+                AchievementManager.instance.AddAchievementProgress("dokevhidden", _dokevHiddenSkillScore);
+                if(_dokevHiddenSkillScore >= 50 && dokevhidden50 ==false)
+                {
+                    dokevhidden50 = true;
+                }
             }
         }
         
@@ -1583,8 +1635,7 @@ public class Player : BaseObject
                 break;
             case PlayerTitle.Dosa:
 
-                //공격시 10% 확률로 분신 소환 분신은 스테이지가 종료되면 사라짐
-                //지능 추가할것 스테이지 종료시 없어지는거 추가 할 것
+                _decoyProbability = 10 + (_skill1 * 5);
                 break;
             case PlayerTitle.Gambler:
                 if(_skill2 >= 3)
@@ -1611,7 +1662,7 @@ public class Player : BaseObject
                 StartCoroutine(MonsterAtkDown());
                 break;
             case PlayerTitle.DokeV:
-                //공격시 10% 확률로 몬스터의 능력치를 랜덤으로 가져온다.
+                _dokevSkillProbability = 10 + (_skill1 * 5);
                 break;
 
 
@@ -1845,12 +1896,12 @@ public class Player : BaseObject
             BlackHole();
         }
         
-        if(rand <=_iceBallProbability)
+        if(rand <=ice)
         {
             //아이스볼
             Debug.Log("아이스볼");
         }
-        else if(rand <=_iceBallProbability + _fireBallProbability && rand > _iceBallProbability)
+        else if(rand <=ice + fire && rand > ice)
         {
             if(_playerTitle == PlayerTitle.Salamander)
             {
@@ -1860,7 +1911,7 @@ public class Player : BaseObject
                 {
                     Meteor();
                 }
-                if (_comboMeteor.Count >= 3 && _comboPristHeal.Exists(x => x < _meteorProbablility) == false)
+                if (_comboMeteor.Count >= 3 && _comboPristHeal.Exists(x => x < _meteorProbablility) == false && salamandermeteor3 == false)
                 {
                     achivementCheck(salamandermeteor3, "salamandermeteor3");
                 }
@@ -1876,7 +1927,7 @@ public class Player : BaseObject
             //파이어볼
             Debug.Log("불공");
         }
-        else if (rand >= _iceBallProbability + _fireBallProbability && rand <= _iceBallProbability + _fireBallProbability + _chainLightProbability)
+        else if (rand >= ice + fire && rand <= ice + fire + light)
         {
             Debug.Log("체라");
 
@@ -2306,7 +2357,7 @@ public class Player : BaseObject
             for (int i = 0; i < obj.Length; ++i)
             {
                 int rand = UnityEngine.Random.Range(0, 10);
-                if (rand >= 2 - _skill1)
+                if (rand >= 3 - _skill1)
                 {
                     obj[i].GetComponent<Monster>().Freezing();
                 }
@@ -2373,7 +2424,11 @@ public class Player : BaseObject
         }
     }
 
-
+    public void DecoySpawn()
+    {
+        GamePlay.Instance._decoyPool.Get();
+        
+    }
 
 
 
@@ -2590,7 +2645,6 @@ public class Player : BaseObject
         getrepairman = data.m_getrepairman;
         repairmanhidden = data.m_repairmanhidden;
         repairmanclear = data.m_repairmanclear;
-        repairmanfullhp = data.m_repairmanfullhp;
         getdosa = data.m_getdosa;
         dosafirstskill = data.m_dosafirstskill;
         dosaskilldie20 = data.m_dosaskilldie20;
@@ -2804,7 +2858,6 @@ public class Player : BaseObject
         _data.m_getrepairman = getrepairman;
         _data.m_repairmanhidden = repairmanhidden;
         _data.m_repairmanclear = repairmanclear;
-        _data.m_repairmanfullhp = repairmanfullhp;
         _data.m_getdosa = getdosa;
         _data.m_dosafirstskill = dosafirstskill;
         _data.m_dosaskilldie20 = dosaskilldie20;

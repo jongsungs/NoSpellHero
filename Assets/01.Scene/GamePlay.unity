@@ -2682,7 +2682,7 @@ MonoBehaviour:
   _meteorTarget: {fileID: 0}
   _meteor: {fileID: 1629008679246270290}
   _wall: {fileID: 1702659639}
-  _decoy: {fileID: 0}
+  _decoy: {fileID: 1848106190}
   _blackHole: {fileID: 559111491}
   _frozen: {fileID: 1429013436}
   _roar: {fileID: 0}
@@ -12779,12 +12779,18 @@ MonoBehaviour:
   _isAttack: 0
   _animator: {fileID: 0}
   _rigidbody: {fileID: 0}
-  _player: {fileID: 0}
-  rb: {fileID: 0}
-  _nav: {fileID: 0}
-  _myWeapon: []
-  _attackOnce: 0
-  _attackDistance: 2
+  _navimeshAgent: {fileID: 0}
+  _onHit: 0
+  _ccDurationTime: 0
+  _currentTime: 0
+  _isDead: 0
+  _monster: 0
+  _category: 0
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  _frozen: {fileID: 0}
+  _burn: {fileID: 0}
   m_speed: 0
   m_viewAngle: 360
   m_viewDistance: 5
@@ -12794,6 +12800,9 @@ MonoBehaviour:
   m_obstacleMask:
     serializedVersion: 2
     m_Bits: 0
+  _attackOnce: 0
+  _attackDistance: 2
+  _myWeapon: {fileID: 0}
 --- !u!136 &1256164201
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -17947,6 +17956,7 @@ MonoBehaviour:
   _spellScore: 0
   _comboPristHeal: 
   _comboMeteor: 
+  _comboInstantDie: 
   _listMeteorPoint:
   - {fileID: 566526449}
   - {fileID: 753451573}
@@ -18158,7 +18168,6 @@ MonoBehaviour:
   getrepairman: 0
   repairmanhidden: 0
   repairmanclear: 0
-  repairmanfullhp: 0
   getdosa: 0
   dosafirstskill: 0
   dosaskilldie20: 0
@@ -18191,6 +18200,8 @@ MonoBehaviour:
   _meteorProbablility: 0
   _instantDeathProbablility: 0
   _blackholeProbablility: 0
+  _decoyProbability: 0
+  _dokevSkillProbability: 0
   m_viewAngle: 0
 --- !u!1001 &1848106186
 PrefabInstance:
@@ -18353,12 +18364,18 @@ MonoBehaviour:
   _isAttack: 0
   _animator: {fileID: 0}
   _rigidbody: {fileID: 0}
-  _player: {fileID: 0}
-  rb: {fileID: 0}
-  _nav: {fileID: 0}
-  _myWeapon: []
-  _attackOnce: 0
-  _attackDistance: 2
+  _navimeshAgent: {fileID: 0}
+  _onHit: 0
+  _ccDurationTime: 0
+  _currentTime: 0
+  _isDead: 0
+  _monster: 8
+  _category: 0
+  _layerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  _frozen: {fileID: 0}
+  _burn: {fileID: 0}
   m_speed: 0
   m_viewAngle: 360
   m_viewDistance: 5
@@ -18368,6 +18385,9 @@ MonoBehaviour:
   m_obstacleMask:
     serializedVersion: 2
     m_Bits: 0
+  _attackOnce: 0
+  _attackDistance: 2
+  _myWeapon: {fileID: 0}
 --- !u!136 &1848106191
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -18892,6 +18912,7 @@ MonoBehaviour:
   _spellScore: 0
   _comboPristHeal: 
   _comboMeteor: 
+  _comboInstantDie: 
   _listMeteorPoint: []
   _listAnimator: []
   _listRigidBody: []
@@ -19091,7 +19112,6 @@ MonoBehaviour:
   getrepairman: 0
   repairmanhidden: 0
   repairmanclear: 0
-  repairmanfullhp: 0
   getdosa: 0
   dosafirstskill: 0
   dosaskilldie20: 0
@@ -19124,6 +19144,8 @@ MonoBehaviour:
   _meteorProbablility: 0
   _instantDeathProbablility: 0
   _blackholeProbablility: 0
+  _decoyProbability: 0
+  _dokevSkillProbability: 0
   m_viewAngle: 0
 --- !u!54 &1867921290
 Rigidbody:

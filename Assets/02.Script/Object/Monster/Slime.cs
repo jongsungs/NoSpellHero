@@ -18,7 +18,7 @@ public class Slime : Monster
         _material = this.gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
         _tempMaterial = _material;
         FadeIn();
-        GamePlay._eventHandler += MonsterRelease;
+        
         _state = State.Walk;
         Debug.Log("슬라임 시작");
     }
@@ -174,11 +174,19 @@ public class Slime : Monster
                 other.GetComponent<Weapon>()._isOnce = false;
                 ChangeState(State.Hit);
                 int rand = Random.Range(0, 100);
+                Player.Instance._comboInstantDie.Add(rand);
+
                 if(rand <Player.Instance._instantDeathProbablility)
                 {
+                    
                     int damage = 999999;
                     _hp -= damage;
                     _feedBack.PlayFeedbacks(this.transform.position, damage);
+                    if(Player.Instance.acupuncturistfirstskill == false)
+                    {
+                        Player.Instance.acupuncturistfirstskill = true;
+                        AchievementManager.instance.Unlock("acupuncturistfirstskill");
+                    }
                 }
                 else if(rand >= Player.Instance._instantDeathProbablility)
                 {
@@ -186,6 +194,110 @@ public class Slime : Monster
                     _hp -= damage;
                     _feedBack.PlayFeedbacks(this.transform.position, damage);
                 }
+
+                if(Player.Instance._comboInstantDie.Count >=3 && Player.Instance._comboInstantDie.Exists(x => x < Player.Instance._instantDeathProbablility) == false && Player.Instance.acupuncturistcritical == false)
+                {
+                    Player.Instance.acupuncturistcritical = true;
+                    AchievementManager.instance.Unlock("acupuncturistcritical");
+                }
+                if(Player.Instance._comboInstantDie.Exists(x => x>= Player.Instance._instantDeathProbablility) == true)
+                {
+                    Player.Instance._comboInstantDie.Clear();
+                }
+
+
+
+            }
+            else if (other.GetComponent<Weapon>()._isOnce == true && Player.Instance._playerTitle == Player.PlayerTitle.DokeV)
+            {
+                int rand = Random.Range(0, 100);
+                other.GetComponent<Weapon>()._isOnce = false;
+                var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
+                _hp -= damage;
+                ChangeState(State.Hit);
+                _feedBack.PlayFeedbacks(this.transform.position, damage);
+                
+                if(rand < Player.Instance._dokevSkillProbability)
+                {
+                    int rand2 = Random.Range(0, 9);
+                    float stat;
+                    if(rand == 0)
+                    {
+                        stat = _basicHp - (_basicHp * 0.1f);
+
+                        _hp = stat;
+                        Player.Instance._hp += stat;
+
+                    }
+                    else if(rand == 1)
+                    {
+                        stat = _basicAtk - (_basicAtk * 0.1f);
+
+                        _atk = stat;
+                        Player.Instance._atk += stat;
+                    }
+                    else if (rand == 2)
+                    {
+                        stat = _basicMatk - (_basicMatk * 0.1f);
+
+                        _matk = stat;
+                        Player.Instance._matk += stat;
+                    }
+                    else if (rand == 3)
+                    {
+                        stat = _basicAtkSpeed - (_basicAtkSpeed * 0.1f);
+
+                        _atkSpeed = stat;
+                        Player.Instance._atkSpeed += stat;
+                    }
+                    else if (rand == 4)
+                    {
+                        stat = _basicDef - (_basicDef * 0.1f);
+
+                        _def = stat;
+                        Player.Instance._def += stat;
+                    }
+                    else if (rand == 5)
+                    {
+                        stat = _basicSpeed - (_basicSpeed * 0.1f);
+
+                        _speed = stat;
+                        Player.Instance._speed += stat;
+                    }
+                    else if (rand == 6)
+                    {
+                        stat = _basicCritical - (_basicCritical * 0.1f);
+
+                        _critical = stat;
+                        Player.Instance._critical += stat;
+                    }
+                    else if (rand == 7)
+                    {
+                        stat = _basicHandicraft - (_basicHandicraft * 0.1f);
+
+                        _critical = stat;
+                        Player.Instance._critical += stat;
+                    }
+                    else if (rand == 8)
+                    {
+                        stat = _basicCharm - (_basicCharm * 0.1f);
+
+                        _charm = stat;
+                        Player.Instance._charm += stat;
+                    }
+
+                    if(Player.Instance.dokevfirstskill == false)
+                    {
+                        Player.Instance.dokevfirstskill = true;
+                        AchievementManager.instance.Unlock("dokevfirstskill");
+                    }
+                    
+                }
+
+
+
+
+
 
             }
             else if (other.GetComponent<Weapon>()._isOnce == true)
@@ -239,27 +351,7 @@ public class Slime : Monster
         }
     }
 
-   public IEnumerator CoDie()
-    {
-        _layerMask = 0;
-        StartCoroutine(CoFadeOut(1f));
-        yield return new WaitForSeconds(2f);
-        if(_CC == CrowdControl.Freezing && Player.Instance._playerTitle == Player.PlayerTitle.JackFrost)
-        {
-            Player.Instance._jackfrostScore++;
-            AchievementManager.instance.AddAchievementProgress("jackfrosttuna", Player.Instance._jackfrostScore);
-            
-        }
-       // if(Player.Instance._jackfrostScore >= 1000 && Player.Instance.jackfrosttuna == false)
-       // {
-       //     Player.Instance.jackfrosttuna = true;
-       //     AchievementManager.instance.Unlock("jackfrosttuna");
-       // }
-
-
-
-        _monsterpool.Release(this);
-    }
+    
 
     public override void MonsterRelease()
     {
@@ -268,43 +360,7 @@ public class Slime : Monster
 
 
 
-    // 투명 -> 불투명
-    IEnumerator CoFadeIn(float fadeOutTime, System.Action nextEvent = null)
-    {
-        var sr = this.gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
-        Color tempColor = sr.material.color;
-        while (tempColor.a < 1f)
-        {
-            tempColor.a += Time.deltaTime / fadeOutTime;
-            sr.material.color = tempColor;
-
-            if (tempColor.a >= 1f) tempColor.a = 1f;
-
-            yield return null;
-        }
-
-        sr.material.color = tempColor;
-        if (nextEvent != null) nextEvent();
-    }
-
-    // 불투명 -> 투명
-    IEnumerator CoFadeOut(float fadeOutTime, System.Action nextEvent = null)
-    {
-        var sr = this.gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
-        
-        Color tempColor = sr.material.color;
-        while (tempColor.a > 0f)
-        {
-            tempColor.a -= Time.deltaTime / fadeOutTime;
-            sr.material.color = tempColor;
-
-            if (tempColor.a <= 0f) tempColor.a = 0f;
-
-            yield return null;
-        }
-        sr.material.color = tempColor;
-        if (nextEvent != null) nextEvent();
-    }
+    
    
 
 }

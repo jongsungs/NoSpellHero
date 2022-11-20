@@ -4,52 +4,32 @@ using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.Pool;
 
-public class Decoy : BaseObject
+public class Decoy : Monster
 {
-    public Player _player;
-    public Rigidbody rb;
-    public NavMeshAgent _nav;
-    public List<Weapon> _myWeapon = new List<Weapon>();
-    
-    public bool _attackOnce;
-    public float _attackDistance = 2f;
 
 
-    [SerializeField] float m_speed;
-    [SerializeField] float m_viewAngle;    //시야각
-    [SerializeField] float m_viewDistance; //시야거리
-
-    [SerializeField] LayerMask m_targetMask;  //Enemy 레이어마스크 지정을 위한 변수
-    [SerializeField] LayerMask m_obstacleMask; //Obstacle 레이어마스크 지정을 위한 변수
+    public Weapon _myWeapon;
 
 
-    Vector3 m_destination;
-    private Transform m_transform;
 
+    private IObjectPool<Monster> _decoypool;
 
-    private IObjectPool<Decoy> _decoypool;
-
-    private void Start()
+    private void OnEnable()
     {
-        _player = GameObject.Find("Player").GetComponent<Player>();
-       // _myWeapon = _player._myWeapon;
-        _animator = GetComponent<Animator>();
-        _nav = GetComponent<NavMeshAgent>();
-        m_transform = GetComponent<Transform>();
+
+        // _myWeapon = _player._myWeapon;
+        GamePlay._eventHandler += MonsterRelease;
+        _hp = Player.Instance._hp;
+        _atk = Player.Instance._atk;
+        _matk = Player.Instance._matk;
+        _atkSpeed = Player.Instance._atkSpeed;
+        _def = Player.Instance._def;
+        _speed = Player.Instance._speed;
+        _critical = Player.Instance._critical;
+        _handicraft = Player.Instance._handicraft;
+        _charm = Player.Instance._charm;
 
 
-        _hp = _player._hp;
-        _atk = _player._atk;
-        _matk = _player._matk;
-        _atkSpeed = _player._atkSpeed;
-        _def = _player._def;
-        _speed = _player._speed;
-        _critical = _player._critical;
-        _handicraft = _player._handicraft;
-        _charm = _player._charm;
-        _nav.stoppingDistance = 2f;
-        _attackOnce = true;
-        StartCoroutine(CoFindEnemy());
     }
 
     private void Update()
@@ -57,65 +37,29 @@ public class Decoy : BaseObject
         if (_animator != null)
         {
             _animator.speed = 0.5f + (_atkSpeed / 10f);
-             _animator.SetFloat("AtkSpeed", _animator.speed);
+            _animator.SetFloat("AtkSpeed", _animator.speed);
         }
 
-        DrawView();  // Scene뷰에 시야범위 그리기
-      // FindVisibleTargets(); // Enemy인지 장애물인지 판별
-
-    }
-    public Vector3 DirFromAngle(float angleInDegrees)
-    {
-        // 좌우 회전값 갱신
-        angleInDegrees += transform.eulerAngles.y;
-        return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
-    }
-    public void DrawView()
-    {
-        Vector3 leftBoundary = DirFromAngle(-m_viewAngle / 2);
-        Vector3 rightBoundary = DirFromAngle(m_viewAngle / 2);
-        Debug.DrawLine(transform.position, transform.position + leftBoundary * m_viewDistance, Color.blue);
-        Debug.DrawLine(transform.position, m_transform.position + rightBoundary * m_viewDistance, Color.blue);
-    }
-    public void FindVisibleTargets()
-    {
-        //시야거리 내에 존재하는 모든 컬라이더 받아오기
-        Collider[] targets = Physics.OverlapSphere(m_transform.position, m_viewDistance, m_targetMask);
-        
-        for (int i = 0; i < targets.Length; i++)
+        if (_hp <= 0f)
         {
-            Transform target = targets[i].transform;
-            
-            //타겟까지의 단위벡터
-            Vector3 dirToTarget = (target.position - m_transform.position).normalized;
-            //transform.forward와 dirToTarget은 모두 단위벡터이므로 내적값은 두 벡터가 이루는 각의 Cos값과 같다.
-            //대적값이 시야각/2의 Cos값보다 크면 시야에 들어온 것이다.
-            if (Vector3.Dot(m_transform.forward, dirToTarget) > Mathf.Cos((m_viewAngle / 2) * Mathf.Deg2Rad))
-            {
-                float distToTarget = Vector3.Distance(m_transform.position, target.position);
-                if (!Physics.Raycast(m_transform.position + m_transform.transform.up, dirToTarget, distToTarget, m_obstacleMask) )
-                {
-                    Debug.DrawLine(m_transform.position, target.position, Color.red);
-                    
-                    if(distToTarget <= _attackDistance && _attackOnce == true)
-                    {
-                        transform.LookAt(target);
-                        ChangeState(State.Attack);
-                    }
-                    else if(distToTarget > _attackDistance)
-                    {
-                        ChangeState(State.Walk);
-                        _nav.SetDestination(target.position);
-                    }
+            ChangeState(State.Die);
 
-                }
-            }
         }
+
+        if (_CC != CrowdControl.Freezing)
+        {
+            _navimeshAgent.speed = _speed;
+
+        }
+        DrawView();  // Scene뷰에 시야범위 그리기
+                     // FindVisibleTargets(); // Enemy인지 장애물인지 판별
+
     }
+
 
     public override void Idle()
     {
-        
+
         ChangeState(State.Idle);
     }
     public override void Attack()
@@ -135,11 +79,29 @@ public class Decoy : BaseObject
     {
         ChangeState(State.Die);
     }
-    
+
 
     public void AttackOn()
     {
         _isAttack = true;
+        int spell;
+        spell = UnityEngine.Random.Range(0, 100);
+
+        if (Player.Instance._playerTitle == Player.PlayerTitle.Dosa && Player.Instance._skill2 >= 3)
+        {
+            if (Player.Instance.dosahidden == false)
+            {
+                Player.Instance.dosahidden = true;
+                AchievementManager.instance.Unlock("dosahidden");
+            }
+
+            if (spell < Player.Instance._spellCastProbability + Player.Instance._weapon._spellProbability)
+            {
+                Spell(Player.Instance._iceBallProbability, Player.Instance._fireBallProbability, Player.Instance._chainLightProbability);
+
+            }
+
+        }
     }
     public void AttackOff()
     {
@@ -156,40 +118,65 @@ public class Decoy : BaseObject
         switch (_state)
         {
             case State.Idle:
-                _nav.speed = 0f;
+                _speed = 0f;
                 _attackOnce = true;
                 break;
             case State.Walk:
-                _attackOnce= true;
-                _nav.speed = _speed;
+                _attackOnce = true;
+                _speed = _basicSpeed;
                 break;
             case State.Attack:
                 _isAttack = true;
                 _attackOnce = false;
-                _nav.speed = 0f;
+                _speed = 0f;
                 break;
             case State.Hit:
-                _nav.speed = 0f;
+                _speed = 0f;
                 break;
             case State.Die:
-                _nav.speed = _speed;
+                _speed = 0f;
+                StartCoroutine(CoDie());
                 break;
             case State.Attack2:
                 _isAttack = true;
                 break;
         }
     }
-    public void SetPool(IObjectPool<Decoy> pool)
+
+    public override void MonsterRelease()
     {
-        _decoypool = pool;
+        _hp = 0f;
     }
-    IEnumerator CoFindEnemy()
+
+    public void Spell(float ice, float fire, float light)
     {
-        while(true)
+        float rand = UnityEngine.Random.Range(0, (ice + fire + light));
+
+
+
+        if (rand <= ice)
         {
-            yield return new WaitForSeconds(1f);
-            FindVisibleTargets();
+            //아이스볼
+            Debug.Log("아이스볼");
         }
+        else if (rand <= ice + fire && rand > ice)
+        {
+
+
+
+
+
+
+            //파이어볼
+            Debug.Log("불공");
+        }
+        else if (rand >= ice + fire && rand <= ice + fire + light)
+        {
+            Debug.Log("체라");
+
+        }
+
 
     }
 }
+

@@ -5787,6 +5787,7 @@ MonoBehaviour:
   _spellScore: 0
   _comboPristHeal: 
   _comboMeteor: 
+  _comboInstantDie: 
   _listMeteorPoint: []
   _listAnimator: []
   _listRigidBody: []
@@ -5986,7 +5987,6 @@ MonoBehaviour:
   getrepairman: 0
   repairmanhidden: 0
   repairmanclear: 0
-  repairmanfullhp: 0
   getdosa: 0
   dosafirstskill: 0
   dosaskilldie20: 0
@@ -6017,6 +6017,10 @@ MonoBehaviour:
   _iceBallProbability: 0
   _chainLightProbability: 0
   _meteorProbablility: 0
+  _instantDeathProbablility: 0
+  _blackholeProbablility: 0
+  _decoyProbability: 0
+  _dokevSkillProbability: 0
   m_viewAngle: 0
 --- !u!4 &361980305
 Transform:
@@ -36908,9 +36912,6 @@ MonoBehaviour:
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
-  - Progress: 0
-    LastProgressUpdate: 0
     Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
@@ -37990,14 +37991,14 @@ MonoBehaviour:
   - Key: helenskill100
     DisplayName: "\uC9C4\uC9DC \uC608\uC05C\uAC00\uBCF4\uB2E4"
     Description: "\uC808\uC138\uBBF8\uC778 \uC2A4\uD0AC\uB85C \uC5BC\uB9B0 \uBAAC\uC2A4\uD130
-      100\uB9C8\uB9AC \uB3CC\uD30C"
+      1000\uB9C8\uB9AC \uB3CC\uD30C"
     LockedIcon: {fileID: 0}
     LockOverlay: 0
     AchievedIcon: {fileID: 0}
     Spoiler: 0
-    Progression: 0
-    ProgressGoal: 0
-    NotificationFrequency: 0
+    Progression: 1
+    ProgressGoal: 1000
+    NotificationFrequency: 100
     ProgressSuffix: 
   - Key: helenhidden
     DisplayName: "\uC2EC\uCFF5\uD574 "
@@ -38153,18 +38154,6 @@ MonoBehaviour:
     DisplayName: "\uB0B4 \uBABD\uD0A4\uC2A4\uD328\uB108\uB294 \uBC30\uC2E0\uC548\uD574"
     Description: "\uC218\uB9AC\uACF5\uC9C1\uC5C5\uC73C\uB85C \uBAA8\uB4E0 \uC2A4\uD14C\uC774\uC9C0
       \uD074\uB9AC\uC5B4\uC2DC"
-    LockedIcon: {fileID: 0}
-    LockOverlay: 0
-    AchievedIcon: {fileID: 0}
-    Spoiler: 0
-    Progression: 0
-    ProgressGoal: 0
-    NotificationFrequency: 0
-    ProgressSuffix: 
-  - Key: repairmanfullhp
-    DisplayName: "\uB354 \uB54C\uB824\uBD10 "
-    Description: "\uC218\uB9AC\uACF5\uC73C\uB85C 3\uBC88 \uC774\uC0C1 \uCCB4\uB825
-      100% \uB418\uC5C8\uC744 \uB54C"
     LockedIcon: {fileID: 0}
     LockOverlay: 0
     AchievedIcon: {fileID: 0}
@@ -38365,8 +38354,8 @@ MonoBehaviour:
     LockOverlay: 0
     AchievedIcon: {fileID: 0}
     Spoiler: 0
-    Progression: 0
-    ProgressGoal: 0
+    Progression: 1
+    ProgressGoal: 50
     NotificationFrequency: 0
     ProgressSuffix: 
   - Key: statlv5

@@ -26,6 +26,7 @@ public class Monster : BaseObject
         Golem,
         Ork,
         Dragon,
+        None,
 
     }
     
@@ -60,15 +61,18 @@ public class Monster : BaseObject
 
     private void Awake()
     {
-        _player = GameObject.Find("Player");
+       
         _navimeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
         m_transform = GetComponent<Transform>();
+        if(_burn != null)
         _burn.SetActive(false);
+        if(_frozen != null)
         _frozen.SetActive(false);
         _navimeshAgent.stoppingDistance = 2f;
         _attackOnce = true;
+        GamePlay._eventHandler += MonsterRelease;
     }
     protected virtual void Start()
     {
@@ -116,7 +120,7 @@ public class Monster : BaseObject
         }
         if(_CC == CrowdControl.Burn)
         {
-            _hp -= (_player.GetComponent<Player>()._matk / 10f) * Time.deltaTime ;
+            _hp -= (Player.Instance._matk / 10f) * Time.deltaTime ;
         }
         
 
@@ -148,6 +152,14 @@ public class Monster : BaseObject
         _frozen.transform.GetChild(2).GetComponent<RFX4_DeactivateByTime>().currentTime = 0;
         _frozen.transform.GetChild(2).GetComponent<RFX4_DeactivateByTime>().DeactivatedGameObject.SetActive(true);
         _ccOn = true;
+        if(Player.Instance._playerTitle == Player.PlayerTitle.Helen)
+        {
+            Player.Instance._helenScore++;
+            AchievementManager.instance.AddAchievementProgress("helenskill100", Player.Instance._helenScore);
+            
+
+
+        }
 
     }
     public virtual void Burn()
@@ -248,7 +260,7 @@ public class Monster : BaseObject
         }
     }
 
-   public IEnumerator CoFindEnemy()
+    public IEnumerator CoFindEnemy()
     {
         while (true)
         {
@@ -258,5 +270,73 @@ public class Monster : BaseObject
         }
 
     }
+    public IEnumerator CoDie()
+    {
+        _layerMask = 0;
+        StartCoroutine(CoFadeOut(1f));
+        yield return new WaitForSeconds(2f);
+        if (_CC == CrowdControl.Freezing && Player.Instance._playerTitle == Player.PlayerTitle.JackFrost)
+        {
+            Player.Instance._jackfrostScore++;
+            AchievementManager.instance.AddAchievementProgress("jackfrosttuna", Player.Instance._jackfrostScore);
 
+        }
+        
+         if(Player.Instance._jackfrostScore >= 1000 && Player.Instance.jackfrosttuna == false)
+         {
+             Player.Instance.jackfrosttuna = true;
+         }
+        if(Player.Instance._playerTitle == Player.PlayerTitle.Dosa)
+        {
+            Player.Instance._dosaDieAvatar++;
+            AchievementManager.instance.AddAchievementProgress("dosaskilldie20", Player.Instance._dosaDieAvatar);
+
+            if(Player.Instance._dosaDieAvatar >= 20 && Player.Instance.dosaskilldie20 == false)
+            {
+                Player.Instance.dosaskilldie20 = true;
+            }
+
+        }
+
+
+
+        _monsterpool.Release(this);
+    }
+    // 투명 -> 불투명
+    IEnumerator CoFadeIn(float fadeOutTime, System.Action nextEvent = null)
+    {
+        var sr = this.gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
+        Color tempColor = sr.material.color;
+        while (tempColor.a < 1f)
+        {
+            tempColor.a += Time.deltaTime / fadeOutTime;
+            sr.material.color = tempColor;
+
+            if (tempColor.a >= 1f) tempColor.a = 1f;
+
+            yield return null;
+        }
+
+        sr.material.color = tempColor;
+        if (nextEvent != null) nextEvent();
+    }
+
+    // 불투명 -> 투명
+    IEnumerator CoFadeOut(float fadeOutTime, System.Action nextEvent = null)
+    {
+        var sr = this.gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
+
+        Color tempColor = sr.material.color;
+        while (tempColor.a > 0f)
+        {
+            tempColor.a -= Time.deltaTime / fadeOutTime;
+            sr.material.color = tempColor;
+
+            if (tempColor.a <= 0f) tempColor.a = 0f;
+
+            yield return null;
+        }
+        sr.material.color = tempColor;
+        if (nextEvent != null) nextEvent();
+    }
 }

@@ -40,7 +40,7 @@ public class GamePlay : MonoBehaviour
     public GameObject _meteorTarget;
     public SkillBase _meteor;
     public SkillBase _wall;
-    public Decoy _decoy;
+    public Monster _decoy;
     public SkillBase _blackHole;
     public SkillBase _frozen;
     public SkillBase _roar;
@@ -88,7 +88,7 @@ public class GamePlay : MonoBehaviour
     public IObjectPool<GameObject> _meteorTargetPool;
     public IObjectPool<SkillBase> _meteorPool;
     public IObjectPool<SkillBase> _wallPool;
-    public IObjectPool<Decoy> _decoyPool;
+    public IObjectPool<Monster> _decoyPool;
     public IObjectPool<SkillBase> _blackHolePool;
     public IObjectPool<SkillBase> _fireBallPool;
     public IObjectPool<SkillBase> _frozenPool;
@@ -141,7 +141,7 @@ public class GamePlay : MonoBehaviour
         _meteorTargetPool = new ObjectPool<GameObject>(CreatMeteorTarget, OngetMeteorTarget, OnReleaseMeteorTarget, OnDestroyMeteorTarget, maxSize: 10);
         _meteorPool = new ObjectPool<SkillBase>(CreateMeteor, OngetMeteor, OnReleaseSkill, OnDestroySkill, maxSize: 10);
         _wallPool = new ObjectPool<SkillBase>(CreateWall, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 20);
-        _decoyPool = new ObjectPool<Decoy>(CreateDecoy, OngetDecoy, OnReleaseDecoy, OnDestroyDecoy, maxSize: 20);
+        _decoyPool = new ObjectPool<Monster>(CreateDecoy, OngetDecoy, OnReleaseDecoy, OnDestroyDecoy, maxSize: 20);
         _blackHolePool = new ObjectPool<SkillBase>(CreateBlackHole, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 10);
         _fireBallPool = new ObjectPool<SkillBase>(CreateFireBall, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 10);
         _frozenPool = new ObjectPool<SkillBase>(CreateFrozen, OngetFrozen, OnReleaseSkill, OnDestroySkill, maxSize: 30);
@@ -218,7 +218,7 @@ public class GamePlay : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.H))
         {
-            ChangeStage(GameState.Stage2);
+            _decoyPool.Get();
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
@@ -315,7 +315,7 @@ public class GamePlay : MonoBehaviour
         return wall;
 
     }
-    private Decoy CreateDecoy()
+    private Monster CreateDecoy()
     {
         var decoy = Instantiate(_decoy, _randomSpawn.Return_RandomPosition(), Quaternion.identity, _objectPool.transform);
         decoy.SetPool(_decoyPool);
@@ -442,7 +442,7 @@ public class GamePlay : MonoBehaviour
         skill.transform.rotation = Player.Instance.m_transform.rotation;
         skill.gameObject.SetActive(true);
     }
-    private void OngetDecoy(Decoy decoy)
+    private void OngetDecoy(Monster decoy)
     {
         decoy.gameObject.SetActive(true);
     }
@@ -485,7 +485,7 @@ public class GamePlay : MonoBehaviour
     {
         skill.gameObject.SetActive(false);
     }
-    private void OnReleaseDecoy(Decoy decoy)
+    private void OnReleaseDecoy(Monster decoy)
     {
         decoy.gameObject.SetActive(false);
     }
@@ -516,7 +516,7 @@ public class GamePlay : MonoBehaviour
     {
         Destroy(skill.gameObject);
     }
-    private void OnDestroyDecoy(Decoy decoy)
+    private void OnDestroyDecoy(Monster decoy)
     {
         Destroy(decoy.gameObject);
     }
