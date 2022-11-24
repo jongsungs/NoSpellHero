@@ -573,11 +573,11 @@ public class Lobby : MonoBehaviour
             }
         }
         #region Weapon
-        if (_player._isStick == true)
+        if (_player._isbasicStick == true)
         {
             _listWeapon[0].SetActive(true);
         }
-        else if (_player._isStick == false)
+        else if (_player._isbasicStick == false)
         {
             _listWeapon[0].SetActive(false);
         }
@@ -672,6 +672,14 @@ public class Lobby : MonoBehaviour
         else if (_player._isWaldo == false)
         {
             _listWeapon[11].SetActive(false);
+        }
+        if(_player._isStick == true)
+        {
+            _listWeapon[12].SetActive(true);
+        }
+        else if(_player._isStick == false)
+        {
+            _listWeapon[12].SetActive(false);
         }
         
 
@@ -847,11 +855,11 @@ public class Lobby : MonoBehaviour
         }
         #endregion
         #region UnpackItem
-        if(Player.Instance._buyStick == false && _closetPopUp.activeSelf == true)
+        if(Player.Instance._buybasicStick == false && _closetPopUp.activeSelf == true)
         {
             _listScreen[0].SetActive(true);
         }
-        else if(Player.Instance._buyStick == true && _closetPopUp.activeSelf == true)
+        else if(Player.Instance._buybasicStick == true && _closetPopUp.activeSelf == true)
         {
             _listScreen[0].SetActive(false);
         }
@@ -1117,6 +1125,15 @@ public class Lobby : MonoBehaviour
             _listScreen[29].SetActive(false);
         }
 
+        if (Player.Instance._buyStick == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[30].SetActive(true);
+        }
+        else if (Player.Instance._buyStick == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[30].SetActive(false);
+        }
+
 
 
         #endregion
@@ -1303,7 +1320,7 @@ public class Lobby : MonoBehaviour
         _choiceNumber = cnt;
         if (cnt == 0 && _listScreen[0].activeSelf == false)
         {
-            _player._isStick = true;
+            _player._isbasicStick = true;
             _player._isSward1 = false;
             _player._isSward2 = false;
             _player._isBroom = false;
@@ -1315,6 +1332,7 @@ public class Lobby : MonoBehaviour
             _player._isSpear = false;
             _player._isUmbrella = false;
             _player._isWaldo = false;
+            _player._isStick = false;
 
         }
         else if(cnt == 0 && _listScreen[0].activeSelf == true)
@@ -1323,7 +1341,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 1&& _listScreen[1].activeSelf == false)
         {
-            _player._isStick = false;
+            _player._isbasicStick = false;
             _player._isSward1 = true;
             _player._isSward2 = false;
             _player._isBroom = false;
@@ -1335,6 +1353,7 @@ public class Lobby : MonoBehaviour
             _player._isSpear = false;
             _player._isUmbrella = false;
             _player._isWaldo = false;
+            _player._isStick = false;
         }
         else if (cnt == 1 && _listScreen[1].activeSelf == true)
         {
@@ -1342,7 +1361,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 2 && _listScreen[2].activeSelf == false)
         {
-            _player._isStick = false;
+            _player._isbasicStick = false;
             _player._isSward1 = false;
             _player._isSward2 = true;
             _player._isBroom = false;
@@ -1354,6 +1373,7 @@ public class Lobby : MonoBehaviour
             _player._isSpear = false;
             _player._isUmbrella = false;
             _player._isWaldo = false;
+            _player._isStick = false;
         }
         else if (cnt == 2 && _listScreen[2].activeSelf == true)
         {
@@ -1361,7 +1381,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 3 && _listScreen[3].activeSelf == false)
         {
-            _player._isStick = false;
+            _player._isbasicStick = false;
             _player._isSward1 = false;
             _player._isSward2 = false;
             _player._isBroom = true;
@@ -1373,6 +1393,7 @@ public class Lobby : MonoBehaviour
             _player._isSpear = false;
             _player._isUmbrella = false;
             _player._isWaldo = false;
+            _player._isStick = false;
         }
         else if (cnt == 3 && _listScreen[3].activeSelf == true)
         {
@@ -1380,7 +1401,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 4 && _listScreen[4].activeSelf == false)
         {
-            _player._isStick = false;
+            _player._isbasicStick = false;
             _player._isSward1 = false;
             _player._isSward2 = false;
             _player._isBroom = false;
@@ -1392,6 +1413,7 @@ public class Lobby : MonoBehaviour
             _player._isSpear = false;
             _player._isUmbrella = false;
             _player._isWaldo = false;
+            _player._isStick = false;
         }
         else if (cnt == 4 && _listScreen[4].activeSelf == true)
         {
@@ -1399,7 +1421,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 5 && _listScreen[5].activeSelf == false)
         {
-            _player._isStick = false;
+            _player._isbasicStick = false;
             _player._isSward1 = false;
             _player._isSward2 = false;
             _player._isBroom = false;
@@ -1411,6 +1433,7 @@ public class Lobby : MonoBehaviour
             _player._isSpear = false;
             _player._isUmbrella = false;
             _player._isWaldo = false;
+            _player._isStick = false;
         }
         else if (cnt == 5 && _listScreen[5].activeSelf == true)
         {
@@ -1418,7 +1441,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 6 && _listScreen[6].activeSelf == false)
         {
-            _player._isStick = false;
+            _player._isbasicStick = false;
             _player._isSward1 = false;
             _player._isSward2 = false;
             _player._isBroom = false;
@@ -1430,6 +1453,7 @@ public class Lobby : MonoBehaviour
             _player._isSpear = false;
             _player._isUmbrella = false;
             _player._isWaldo = false;
+            _player._isStick = false;
         }
         else if (cnt == 6 && _listScreen[6].activeSelf == true)
         {
@@ -1437,7 +1461,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 7 && _listScreen[7].activeSelf == false)
         {
-            _player._isStick = false;
+            _player._isbasicStick = false;
             _player._isSward1 = false;
             _player._isSward2 = false;
             _player._isBroom = false;
@@ -1449,6 +1473,7 @@ public class Lobby : MonoBehaviour
             _player._isSpear = false;
             _player._isUmbrella = false;
             _player._isWaldo = false;
+            _player._isStick = false;
         }
         else if (cnt == 7 && _listScreen[7].activeSelf == true)
         {
@@ -1456,7 +1481,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 8 && _listScreen[8].activeSelf == false)
         {
-            _player._isStick = false;
+            _player._isbasicStick = false;
             _player._isSward1 = false;
             _player._isSward2 = false;
             _player._isBroom = false;
@@ -1468,6 +1493,7 @@ public class Lobby : MonoBehaviour
             _player._isSpear = false;
             _player._isUmbrella = false;
             _player._isWaldo = false;
+            _player._isStick = false;
         }
         else if (cnt == 8 && _listScreen[8].activeSelf == true)
         {
@@ -1475,7 +1501,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 9 && _listScreen[9].activeSelf == false)
         {
-            _player._isStick = false;
+            _player._isbasicStick = false;
             _player._isSward1 = false;
             _player._isSward2 = false;
             _player._isBroom = false;
@@ -1487,6 +1513,7 @@ public class Lobby : MonoBehaviour
             _player._isSpear = true;
             _player._isUmbrella = false;
             _player._isWaldo = false;
+            _player._isStick = false;
         }
         else if (cnt == 9 && _listScreen[9].activeSelf == true)
         {
@@ -1494,7 +1521,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 10 && _listScreen[10].activeSelf == false)
         {
-            _player._isStick = false;
+            _player._isbasicStick = false;
             _player._isSward1 = false;
             _player._isSward2 = false;
             _player._isBroom = false;
@@ -1506,6 +1533,7 @@ public class Lobby : MonoBehaviour
             _player._isSpear = false;
             _player._isUmbrella = true;
             _player._isWaldo = false;
+            _player._isStick = false;
         }
         else if (cnt == 10 && _listScreen[10].activeSelf == true)
         {
@@ -1513,7 +1541,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 11 && _listScreen[11].activeSelf == false)
         {
-            _player._isStick = false;
+            _player._isbasicStick = false;
             _player._isSward1 = false;
             _player._isSward2 = false;
             _player._isBroom = false;
@@ -1525,8 +1553,29 @@ public class Lobby : MonoBehaviour
             _player._isSpear = false;
             _player._isUmbrella = false;
             _player._isWaldo = true;
+            _player._isStick = false;
         }
         else if (cnt == 11 && _listScreen[11].activeSelf == true)
+        {
+            EnterCheckOutPopUp();
+        }
+        else if (cnt == 30 && _listScreen[30].activeSelf == false)
+        {
+            _player._isbasicStick = false;
+            _player._isSward1 = false;
+            _player._isSward2 = false;
+            _player._isBroom = false;
+            _player._isClub = false;
+            _player._isShortSward = false;
+            _player._isHanger = false;
+            _player._isMace = false;
+            _player._isShield = false;
+            _player._isSpear = false;
+            _player._isUmbrella = false;
+            _player._isWaldo = false;
+            _player._isStick = true;
+        }
+        else if (cnt == 30 && _listScreen[30].activeSelf == true)
         {
             EnterCheckOutPopUp();
         }
@@ -1779,7 +1828,7 @@ public class Lobby : MonoBehaviour
     {
         if(_choiceNumber  == 0)
         {
-            Player.Instance._buyStick = true;
+            Player.Instance._buybasicStick = true;
         }
         else if (_choiceNumber == 1)
         {
@@ -1896,6 +1945,10 @@ public class Lobby : MonoBehaviour
         else if (_choiceNumber == 29)
         {
             Player.Instance._buynormalShoes = true;
+        }
+        else if (_choiceNumber == 30)
+        {
+            Player.Instance._buybasicStick = true;
         }
         ExitCheckOutPopUp();
 

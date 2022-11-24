@@ -132,14 +132,14 @@ namespace MoreMountains.FeedbacksForThirdParty
 				return;
 			}
             
-			float intensityMultiplier = ComputeIntensity(feedbacksIntensity);
+			float intensityMultiplier = ComputeIntensity(feedbacksIntensity, position);
 			MMColorAdjustmentsShakeEvent_HDRP.Trigger(ShakePostExposure, RemapPostExposureZero, RemapPostExposureOne,
 				ShakeHueShift, RemapHueShiftZero, RemapHueShiftOne,
 				ShakeSaturation, RemapSaturationZero, RemapSaturationOne,
 				ShakeContrast, RemapContrastZero, RemapContrastOne,
 				ColorFilterMode, ColorFilterGradient, ColorFilterDestination, ColorFilterCurve,
 				FeedbackDuration,
-				RelativeIntensity, intensityMultiplier, Channel, ResetShakerValuesAfterShake, ResetTargetValuesAfterShake, NormalPlayDirection, ComputedTimescaleMode);
+				RelativeIntensity, intensityMultiplier, ChannelData, ResetShakerValuesAfterShake, ResetTargetValuesAfterShake, NormalPlayDirection, ComputedTimescaleMode);
             
 		}
         
@@ -162,8 +162,26 @@ namespace MoreMountains.FeedbacksForThirdParty
 				ShakeContrast, RemapContrastZero, RemapContrastOne,
 				ColorFilterMode, ColorFilterGradient, ColorFilterDestination, ColorFilterCurve,
 				FeedbackDuration,
-				RelativeIntensity, channel:Channel, stop:true);
-            
+				RelativeIntensity, channelData:ChannelData, stop:true);
+		}
+		
+		/// <summary>
+		/// On restore, we put our object back at its initial position
+		/// </summary>
+		protected override void CustomRestoreInitialValues()
+		{
+			if (!Active || !FeedbackTypeAuthorized)
+			{
+				return;
+			}
+			
+			MMColorAdjustmentsShakeEvent_HDRP.Trigger(ShakePostExposure, RemapPostExposureZero, RemapPostExposureOne,
+				ShakeHueShift, RemapHueShiftZero, RemapHueShiftOne,
+				ShakeSaturation, RemapSaturationZero, RemapSaturationOne,
+				ShakeContrast, RemapContrastZero, RemapContrastOne,
+				ColorFilterMode, ColorFilterGradient, ColorFilterDestination, ColorFilterCurve,
+				FeedbackDuration,
+				RelativeIntensity, channelData:ChannelData, restore:true);
 		}
 	}
 }

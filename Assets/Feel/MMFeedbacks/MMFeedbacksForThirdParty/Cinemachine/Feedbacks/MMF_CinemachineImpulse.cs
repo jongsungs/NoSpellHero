@@ -48,7 +48,7 @@ namespace MoreMountains.FeedbacksForThirdParty
 
 			#if MM_CINEMACHINE
 			CinemachineImpulseManager.Instance.IgnoreTimeScale = !InScaledTimescaleMode;
-			float intensityMultiplier = ComputeIntensity(feedbacksIntensity);
+			float intensityMultiplier = ComputeIntensity(feedbacksIntensity, position);
 			m_ImpulseDefinition.CreateEvent(position, Velocity * intensityMultiplier);
 			#endif
 		}

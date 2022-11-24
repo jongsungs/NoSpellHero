@@ -434,7 +434,7 @@ namespace MoreMountains.Tools
 			_songsPlayedSoFar++;
 			_songsPlayedThisCycle++;
 
-			while (Songs[index].TargetAudioSource.isPlaying || _shouldResumeOnApplicationPause)
+			while (Songs[index].TargetAudioSource.isPlaying || (PlaylistState.CurrentState == PlaylistStates.Paused) || _shouldResumeOnApplicationPause)
 			{
 				yield return null;
 			}
@@ -591,7 +591,7 @@ namespace MoreMountains.Tools
 			{
 				return;
 			}
-	        
+
 			Songs[CurrentlyPlayingIndex].TargetAudioSource.Pause();
 			ChangePlaylistState(PlaylistStates.Paused);
 		}

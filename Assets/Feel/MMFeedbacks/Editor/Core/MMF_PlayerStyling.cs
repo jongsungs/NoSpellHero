@@ -283,28 +283,31 @@ namespace MoreMountains.Feedbacks
 				EditorGUI.LabelField(_directionRect, _directionDownIcon);
 			}
 
-			if (requiresSetup)
+			if (!host.DisplayFullDurationDetails)
 			{
-				float setupRectWidth = 90f;
-				_setupRect.x = _labelRect.xMax - setupRectWidth;
-				_setupRect.y = _labelRect.yMin;
-				_setupRect.width = setupRectWidth;
-				_setupRect.height = 17f;
-				_setupRect.xMin = _labelRect.xMax - setupRectWidth;
-				_setupRect.xMax = _labelRect.xMax;
+				if (requiresSetup)
+				{
+					float setupRectWidth = 90f;
+					_setupRect.x = _labelRect.xMax - setupRectWidth;
+					_setupRect.y = _labelRect.yMin;
+					_setupRect.width = setupRectWidth;
+					_setupRect.height = 17f;
+					_setupRect.xMin = _labelRect.xMax - setupRectWidth;
+					_setupRect.xMax = _labelRect.xMax;
                 
-				EditorGUI.LabelField(_setupRect, _setupRequiredIcon);
-			}
-			else
-			{
-				// otherwise we draw the name of our target
-				float setupRectWidth = _labelRect.width / 2f;
-				_setupRect.x = _labelRect.xMax - setupRectWidth - 73f;
-				_setupRect.y = _labelRect.yMin;
-				_setupRect.width = setupRectWidth;
-				_setupRect.height = 17f;
+					EditorGUI.LabelField(_setupRect, _setupRequiredIcon);
+				}
+				else
+				{
+					// otherwise we draw the name of our target
+					float setupRectWidth = _labelRect.width / 2f;
+					_setupRect.x = _labelRect.xMax - setupRectWidth - 73f;
+					_setupRect.y = _labelRect.yMin;
+					_setupRect.width = setupRectWidth;
+					_setupRect.height = 17f;
                 
-				EditorGUI.LabelField(_setupRect, requiredTarget, _targetLabelStyle);
+					EditorGUI.LabelField(_setupRect, requiredTarget, _targetLabelStyle);
+				}
 			}
 
 			// Time -----------------------------------------------------------------------------------------------------
@@ -326,15 +329,7 @@ namespace MoreMountains.Feedbacks
 					float delayBetweenRepeats = host.ApplyTimeMultiplier(timing.DelayBetweenRepeats); 
                     
 					timingInfo += " + "+ timing.NumberOfRepeats.ToString() + " x ";
-					if (timing.DelayBetweenRepeats > 0)
-					{
-						timingInfo += "(";
-					}
-					timingInfo += duration + "s";
-					if (timing.DelayBetweenRepeats > 0)
-					{
-						timingInfo += " + " + host.ApplyTimeMultiplier(timing.DelayBetweenRepeats) + "s )";
-					}
+					timingInfo += host.ApplyTimeMultiplier(timing.DelayBetweenRepeats) + "s";
 					displayTotal = true;
 				}
 

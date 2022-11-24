@@ -153,7 +153,7 @@ namespace MoreMountains.Feedbacks
 				return;
 			}
             
-			float intensityMultiplier = ComputeIntensity(feedbacksIntensity);
+			float intensityMultiplier = ComputeIntensity(feedbacksIntensity, position);
 			if (Active || Owner.AutoPlayOnEnable)
 			{
 				if ((Mode == Modes.Absolute) || (Mode == Modes.Additive))
@@ -384,6 +384,26 @@ namespace MoreMountains.Feedbacks
 			MMFeedbacksHelpers.MigrateCurve(AnimateRotationY, AnimateRotationTweenY, Owner);
 			MMFeedbacksHelpers.MigrateCurve(AnimateRotationZ, AnimateRotationTweenZ, Owner);
 			MMFeedbacksHelpers.MigrateCurve(ToDestinationCurve, ToDestinationTween, Owner);
+		}
+		
+		/// <summary>
+		/// On restore, we restore our initial state
+		/// </summary>
+		protected override void CustomRestoreInitialValues()
+		{
+			if (!Active || !FeedbackTypeAuthorized)
+			{
+				return;
+			}
+
+			if (RotationSpace == Space.World)
+			{
+				AnimateRotationTarget.rotation = _initialRotation;
+			}
+			else
+			{
+				AnimateRotationTarget.localRotation= _initialRotation;	
+			}
 		}
 	}
 }

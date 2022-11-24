@@ -16,6 +16,8 @@ namespace MoreMountains.Feedbacks
 	[FeedbackPath("GameObject/Property")]
 	public class MMF_Property : MMF_Feedback
 	{
+		/// a static bool used to disable all feedbacks of this type at once
+		public static bool FeedbackTypeAuthorized = true;
 		/// the duration of this feedback is the duration of the target property, or 0 if instant
 		public override float FeedbackDuration { get { return (Mode == Modes.Instant) ? 0f : ApplyTimeMultiplier(Duration); } set { if (Mode != Modes.Instant) { Duration = value; } } }
 		/// sets the inspector color for this feedback
@@ -25,6 +27,7 @@ namespace MoreMountains.Feedbacks
 		public override string RequiresSetupText { get { return "This feedback requires that a Target be set to be able to work properly. You can set one below."; } }
 		#endif
 		public override bool HasRandomness => true;
+		public override bool HasCustomInspectors => true;
         
 		/// the possible modes for this feedback
 		public enum Modes { OverTime, Instant } 
@@ -91,7 +94,6 @@ namespace MoreMountains.Feedbacks
 					Turn(false);
 				}
 			}
-
 		}
 
 		/// <summary>
@@ -101,25 +103,27 @@ namespace MoreMountains.Feedbacks
 		/// <param name="feedbacksIntensity"></param>
 		protected override void CustomPlayFeedback(Vector3 position, float feedbacksIntensity = 1.0f)
 		{
-			if (Active)
+			if (!Active || !FeedbackTypeAuthorized)
 			{
-				Turn(true);
-                
-				float intensityMultiplier = ComputeIntensity(feedbacksIntensity);
-                
-				switch (Mode)
-				{
-					case Modes.Instant:
-						Target.SetLevel(InstantLevel);
-						break;
-					case Modes.OverTime:
-						if (!AllowAdditivePlays && (_coroutine != null))
-						{
-							return;
-						}
-						_coroutine = Owner.StartCoroutine(UpdateValueSequence(intensityMultiplier));
-						break;
-				}
+				return;
+			}
+			
+			Turn(true);
+            
+			float intensityMultiplier = ComputeIntensity(feedbacksIntensity, position);
+            
+			switch (Mode)
+			{
+				case Modes.Instant:
+					Target.SetLevel(InstantLevel);
+					break;
+				case Modes.OverTime:
+					if (!AllowAdditivePlays && (_coroutine != null))
+					{
+						return;
+					}
+					_coroutine = Owner.StartCoroutine(UpdateValueSequence(intensityMultiplier));
+					break;
 			}
 		}
 
@@ -202,6 +206,24 @@ namespace MoreMountains.Feedbacks
 			{
 				Target.TargetComponent.gameObject.SetActive(status);
 			}
+		}
+		
+		/// <summary>
+		/// On restore, we put our object back at its initial position
+		/// </summary>
+		protected override void CustomRestoreInitialValues()
+		{
+			if (!Active || !FeedbackTypeAuthorized)
+			{
+				return;
+			}
+
+			if (StartsOff)
+			{
+				Turn(false);
+			}
+			
+			SetValues(_initialIntensity, 1f);
 		}
 	}
 }

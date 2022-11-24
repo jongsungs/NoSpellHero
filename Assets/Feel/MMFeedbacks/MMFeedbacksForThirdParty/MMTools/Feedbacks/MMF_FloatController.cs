@@ -118,7 +118,7 @@ namespace MoreMountains.Feedbacks
 				return;
 			}
             
-			float intensityMultiplier = ComputeIntensity(feedbacksIntensity);
+			float intensityMultiplier = ComputeIntensity(feedbacksIntensity, position);
 			TargetFloatController.RevertToInitialValueAfterEnd = RevertToInitialValueAfterEnd;
 
 			if (Mode == Modes.OneTime)
@@ -184,6 +184,18 @@ namespace MoreMountains.Feedbacks
 			{
 				TargetFloatController.Stop();
 			}
+		}
+		
+		/// <summary>
+		/// On restore, we restore our initial state
+		/// </summary>
+		protected override void CustomRestoreInitialValues()
+		{
+			if (!Active || !FeedbackTypeAuthorized)
+			{
+				return;
+			}
+			TargetFloatController.RestoreInitialValues();
 		}
 	}
 }

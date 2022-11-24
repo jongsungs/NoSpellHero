@@ -34,7 +34,6 @@ public class GamePlay : MonoBehaviour
     public Monster _demonKing;
     public GameObject _objectPool;
     public GameObject _damageTextPoolParent;
-    public GameObject _spawnZone;
     public RespawnZone _randomSpawn;
     public LightningBoltScript _lightning;
     public GameObject _meteorTarget;
@@ -46,6 +45,7 @@ public class GamePlay : MonoBehaviour
     public SkillBase _roar;
     public SkillBase _heal;
     public SkillBase _meteorEffect;
+    public SkillBase _thunder;
 
     public List<GameObject> _listPlayers = new List<GameObject>();
 
@@ -95,6 +95,7 @@ public class GamePlay : MonoBehaviour
     public IObjectPool<SkillBase> _roarPool;
     public IObjectPool<SkillBase> _healPool;
     public IObjectPool<SkillBase> _meteorEffectPool;
+    public IObjectPool<SkillBase> _thunderPool;
 
 
 
@@ -124,6 +125,8 @@ public class GamePlay : MonoBehaviour
     public TextMeshProUGUI _skill3Text;
 
 
+    public int _spawnChannelCount;
+
 
 
     private void Awake()
@@ -138,7 +141,6 @@ public class GamePlay : MonoBehaviour
         _demonkingPool = new ObjectPool<Monster>(CreatDemonKing, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
         _damageTextPool = new ObjectPool<DamageText>(CreatDamageText, OngetDamageText, OnRelaseText, OnDestroyText, maxSize: 10);
         _lightningPool = new ObjectPool<LightningBoltScript>(CreateLightning, OngetLightningBolt, OnRelaseLightning, OnDestroyLightning, maxSize: 30);
-        _meteorTargetPool = new ObjectPool<GameObject>(CreatMeteorTarget, OngetMeteorTarget, OnReleaseMeteorTarget, OnDestroyMeteorTarget, maxSize: 10);
         _meteorPool = new ObjectPool<SkillBase>(CreateMeteor, OngetMeteor, OnReleaseSkill, OnDestroySkill, maxSize: 10);
         _wallPool = new ObjectPool<SkillBase>(CreateWall, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 20);
         _decoyPool = new ObjectPool<Monster>(CreateDecoy, OngetDecoy, OnReleaseDecoy, OnDestroyDecoy, maxSize: 20);
@@ -147,7 +149,9 @@ public class GamePlay : MonoBehaviour
         _frozenPool = new ObjectPool<SkillBase>(CreateFrozen, OngetFrozen, OnReleaseSkill, OnDestroySkill, maxSize: 30);
         _roarPool = new ObjectPool<SkillBase>(CreateRoar, OngetRoar, OnReleaseRoar, OnDestroySkill, maxSize: 10);
         _healPool = new ObjectPool<SkillBase>(CreateHeal, OngetEffectSkill, OnReleaseSkill, OnDestroySkill, maxSize: 20);
-        _meteorEffectPool = new ObjectPool<SkillBase>(CreateMeteorEffect, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 20);
+        _meteorEffectPool = new ObjectPool<SkillBase>(CreateMeteorEffect, OngetMeteorTarger, OnReleaseSkill, OnDestroySkill, maxSize: 10);
+        _thunderPool = new ObjectPool<SkillBase>(CreateThunder, OngetThunder, OnReleaseSkill, OnDestroySkill, maxSize: 10);
+
 
         _bossHPBar.SetActive(false);
 
@@ -182,7 +186,7 @@ public class GamePlay : MonoBehaviour
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            _test.Minus10Percent(200f,5f);
+          //  _test.Minus10Percent(200f,5f);
         }
         //if (Input.GetKeyDown(KeyCode.Space))
         //{
@@ -218,7 +222,7 @@ public class GamePlay : MonoBehaviour
         }
         if (Input.GetKeyDown(KeyCode.H))
         {
-            _decoyPool.Get();
+            _wolfpool.Get();
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
@@ -241,12 +245,24 @@ public class GamePlay : MonoBehaviour
     {
         var monster = Instantiate(_slime, _randomSpawn.Return_RandomPosition(), Quaternion.identity,_objectPool.transform);
         monster.SetPool(_slimePool);
+        monster._floatingTextSpawner.Channel = _spawnChannelCount;
+        monster._mmfPlayer.FeedbacksList[0].Channel = _spawnChannelCount;
+        monster._mmfPlayer.Initialization();
+        monster._hp = 20f;
+
+        _spawnChannelCount++;
+
         return monster;
     }
     private Monster CreatWolf()
     {
         var monster = Instantiate(_wolf, _randomSpawn.Return_RandomPosition() ,Quaternion.identity, _objectPool.transform);
         monster.SetPool(_wolfpool);
+        monster._floatingTextSpawner.Channel = _spawnChannelCount;
+        monster._mmfPlayer.FeedbacksList[0].Channel = _spawnChannelCount;
+        monster._mmfPlayer.Initialization();
+
+        _spawnChannelCount++;
         return monster;
     }
     private Monster CreatCaptainSkull()
@@ -285,16 +301,7 @@ public class GamePlay : MonoBehaviour
         lightning.SetPool(_lightningPool);
         return lightning;
     }
-    private GameObject CreatMeteorTarget()
-    {
-        var target = Instantiate(_meteorTarget, Player.Instance._meteorPoint.transform.position, Quaternion.identity, _objectPool.transform);
-        _listMeteorTarget.Add(target);
-        _meteorPool.Get();
-        StartCoroutine(_listMeteor[0].GetComponent<Meteor>().Target(target));
-        
-        
-        return target;
-    }
+    
    
     private SkillBase CreateFrozen()
     {
@@ -349,9 +356,18 @@ public class GamePlay : MonoBehaviour
     {
         var meteorEffect = Instantiate(_meteorEffect, Player.Instance.m_transform.position, Quaternion.identity, _objectPool.transform);
         meteorEffect.SetPool(_meteorEffectPool);
+        _listMeteorTarget.Add(meteorEffect.gameObject);
+       // _meteorPool.Get();
+        
         return meteorEffect;
     }
 
+    private SkillBase CreateThunder()
+    {
+        var thunder = Instantiate(_thunder, _randomSpawn.Return_RandomPosition(), Quaternion.identity, _objectPool.transform);
+        thunder.SetPool(_thunderPool);
+        return thunder;
+    }
 
 
     // ªı∑Œ ªÃ¿ª ∂ß
@@ -359,14 +375,26 @@ public class GamePlay : MonoBehaviour
     {
         obj.gameObject.SetActive(true);
         obj._layerMask = 6;
-        if(obj._monster == Monster.MonsterKind.Slime)
+        obj._floatingTextSpawner.Channel = _spawnChannelCount;
+        obj._mmfPlayer.FeedbacksList[0].Channel = _spawnChannelCount;
+        obj._mmfPlayer.Initialization();
+
+        _spawnChannelCount++;
+        if (obj._monster == Monster.MonsterKind.Slime)
         {
-            obj._hp = 10f;
+           
             obj._speed = 1f;
-            obj.StartCoroutine(obj.CoFindEnemy());
+            //obj.StartCoroutine(obj.CoFindEnemy());
             obj.FadeIn();
         }
-        if(obj._monster == Monster.MonsterKind.CaptainSkull && _isBoss == false && _currentStage == GameState.Stage1 && obj._category == Monster.MonsterCategory.Boss)
+        if (obj._monster == Monster.MonsterKind.Wolf)
+        {
+            obj._hp = 20f;
+            obj._speed = 1f;
+            //obj.StartCoroutine(obj.CoFindEnemy());
+            obj.FadeIn();
+        }
+        if (obj._monster == Monster.MonsterKind.CaptainSkull && _isBoss == false && _currentStage == GameState.Stage1 && obj._category == Monster.MonsterCategory.Boss)
         {
             obj._hp = 2f;
             _isBoss = true;
@@ -401,11 +429,7 @@ public class GamePlay : MonoBehaviour
     {
         lightning.gameObject.SetActive(true);
     }
-    private void OngetMeteorTarget(GameObject obj)
-    {
-        obj.gameObject.SetActive(true);
-        
-    }
+   
     private void OngetFrozen(SkillBase obj)
     {
         obj.gameObject.SetActive(true);
@@ -442,6 +466,37 @@ public class GamePlay : MonoBehaviour
         skill.transform.rotation = Player.Instance.m_transform.rotation;
         skill.gameObject.SetActive(true);
     }
+    private void OngetMeteorTarger(SkillBase skill)
+    {
+        skill.gameObject.SetActive(true);
+        skill.transform.position = Player.Instance._meteorPoint.transform.position;
+        _listMeteorTarget.Add(skill.gameObject);
+
+        if (_listMeteorTarget.Count <= 1)
+        {
+            _listMeteorTarget.Add(skill.gameObject);
+        }
+        else if (_listMeteorTarget.Count >= 2)
+        {
+            _listMeteorTarget.Add(skill.gameObject);
+            var temp = _listMeteorTarget[0];
+            _listMeteorTarget[0] = _listMeteorTarget[_listMeteorTarget.Count - 1];
+            _listMeteorTarget[_listMeteorTarget.Count - 1] = temp;
+
+        }
+
+
+         _meteorPool.Get();
+
+
+        skill.transform.position = Player.Instance._meteorPoint.transform.position + new Vector3(0, 0.1f, 0);
+        skill.gameObject.SetActive(true);
+    }
+    private void OngetThunder(SkillBase skill)
+    {
+        skill.transform.position = _randomSpawn.Return_RandomPosition();
+        skill.gameObject.SetActive(true);
+    }
     private void OngetDecoy(Monster decoy)
     {
         decoy.gameObject.SetActive(true);
@@ -476,11 +531,7 @@ public class GamePlay : MonoBehaviour
     {
         lightning.gameObject.SetActive(false);
     }
-    private void OnReleaseMeteorTarget(GameObject obj)
-    {
-        obj.gameObject.SetActive(false);
-    }
-
+    
     private void OnReleaseSkill(SkillBase skill)
     {
         skill.gameObject.SetActive(false);
@@ -507,10 +558,6 @@ public class GamePlay : MonoBehaviour
     private void OnDestroyLightning(LightningBoltScript lightning)
     {
         Destroy(lightning.gameObject);
-    }
-    private void OnDestroyMeteorTarget(GameObject obj)
-    {
-        Destroy(obj.gameObject);
     }
     private void OnDestroySkill(SkillBase skill)
     {

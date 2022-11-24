@@ -973,5 +973,11 @@ namespace MoreMountains.Tools
 			_shaking = false;
 			this.enabled = false;
 		}
+
+		public virtual void RestoreInitialValues()
+		{
+			_currentColor = InitialColor;
+			SetValue(InitialValue);
+		}
 	}
 }

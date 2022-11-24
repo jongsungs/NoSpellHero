@@ -25,13 +25,11 @@ public class BaseObject : MonoBehaviour
         Freezing,
         ElectricShock,
         Stun,
-        fascination, //매혹
 
     }
 
     public State _state;
     [SerializeField]protected CrowdControl _CC = CrowdControl.Normal;
-    public MoreMountains.Feedbacks.MMFeedbacks _feedBack;
 
 
     public float _hp;
@@ -103,7 +101,7 @@ public class BaseObject : MonoBehaviour
 
     public virtual void Play(int i)
     {
-        _feedBack?.PlayFeedbacks(this.transform.position, i);
+        
        
     }
 

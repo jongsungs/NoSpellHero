@@ -11,11 +11,13 @@ public class Meteor : SkillBase
     {
         _render = GetComponent<MeshRenderer>();
         _effect.gameObject.SetActive(false);
+        _target = GamePlay.Instance._listMeteorTarget[0];
+        StartCoroutine(Target());
     }
 
     private void Update()
     {
-        if(transform.position == _target.transform.position)
+        if(transform.position.y  <= _target.transform.position.y)
         {
             _render.enabled = false;
             _effect.gameObject.SetActive(true);
@@ -25,13 +27,13 @@ public class Meteor : SkillBase
 
 
 
-    public IEnumerator Target(GameObject obj)
+    public IEnumerator Target()
     {
-        _target = obj;
-        while(transform.position.z != obj.transform.position.z)
+        
+        while(transform.position.y >= _target.transform.position.y)
         {
             yield return new WaitForSeconds(0.01f);
-            transform.position = Vector3.MoveTowards(transform.position, obj.transform.position, _skillSpeed * Time.deltaTime);
+            transform.position = Vector3.MoveTowards(transform.position, _target.transform.position, _skillSpeed * Time.deltaTime);
         }
 
     }
@@ -39,7 +41,7 @@ public class Meteor : SkillBase
     public void Release()
     {
         _render.enabled = true ;
-
+        _target.SetActive(false);
         _skillPool.Release(this);
     }
 }

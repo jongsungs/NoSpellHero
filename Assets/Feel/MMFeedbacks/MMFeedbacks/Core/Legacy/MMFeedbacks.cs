@@ -82,6 +82,30 @@ namespace MoreMountains.Feedbacks
 		[Tooltip("the timescale at which the player itself will operate. This notably impacts sequencing and pauses duration evaluation.")]
 		public TimescaleModes PlayerTimescaleMode = TimescaleModes.Unscaled;
 
+		/// if this is true, this feedback will only play if its distance to RangeCenter is lower or equal to RangeDistance
+		[Tooltip("if this is true, this feedback will only play if its distance to RangeCenter is lower or equal to RangeDistance")]
+		public bool OnlyPlayIfWithinRange = false;
+		/// when in OnlyPlayIfWithinRange mode, the transform to consider as the center of the range
+		[Tooltip("when in OnlyPlayIfWithinRange mode, the transform to consider as the center of the range")]
+		public Transform RangeCenter;
+		/// when in OnlyPlayIfWithinRange mode, the distance to the center within which the feedback will play
+		[Tooltip("when in OnlyPlayIfWithinRange mode, the distance to the center within which the feedback will play")]
+		public float RangeDistance = 5f;
+		/// when in OnlyPlayIfWithinRange mode, whether or not to modify the intensity of feedbacks based on the RangeFallOff curve  
+		[Tooltip("when in OnlyPlayIfWithinRange mode, whether or not to modify the intensity of feedbacks based on the RangeFallOff curve")]
+		public bool UseRangeFalloff = false;
+		/// the animation curve to use to define falloff (on the x 0 represents the range center, 1 represents the max distance to it)
+		[Tooltip("the animation curve to use to define falloff (on the x 0 represents the range center, 1 represents the max distance to it)")]
+		[MMFCondition("UseRangeFalloff", true)]
+		public AnimationCurve RangeFalloff = new AnimationCurve(new Keyframe(0f, 1f), new Keyframe(1f, 0f));
+		/// the values to remap the falloff curve's y axis' 0 and 1
+		[Tooltip("the values to remap the falloff curve's y axis' 0 and 1")]
+		[MMFVector("Zero","One")]
+		public Vector2 RemapRangeFalloff = new Vector2(0f, 1f);
+		/// whether or not to ignore MMSetFeedbackRangeCenterEvent, used to set the RangeCenter from anywhere
+		[Tooltip("whether or not to ignore MMSetFeedbackRangeCenterEvent, used to set the RangeCenter from anywhere")]
+		public bool IgnoreRangeEvents = false;
+
 		/// a duration, in seconds, during which triggering a new play of this MMFeedbacks after it's been played once will be impossible
 		[Tooltip("a duration, in seconds, during which triggering a new play of this MMFeedbacks after it's been played once will be impossible")]
 		public float CooldownDuration = 0f;

@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using MoreMountains.Tools;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -123,6 +122,10 @@ namespace MoreMountains.Feedbacks
 		/// </summary>
 		protected override void OnEnable()
 		{
+			if (OnlyPlayIfWithinRange)
+			{
+				MMSetFeedbackRangeCenterEvent.Register(OnMMSetFeedbackRangeCenterEvent);	
+			}
 			if (AutoPlayOnEnable && Application.isPlaying)
 			{
 				PlayFeedbacks();
@@ -272,42 +275,12 @@ namespace MoreMountains.Feedbacks
 		/// <param name="feedbacksIntensity"></param>
 		protected override void PlayFeedbacksInternal(Vector3 position, float feedbacksIntensity, bool forceRevert = false)
 		{
-			if (!CanPlay)
+			if (!IsAllowedToPlay(position))
 			{
 				return;
-			}
-			
-			if (IsPlaying && !CanPlayWhileAlreadyPlaying)
-			{
-				return;
-			}
-
-			if (!EvaluateChance())
-			{
-				return;
-			}
-
-			// if we have a cooldown we prevent execution if needed
-			if (CooldownDuration > 0f)
-			{
-				if (GetTime() - _lastStartAt < CooldownDuration)
-				{
-					return;
-				}
 			}
             
 			SkippingToTheEnd = false;
-
-			// if all MMFeedbacks are disabled globally, we stop and don't play
-			if (!GlobalMMFeedbacksActive)
-			{
-				return;
-			}
-
-			if (!this.gameObject.activeInHierarchy)
-			{
-				return;
-			}
             
 			if (ShouldRevertOnNextPlay)
 			{
@@ -344,6 +317,69 @@ namespace MoreMountains.Feedbacks
 			{
 				PreparePlay(position, feedbacksIntensity, forceRevert);
 			}
+		}
+
+		/// <summary>
+		/// Returns true if this feedback is allowed to play, false otherwise
+		/// </summary>
+		/// <param name="position"></param>
+		/// <returns></returns>
+		public virtual bool IsAllowedToPlay(Vector3 position)
+		{
+			// if CanPlay is false, we're not allowed to play
+			if (!CanPlay)
+			{
+				return false;
+			}
+			
+			// if we're already playing and can't play while already playing, we're not allowed to play 
+			if (IsPlaying && !CanPlayWhileAlreadyPlaying)
+			{
+				return false;
+			}
+
+			// if we roll a dice and are below our chance rate, we're not allowed to play
+			if (!EvaluateChance())
+			{
+				return false;
+			}
+
+			// if we are in cooldown, we're not allowed to play
+			if (CooldownDuration > 0f)
+			{
+				if (GetTime() - _lastStartAt < CooldownDuration)
+				{
+					return false;
+				}
+			}
+
+			// if all MMFeedbacks are disabled globally, we're not allowed to play
+			if (!GlobalMMFeedbacksActive)
+			{
+				return false;
+			}
+
+			// if the game object this player is on disabled, we're not allowed to play
+			if (!this.gameObject.activeInHierarchy)
+			{
+				return false;
+			}
+			
+			// if we're using range and are not within range, we're not allowed to play
+			if (OnlyPlayIfWithinRange)
+			{
+				if (RangeCenter == null)
+				{
+					return false;
+				}
+				float distanceToCenter = Vector3.Distance(position, RangeCenter.position);
+				if (distanceToCenter > RangeDistance)
+				{
+					return false;
+				}
+			}
+
+			return true;
 		}
         
 		protected virtual IEnumerator FrameOnePlayCo(Vector3 position, float feedbacksIntensity, bool forceRevert = false)
@@ -679,7 +715,7 @@ namespace MoreMountains.Feedbacks
 		#region CONTROLS
 
 		/// <summary>
-		/// Calls each feedback's Reset method if they've defined one. An example of that can be resetting the initial color of a flickering renderer.
+		/// Calls each feedback's Reset method if they've defined one. An example of that can be resetting the initial color of a flickering renderer. It's usually called automatically before playing them.
 		/// </summary>
 		public override void ResetFeedbacks()
 		{
@@ -714,6 +750,22 @@ namespace MoreMountains.Feedbacks
 
 		/// <summary>
 		/// Pauses execution of a sequence, which can then be resumed by calling ResumeFeedbacks()
+		/// Note that this doesn't stop feedbacks, by design, but in most cases you'll probably want to call StopFeedbacks() first
+		/// </summary>
+		public virtual void RestoreInitialValues()
+		{
+			int count = FeedbacksList.Count;
+			for (int i = 0; i < count; i++)
+			{
+				if ((FeedbacksList[i] != null) && (FeedbacksList[i].Active))
+				{
+					FeedbacksList[i].RestoreInitialValues();    
+				}
+			}
+		}
+
+		/// <summary>
+		/// Skips to the end of a sequence of feedbacks. Note that depending on your setup, this can take up to 3 frames to complete, don't disable your player instantly, or it won't complete the skipping
 		/// </summary>
 		public virtual void SkipToTheEnd()
 		{
@@ -791,7 +843,9 @@ namespace MoreMountains.Feedbacks
 			int count = FeedbacksList.Count;
 			for (int i = 0; i < count; i++)
 			{
-				if (FeedbacksList[i].IsPlaying && !FeedbacksList[i].Timing.ExcludeFromHoldingPauses)
+				if ((FeedbacksList[i].IsPlaying 
+				     && !FeedbacksList[i].Timing.ExcludeFromHoldingPauses)
+				    || FeedbacksList[i].Timing.RepeatForever)
 				{
 					return true;
 				}
@@ -837,6 +891,41 @@ namespace MoreMountains.Feedbacks
 					FeedbacksList[i].ComputeNewRandomDurationMultiplier();
 				}                
 			}
+		}
+
+		/// <summary>
+		/// Determines the intensity multiplier to apply 
+		/// </summary>
+		/// <param name="position"></param>
+		/// <returns></returns>
+		public virtual float ComputeRangeIntensityMultiplier(Vector3 position)
+		{
+			if (!OnlyPlayIfWithinRange)
+			{
+				return 1f;
+			}
+
+			if (RangeCenter == null)
+			{
+				return 0f;
+			}
+
+			float distanceToCenter = Vector3.Distance(position, RangeCenter.position);
+
+			if (distanceToCenter > RangeDistance)
+			{
+				return 0f;
+			}
+
+			if (!UseRangeFalloff)
+			{
+				return 1f;
+			}
+
+			float normalizedDistance = MMFeedbacksHelpers.Remap(distanceToCenter, 0f, RangeDistance, 0f, 1f);
+			float curveValue = RangeFalloff.Evaluate(normalizedDistance);
+			float newIntensity = MMFeedbacksHelpers.Remap(curveValue, 0f, 1f, RemapRangeFalloff.x, RemapRangeFalloff.y);
+			return newIntensity;
 		}
         
 		/// <summary>
@@ -990,10 +1079,28 @@ namespace MoreMountains.Feedbacks
 		#region EVENTS
 
 		/// <summary>
+		/// When we get a MMSetFeedbackRangeCenterEvent, we set our new range center
+		/// </summary>
+		/// <param name="newTransform"></param>
+		protected virtual void OnMMSetFeedbackRangeCenterEvent(Transform newTransform)
+		{
+			if (IgnoreRangeEvents)
+			{
+				return;
+			}
+			RangeCenter = newTransform;
+		}
+
+		/// <summary>
 		/// On Disable we stop all feedbacks
 		/// </summary>
 		protected override void OnDisable()
 		{
+			if (OnlyPlayIfWithinRange)
+			{
+				MMSetFeedbackRangeCenterEvent.Unregister(OnMMSetFeedbackRangeCenterEvent);	
+			}
+			
 			if (IsPlaying)
 			{
 				if (ForceStopFeedbacksOnDisable)

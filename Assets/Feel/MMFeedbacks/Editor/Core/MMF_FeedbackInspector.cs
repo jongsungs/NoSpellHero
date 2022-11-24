@@ -36,7 +36,8 @@ namespace MoreMountains.Feedbacks
 		protected MMF_Feedback _feedback;
 		protected bool _expandGroupInspectors;
 		private const string _channelFieldName = "Channel";
-		private const string _randomnessGroupName = "Feedback Randomness";
+		private const string _channelModeFieldName = "ChannelMode";
+		private const string _channelDefinitionFieldName = "MMChannelDefinition";
         
 		public virtual void OnEnable()
 		{
@@ -99,7 +100,7 @@ namespace MoreMountains.Feedbacks
 						_shouldDrawBase = false;
 						if (!GroupData.TryGetValue(previousGroupAttribute.GroupName, out groupData))
 						{
-							if (_feedback.HasRandomness || previousGroupAttribute.GroupName != _randomnessGroupName) // if we find the randomness group we skip it if needed
+							if (!ShouldSkipGroup(previousGroupAttribute.GroupName))
 							{
 								GroupData.Add(previousGroupAttribute.GroupName, new MMFInspectorGroupData
 								{
@@ -127,7 +128,7 @@ namespace MoreMountains.Feedbacks
 					if (group.ClosedByDefault) { fallbackOpenState = false; }
 					bool groupIsOpen = EditorPrefs.GetBool(string.Format($"{group.GroupName}{fieldInfoList[i].Name}{feedback.UniqueID}"), fallbackOpenState);
 
-					if (_feedback.HasRandomness || previousGroupAttribute.GroupName != _randomnessGroupName) // if we find the randomness group we skip it if needed
+					if (!ShouldSkipGroup(previousGroupAttribute.GroupName))
 					{
 						GroupData.Add(group.GroupName, new MMFInspectorGroupData
 						{
@@ -153,6 +154,23 @@ namespace MoreMountains.Feedbacks
 			}
 
 			DrawerInitialized = true;
+		}
+
+		protected virtual bool ShouldSkipGroup(string groupName)
+		{
+			bool skip = false;
+            
+			if (groupName == MMF_Feedback._randomnessGroupName && !_feedback.HasRandomness)
+			{
+				skip = true;
+			}
+
+			if (groupName == MMF_Feedback._rangeGroupName && !_feedback.HasRange)
+			{
+				skip = true;
+			}
+
+			return skip;
 		}
 
 		protected virtual void SearchForConditions(FieldInfo fieldInfo)
@@ -306,7 +324,10 @@ namespace MoreMountains.Feedbacks
 					return;
 				}
 
-				if (!feedback.HasChannel && groupData.PropertiesList[i].name == _channelFieldName)
+				if (!feedback.HasChannel 
+				    && (groupData.PropertiesList[i].name == _channelFieldName
+				        || groupData.PropertiesList[i].name == _channelModeFieldName
+				        || groupData.PropertiesList[i].name == _channelDefinitionFieldName))
 				{
 					return;
 				}

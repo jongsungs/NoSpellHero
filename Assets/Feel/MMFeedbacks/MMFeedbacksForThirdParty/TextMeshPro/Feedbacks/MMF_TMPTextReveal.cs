@@ -157,6 +157,7 @@ namespace MoreMountains.Feedbacks
 		protected int _totalCharacters;
 		protected int _totalLines;
 		protected int _totalWords;
+		protected string _initialText;
         
 		/// <summary>
 		/// On play we change the text of our target TMPText
@@ -176,6 +177,8 @@ namespace MoreMountains.Feedbacks
 			{
 				return;
 			}
+
+			_initialText = TargetTMPText.text;
 
 			if (ReplaceText)
 			{
@@ -379,5 +382,19 @@ namespace MoreMountains.Feedbacks
 			return richTextLength;
 		}
 		#endif
+		
+		/// <summary>
+		/// On restore, we put our object back at its initial position
+		/// </summary>
+		protected override void CustomRestoreInitialValues()
+		{
+			if (!Active || !FeedbackTypeAuthorized)
+			{
+				return;
+			}
+			#if MM_TEXTMESHPRO
+			TargetTMPText.text = _initialText;
+			#endif
+		}
 	}
 }

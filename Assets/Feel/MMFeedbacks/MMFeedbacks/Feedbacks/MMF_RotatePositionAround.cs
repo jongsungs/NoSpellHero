@@ -115,7 +115,7 @@ namespace MoreMountains.Feedbacks
 				return;
 			}
             
-			float intensityMultiplier = ComputeIntensity(feedbacksIntensity);
+			float intensityMultiplier = ComputeIntensity(feedbacksIntensity, position);
 			if (Active || Owner.AutoPlayOnEnable)
 			{
 				if (!AllowAdditivePlays && (_coroutine != null))
@@ -243,6 +243,18 @@ namespace MoreMountains.Feedbacks
 				_coroutine = null;
 				IsPlaying = false;
 			}
+		}
+		
+		/// <summary>
+		/// On restore, we restore our initial state
+		/// </summary>
+		protected override void CustomRestoreInitialValues()
+		{
+			if (!Active || !FeedbackTypeAuthorized)
+			{
+				return;
+			}
+			AnimateRotationTarget.transform.position = _initialPosition;
 		}
 
 		/// <summary>

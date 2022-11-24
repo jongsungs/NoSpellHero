@@ -11,18 +11,11 @@ public class effectCollider : SkillBase
         StartCoroutine(CoFadeOut());
     }
 
-    private void OnTriggerEnter(Collider other)
-    {
-        if(other.CompareTag("Enemy"))
-        {
-            other.GetComponent<Monster>()._hp -= 1f;
-        }
-    }
-
+   
 
     IEnumerator CoFadeOut()
     {
-        yield return new WaitForSeconds(1f);
+        yield return new WaitForSeconds(_skillDurationTime);
         _meteor.Release();
     }
 

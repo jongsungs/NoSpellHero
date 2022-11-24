@@ -101,8 +101,8 @@ namespace MoreMountains.Feedbacks
 		[Tooltip("if this is true, calling that feedback will trigger it, even if it's in progress. If it's false, it'll prevent any new Play until the current one is over")] 
 		public bool AllowAdditivePlays = false;
 		[MMFInspectorGroup("Positions", true, 64)]
-		/// if this is true, the initial position won't be added to init and destination
-		[Tooltip("if this is true, the initial position won't be added to init and destination")]
+		/// if this is true, movement will be relative to the object's initial position. So moving its y position along a curve going from 0 to 1 will move it up one unit. If this is false, in that same example, it'll be moved from 0 to 1 in absolute coordinates.
+		[Tooltip("if this is true, movement will be relative to the object's initial position. So moving its y position along a curve going from 0 to 1 will move it up one unit. If this is false, in that same example, it'll be moved from 0 to 1 in absolute coordinates.")]
 		public bool RelativePosition = true;
 		/// if this is true, initial and destination positions will be recomputed on every play
 		[Tooltip("if this is true, initial and destination positions will be recomputed on every play")]
@@ -143,6 +143,7 @@ namespace MoreMountains.Feedbacks
 		protected Vector3 _destinationPosition;
 		protected Coroutine _coroutine;
 		protected Vector3 _workInitialPosition;
+		protected Vector3 _workDestinationPosition;
 		protected float _remapCurveZero;
 		protected float _remapCurveOne;
 
@@ -192,13 +193,13 @@ namespace MoreMountains.Feedbacks
 			{
 				if (DestinationPositionTransform != null)
 				{
-					DestinationPosition = GetPosition(DestinationPositionTransform);
+					_workDestinationPosition = GetPosition(DestinationPositionTransform);
 				}
 				else
 				{
-					DestinationPosition = RelativePosition ? GetPosition(AnimatePositionTarget.transform) + DestinationPosition : DestinationPosition;
+					_workDestinationPosition = RelativePosition ? GetPosition(AnimatePositionTarget.transform) + DestinationPosition : DestinationPosition;
 				}
-			}  
+			}
 		}
 
 		/// <summary>
@@ -224,7 +225,7 @@ namespace MoreMountains.Feedbacks
 				{
 					case Modes.ToDestination:
 						_initialPosition = GetPosition(AnimatePositionTarget.transform);
-						_destinationPosition = RelativePosition ? _initialPosition + DestinationPosition : DestinationPosition;
+						_destinationPosition = RelativePosition ? _initialPosition + _workDestinationPosition : _workDestinationPosition;
 						if (DestinationPositionTransform != null)
 						{
 							_destinationPosition = GetPosition(DestinationPositionTransform);
@@ -236,14 +237,14 @@ namespace MoreMountains.Feedbacks
 						{
 							return;
 						}
-						_coroutine = Owner.StartCoroutine(MoveFromTo(AnimatePositionTarget, _workInitialPosition, DestinationPosition, FeedbackDuration, AnimatePositionTween));
+						_coroutine = Owner.StartCoroutine(MoveFromTo(AnimatePositionTarget, _workInitialPosition, _workDestinationPosition, FeedbackDuration, AnimatePositionTween));
 						break;
 					case Modes.AlongCurve:
 						if (!AllowAdditivePlays && (_coroutine != null))
 						{
 							return;
 						}
-						float intensityMultiplier = ComputeIntensity(feedbacksIntensity);
+						float intensityMultiplier = ComputeIntensity(feedbacksIntensity, position);
 
 						_remapCurveZero = RandomizeRemap ? Random.Range(RemapCurveZero, RemapCurveZeroAlt) : RemapCurveZero;
 						_remapCurveOne = RandomizeRemap ? Random.Range(RemapCurveOne, RemapCurveOneAlt) : RemapCurveOne;
@@ -420,6 +421,19 @@ namespace MoreMountains.Feedbacks
 			IsPlaying = false;
 			Owner.StopCoroutine(_coroutine);
 			_coroutine = null;
+		}
+
+		/// <summary>
+		/// On restore, we put our object back at its initial position
+		/// </summary>
+		protected override void CustomRestoreInitialValues()
+		{
+			if (!Active || !FeedbackTypeAuthorized)
+			{
+				return;
+			}
+			
+			SetPosition(AnimatePositionTarget.transform, _workInitialPosition);
 		}
 
 		/// <summary>

@@ -45,10 +45,15 @@ public class Monster : BaseObject
     public LayerMask _layerMask;
     public GameObject _frozen;
     public GameObject _burn;
+    public GameObject _sturn;
+    public MoreMountains.Feedbacks.MMFloatingTextSpawner _floatingTextSpawner;
+    public MoreMountains.Feedbacks.MMF_Player _mmfPlayer;
+
+   
+
 
 
     protected Transform m_transform;
-    [SerializeField] float m_speed;
     [SerializeField] float m_viewAngle;    //시야각
     [SerializeField] float m_viewDistance; //시야거리
 
@@ -56,7 +61,8 @@ public class Monster : BaseObject
     public LayerMask m_obstacleMask; //Obstacle 레이어마스크 지정을 위한 변수
 
     public bool _attackOnce;
-    public float _attackDistance = 2f;
+    public float _attackDistance;
+    public List<SkinnedMeshRenderer> _listMaterial;
 
 
     private void Awake()
@@ -66,18 +72,22 @@ public class Monster : BaseObject
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
         m_transform = GetComponent<Transform>();
-        if(_burn != null)
+        _floatingTextSpawner = transform.GetChild(0).GetChild(0).GetComponent<MoreMountains.Feedbacks.MMFloatingTextSpawner>();
+        _mmfPlayer = transform.GetChild(0).GetChild(1).GetComponent<MoreMountains.Feedbacks.MMF_Player>();
+        _navimeshAgent.stoppingDistance = _attackDistance;
+        if (_burn != null)
         _burn.SetActive(false);
         if(_frozen != null)
         _frozen.SetActive(false);
-        _navimeshAgent.stoppingDistance = 2f;
+        if (_sturn != null)
+            _sturn.SetActive(false);
         _attackOnce = true;
         GamePlay._eventHandler += MonsterRelease;
     }
-    protected virtual void Start()
+    private void OnEnable()
     {
-        
-        _maxHp = _hp;
+        _basicHp = _hp;
+        _maxHp = _basicHp;
         _basicAtk = _atk;
         _basicMatk = _matk;
         _basicAtkSpeed = _atkSpeed;
@@ -117,6 +127,11 @@ public class Monster : BaseObject
                 _burn.SetActive(false);
                 CCrecovery();
             }
+            else if(_CC == CrowdControl.Stun)
+            {
+                _sturn.SetActive(false);
+                CCrecovery();
+            }
         }
         if(_CC == CrowdControl.Burn)
         {
@@ -141,6 +156,7 @@ public class Monster : BaseObject
 
     public virtual void Freezing()
     {
+        CCrecovery();
         _CC = CrowdControl.Freezing;
         Debug.Log("얼었다");
         _animator.speed = 0f;
@@ -164,6 +180,7 @@ public class Monster : BaseObject
     }
     public virtual void Burn()
     {
+        CCrecovery();
         _CC = CrowdControl.Burn;
         _ccDurationTime += 3f;
         Debug.Log("으이구 이 화상아");
@@ -174,11 +191,14 @@ public class Monster : BaseObject
     }
     public virtual void Stun()
     {
+        CCrecovery();
         _CC = CrowdControl.Stun;
-        //_ccDurationTime += 1f;
-        _animator.speed = 0f;
+        _ccDurationTime += 1f;
+        _animator.speed = 0f; 
         _navimeshAgent.speed = 0f;
         _ccOn = true;
+        _sturn.SetActive(true);
+        Debug.Log("스턴");
     }
     public virtual void CCrecovery()
     {
@@ -187,6 +207,18 @@ public class Monster : BaseObject
         _navimeshAgent.speed = _speed;
         _atk = _basicAtk;
         _ccOn = false;
+        if(_sturn.activeSelf == true)
+        {
+            _sturn.SetActive(false);
+        }
+        if(_frozen.activeSelf == true)
+        {
+            _frozen.SetActive(false);
+        }
+        if(_burn.activeSelf == true)
+        {
+            _burn.SetActive(false);
+        }
     }
 
     public virtual void MonsterRelease()
@@ -197,19 +229,19 @@ public class Monster : BaseObject
     // 투명 -> 불투명
     public void FadeIn()
     {
-        var sr = this.gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
-        Color tempColor = sr.material.color;
-        while (tempColor.a < 1f)
-        {
-            tempColor.a += 1f;
-            sr.material.color = tempColor;
-
-            if (tempColor.a >= 1f) tempColor.a = 1f;
-
-
-        }
-
-        sr.material.color = tempColor;
+      //  var sr = this.gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
+      //  Color tempColor = sr.material.color;
+      //  while (tempColor.a < 1f)
+      //  {
+      //      tempColor.a += 1f;
+      //      sr.material.color = tempColor;
+      //
+      //      if (tempColor.a >= 1f) tempColor.a = 1f;
+      //
+      //
+      //  }
+        
+      //  sr.material.color = tempColor;
     }
     public Vector3 DirFromAngle(float angleInDegrees)
     {
@@ -244,7 +276,11 @@ public class Monster : BaseObject
                 {
                     Debug.DrawLine(m_transform.position, target.position, Color.red);
 
-                    if (distToTarget <= _attackDistance && _attackOnce == true)
+                    if(_CC == CrowdControl.Stun || _CC == CrowdControl.Freezing)
+                    {
+                        _speed = 0f;
+                    }
+                   else if (distToTarget <= _attackDistance && _attackOnce == true)
                     {
                         transform.LookAt(target);
                         ChangeState(State.Attack);
@@ -303,40 +339,16 @@ public class Monster : BaseObject
         _monsterpool.Release(this);
     }
     // 투명 -> 불투명
-    IEnumerator CoFadeIn(float fadeOutTime, System.Action nextEvent = null)
+   public virtual IEnumerator CoFadeIn(float fadeOutTime, System.Action nextEvent = null)
     {
-        var sr = this.gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
-        Color tempColor = sr.material.color;
-        while (tempColor.a < 1f)
-        {
-            tempColor.a += Time.deltaTime / fadeOutTime;
-            sr.material.color = tempColor;
-
-            if (tempColor.a >= 1f) tempColor.a = 1f;
-
-            yield return null;
-        }
-
-        sr.material.color = tempColor;
-        if (nextEvent != null) nextEvent();
+        yield return null;
     }
 
     // 불투명 -> 투명
-    IEnumerator CoFadeOut(float fadeOutTime, System.Action nextEvent = null)
+    public virtual IEnumerator CoFadeOut(float fadeOutTime, System.Action nextEvent = null)
     {
-        var sr = this.gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
-
-        Color tempColor = sr.material.color;
-        while (tempColor.a > 0f)
-        {
-            tempColor.a -= Time.deltaTime / fadeOutTime;
-            sr.material.color = tempColor;
-
-            if (tempColor.a <= 0f) tempColor.a = 0f;
-
-            yield return null;
-        }
-        sr.material.color = tempColor;
-        if (nextEvent != null) nextEvent();
+        yield return null;
     }
+
+
 }

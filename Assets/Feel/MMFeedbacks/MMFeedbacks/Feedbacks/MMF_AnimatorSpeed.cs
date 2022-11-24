@@ -80,7 +80,7 @@ namespace MoreMountains.Feedbacks
 
 			if (Mode == SpeedModes.Once)
 			{
-				BoundAnimator.speed = ComputeIntensity(DetermineNewSpeed());
+				BoundAnimator.speed = ComputeIntensity(DetermineNewSpeed(), position);
 			}
 			else
 			{
@@ -143,6 +143,19 @@ namespace MoreMountains.Feedbacks
 			if (_coroutine != null)
 			{
 				Owner.StopCoroutine(_coroutine);	
+			}
+
+			BoundAnimator.speed = _initialSpeed;
+		}
+		
+		/// <summary>
+		/// On restore, we restore our initial state
+		/// </summary>
+		protected override void CustomRestoreInitialValues()
+		{
+			if (!Active || !FeedbackTypeAuthorized)
+			{
+				return;
 			}
 
 			BoundAnimator.speed = _initialSpeed;

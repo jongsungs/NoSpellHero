@@ -78,7 +78,7 @@ namespace MoreMountains.Feedbacks
 				return;
 			}
             
-			float intensityMultiplier = ComputeIntensity(feedbacksIntensity);
+			float intensityMultiplier = ComputeIntensity(feedbacksIntensity, position);
 			switch(Mode)
 			{
 				case Modes.Play:
@@ -140,6 +140,7 @@ namespace MoreMountains.Feedbacks
 		/// <param name="feedbacksIntensity"></param>
 		public override void Stop(Vector3 position, float feedbacksIntensity = 1.0f)
 		{
+			Debug.Log("stop");
 			base.Stop(position, feedbacksIntensity);
 			if (TargetAudioSource != null)
 			{

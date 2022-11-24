@@ -107,5 +107,18 @@ namespace MoreMountains.Feedbacks
 
 			TargetWiggle.enabled = false;
 		}
+		
+		/// <summary>
+		/// On restore, we restore our initial state
+		/// </summary>
+		protected override void CustomRestoreInitialValues()
+		{
+			if (!Active || !FeedbackTypeAuthorized)
+			{
+				return;
+			}
+
+			TargetWiggle.RestoreInitialValues();
+		}
 	}
 }

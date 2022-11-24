@@ -17,7 +17,7 @@ namespace MoreMountains.Feedbacks
 		/// sets the inspector color for this feedback
 		#if UNITY_EDITOR
 		public override Color FeedbackColor { get { return MMFeedbacksInspectorColors.FeedbacksColor; } }
-		public override string RequiredTargetText { get { return "Channel "+Channel;  } }
+		public override string RequiredTargetText => RequiredChannelText;
 		#endif
 		/// the duration of this feedback is the duration of the light, or 0 if instant
 		public override float FeedbackDuration 
@@ -56,7 +56,7 @@ namespace MoreMountains.Feedbacks
 		/// whether or not to use a range
 		[MMFEnumCondition("Mode", (int)Modes.PlayFeedbacksInArea)]
 		[Tooltip("whether or not to use a range")]
-		public bool UseRange = false;
+		public bool OnlyTriggerPlayersInRange = false;
 		/// the range of the event, in units
 		[MMFEnumCondition("Mode", (int)Modes.PlayFeedbacksInArea)]
 		[Tooltip("the range of the event, in units")]
@@ -99,7 +99,7 @@ namespace MoreMountains.Feedbacks
 
 			if (Mode == Modes.PlayFeedbacksInArea)
 			{
-				MMFeedbacksShakeEvent.Trigger(Channel, UseRange, EventRange, EventOriginTransform.position);    
+				MMFeedbacksShakeEvent.Trigger(ChannelData, OnlyTriggerPlayersInRange, EventRange, EventOriginTransform.position);    
 			}
 			else if (Mode == Modes.PlayTargetFeedbacks)
 			{

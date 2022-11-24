@@ -115,7 +115,7 @@ namespace MoreMountains.Feedbacks
 				return;
 			}
             
-			float intensityMultiplier = ComputeIntensity(feedbacksIntensity);
+			float intensityMultiplier = ComputeIntensity(feedbacksIntensity, position);
             
 			switch (Mode)
 			{
@@ -207,6 +207,19 @@ namespace MoreMountains.Feedbacks
 			IsPlaying = false;
 			Owner.StopCoroutine(_coroutine);
 			_coroutine = null;
+		}
+		
+		/// <summary>
+		/// On restore, we restore our initial state
+		/// </summary>
+		protected override void CustomRestoreInitialValues()
+		{
+			if (!Active || !FeedbackTypeAuthorized)
+			{
+				return;
+			}
+
+			ApplyValue(_initialValue);
 		}
 	}
 }

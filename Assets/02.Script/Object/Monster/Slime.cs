@@ -6,16 +6,16 @@ using UnityEngine.AI;
 public class Slime : Monster
 {
 
-    SkinnedMeshRenderer _material;
-    SkinnedMeshRenderer _tempMaterial;
+    MeshRenderer _material;
+    MeshRenderer _tempMaterial;
 
-
-    protected override void Start()
+    private void Start()
     {
-        base.Start();
+        
 
         _monster = MonsterKind.Slime;
-        _material = this.gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
+        
+        _material = GetComponent<MeshRenderer>();
         _tempMaterial = _material;
         FadeIn();
         
@@ -34,9 +34,21 @@ public class Slime : Monster
 
         }
 
+        if(Input.GetKeyDown(KeyCode.M))
+        {
+            Freezing();
+        }
+        if(Input.GetKeyDown(KeyCode.N))
+        {
+            Burn();
+        }
+        if(Input.GetKeyDown(KeyCode.B))
+        {
+            Stun();
+        }
 
 
-        if(_CC != CrowdControl.Freezing)
+        if(_CC != CrowdControl.Freezing || _CC != CrowdControl.Stun)
         {
             _navimeshAgent.speed = _speed;
 
@@ -46,10 +58,7 @@ public class Slime : Monster
     }
 
 
-    public override void Idle()
-    {
-        ChangeState(State.Idle);
-    }
+    
 
 
 
@@ -70,11 +79,12 @@ public class Slime : Monster
                 break;
             case State.Walk:
                 _speed =  _basicSpeed;
+                _attackOnce = true;
               
                 break;
             case State.Attack:
                 _speed = 0f;
-
+                _attackOnce = false;
                 break;
             case State.Hit:
                 _speed = 0f;
@@ -94,14 +104,13 @@ public class Slime : Monster
     public override void Freezing()
     {
         base.Freezing();
-        
-        _material.material.color = Color.blue;
+
     }
    
     public override void CCrecovery()
     {
         base.CCrecovery();
-        _material.material.color = Color.white; 
+        _material.material.color = Color.green;
        
         Debug.Log("회복");
     }
@@ -128,7 +137,7 @@ public class Slime : Monster
 
                 var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
                 _hp -= damage;
-                _feedBack.PlayFeedbacks(this.transform.position,damage);
+                _mmfPlayer.PlayFeedbacks(this.transform.position,damage);
               
             }
             else if(other.GetComponent<Weapon>()._isOnce == true && Player.Instance._playerTitle == Player.PlayerTitle.Druid)
@@ -181,8 +190,8 @@ public class Slime : Monster
                     
                     int damage = 999999;
                     _hp -= damage;
-                    _feedBack.PlayFeedbacks(this.transform.position, damage);
-                    if(Player.Instance.acupuncturistfirstskill == false)
+                    _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                    if (Player.Instance.acupuncturistfirstskill == false)
                     {
                         Player.Instance.acupuncturistfirstskill = true;
                         AchievementManager.instance.Unlock("acupuncturistfirstskill");
@@ -192,7 +201,7 @@ public class Slime : Monster
                 {
                     var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
                     _hp -= damage;
-                    _feedBack.PlayFeedbacks(this.transform.position, damage);
+                    _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
                 }
 
                 if(Player.Instance._comboInstantDie.Count >=3 && Player.Instance._comboInstantDie.Exists(x => x < Player.Instance._instantDeathProbablility) == false && Player.Instance.acupuncturistcritical == false)
@@ -215,9 +224,9 @@ public class Slime : Monster
                 var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
                 _hp -= damage;
                 ChangeState(State.Hit);
-                _feedBack.PlayFeedbacks(this.transform.position, damage);
-                
-                if(rand < Player.Instance._dokevSkillProbability)
+                _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+
+                if (rand < Player.Instance._dokevSkillProbability)
                 {
                     int rand2 = Random.Range(0, 9);
                     float stat;
@@ -304,20 +313,19 @@ public class Slime : Monster
             {
 
                 other.GetComponent<Weapon>()._isOnce = false;
-                Debug.Log("여기여기");
+                Debug.Log("데미지텍스트");
 
-                ChangeState(State.Hit);
+                //ChangeState(State.Hit);
                 var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
                 _hp -= damage;
-                _feedBack.PlayFeedbacks(this.transform.position, damage);
+                _mmfPlayer.PlayFeedbacks(transform.position, damage);
             }
 
         }
-
-        if (other.CompareTag("IceBall"))
+        else if (other.CompareTag("IceBall"))
         {
 
-            ChangeState(State.Hit);
+          //  ChangeState(State.Hit);
             var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._matk * 5) - (_def * 3);
 
             int _30 = Random.Range(0, 3); // 30퍼확률로 빙결
@@ -328,11 +336,9 @@ public class Slime : Monster
        
             }
         }
-        
-
-        if(other.CompareTag("FireBall") )
+        else if(other.CompareTag("FireBall") )
         {
-            ChangeState(State.Hit);
+           // ChangeState(State.Hit);
             var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._matk * 5) - (_def * 3);
             int _30 = Random.Range(0, 3);
             if(_30 == 0)
@@ -340,18 +346,37 @@ public class Slime : Monster
                 Burn();
             }
         }
-        
-    }
-    private void OnTriggerExit(Collider other)
-    {
-        
-        if (other.CompareTag("Weapon"))
+        else if(other.CompareTag("Thunder"))
         {
+           // ChangeState(State.Hit);
+            var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._matk * 5) - (_def * 3);
+            _hp -= damage;
+            _mmfPlayer.PlayFeedbacks(transform.position, damage);
 
         }
+        else if(other.CompareTag("Meteor"))
+        {
+           // ChangeState(State.Hit);
+            var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._matk * 5) - (_def * 3);
+            _hp -= damage;
+            _mmfPlayer.PlayFeedbacks(transform.position, damage);
+        }
+
+
+
     }
 
-    
+    public override void Walk()
+    {
+        ChangeState(State.Walk);
+    }
+
+    public void AttackOff()
+    {
+        _isAttack = false;
+        _attackOnce = true;
+        Walk();
+    }
 
     public override void MonsterRelease()
     {
@@ -359,8 +384,43 @@ public class Slime : Monster
     }
 
 
+  public override  IEnumerator CoFadeIn(float fadeOutTime, System.Action nextEvent = null)
+    {
+        var sr = _material;
+        Color tempColor = sr.material.color;
+        while (tempColor.a < 1f)
+        {
+            tempColor.a += Time.deltaTime / fadeOutTime;
+            sr.material.color = tempColor;
 
-    
-   
+            if (tempColor.a >= 1f) tempColor.a = 1f;
+
+            yield return null;
+        }
+
+        sr.material.color = tempColor;
+        if (nextEvent != null) nextEvent();
+    }
+
+    // 불투명 -> 투명
+    public override IEnumerator CoFadeOut(float fadeOutTime, System.Action nextEvent = null)
+    {
+        var sr = _material;
+
+        Color tempColor = sr.material.color;
+        while (tempColor.a > 0f)
+        {
+            tempColor.a -= Time.deltaTime / fadeOutTime;
+            sr.material.color = tempColor;
+
+            if (tempColor.a <= 0f) tempColor.a = 0f;
+
+            yield return null;
+        }
+        sr.material.color = tempColor;
+        if (nextEvent != null) nextEvent();
+    }
+
+
 
 }

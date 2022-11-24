@@ -127,10 +127,10 @@ namespace MoreMountains.Feedbacks
 
 		public virtual void OnMMSpriteRendererShakeEvent(float shakeDuration, bool modifyColor, Gradient colorOverTime,
 			bool flipX, bool flipY,
-			float feedbacksIntensity = 1.0f, int channel = 0, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true,
+			float feedbacksIntensity = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true,
 			bool useRange = false, float eventRange = 0f, Vector3 eventOriginPosition = default(Vector3))
 		{
-			if (!CheckEventAllowed(channel, useRange, eventRange, eventOriginPosition) ||  (!Interruptible && Shaking))
+			if (!CheckEventAllowed(channelData, useRange, eventRange, eventOriginPosition) ||  (!Interruptible && Shaking))
 			{
 				return;
 			}
@@ -176,17 +176,17 @@ namespace MoreMountains.Feedbacks
 
 		public delegate void Delegate(float shakeDuration, bool modifyColor, Gradient colorOverTime,
 			bool flipX, bool flipY,
-			float feedbacksIntensity = 1.0f, int channel = 0, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true,
+			float feedbacksIntensity = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true,
 			bool useRange = false, float eventRange = 0f, Vector3 eventOriginPosition = default(Vector3));
 
 		static public void Trigger(float shakeDuration, bool modifyColor, Gradient colorOverTime,
 			bool flipX, bool flipY,
-			float feedbacksIntensity = 1.0f, int channel = 0, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true,
+			float feedbacksIntensity = 1.0f, MMChannelData channelData = null, bool resetShakerValuesAfterShake = true, bool resetTargetValuesAfterShake = true,
 			bool useRange = false, float eventRange = 0f, Vector3 eventOriginPosition = default(Vector3))
 		{
 			OnEvent?.Invoke(shakeDuration, modifyColor, colorOverTime,
 				flipX, flipY,
-				feedbacksIntensity, channel, resetShakerValuesAfterShake, resetTargetValuesAfterShake, 
+				feedbacksIntensity, channelData, resetShakerValuesAfterShake, resetTargetValuesAfterShake, 
 				useRange, eventRange, eventOriginPosition);
 		}
 	}

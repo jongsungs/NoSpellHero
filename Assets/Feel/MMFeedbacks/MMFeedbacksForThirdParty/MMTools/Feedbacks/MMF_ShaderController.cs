@@ -126,7 +126,7 @@ namespace MoreMountains.Feedbacks
 				return;
 			}
             
-			float intensityMultiplier = ComputeIntensity(feedbacksIntensity);
+			float intensityMultiplier = ComputeIntensity(feedbacksIntensity, position);
             
 			PerformPlay(TargetShaderController, intensityMultiplier);     
 
@@ -219,6 +219,23 @@ namespace MoreMountains.Feedbacks
 			shaderController.ToDestinationValue = _toDestinationValueStorage;
 			shaderController.RevertToInitialValueAfterEnd = _revertToInitialValueAfterEndStorage;
 		}
+		
+		/// <summary>
+		/// On restore, we restore our initial state
+		/// </summary>
+		protected override void CustomRestoreInitialValues()
+		{
+			if (!Active || !FeedbackTypeAuthorized)
+			{
+				return;
+			}
+			
+			TargetShaderController.RestoreInitialValues();     
 
+			foreach (ShaderController shaderController in TargetShaderControllerList)
+			{
+				shaderController.RestoreInitialValues();     
+			}  
+		}
 	}
 }

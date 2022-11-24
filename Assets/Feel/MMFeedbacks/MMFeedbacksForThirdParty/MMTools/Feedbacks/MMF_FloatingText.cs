@@ -48,6 +48,14 @@ namespace MoreMountains.Feedbacks
 		/// if this is true, the intensity passed to this feedback will be the value displayed
 		[Tooltip("if this is true, the intensity passed to this feedback will be the value displayed")]
 		public bool UseIntensityAsValue = false;
+		
+		/// the possible methods that can be applied to the output value (when using intensity as the output value, string values won't get rounded) 
+		public enum RoundingMethods { NoRounding, Round, Ceil, Floor }
+		
+		/// the rounding methods to apply to the output value (when using intensity as the output value, string values won't get rounded)
+		[Tooltip("the rounding methods to apply to the output value (when using intensity as the output value, string values won't get rounded)")]
+		[MMFInspectorGroup("Rounding", true, 68)]
+		public RoundingMethods RoundingMethod = RoundingMethods.NoRounding;
 
 		[MMFInspectorGroup("Color", true, 65)]
 		/// whether or not to force a color on the new text, if not, the default colors of the spawner will be used
@@ -94,7 +102,7 @@ namespace MoreMountains.Feedbacks
 				return;
 			}
             
-			float intensityMultiplier = ComputeIntensity(feedbacksIntensity);
+			float intensityMultiplier = ComputeIntensity(feedbacksIntensity, position);
 			switch (PositionMode)
 			{
 				case PositionModes.FeedbackPosition:
@@ -107,9 +115,43 @@ namespace MoreMountains.Feedbacks
 					_playPosition = TargetTransform.position;
 					break;
 			}
+
+			if (RoundingMethod != RoundingMethods.NoRounding)
+			{
+				switch (RoundingMethod)
+				{
+					case RoundingMethods.Ceil:
+						
+
+						break;
+				}
+			}
+
+			feedbacksIntensity = ApplyRounding(feedbacksIntensity);
+			
 			_value = UseIntensityAsValue ? feedbacksIntensity.ToString() : Value;
-			MMFloatingTextSpawnEvent.Trigger(Channel, _playPosition, _value, Direction, Intensity * intensityMultiplier, ForceLifetime, Lifetime, ForceColor, AnimateColorGradient, ComputedTimescaleMode == TimescaleModes.Unscaled);
-            
+			
+			MMFloatingTextSpawnEvent.Trigger(ChannelData, _playPosition, _value, Direction, Intensity * intensityMultiplier, ForceLifetime, Lifetime, ForceColor, AnimateColorGradient, ComputedTimescaleMode == TimescaleModes.Unscaled);
+		}
+
+		protected virtual float ApplyRounding(float value)
+		{
+			if (RoundingMethod == RoundingMethods.NoRounding)
+			{
+				return value;
+			}
+
+			switch (RoundingMethod)
+			{
+				case RoundingMethods.Round:
+					return Mathf.Round(value);
+				case RoundingMethods.Ceil:
+					return Mathf.Ceil(value);
+				case RoundingMethods.Floor:
+					return Mathf.Floor(value);
+			}
+
+			return value;
 		}
 	}
 }

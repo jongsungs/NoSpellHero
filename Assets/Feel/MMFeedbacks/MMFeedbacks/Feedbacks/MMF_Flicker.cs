@@ -294,5 +294,18 @@ namespace MoreMountains.Feedbacks
 				_coroutines[i] = null;    
 			}
 		}
+		
+		/// <summary>
+		/// On restore, we put our object back at its initial position
+		/// </summary>
+		protected override void CustomRestoreInitialValues()
+		{
+			if (!Active || !FeedbackTypeAuthorized)
+			{
+				return;
+			}
+
+			CustomReset();
+		}
 	}
 }

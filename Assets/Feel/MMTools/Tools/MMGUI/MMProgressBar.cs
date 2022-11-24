@@ -468,7 +468,7 @@ namespace MoreMountains.Tools
 			_isDelayedBarIncreasingNotNull = DelayedBarIncreasing != null;
 			_isPercentageTextNotNull = PercentageText != null;
 			#if MM_TEXTMESHPRO
-				_isPercentageTextMeshProNotNull = PercentageTextMeshPro != null;
+			_isPercentageTextMeshProNotNull = PercentageTextMeshPro != null;
 			#endif
 			_initialScale = this.transform.localScale;
 
@@ -539,9 +539,9 @@ namespace MoreMountains.Tools
 		/// <summary>
 		/// Test method
 		/// </summary>
-		public virtual void Minus10Percent(float Maxhp,float hitdamage)
+		public virtual void Minus10Percent()
 		{
-			float newProgress = BarTarget - hitdamage/Maxhp;
+			float newProgress = BarTarget - 0.1f;
 			newProgress = Mathf.Clamp(newProgress, 0f, 1f);
 			UpdateBar01(newProgress);
 		}

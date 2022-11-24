@@ -156,7 +156,7 @@ namespace MoreMountains.Feedbacks
             
 			GetAxisScale();
             
-			float intensityMultiplier = ComputeIntensity(feedbacksIntensity);
+			float intensityMultiplier = ComputeIntensity(feedbacksIntensity, position);
 			if (Active || Owner.AutoPlayOnEnable)
 			{
 				if ((Mode == Modes.Absolute) || (Mode == Modes.Additive))
@@ -254,37 +254,36 @@ namespace MoreMountains.Feedbacks
 			while ((journey >= 0) && (journey <= duration) && (duration > 0))
 			{
 				float percent = Mathf.Clamp01(journey / duration);
-
-				float newScale = curve.Evaluate(percent) + Offset;
-				newScale = MMFeedbacksHelpers.Remap(newScale, 0f, 1f, remapCurveZero, remapCurveOne);
-				if (Mode == Modes.Additive)
-				{
-					newScale += _initialAxisScale;
-				}
-
-				ApplyScale(newScale);
-				targetTransform.localScale = _newScale;
-                
+				ComputeAndApplyScale(percent, curve, remapCurveZero, remapCurveOne, targetTransform);
 				journey += NormalPlayDirection ? FeedbackDeltaTime : -FeedbackDeltaTime;
-                
 				yield return null;
 			}
 
-			float finalScale;
-            
-			finalScale = curve.Evaluate(FinalNormalizedTime) + Offset;
-			finalScale = MMFeedbacksHelpers.Remap(finalScale, 0f, 1f, remapCurveZero, remapCurveOne);
-			if (Mode == Modes.Additive)
-			{
-				finalScale += _initialAxisScale;
-			}
-            
-			ApplyScale(finalScale);
-            
-			targetTransform.localScale = _newScale;
+			ComputeAndApplyScale(1f, curve, remapCurveZero, remapCurveOne, targetTransform);
 			_coroutine = null;
 			IsPlaying = false;
 			yield return null;
+		}
+
+		/// <summary>
+		/// Computes the new scale based on the current percent, and applies it to the transform
+		/// </summary>
+		/// <param name="percent"></param>
+		/// <param name="curve"></param>
+		/// <param name="remapCurveZero"></param>
+		/// <param name="remapCurveOne"></param>
+		/// <param name="targetTransform"></param>
+		protected virtual void ComputeAndApplyScale(float percent, AnimationCurve curve, float remapCurveZero, float remapCurveOne, Transform targetTransform)
+		{
+			float newScale = curve.Evaluate(percent) + Offset;
+			newScale = MMFeedbacksHelpers.Remap(newScale, 0f, 1f, remapCurveZero, remapCurveOne);
+			if (Mode == Modes.Additive)
+			{
+				newScale += _initialAxisScale;
+			}
+			newScale = Mathf.Abs(newScale);
+			ApplyScale(newScale);
+			targetTransform.localScale = _newScale;
 		}
 
 		/// <summary>
@@ -365,6 +364,19 @@ namespace MoreMountains.Feedbacks
 		public override void OnDisable()
 		{
 			_coroutine = null;
+		}
+		
+		/// <summary>
+		/// On restore, we restore our initial state
+		/// </summary>
+		protected override void CustomRestoreInitialValues()
+		{
+			if (!Active || !FeedbackTypeAuthorized)
+			{
+				return;
+			}
+
+			SquashAndStretchTarget.localScale = _initialScale;
 		}
 	}
 }

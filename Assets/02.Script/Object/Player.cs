@@ -73,6 +73,7 @@ public class PlayerData
     public float m_charm;
     public float m_criticalDamage;
 
+    public bool m_isBasicStick;
     public bool m_isStick;
     public bool m_isSward1;
     public bool m_isSward2;
@@ -108,6 +109,7 @@ public class PlayerData
     public bool m_isnormalShoes;
 
 
+    public bool m_buyBasicStick;
     public bool m_buyStick;
     public bool m_buySward1;
     public bool m_buySward2;
@@ -274,7 +276,8 @@ public class PlayerData
         bool knighttop,bool masiciantop,bool durumagitop, bool knightbottom,bool masicianbottom,bool durumagibottom,bool knightshoes,bool sandal, bool oldshoes,bool emptyhelmet,bool normaltop,bool trunkbottom,bool normalshoes,
         bool stick,bool sward1,bool sward2,bool broom,bool club, bool shortsward,bool hanger,bool mace,bool shield,bool spear,bool umbrella, bool waldo,
         bool buystick, bool buysward1, bool buysward2, bool buybroom, bool buyclub, bool buyshortsward, bool buyhanger, bool buymace, bool buyshield, bool buyspear, bool buyumbrella, bool buywaldo,
-        bool buyknighthelmet, bool buymasicianhat, bool buygat, bool buyskinhead, bool buynormalhair, bool buyknighttop, bool buymasiciantop, bool buydurumagitop, bool buyknightbottom, bool buymasicianbottom, bool buydurumagibottom, bool buyknightshoes, bool buysandal, bool buyoldshoes, bool buyemptyhelmet,bool buynormaltop,bool buytrunkbottom,bool buynormalshoes)
+        bool buyknighthelmet, bool buymasicianhat, bool buygat, bool buyskinhead, bool buynormalhair, bool buyknighttop, bool buymasiciantop, bool buydurumagitop, bool buyknightbottom, bool buymasicianbottom, bool buydurumagibottom, bool buyknightshoes, bool buysandal, bool buyoldshoes, bool buyemptyhelmet,bool buynormaltop,bool buytrunkbottom,bool buynormalshoes,
+        bool basicstick, bool buybasicstick)
     {
         m_hp = hp;
         m_atk = atk;
@@ -287,6 +290,7 @@ public class PlayerData
         m_charm = charm;
         m_criticalDamage = criticalDamage;
 
+        m_isBasicStick = basicstick;
         m_isStick = stick;
         m_isSward1 = sward1;
         m_isSward2 = sward2;
@@ -320,6 +324,7 @@ public class PlayerData
         m_isTrunkBottom = trunkbottom;
         m_isnormalShoes = normalshoes;
 
+        m_buyBasicStick = buybasicstick;
         m_buyStick = buystick;
         m_buySward1 = buysward1;
         m_buySward2 = buysward2;
@@ -479,32 +484,21 @@ public class Player : BaseObject
     //////옷----------------------------------------
 
     //무기
-    public GameObject _stick;   //막대기
-    public GameObject _sward1;   //한손검
-    public GameObject _sward2;  //한손검2
-    public GameObject _broom;   //빗자루
-    public GameObject _club;    //나무몽둥이
-    public GameObject _shortSward;  //단도
-    public GameObject _hanger;  //옷걸이
-    public GameObject _mace;    //메이스
-    public GameObject _shield;  //방패
-    public GameObject _spear;   //창
-    public GameObject _umbrella;    //우산
-    public GameObject _waldo;   //월도
+    public bool _isbasicStick;      //기본 막대기
+    public bool _isStick;            //지팡이
+    public bool _isSward1;            //한손검
+    public bool _isSward2;           //한손검2
+    public bool _isBroom;            //빗자루
+    public bool _isClub;             //나무몽둥이
+    public bool _isShortSward;        //단도
+    public bool _isHanger;           //옷걸이
+    public bool _isMace;             //메이스
+    public bool _isShield;           //방패
+    public bool _isSpear;            //창
+    public bool _isUmbrella;            //우산
+    public bool _isWaldo;            //월도
 
-    public bool _isStick;
-    public bool _isSward1;
-    public bool _isSward2;
-    public bool _isBroom;
-    public bool _isClub;
-    public bool _isShortSward;
-    public bool _isHanger;
-    public bool _isMace;
-    public bool _isShield;
-    public bool _isSpear;
-    public bool _isUmbrella;
-    public bool _isWaldo;
-
+    public bool _buybasicStick;
     public bool _buyStick;
     public bool _buySward1;
     public bool _buySward2;
@@ -755,7 +749,7 @@ public class Player : BaseObject
         _data = new PlayerData(_hp, _atk, _matk, _atkSpeed, _def, _speed, _critical, _handicraft, _charm, _criticalDamage,
             _isKightHelmet, _isMasicianHat, _isGat, _isSkinHead, _isnormalHair, _isKnightTop, _isMasicianTop, _isDurumagiTop, _isKnightBottom, _isMasicianBottom, _isdurumagiBottom, _isKnightShoes, _isSandal, _isOldShoes, _isEmptyHelmet, _isNormalTop, _isTrunkBottom, _isnormalShoes, _isStick, _isSward1, _isSward2, _isBroom, _isClub, _isShortSward, _isHanger, _isMace, _isShield, _isSpear, _isUmbrella, _isWaldo, _buyStick, _buySward1, _buySward2, _buyBroom, _buyClub, _buyShortSward, _buyHanger, _buyMace, _buyShield, _buySpear, _buyUmbrella, _buyWaldo, _buyKightHelmet, _buyMasicianHat, _buyGat,
             _buySkinHead, _buynormalHair, _buyKnightTop, _buyMasicianTop, _buyDurumagiTop, _buyKnightBottom, _buyMasicianBottom, _buydurumagiBottom, _buyKnightShoes, _buySandal, _buyOldShoes, _buyEmptyHelmet, _buyNormalTop, _buyTrunkBottom, _buynormalShoes
-            );
+            ,_isbasicStick,_buybasicStick);
         
         _preSpeed = _speed;
         _maxHp = 50 + (_hp * 10);
@@ -806,6 +800,8 @@ public class Player : BaseObject
         _basicJumpStack = _jumpStack;
         if(GamePlay.Instance != null)
         GamePlay.Instance.ChangeStage();
+        if(_meteorPoint != null)
+        _meteorPoint = _listMeteorPoint[0];
         
         
 
@@ -851,7 +847,7 @@ public class Player : BaseObject
         }
         if (Input.GetKeyDown(KeyCode.D))
         {
-            BlackHole();
+            Meteor();
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
@@ -875,7 +871,7 @@ public class Player : BaseObject
         
         if (Input.GetKeyDown(KeyCode.I))
         {
-            Play(25);
+        
 
         }
         //DrawView();
@@ -1022,7 +1018,7 @@ public class Player : BaseObject
         else if(_playerTitle == PlayerTitle.Dosa)
         {
             rand = UnityEngine.Random.Range(0, 10);
-            if(rand >= 0 + _skill1)
+            if(rand < 1 + _skill1)
             {
                 GamePlay.Instance._decoyPool.Get();
             }
@@ -1751,7 +1747,6 @@ public class Player : BaseObject
                 }
                 break;
             case PlayerTitle.Priest:
-                //업데이트
                 if (_skill1 >= 3 && _hp >= _maxHp)
                 {
                     achivementCheck(pristhidden, "pristhidden");
@@ -1783,7 +1778,7 @@ public class Player : BaseObject
                 if (_skill1 >= 3)
                 {
                     achivementCheck(zeushidden, "zeushidden");
-                    Thunder();
+                    StartCoroutine(Thunder());
                 }
                 break;
             case PlayerTitle.PracticeBug:
@@ -2311,8 +2306,8 @@ public class Player : BaseObject
 
     public void Meteor()
     {
-        achivementCheck(salamandermeteor, "salamandermeteor");
-        GamePlay.Instance._meteorTargetPool.Get();
+      //  achivementCheck(salamandermeteor, "salamandermeteor");
+        GamePlay.Instance._meteorEffectPool.Get();
     }
 
     public void BlackHole()
@@ -2335,14 +2330,7 @@ public class Player : BaseObject
 
         }
     }
-    public void Thunder()
-    {
-        var obj = Physics.OverlapSphere(m_transform.position, m_viewDistance, m_targetMask);
-
-        obj[0].GetComponent<Monster>()._hp -= 1f;
-        
-
-    }
+    
     public void Wall()
     {
         GamePlay.Instance._wallPool.Get();
@@ -2430,7 +2418,16 @@ public class Player : BaseObject
         
     }
 
+    public IEnumerator Thunder()
+    {
+        while(true)
+        {
+            yield return new WaitForSeconds(0.5f);
+            GamePlay.Instance._thunderPool.Get();
 
+
+        }
+    }
 
 
 
@@ -2471,7 +2468,7 @@ public class Player : BaseObject
 
 
 
-
+        _isbasicStick = data.m_isBasicStick;
         _isStick = data.m_isStick;
         _isSward1 = data.m_isSward1;
         _isSward2 = data.m_isSward2;
@@ -2504,7 +2501,7 @@ public class Player : BaseObject
         _isTrunkBottom = data.m_isTrunkBottom;
         _isnormalShoes = data.m_isnormalShoes;
 
-
+        _buybasicStick = data.m_buyBasicStick;
         _buyStick = data.m_buyStick;
         _buySward1 = data.m_buySward1;
         _buySward2 = data.m_buySward2;
@@ -2682,6 +2679,7 @@ public class Player : BaseObject
         _data.m_charm = _charm;
         _data.m_criticalDamage = _criticalDamage;
 
+        _data.m_isBasicStick = _isbasicStick;
         _data.m_isStick = _isStick;
         _data.m_isSward1 = _isSward1;
         _data.m_isSward2 = _isSward2;
@@ -2715,6 +2713,7 @@ public class Player : BaseObject
         _data.m_isTrunkBottom = _isTrunkBottom;
         _data.m_isnormalShoes = _isnormalShoes;
 
+        _data.m_buyBasicStick = _buybasicStick;
         _data.m_buyStick = _buyStick;
         _data.m_buySward1 = _buySward1;
         _data.m_buySward2 = _buySward2;

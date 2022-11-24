@@ -43,9 +43,6 @@ namespace MoreMountains.Feedbacks
 		public Transform Destination;
         
 		[MMFInspectorGroup("Transition", true, 63)]
-		/// whether or not we want to force transform properties at the end of the transition
-		[Tooltip("whether or not we want to force transform properties at the end of the transition")]
-		public bool ForceDestinationOnEnd = false;
 		/// a global curve to animate all properties on, unless dedicated ones are specified
 		[Tooltip("a global curve to animate all properties on, unless dedicated ones are specified")]
 		public MMTweenType GlobalAnimationTween = new MMTweenType( new AnimationCurve(new Keyframe(0, 0), new Keyframe(0.3f, 1f), new Keyframe(1, 0)));
@@ -134,6 +131,10 @@ namespace MoreMountains.Feedbacks
 		protected Vector3 _pointAScale;
 		protected Vector3 _pointBScale;
 		protected MMTweenType _animationTweenType;
+
+		protected Vector3 _initialPosition;
+		protected Vector3 _initialScale;
+		protected Quaternion _initialRotation;
         
 		/// <summary>
 		/// On Play we animate the pos/rotation/scale of the target transform towards its destination
@@ -155,6 +156,10 @@ namespace MoreMountains.Feedbacks
 		/// <returns></returns>
 		protected virtual IEnumerator AnimateToDestination()
 		{
+			_initialPosition = TargetTransform.position;
+			_initialRotation = TargetTransform.rotation;
+			_initialScale = TargetTransform.localScale;
+			
 			_pointAPosition = ForceOrigin ? Origin.transform.position : TargetTransform.position;
 			_pointBPosition = Destination.transform.position;
 
@@ -182,43 +187,37 @@ namespace MoreMountains.Feedbacks
 			while ((journey >= 0) && (journey <= Duration) && (Duration > 0))
 			{
 				float percent = Mathf.Clamp01(journey / Duration);
-
-				_animationTweenType = SeparatePositionCurve ? AnimatePositionTween : GlobalAnimationTween;
-				_newPosition = Vector3.LerpUnclamped(_pointAPosition, _pointBPosition, _animationTweenType.Evaluate(percent));
-                
-				_animationTweenType = SeparateRotationCurve ? AnimateRotationTween : GlobalAnimationTween;
-				_newRotation = Quaternion.LerpUnclamped(_pointARotation, _pointBRotation, _animationTweenType.Evaluate(percent));
-                
-				_animationTweenType = SeparateScaleCurve ? AnimateScaleTween : GlobalAnimationTween;
-				_newScale = Vector3.LerpUnclamped(_pointAScale, _pointBScale, _animationTweenType.Evaluate(percent));
-
-				TargetTransform.position = _newPosition;
-				TargetTransform.rotation = _newRotation;
-				TargetTransform.localScale = _newScale;
-
+				ChangeTransformValues(percent);
 				journey += NormalPlayDirection ? FeedbackDeltaTime : -FeedbackDeltaTime;
 				yield return null;
 			}
 
 			// set final position
-			if (ForceDestinationOnEnd)
-			{
-				if (NormalPlayDirection)
-				{
-					TargetTransform.position = _pointBPosition;
-					TargetTransform.rotation = _pointBRotation;
-					TargetTransform.localScale = _pointBScale;
-				}
-				else
-				{
-					TargetTransform.position = _pointAPosition;
-					TargetTransform.rotation = _pointARotation;
-					TargetTransform.localScale = _pointAScale;
-				}    
-			}
+			ChangeTransformValues(1f);
+			
 			IsPlaying = false;
 			_coroutine = null;
 			yield break;
+		}
+
+		/// <summary>
+		/// Computes the new position, rotation and scale for our transform, and applies it to the transform
+		/// </summary>
+		/// <param name="percent"></param>
+		protected virtual void ChangeTransformValues(float percent)
+		{
+			_animationTweenType = SeparatePositionCurve ? AnimatePositionTween : GlobalAnimationTween;
+			_newPosition = Vector3.LerpUnclamped(_pointAPosition, _pointBPosition, _animationTweenType.Evaluate(percent));
+                
+			_animationTweenType = SeparateRotationCurve ? AnimateRotationTween : GlobalAnimationTween;
+			_newRotation = Quaternion.LerpUnclamped(_pointARotation, _pointBRotation, _animationTweenType.Evaluate(percent));
+                
+			_animationTweenType = SeparateScaleCurve ? AnimateScaleTween : GlobalAnimationTween;
+			_newScale = Vector3.LerpUnclamped(_pointAScale, _pointBScale, _animationTweenType.Evaluate(percent));
+			
+			TargetTransform.position = _newPosition;
+			TargetTransform.rotation = _newRotation;
+			TargetTransform.localScale = _newScale;
 		}
 
 		/// <summary>
@@ -240,6 +239,20 @@ namespace MoreMountains.Feedbacks
 			{
 				Owner.StopCoroutine(_coroutine);
 			}
+		}
+		
+		/// <summary>
+		/// On restore, we restore our initial state
+		/// </summary>
+		protected override void CustomRestoreInitialValues()
+		{
+			if (!Active || !FeedbackTypeAuthorized)
+			{
+				return;
+			}
+			TargetTransform.position = _initialPosition;
+			TargetTransform.rotation = _initialRotation;
+			TargetTransform.localScale = _initialScale;
 		}
 		
 		/// <summary>

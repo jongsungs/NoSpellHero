@@ -64,7 +64,7 @@ namespace MoreMountains.Feedbacks
 		/// whether or not to broadcast a range to only affect certain shakers
 		[Tooltip("whether or not to broadcast a range to only affect certain shakers")]
 		[MMFEnumCondition("Mode", (int)Modes.ShakerEvent)]
-		public bool UseRange = false;
+		public bool OnlyBroadcastInRange = false;
 		/// the range of the event, in units
 		[Tooltip("the range of the event, in units")]
 		[MMFEnumCondition("Mode", (int)Modes.ShakerEvent)]
@@ -228,7 +228,7 @@ namespace MoreMountains.Feedbacks
 				_initialColor = BoundLight.color;
 			}
 			
-			float intensityMultiplier = ComputeIntensity(feedbacksIntensity);
+			float intensityMultiplier = ComputeIntensity(feedbacksIntensity, position);
 			Turn(true);
 			switch (Mode)
 			{
@@ -253,8 +253,8 @@ namespace MoreMountains.Feedbacks
 					MMLightShakeEvent.Trigger(FeedbackDuration, RelativeValues, ModifyColor, ColorOverTime, IntensityCurve,
 						RemapIntensityZero, RemapIntensityOne, RangeCurve, RemapRangeZero * intensityMultiplier, RemapRangeOne * intensityMultiplier,
 						ShadowStrengthCurve, RemapShadowStrengthZero, RemapShadowStrengthOne, feedbacksIntensity,
-						Channel, ResetShakerValuesAfterShake, ResetTargetValuesAfterShake,
-						UseRange, EventRange, EventOriginTransform.position);
+						ChannelData, ResetShakerValuesAfterShake, ResetTargetValuesAfterShake,
+						OnlyBroadcastInRange, EventRange, EventOriginTransform.position);
 					break;
 			}
 		}
@@ -371,6 +371,27 @@ namespace MoreMountains.Feedbacks
 		{
 			BoundLight.gameObject.SetActive(status);
 			BoundLight.enabled = status;
+		}
+		
+		/// <summary>
+		/// On restore, we put our object back at its initial position
+		/// </summary>
+		protected override void CustomRestoreInitialValues()
+		{
+			if (!Active || !FeedbackTypeAuthorized)
+			{
+				return;
+			}
+			
+			BoundLight.range = _initialRange;
+			BoundLight.shadowStrength = _initialShadowStrength;
+			BoundLight.intensity = _initialIntensity;
+			BoundLight.color = _initialColor;
+
+			if (StartsOff)
+			{
+				Turn(false);
+			}
 		}
 	}
 }

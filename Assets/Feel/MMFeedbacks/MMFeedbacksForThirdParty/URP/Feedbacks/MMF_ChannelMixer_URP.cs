@@ -92,12 +92,12 @@ namespace MoreMountains.FeedbacksForThirdParty
 			{
 				return;
 			}
-			float intensityMultiplier = ComputeIntensity(feedbacksIntensity);
+			float intensityMultiplier = ComputeIntensity(feedbacksIntensity, position);
 			MMChannelMixerShakeEvent_URP.Trigger(ShakeRed, RemapRedZero, RemapRedOne,
 				ShakeGreen, RemapGreenZero, RemapGreenOne,
 				ShakeBlue, RemapBlueZero, RemapBlueOne,
 				FeedbackDuration,
-				RelativeIntensity, intensityMultiplier, Channel, ResetShakerValuesAfterShake, ResetTargetValuesAfterShake, NormalPlayDirection, ComputedTimescaleMode);
+				RelativeIntensity, intensityMultiplier, ChannelData, ResetShakerValuesAfterShake, ResetTargetValuesAfterShake, NormalPlayDirection, ComputedTimescaleMode);
             
 		}
         
@@ -118,8 +118,24 @@ namespace MoreMountains.FeedbacksForThirdParty
 				ShakeGreen, RemapGreenZero, RemapGreenOne,
 				ShakeBlue, RemapBlueZero, RemapBlueOne,
 				FeedbackDuration,
-				RelativeIntensity, channel:Channel, stop:true);
+				RelativeIntensity, channelData:ChannelData, stop:true);
+		}
+
+		/// <summary>
+		/// On restore, we put our object back at its initial position
+		/// </summary>
+		protected override void CustomRestoreInitialValues()
+		{
+			if (!Active || !FeedbackTypeAuthorized)
+			{
+				return;
+			}
             
+			MMChannelMixerShakeEvent_URP.Trigger(ShakeRed, RemapRedZero, RemapRedOne,
+				ShakeGreen, RemapGreenZero, RemapGreenOne,
+				ShakeBlue, RemapBlueZero, RemapBlueOne,
+				FeedbackDuration,
+				RelativeIntensity, channelData:ChannelData, restore:true);
 		}
 	}
 }

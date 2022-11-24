@@ -24,6 +24,7 @@ public class RespawnZone : MonoBehaviour
         Vector3 RandomPostion = new Vector3(range_X, 0f, range_Z);
 
         Vector3 respawnPosition = originPosition + RandomPostion;
+
         return respawnPosition;
     }
 }

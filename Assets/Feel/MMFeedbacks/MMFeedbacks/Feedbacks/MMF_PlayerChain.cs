@@ -110,5 +110,21 @@ namespace MoreMountains.Feedbacks
 				if (item.Delay.y > 0) { yield return WaitFor(item.Delay.y); }
 			}
 		}
+		
+		/// <summary>
+		/// On restore, we put our object back at its initial position
+		/// </summary>
+		protected override void CustomRestoreInitialValues()
+		{
+			if (!Active || !FeedbackTypeAuthorized)
+			{
+				return;
+			}
+
+			foreach (PlayerChainItem item in Players)
+			{
+				item.TargetPlayer.RestoreInitialValues();
+			}
+		}
 	}
 }
