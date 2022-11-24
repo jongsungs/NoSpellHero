@@ -9,6 +9,8 @@ TagManager:
   - Roar
   - Weapon
   - Enemy
+  - Thunder
+  - Meteor
   layers:
   - Default
   - TransparentFX
