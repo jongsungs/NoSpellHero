@@ -1,0 +1,936 @@
+fileFormatVersion: 2
+guid: 1c44d4a579104de41a5b9d18eaeed184
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 11
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMasterTextureLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 1
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 0
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 100
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Server
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_0
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 1748
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ff750eb66ead584e84a8e809e1ce317
+      internalID: -823993129
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_1
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 1748
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90464becba5fbcc41b8f5896dea20f00
+      internalID: -194696346
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_2
+      rect:
+        serializedVersion: 2
+        x: 580
+        y: 1748
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4a89f7862fde73a468d6743f4940350b
+      internalID: 2055656540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_3
+      rect:
+        serializedVersion: 2
+        x: 860
+        y: 1748
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7da02f1df4462724fbee9c57c2266228
+      internalID: 367914947
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_4
+      rect:
+        serializedVersion: 2
+        x: 1150
+        y: 1748
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 12440fd5718b6ff4d95c464417209d5b
+      internalID: -444021934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_5
+      rect:
+        serializedVersion: 2
+        x: 1450
+        y: 1748
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f4bb06d7c1d4a544acf775b7e59e057
+      internalID: -364741471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_6
+      rect:
+        serializedVersion: 2
+        x: 1749
+        y: 1748
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f2efe37aa994b04eb00b985376c7e5a
+      internalID: 652429768
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_7
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 1448
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2cc8b00ba6f695d4186962904f8996a4
+      internalID: -279629623
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_8
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 1448
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd965c4c2fc49d34cb156a04b525cf42
+      internalID: -1493529460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_9
+      rect:
+        serializedVersion: 2
+        x: 580
+        y: 1448
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1becf23d27b73ac42bc7a906b3d721d1
+      internalID: 902800006
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_10
+      rect:
+        serializedVersion: 2
+        x: 860
+        y: 1448
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9dfb202c4160e7b4f84a53b6fc61a0c1
+      internalID: 1812846309
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_11
+      rect:
+        serializedVersion: 2
+        x: 1150
+        y: 1448
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a0e360c4a49616a409e72878eb7da604
+      internalID: 548003558
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_12
+      rect:
+        serializedVersion: 2
+        x: 1450
+        y: 1448
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 00ba4794b74849a4a94debc92207192e
+      internalID: -826675645
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_13
+      rect:
+        serializedVersion: 2
+        x: 1749
+        y: 1448
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b890e410ac785624cb7aaa2e61e0e52c
+      internalID: -31256561
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_14
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 1138
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8f4309b558baf20458776a9e1cf7678e
+      internalID: -1829107827
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_15
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 1138
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9731d989e8b65f04a850492c905059ab
+      internalID: 547591784
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_16
+      rect:
+        serializedVersion: 2
+        x: 580
+        y: 1138
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2286e9b028c3d3049930c4d8ef375b09
+      internalID: 1111033395
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_17
+      rect:
+        serializedVersion: 2
+        x: 860
+        y: 1138
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5fb387f73c33d414baef13503bb8ab0d
+      internalID: -856132450
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_18
+      rect:
+        serializedVersion: 2
+        x: 1150
+        y: 1138
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ee31b767b4f8a66438c57e50b4bed8e2
+      internalID: -2033377223
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_19
+      rect:
+        serializedVersion: 2
+        x: 1450
+        y: 1138
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 146bfb5506d34474eb293974579e7a2a
+      internalID: 128926078
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_20
+      rect:
+        serializedVersion: 2
+        x: 1749
+        y: 1138
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cf2873f0fe71ccf4bbb18a300cbcba3d
+      internalID: -1957129460
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_21
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 838
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd11c59e66bf3ad4c9bbc2d95eff6316
+      internalID: -1790130132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_22
+      rect:
+        serializedVersion: 2
+        x: 300
+        y: 838
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 83ea61987cf021545ad4fd98d2aa7921
+      internalID: 152413715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_23
+      rect:
+        serializedVersion: 2
+        x: 580
+        y: 838
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 171ab4b01118cfe4c99ac6029232f395
+      internalID: -1421009143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_24
+      rect:
+        serializedVersion: 2
+        x: 860
+        y: 838
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 500047a7a441b784ab3e5673b16edda4
+      internalID: -83002070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_25
+      rect:
+        serializedVersion: 2
+        x: 1150
+        y: 838
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b5eb2054f13df894bbf595b872866773
+      internalID: -918766376
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_26
+      rect:
+        serializedVersion: 2
+        x: 1450
+        y: 838
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dc5238ba6d227754c90ed56ce89b9821
+      internalID: 1762248813
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_27
+      rect:
+        serializedVersion: 2
+        x: 1749
+        y: 838
+        width: 260
+        height: 280
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c55815eaaaf39e44da3ec7c0d0ed6738
+      internalID: 1584114698
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_28
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 488
+        width: 300
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3a14b0ebb0d4d174d97f7e037a6bf250
+      internalID: 1998762218
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_29
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 488
+        width: 300
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a83ad06160faa64449c620237b8fa594
+      internalID: 309083287
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_30
+      rect:
+        serializedVersion: 2
+        x: 680
+        y: 488
+        width: 300
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6751da37708ca40468d4bc803d2bf63c
+      internalID: -1755392492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_31
+      rect:
+        serializedVersion: 2
+        x: 1020
+        y: 488
+        width: 300
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ceb9207a1b42ae547a0f3078b99f23a7
+      internalID: 194165741
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_32
+      rect:
+        serializedVersion: 2
+        x: 1350
+        y: 488
+        width: 300
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 937ab54f32cd76b41a10a0e16605b567
+      internalID: 918802053
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_33
+      rect:
+        serializedVersion: 2
+        x: 1700
+        y: 488
+        width: 300
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dd0d03c4e2d5b1449b72ed320591a07e
+      internalID: -13745862
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_34
+      rect:
+        serializedVersion: 2
+        x: 20
+        y: 148
+        width: 300
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c75a0b741112a584bbf83bf04f251268
+      internalID: 1277693550
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_35
+      rect:
+        serializedVersion: 2
+        x: 350
+        y: 148
+        width: 300
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c35c4bb29cafab4cbee604453687f77
+      internalID: -973992655
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_36
+      rect:
+        serializedVersion: 2
+        x: 680
+        y: 148
+        width: 300
+        height: 310
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c5ddf7c17ae46664e92e04928afa5630
+      internalID: -1635656843
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      noSpellhero_ui_pkg-02_24: -83002070
+      noSpellhero_ui_pkg-02_36: -1635656843
+      noSpellhero_ui_pkg-02_11: 548003558
+      noSpellhero_ui_pkg-02_7: -279629623
+      noSpellhero_ui_pkg-02_8: -1493529460
+      noSpellhero_ui_pkg-02_21: -1790130132
+      noSpellhero_ui_pkg-02_25: -918766376
+      noSpellhero_ui_pkg-02_5: -364741471
+      noSpellhero_ui_pkg-02_26: 1762248813
+      noSpellhero_ui_pkg-02_34: 1277693550
+      noSpellhero_ui_pkg-02_3: 367914947
+      noSpellhero_ui_pkg-02_4: -444021934
+      noSpellhero_ui_pkg-02_29: 309083287
+      noSpellhero_ui_pkg-02_31: 194165741
+      noSpellhero_ui_pkg-02_12: -826675645
+      noSpellhero_ui_pkg-02_6: 652429768
+      noSpellhero_ui_pkg-02_13: -31256561
+      noSpellhero_ui_pkg-02_16: 1111033395
+      noSpellhero_ui_pkg-02_0: -823993129
+      noSpellhero_ui_pkg-02_15: 547591784
+      noSpellhero_ui_pkg-02_19: 128926078
+      noSpellhero_ui_pkg-02_30: -1755392492
+      noSpellhero_ui_pkg-02_10: 1812846309
+      noSpellhero_ui_pkg-02_17: -856132450
+      noSpellhero_ui_pkg-02_18: -2033377223
+      noSpellhero_ui_pkg-02_20: -1957129460
+      noSpellhero_ui_pkg-02_33: -13745862
+      noSpellhero_ui_pkg-02_9: 902800006
+      noSpellhero_ui_pkg-02_1: -194696346
+      noSpellhero_ui_pkg-02_2: 2055656540
+      noSpellhero_ui_pkg-02_14: -1829107827
+      noSpellhero_ui_pkg-02_23: -1421009143
+      noSpellhero_ui_pkg-02_27: 1584114698
+      noSpellhero_ui_pkg-02_35: -973992655
+      noSpellhero_ui_pkg-02_28: 1998762218
+      noSpellhero_ui_pkg-02_32: 918802053
+      noSpellhero_ui_pkg-02_22: 152413715
+  spritePackingTag: 
+  pSDRemoveMatte: 0
+  pSDShowRemoveMatteOption: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
