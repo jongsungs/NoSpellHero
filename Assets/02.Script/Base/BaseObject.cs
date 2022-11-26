@@ -43,6 +43,7 @@ public class BaseObject : MonoBehaviour
     public float _charm;
     public float _criticalDamage;
 
+    public float _ingameHp;
     public float _maxHp;
     public float _basicHp;
     public float _basicAtk;

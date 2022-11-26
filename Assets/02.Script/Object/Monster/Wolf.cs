@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Wolf : Monster
 {
 
-   public List<SkinnedMeshRenderer> _material;
+  
    public List<SkinnedMeshRenderer> _tempMaterial;
 
     private void Start()
@@ -15,7 +15,7 @@ public class Wolf : Monster
 
         _monster = MonsterKind.Wolf;
 
-        _tempMaterial = _material;
+        _tempMaterial = _listMaterial;
         FadeIn();
 
         _state = State.Walk;
@@ -97,9 +97,9 @@ public class Wolf : Monster
     public override void Burn()
     {
         base.Burn();
-        for(int i = 0; i < _material.Count; ++i)
+        for(int i = 0; i < _listMaterial.Count; ++i)
         {
-            _material[i].material.color = Color.red;
+            _listMaterial[i].material.color = Color.red;
 
         }
     }
@@ -112,9 +112,9 @@ public class Wolf : Monster
     public override void CCrecovery()
     {
         base.CCrecovery();
-        for (int i = 0; i < _material.Count; ++i)
+        for (int i = 0; i < _listMaterial.Count; ++i)
         {
-            _material[i].material.color = Color.white;
+            _listMaterial[i].material.color = Color.white;
 
         }
 
@@ -397,12 +397,12 @@ public class Wolf : Monster
 
     public override IEnumerator CoFadeIn(float fadeOutTime, System.Action nextEvent = null)
     {
-        var sr = _material;
+        var sr = _listMaterial;
         List<Color> tempColor = new List<Color>();
    
-        for(int i = 0; i < _material.Count; ++i)
+        for(int i = 0; i < _listMaterial.Count; ++i)
         {
-            tempColor.Add(_material[i].material.color);
+            tempColor.Add(_listMaterial[i].material.color);
         }
    
         for (int i = 0; i < _tempMaterial.Count; ++i)
@@ -427,13 +427,13 @@ public class Wolf : Monster
     // 불투명 -> 투명
     public override IEnumerator CoFadeOut(float fadeOutTime, System.Action nextEvent = null)
     {
-        var sr = _material;
+        var sr = _listMaterial;
 
         List<Color> tempColor = new List<Color>();
 
-        for (int i = 0; i < _material.Count; ++i)
+        for (int i = 0; i < _listMaterial.Count; ++i)
         {
-            tempColor.Add(_material[i].material.color);
+            tempColor.Add(_listMaterial[i].material.color);
         }
         for (int i = 0; i < _tempMaterial.Count; ++i)
         {

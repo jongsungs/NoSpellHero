@@ -28,24 +28,13 @@ public class Slime : Monster
         
         
         
-        if(_hp <= 0f)
+        if(_ingameHp <= 0f)
         {
             ChangeState(State.Die);
 
         }
 
-        if(Input.GetKeyDown(KeyCode.M))
-        {
-            Freezing();
-        }
-        if(Input.GetKeyDown(KeyCode.N))
-        {
-            Burn();
-        }
-        if(Input.GetKeyDown(KeyCode.B))
-        {
-            Stun();
-        }
+       
 
 
         if(_CC != CrowdControl.Freezing || _CC != CrowdControl.Stun)
@@ -136,7 +125,7 @@ public class Slime : Monster
                 }
 
                 var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
-                _hp -= damage;
+                _ingameHp -= damage;
                 _mmfPlayer.PlayFeedbacks(this.transform.position,damage);
               
             }
@@ -144,7 +133,7 @@ public class Slime : Monster
             {
                 other.GetComponent<Weapon>()._isOnce = false;
                 ChangeState(State.Hit);
-                _hp -= other.GetComponent<Weapon>()._damage;
+                _ingameHp -= other.GetComponent<Weapon>()._damage;
                 int rand = Random.Range(0, 10 - _player.GetComponent<Player>()._skill1);
 
                 if(rand == 0)
@@ -189,7 +178,7 @@ public class Slime : Monster
                 {
                     
                     int damage = 999999;
-                    _hp -= damage;
+                    _ingameHp -= damage;
                     _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
                     if (Player.Instance.acupuncturistfirstskill == false)
                     {
@@ -200,7 +189,7 @@ public class Slime : Monster
                 else if(rand >= Player.Instance._instantDeathProbablility)
                 {
                     var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
-                    _hp -= damage;
+                    _ingameHp -= damage;
                     _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
                 }
 
@@ -222,7 +211,7 @@ public class Slime : Monster
                 int rand = Random.Range(0, 100);
                 other.GetComponent<Weapon>()._isOnce = false;
                 var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
-                _hp -= damage;
+                _ingameHp -= damage;
                 ChangeState(State.Hit);
                 _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
 
@@ -317,7 +306,7 @@ public class Slime : Monster
 
                 //ChangeState(State.Hit);
                 var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
-                _hp -= damage;
+                _ingameHp -= damage;
                 _mmfPlayer.PlayFeedbacks(transform.position, damage);
             }
 
@@ -350,7 +339,7 @@ public class Slime : Monster
         {
            // ChangeState(State.Hit);
             var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._matk * 5) - (_def * 3);
-            _hp -= damage;
+            _ingameHp -= damage;
             _mmfPlayer.PlayFeedbacks(transform.position, damage);
 
         }
@@ -358,7 +347,7 @@ public class Slime : Monster
         {
            // ChangeState(State.Hit);
             var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._matk * 5) - (_def * 3);
-            _hp -= damage;
+            _ingameHp -= damage;
             _mmfPlayer.PlayFeedbacks(transform.position, damage);
         }
 
@@ -380,7 +369,7 @@ public class Slime : Monster
 
     public override void MonsterRelease()
     {
-        _hp = 0f;
+        _ingameHp = 0f;
     }
 
 

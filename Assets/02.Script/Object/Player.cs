@@ -512,7 +512,21 @@ public class Player : BaseObject
     public bool _buyUmbrella;
     public bool _buyWaldo;
 
-    
+    public Weapon _basicStick;      //기본 막대기
+    public Weapon _Stick;            //지팡이
+    public Weapon _Sward1;            //한손검
+    public Weapon _Sward2;           //한손검2
+    public Weapon _Broom;            //빗자루
+    public Weapon _Club;             //나무몽둥이
+    public Weapon _ShortSward;        //단도
+    public Weapon _Hanger;           //옷걸이
+    public Weapon _Mace;             //메이스
+    public Weapon _Shield;           //방패
+    public Weapon _Spear;            //창
+    public Weapon _Umbrella;            //우산
+    public Weapon _Waldo;            //월도
+
+
     //투구
     public GameObject _knightHelmet;    //기사 투구
     public GameObject _masicianHat;     //마법사모자
@@ -752,7 +766,10 @@ public class Player : BaseObject
             ,_isbasicStick,_buybasicStick);
         
         _preSpeed = _speed;
-        _maxHp = 50 + (_hp * 10);
+
+        _ingameHp = 50f + (_hp * 10f);
+        _maxHp = 50f + (_hp * 10f);
+        _basicHp = _hp;
         _basicAtk = _atk;
         _basicMatk = _matk;
         _basicAtkSpeed = _atkSpeed;
@@ -812,17 +829,20 @@ public class Player : BaseObject
        // _half = UnityEngine.Random.Range(0, 2);
         _1_3 = UnityEngine.Random.Range(0, 3);
         _quater = UnityEngine.Random.Range(0, 4);
+        if (_ingameHp >= _maxHp)
+        {
+            _ingameHp = _maxHp;
+        }
 
-        
         //사제 히든
-        if(_playerTitle == PlayerTitle.Priest)
+        if (_playerTitle == PlayerTitle.Priest)
         {
             HiddenSkill(_playerTitle);
-            if(_hp <= _maxHp * 0.5f && _ishalfHp == false)
+            if(_ingameHp <= _maxHp * 0.5f && _ishalfHp == false)
             {
                 _ishalfHp = true;
             }
-            if(_hp >= _maxHp && _ishalfHp == true)
+            if(_ingameHp >= _maxHp && _ishalfHp == true)
             {
                 achivementCheck(pristhpfull, "pristhpfull");
             }
@@ -830,13 +850,20 @@ public class Player : BaseObject
         if (_playerTitle == PlayerTitle.Cook)
         {
             
-            if (_hp <= _maxHp * 0.5f && _ishalfHp == false)
+            if (_ingameHp <= _maxHp * 0.5f && _ishalfHp == false)
             {
                 _ishalfHp = true;
             }
-            if (_hp >= _maxHp && _ishalfHp == true)
+            if (_ingameHp >= _maxHp && _ishalfHp == true)
             {
                 achivementCheck(cookfullhp, "cookfullhp");
+            }
+        }
+        if(_playerTitle == PlayerTitle.Berserker)
+        {
+            if (_ingameHp <= (_maxHp * (0.25f + _skill1 / 20f)))
+            {
+                _atk = (_basicAtk * 2f) + (_basicAtk * _skill2 / 10f);
             }
         }
 
@@ -845,17 +872,20 @@ public class Player : BaseObject
             _animator.speed = 0.5f + (_atkSpeed / 10f);
             _animator.SetFloat("AtkSpeed", _animator.speed);
         }
-        if (Input.GetKeyDown(KeyCode.D))
+        if (Input.GetKeyDown(KeyCode.Alpha1))
         {
-            Meteor();
+            _skill1 += 1;
+            ChangeTitle(_playerTitle);
         }
         if (Input.GetKeyDown(KeyCode.Alpha2))
         {
-            Load();
+            _skill2 += 1;
+            ChangeTitle(_playerTitle);
         }
         if (Input.GetKeyDown(KeyCode.Alpha3))
         {
-            _hp += 1;
+            _skill3 += 1;
+            ChangeTitle(_playerTitle);
         }
         if(Input.GetKeyDown(KeyCode.A))
         {
@@ -867,13 +897,9 @@ public class Player : BaseObject
             Die();
             GamePlay.Instance.ActiveResultPopUp();
         }
-       
-        
-        if (Input.GetKeyDown(KeyCode.I))
-        {
         
 
-        }
+      
         //DrawView();
 
        
@@ -1005,7 +1031,7 @@ public class Player : BaseObject
         {
             
             rand = UnityEngine.Random.Range(0, 5);
-            if(rand == 0 && _hp <= (_maxHp * 0.2f))
+            if(rand == 0 && _ingameHp <= (_maxHp * 0.2f))
             {
                 Roar();
                 achivementCheck(zhangfeirowhp, "zhangfeirowhp");
@@ -1134,7 +1160,7 @@ public class Player : BaseObject
             _comboPristHeal.Add(rand);
             if (rand == 0)
             {
-                _hp += _maxHp / 10f + (_maxHp / (10 - (_skill1 * 2)));
+                _ingameHp += _maxHp / 10f + (_maxHp / (10 - (_skill1 * 2)));
             }
           
             
@@ -1180,7 +1206,8 @@ public class Player : BaseObject
                 }
             }
         }
-        
+        _ingameHp = 50f + (_hp * 10f);
+        _maxHp = 50f + (_hp * 10f);
 
     }
     public void AttackOff()
@@ -1259,8 +1286,8 @@ public class Player : BaseObject
     }
     public void ChangeTitle(PlayerTitle title)
     {
-        if (IsTitle(title))
-            return;
+     //   if (IsTitle(title))
+     //       return;
         _playerTitle = title;
         int rand;
         switch(_playerTitle)
@@ -1357,11 +1384,7 @@ public class Player : BaseObject
                     _maxHp = _basicHp * 0.2f;
                     _atk = (_basicAtk * 2f) + (_basicAtk * 2f);
                 }
-                else if (_hp <= (_maxHp * (0.25f + _skill1 / 20f)))
-                {
-
-                    _atk = (_basicAtk * 2f) + (_basicAtk * _skill2 / 10f);
-                }
+                
 
 
                 break;
@@ -1416,16 +1439,16 @@ public class Player : BaseObject
                 _speed = _basicSpeed + (_basicSpeed * 0.2f) + (_basicSpeed * _skill2 / 10f);
                 break;
             case PlayerTitle.HealthMagician:
-                _maxHp = _basicHp + (_basicHp * 0.3f) + (_basicHp * _skill1 / 5f);
+                _hp = _basicHp + (_basicHp * 0.3f) + (_basicHp * _skill1 / 5f);
 
                 if (_skill2 >= 3)
                 {
                     achivementCheck(healthmagicianskill2full, "healthmagicianskill2full");
                 }
 
-                //체력 풀스택시 체력비례 대미지 가격 및 주문확률증가 구현해야함
                 _spellCastProbability = 50;
-       
+                _maxHp = 50f + (_hp * 10f);
+
                 break;
             case PlayerTitle.Priest:
         
@@ -1439,7 +1462,7 @@ public class Player : BaseObject
 
                 _matk = _basicMatk + (_basicMatk * _skill2 / 10f);
           
-                if (_hp <= _maxHp * (0.20f + _skill1 / 20f))
+                if (_ingameHp <= _maxHp * (0.20f + _skill1 / 20f))
                 {
                     _matk = (_basicMatk * 2f) + (_basicMatk * _skill2 / 10f);
                 }
@@ -1518,7 +1541,8 @@ public class Player : BaseObject
                 _hp = _basicHp * 2f + (_basicHp * _skill1 / 5f);
                 _atkSpeed = _basicAtkSpeed * (_basicAtkSpeed * _skill2 / 10f);
 
-               
+
+                _maxHp = 50f + (_hp * 10f);
                 break;
             case PlayerTitle.Athlete:
 
@@ -1529,6 +1553,8 @@ public class Player : BaseObject
 
                 _hp = _basicHp + (_basicHp * 0.3f) + (_basicHp * _skill2 / 10f);
                 _speed = _basicSpeed + (_basicSpeed * 0.2f) + (_basicSpeed * _skill1 / 10f);
+
+                _maxHp = 50f + (_hp * 10f);
                 break;
             case PlayerTitle.Versatile:
 
@@ -1600,6 +1626,8 @@ public class Player : BaseObject
                 _critical = _basicCritical + (_basicCritical * 0.2f) + (_basicCritical * _skill1 / 10f);
                 _handicraft = _basicHandicraft + (_basicHandicraft * 0.2f) + (_basicHandicraft * _skill1 / 10f);
                 _charm = _basicCharm + (_basicCharm * 0.2f) + (_basicCharm * _skill1 / 10f);
+
+                _maxHp = 50f + (_hp * 10f);
                 break;
             case PlayerTitle.Delivery:
                 
@@ -1650,6 +1678,8 @@ public class Player : BaseObject
                 _critical = _basicCritical + (_basicCritical * 0.2f) + (_basicCritical * _skill1 / 10f);
                 _handicraft = _basicHandicraft + (_basicHandicraft * 0.2f) + (_basicHandicraft * _skill1 / 10f);
                 _charm = _basicCharm + (_basicCharm * 0.2f) + (_basicCharm * _skill1 / 10f);
+
+                _maxHp = 50f + (_hp * 10f);
                 break;
             case PlayerTitle.Orpheus:
                 StopCoroutine(MonsterAtkDown());
@@ -1663,7 +1693,8 @@ public class Player : BaseObject
 
 
         }
-
+        
+        Debug.Log("걸리");
     }
     public void HiddenSkill(PlayerTitle title)
     {
@@ -1747,12 +1778,12 @@ public class Player : BaseObject
                 }
                 break;
             case PlayerTitle.Priest:
-                if (_skill1 >= 3 && _hp >= _maxHp)
+                if (_skill1 >= 3 && _ingameHp >= _maxHp)
                 {
                     achivementCheck(pristhidden, "pristhidden");
                     _matk = _basicMatk * 3f;
                 }
-                else if(_skill1 >= 3 && _hp < _maxHp)
+                else if(_skill1 >= 3 && _ingameHp < _maxHp)
                 {
                     _matk = _basicMatk;
                 }
@@ -1860,6 +1891,7 @@ public class Player : BaseObject
             case PlayerTitle.DokeV:
                 break;
         }
+      
     }
     public void ChangeComponent(GameObject obj)
     {
@@ -2352,7 +2384,7 @@ public class Player : BaseObject
                 if(_skill2 >= 3)
                 {
 
-                    obj[i].GetComponent<Monster>()._hp -= _atk/3;
+                    obj[i].GetComponent<Monster>()._ingameHp -= _atk/3;
                 }
 
             }
@@ -2393,19 +2425,16 @@ public class Player : BaseObject
 
             if(_skill1 <3)
             {
-                _hp += 10f + _skill1 * 10f;
+                _ingameHp += 10f + _skill1 * 10f;
 
             }
             else if (_skill1 >= 3)
             {
-                _hp += _maxHp * 0.1f;
+                _ingameHp += _maxHp * 0.1f;
                 time = 1;
             }
             
-            if(_hp >= _maxHp)
-            {
-                _hp = _maxHp;
-            }
+            
             yield return new WaitForSeconds(time);
 
 

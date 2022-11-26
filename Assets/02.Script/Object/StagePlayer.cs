@@ -51,6 +51,7 @@ public class StagePlayer : MonoBehaviour
                 _listWeapon[i].SetActive(false);
             }
             _listWeapon[0].SetActive(true);
+            Player.Instance._weapon = Player.Instance._basicStick;
 
         }
         else if(Player.Instance._isSward1 == true)
@@ -60,6 +61,7 @@ public class StagePlayer : MonoBehaviour
                 _listWeapon[i].SetActive(false);
             }
             _listWeapon[1].SetActive(true);
+            Player.Instance._weapon = Player.Instance._Sward1;
         }
         else if (Player.Instance._isSward2 == true)
         {
@@ -68,6 +70,7 @@ public class StagePlayer : MonoBehaviour
                 _listWeapon[i].SetActive(false);
             }
             _listWeapon[2].SetActive(true);
+            Player.Instance._weapon = Player.Instance._Sward2;
         }
         else if (Player.Instance._isBroom == true)
         {
@@ -76,6 +79,7 @@ public class StagePlayer : MonoBehaviour
                 _listWeapon[i].SetActive(false);
             }
             _listWeapon[3].SetActive(true);
+            Player.Instance._weapon = Player.Instance._Broom;
         }
         else if (Player.Instance._isClub == true)
         {
@@ -84,6 +88,7 @@ public class StagePlayer : MonoBehaviour
                 _listWeapon[i].SetActive(false);
             }
             _listWeapon[4].SetActive(true);
+            Player.Instance._weapon = Player.Instance._Club;
         }
         else if (Player.Instance._isShortSward == true)
         {
@@ -92,6 +97,7 @@ public class StagePlayer : MonoBehaviour
                 _listWeapon[i].SetActive(false);
             }
             _listWeapon[5].SetActive(true);
+            Player.Instance._weapon = Player.Instance._ShortSward;
         }
         else if (Player.Instance._isHanger == true)
         {
@@ -100,6 +106,7 @@ public class StagePlayer : MonoBehaviour
                 _listWeapon[i].SetActive(false);
             }
             _listWeapon[6].SetActive(true);
+            Player.Instance._weapon = Player.Instance._Hanger;
         }
         else if (Player.Instance._isMace == true)
         {
@@ -108,6 +115,7 @@ public class StagePlayer : MonoBehaviour
                 _listWeapon[i].SetActive(false);
             }
             _listWeapon[7].SetActive(true);
+            Player.Instance._weapon = Player.Instance._Mace;
         }
         else if (Player.Instance._isShield == true)
         {
@@ -116,6 +124,7 @@ public class StagePlayer : MonoBehaviour
                 _listWeapon[i].SetActive(false);
             }
             _listWeapon[8].SetActive(true);
+            Player.Instance._weapon = Player.Instance._Shield;
         }
         else if (Player.Instance._isSpear == true)
         {
@@ -124,6 +133,7 @@ public class StagePlayer : MonoBehaviour
                 _listWeapon[i].SetActive(false);
             }
             _listWeapon[9].SetActive(true);
+            Player.Instance._weapon = Player.Instance._Spear;
         }
         else if (Player.Instance._isUmbrella == true)
         {
@@ -132,6 +142,7 @@ public class StagePlayer : MonoBehaviour
                 _listWeapon[i].SetActive(false);
             }
             _listWeapon[10].SetActive(true);
+            Player.Instance._weapon = Player.Instance._Umbrella;
         }
         else if (Player.Instance._isWaldo == true)
         {
@@ -140,6 +151,7 @@ public class StagePlayer : MonoBehaviour
                 _listWeapon[i].SetActive(false);
             }
             _listWeapon[11].SetActive(true);
+            Player.Instance._weapon = Player.Instance._Waldo;
         }
         #endregion
 

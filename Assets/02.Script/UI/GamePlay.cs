@@ -32,6 +32,7 @@ public class GamePlay : MonoBehaviour
     public Monster _golem;
     public Monster _dragon;
     public Monster _demonKing;
+    public Monster _skeleton;
     public GameObject _objectPool;
     public GameObject _damageTextPoolParent;
     public RespawnZone _randomSpawn;
@@ -74,16 +75,13 @@ public class GamePlay : MonoBehaviour
 
    
 
-
-    public DamageText _damageText;
-
     private IObjectPool<Monster> _wolfpool;
     private IObjectPool<Monster> _slimePool;
     private IObjectPool<Monster> _captainSkullPool;
+    public IObjectPool<Monster> _skeletonPool;
     private IObjectPool<Monster> _golemPool;
     private IObjectPool<Monster> _dragonPool;
     private IObjectPool<Monster> _demonkingPool;
-    public IObjectPool<DamageText> _damageTextPool;
     public IObjectPool<LightningBoltScript> _lightningPool;
     public IObjectPool<GameObject> _meteorTargetPool;
     public IObjectPool<SkillBase> _meteorPool;
@@ -136,10 +134,10 @@ public class GamePlay : MonoBehaviour
         _slimePool = new ObjectPool<Monster>(CreatSlime,OngetMonster,OnReleaseMonster,OnDestroyMonster,maxSize : 10);
         _wolfpool = new ObjectPool<Monster>(CreatWolf, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
         _captainSkullPool = new ObjectPool<Monster>(CreatCaptainSkull, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
+        _skeletonPool = new ObjectPool<Monster>(CreatSkeleton, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 20);
         _golemPool = new ObjectPool<Monster>(CreatGolem, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
         _dragonPool = new ObjectPool<Monster>(CreatDragon, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
         _demonkingPool = new ObjectPool<Monster>(CreatDemonKing, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
-        _damageTextPool = new ObjectPool<DamageText>(CreatDamageText, OngetDamageText, OnRelaseText, OnDestroyText, maxSize: 10);
         _lightningPool = new ObjectPool<LightningBoltScript>(CreateLightning, OngetLightningBolt, OnRelaseLightning, OnDestroyLightning, maxSize: 30);
         _meteorPool = new ObjectPool<SkillBase>(CreateMeteor, OngetMeteor, OnReleaseSkill, OnDestroySkill, maxSize: 10);
         _wallPool = new ObjectPool<SkillBase>(CreateWall, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 20);
@@ -271,6 +269,12 @@ public class GamePlay : MonoBehaviour
         monster.SetPool(_captainSkullPool);
         return monster;
     }
+    private Monster CreatSkeleton()
+    {
+        var monster = Instantiate(_skeleton, _randomSpawn.Return_RandomPosition(), Quaternion.identity, _objectPool.transform);
+        monster.SetPool(_skeletonPool);
+        return monster;
+    }
     private Monster CreatGolem()
     {
         var monster = Instantiate(_golem, _randomSpawn.Return_RandomPosition(), Quaternion.identity, _objectPool.transform);
@@ -289,12 +293,7 @@ public class GamePlay : MonoBehaviour
         monster.SetPool(_demonkingPool);
         return monster;
     }
-    private DamageText CreatDamageText()
-    {
-        var damagetext = Instantiate(_damageText, _damageTextPoolParent.transform);
-        damagetext.SetPool(_damageTextPool);
-        return damagetext;
-    }
+   
     private LightningBoltScript CreateLightning()
     {
         var lightning = Instantiate(_lightning, _randomSpawn.Return_RandomPosition(), Quaternion.identity, _objectPool.transform);
@@ -369,6 +368,7 @@ public class GamePlay : MonoBehaviour
         return thunder;
     }
 
+    
 
     // 새로 뽑을 때
     private void OngetMonster(Monster obj)
@@ -396,7 +396,7 @@ public class GamePlay : MonoBehaviour
         }
         if (obj._monster == Monster.MonsterKind.CaptainSkull && _isBoss == false && _currentStage == GameState.Stage1 && obj._category == Monster.MonsterCategory.Boss)
         {
-            obj._hp = 2f;
+            obj._hp = 100f;
             _isBoss = true;
             
         }
@@ -421,10 +421,7 @@ public class GamePlay : MonoBehaviour
         obj.transform.position = _randomSpawn.Return_RandomPosition();
     }
 
-    private void OngetDamageText(DamageText text)
-    {
-        text.gameObject.SetActive(true);
-    }
+   
     private void OngetLightningBolt(LightningBoltScript lightning)
     {
         lightning.gameObject.SetActive(true);
@@ -523,10 +520,7 @@ public class GamePlay : MonoBehaviour
       
     }
 
-    private void OnRelaseText(DamageText text)
-    {
-        text.gameObject.SetActive(false);
-    }
+   
     private void OnRelaseLightning(LightningBoltScript lightning)
     {
         lightning.gameObject.SetActive(false);
@@ -551,10 +545,7 @@ public class GamePlay : MonoBehaviour
         Destroy(obj.gameObject);
     }
 
-    private void OnDestroyText(DamageText text)
-    {
-        Destroy(text.gameObject);
-    }
+  
     private void OnDestroyLightning(LightningBoltScript lightning)
     {
         Destroy(lightning.gameObject);
@@ -978,16 +969,7 @@ public class GamePlay : MonoBehaviour
     {
         _bossHPBar.gameObject.SetActive(false);
     }
-
-    public void DamageTextOn(DamageText damagetext,string str, Vector3 worldPosition)
-    {
-        damagetext.RequestDamageText(str,worldPosition);
-    }
-
-    public void SetValue(float value, Material materials)
-    {
-        materials.SetFloat("_Dissolve", value);
-    }
+    
 
     public void ChangeStage(GameState stage)
     {
@@ -1740,7 +1722,7 @@ public class GamePlay : MonoBehaviour
     {
         if(_currentStage == GameState.Stage1 && _isBoss == false)
         {
-            _timer = 60f;
+            _timer = 10f;
             Debug.Log("작동했다");
         }
         else if(_currentStage == GameState.Stage2 && _isBoss == false)

@@ -63,7 +63,7 @@ public class Monster : BaseObject
     public bool _attackOnce;
     public float _attackDistance;
     public List<SkinnedMeshRenderer> _listMaterial;
-
+    public int _attackStack;
 
     private void Awake()
     {
@@ -86,6 +86,8 @@ public class Monster : BaseObject
     }
     private void OnEnable()
     {
+        _ingameHp = 50 + (_hp * 10);
+        _maxHp = 50 + (_hp * 10);
         _basicHp = _hp;
         _maxHp = _basicHp;
         _basicAtk = _atk;
@@ -135,7 +137,7 @@ public class Monster : BaseObject
         }
         if(_CC == CrowdControl.Burn)
         {
-            _hp -= (Player.Instance._matk / 10f) * Time.deltaTime ;
+            _ingameHp -= (Player.Instance._matk / 10f) * Time.deltaTime ;
         }
         
 
@@ -280,11 +282,17 @@ public class Monster : BaseObject
                     {
                         _speed = 0f;
                     }
-                   else if (distToTarget <= _attackDistance && _attackOnce == true)
+                    else if (_monster == MonsterKind.CaptainSkull && _category == MonsterCategory.Boss && _attackStack >= 500)
+                    {
+                        ChangeState(State.Attack2);
+
+                    }
+                    else if (distToTarget <= _attackDistance && _attackOnce == true)
                     {
                         transform.LookAt(target);
                         ChangeState(State.Attack);
                     }
+                    
                     else if (distToTarget > _attackDistance)
                     {
                         ChangeState(State.Walk);
