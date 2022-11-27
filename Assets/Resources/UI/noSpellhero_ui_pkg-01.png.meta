@@ -632,10 +632,10 @@ TextureImporter:
       name: noSpellhero_ui_pkg-01_25
       rect:
         serializedVersion: 2
-        x: 31
-        y: 1259
-        width: 329
-        height: 255
+        x: 345
+        y: 1346
+        width: 224
+        height: 244
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -653,10 +653,10 @@ TextureImporter:
       name: noSpellhero_ui_pkg-01_26
       rect:
         serializedVersion: 2
-        x: 387
-        y: 1253
-        width: 233
-        height: 252
+        x: 592
+        y: 1246
+        width: 326
+        height: 345
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -674,10 +674,10 @@ TextureImporter:
       name: noSpellhero_ui_pkg-01_27
       rect:
         serializedVersion: 2
-        x: 654
-        y: 1171
-        width: 336
-        height: 352
+        x: 10
+        y: 970
+        width: 300
+        height: 250
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -695,10 +695,10 @@ TextureImporter:
       name: noSpellhero_ui_pkg-01_28
       rect:
         serializedVersion: 2
-        x: 1016
-        y: 1247
-        width: 224
-        height: 227
+        x: 320
+        y: 970
+        width: 300
+        height: 250
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
@@ -708,6 +708,216 @@ TextureImporter:
       bones: []
       spriteID: cf81eb2eec61c544686bd8862b06be8a
       internalID: 336587358
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-01_29
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 970
+        width: 300
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4db527d5eeb4529429105d52345b1560
+      internalID: -189208141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-01_30
+      rect:
+        serializedVersion: 2
+        x: 940
+        y: 970
+        width: 300
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c3eb2eb5f4318645a3777278691281c
+      internalID: -617171861
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-01_31
+      rect:
+        serializedVersion: 2
+        x: 1250
+        y: 970
+        width: 300
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3f57aa93d07278f4e89eb9893c054825
+      internalID: 781733423
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-01_32
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 970
+        width: 300
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 52b49af952713154385e70a5967c04e0
+      internalID: 7045986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-01_33
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 705
+        width: 300
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26fa0cf434723ac48b9e98c0a3680415
+      internalID: -2119028733
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-01_34
+      rect:
+        serializedVersion: 2
+        x: 320
+        y: 705
+        width: 300
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6da03dc51e6e67e47bd00b309d44b009
+      internalID: 844610541
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-01_35
+      rect:
+        serializedVersion: 2
+        x: 630
+        y: 705
+        width: 300
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a478118829cd6904181025f8227f08e2
+      internalID: -277925889
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-01_36
+      rect:
+        serializedVersion: 2
+        x: 940
+        y: 705
+        width: 300
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f08391543f9807f438c6b211259fa7c8
+      internalID: 1008346373
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-01_37
+      rect:
+        serializedVersion: 2
+        x: 1250
+        y: 705
+        width: 300
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec556293b5a5335408224905f1927404
+      internalID: 1089731370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-01_38
+      rect:
+        serializedVersion: 2
+        x: 1560
+        y: 705
+        width: 300
+        height: 250
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e2d07a331662564ab4ec84bb7e1fbc0
+      internalID: -555993358
       vertices: []
       indices: 
       edges: []
@@ -727,14 +937,19 @@ TextureImporter:
       noSpellhero_ui_pkg-01_9: -405354363
       noSpellhero_ui_pkg-01_7: -1031558006
       noSpellhero_ui_pkg-01_20: -1522865357
+      noSpellhero_ui_pkg-01_34: 844610541
       noSpellhero_ui_pkg-01_16: -183331938
       noSpellhero_ui_pkg-01_21: -2113056626
       noSpellhero_ui_pkg-01_0: -1336985422
       noSpellhero_ui_pkg-01_17: -1837358032
+      noSpellhero_ui_pkg-01_31: 781733423
       noSpellhero_ui_pkg-01_15: -920321831
       noSpellhero_ui_pkg-01_19: 918571236
       noSpellhero_ui_pkg-01_23: -704655102
       noSpellhero_ui_pkg-01_2: 46047045
+      noSpellhero_ui_pkg-01_36: 1008346373
+      noSpellhero_ui_pkg-01_30: -617171861
+      noSpellhero_ui_pkg-01_29: -189208141
       noSpellhero_ui_pkg-01_25: -1811059256
       noSpellhero_ui_pkg-01_5: -2088914201
       noSpellhero_ui_pkg-01_8: 937884564
@@ -747,11 +962,16 @@ TextureImporter:
       noSpellhero_ui_pkg-01_22: -1764106682
       noSpellhero_ui_pkg-01_14: -212686449
       noSpellhero_ui_pkg-01_13: 334624891
+      noSpellhero_ui_pkg-01_38: -555993358
       noSpellhero_ui_pkg-01_18: -1668333735
       noSpellhero_ui_pkg-01_1: -1121574154
       noSpellhero_ui_pkg-01_4: 26451145
       noSpellhero_ui_pkg-01_6: 1239369592
+      noSpellhero_ui_pkg-01_37: 1089731370
+      noSpellhero_ui_pkg-01_32: 7045986
       noSpellhero_ui_pkg-01_12: -1200631591
+      noSpellhero_ui_pkg-01_35: -277925889
+      noSpellhero_ui_pkg-01_33: -2119028733
   spritePackingTag: 
   pSDRemoveMatte: 0
   pSDShowRemoveMatteOption: 0
