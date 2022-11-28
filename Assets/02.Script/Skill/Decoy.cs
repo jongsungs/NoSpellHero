@@ -17,19 +17,32 @@ public class Decoy : Monster
     private void OnEnable()
     {
 
-        // _myWeapon = _player._myWeapon;
-        GamePlay._eventHandler += MonsterRelease;
+         _myWeapon = Player.Instance._weapon;
         _hp = Player.Instance._hp;
         _atk = Player.Instance._atk;
         _matk = Player.Instance._matk;
         _atkSpeed = Player.Instance._atkSpeed;
         _def = Player.Instance._def;
-        _speed = Player.Instance._speed;
+        _speed = Player.Instance._speed + 0.5f;
         _critical = Player.Instance._critical;
         _handicraft = Player.Instance._handicraft;
         _charm = Player.Instance._charm;
+        _basicHp = _hp;
+        _maxHp = _basicHp;
+        _basicAtk = _atk;
+        _basicMatk = _matk;
+        _basicAtkSpeed = _atkSpeed;
+        _basicDef = _def;
+        _basicSpeed = _speed;
+        _basicCritical = _critical;
+        _basicHandicraft = _handicraft;
+        _basicCharm = _charm;
 
 
+        _ingameHp = 50 + (_hp * 5);
+        _maxHp = 50 + (_hp * 5);
+        StartCoroutine(CoFindEnemy());
+        Debug.Log("µðÄÚÀÌ");
     }
 
     private void Update()
@@ -40,7 +53,7 @@ public class Decoy : Monster
             _animator.SetFloat("AtkSpeed", _animator.speed);
         }
 
-        if (_hp <= 0f)
+        if (_ingameHp <= 0f)
         {
             ChangeState(State.Die);
 
@@ -93,6 +106,7 @@ public class Decoy : Monster
             {
                 Player.Instance.dosahidden = true;
                 AchievementManager.instance.Unlock("dosahidden");
+                Player.Instance.Save();
             }
 
             if (spell < Player.Instance._spellCastProbability + Player.Instance._weapon._spellProbability)

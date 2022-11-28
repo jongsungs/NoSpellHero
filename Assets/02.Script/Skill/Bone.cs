@@ -6,8 +6,11 @@ public class Bone : SkillBase
 {
 
     public GameObject _object;
+    public float _rotateSpeed;
 
 
+
+  
     private void OnEnable()
     {
         StartCoroutine(CoRotate());
@@ -19,7 +22,7 @@ public class Bone : SkillBase
         while(true)
         {
             yield return new WaitForSeconds(0.05f);
-            _object.transform.Rotate(Vector3.up * 5,Space.Self);
+            _object.transform.Rotate(Vector3.up * _rotateSpeed, Space.Self);
         }
     }
     public IEnumerator CoFoward()

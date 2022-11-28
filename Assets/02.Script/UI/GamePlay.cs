@@ -47,6 +47,7 @@ public class GamePlay : MonoBehaviour
     public SkillBase _heal;
     public SkillBase _meteorEffect;
     public SkillBase _thunder;
+    public SkillBase _footStep;
 
     public List<GameObject> _listPlayers = new List<GameObject>();
 
@@ -94,6 +95,7 @@ public class GamePlay : MonoBehaviour
     public IObjectPool<SkillBase> _healPool;
     public IObjectPool<SkillBase> _meteorEffectPool;
     public IObjectPool<SkillBase> _thunderPool;
+    public IObjectPool<SkillBase> _footStepPool;
 
 
 
@@ -108,7 +110,8 @@ public class GamePlay : MonoBehaviour
 
     public static event EventHandler _eventHandler;
 
-    public MoreMountains.Tools.MMProgressBar _test;
+    public MoreMountains.Tools.MMProgressBar _bossHpbarPlayer;
+    public MoreMountains.Tools.MMProgressBar _playerHp;
 
     public TextMeshProUGUI _timerMin,_timerSec;
     public float _timer;
@@ -130,7 +133,7 @@ public class GamePlay : MonoBehaviour
     private void Awake()
     {
         Instance = this;
-
+        _spawnChannelCount = 5;
         _slimePool = new ObjectPool<Monster>(CreatSlime,OngetMonster,OnReleaseMonster,OnDestroyMonster,maxSize : 10);
         _wolfpool = new ObjectPool<Monster>(CreatWolf, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
         _captainSkullPool = new ObjectPool<Monster>(CreatCaptainSkull, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
@@ -146,10 +149,10 @@ public class GamePlay : MonoBehaviour
         _fireBallPool = new ObjectPool<SkillBase>(CreateFireBall, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 10);
         _frozenPool = new ObjectPool<SkillBase>(CreateFrozen, OngetFrozen, OnReleaseSkill, OnDestroySkill, maxSize: 30);
         _roarPool = new ObjectPool<SkillBase>(CreateRoar, OngetRoar, OnReleaseRoar, OnDestroySkill, maxSize: 10);
-        _healPool = new ObjectPool<SkillBase>(CreateHeal, OngetEffectSkill, OnReleaseSkill, OnDestroySkill, maxSize: 20);
         _meteorEffectPool = new ObjectPool<SkillBase>(CreateMeteorEffect, OngetMeteorTarger, OnReleaseSkill, OnDestroySkill, maxSize: 10);
         _thunderPool = new ObjectPool<SkillBase>(CreateThunder, OngetThunder, OnReleaseSkill, OnDestroySkill, maxSize: 10);
-
+        _healPool = new ObjectPool<SkillBase>(CreateHeal, OngetEffectSkill, OnReleaseSkill, OnDestroySkill, maxSize: 20);
+        _footStepPool = new ObjectPool<SkillBase>(CreateFootStepEffect, OngetFootStepEffect, OnReleaseSkill, OnDestroySkill, maxSize: 50);
 
         _bossHPBar.SetActive(false);
 
@@ -163,6 +166,10 @@ public class GamePlay : MonoBehaviour
 
     private void Start()
     {
+        for(int i = 0; i < 10; ++i)
+        {
+          //  _roarPool.Get();
+        }
         StartCoroutine(CoTimer());
     }
 
@@ -216,11 +223,14 @@ public class GamePlay : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.G))
         {
-            EnterChoicePopUp();
+            Player.Instance._ingameHp -= 10f;
+            _playerHp.UpdateBar(Player.Instance._ingameHp, 0, Player.Instance._maxHp);
         }
         if (Input.GetKeyDown(KeyCode.H))
         {
             _wolfpool.Get();
+            _slimePool.Get();
+            _skeletonPool.Get();
         }
         if (Input.GetKeyDown(KeyCode.J))
         {
@@ -267,6 +277,7 @@ public class GamePlay : MonoBehaviour
     {
         var monster = Instantiate(_captainSkull, _randomSpawn.Return_RandomPosition(), Quaternion.identity, _objectPool.transform);
         monster.SetPool(_captainSkullPool);
+
         return monster;
     }
     private Monster CreatSkeleton()
@@ -342,6 +353,8 @@ public class GamePlay : MonoBehaviour
     private SkillBase CreateRoar()
     {
         var roar = Instantiate(_roar, Player.Instance.m_transform.position, Quaternion.identity, Player.Instance.m_transform);
+
+        roar.transform.localScale = new Vector3(0.5f + (float)Player.Instance._skill2, 0.5f + (float)Player.Instance._skill2, 0.5f + (float)Player.Instance._skill2);
         roar.SetPool(_roarPool);
         return roar;
     }
@@ -351,6 +364,7 @@ public class GamePlay : MonoBehaviour
         heal.SetPool(_healPool);
         return heal;
     }
+   
     private SkillBase CreateMeteorEffect()
     {
         var meteorEffect = Instantiate(_meteorEffect, Player.Instance.m_transform.position, Quaternion.identity, _objectPool.transform);
@@ -359,6 +373,13 @@ public class GamePlay : MonoBehaviour
        // _meteorPool.Get();
         
         return meteorEffect;
+    }
+    private SkillBase CreateFootStepEffect()
+    {
+        var foot = Instantiate(_footStep, Player.Instance.m_transform.position + new Vector3(0f,0.065f,0), Quaternion.identity, _objectPool.transform);
+        foot.SetPool(_footStepPool);
+
+        return foot;
     }
 
     private SkillBase CreateThunder()
@@ -396,7 +417,7 @@ public class GamePlay : MonoBehaviour
         }
         if (obj._monster == Monster.MonsterKind.CaptainSkull && _isBoss == false && _currentStage == GameState.Stage1 && obj._category == Monster.MonsterCategory.Boss)
         {
-            obj._hp = 100f;
+            obj._hp = 10f;
             _isBoss = true;
             
         }
@@ -419,6 +440,8 @@ public class GamePlay : MonoBehaviour
 
         }
         obj.transform.position = _randomSpawn.Return_RandomPosition();
+        obj._ingameHp = 50f + (obj._hp * 10f);
+        obj._maxHp = 50f + (obj._hp * 10f);
     }
 
    
@@ -453,13 +476,20 @@ public class GamePlay : MonoBehaviour
     }
     private void OngetRoar(SkillBase skill)
     {
-        skill.transform.position = Player.Instance._meteorPoint.transform.position ;
+        skill.transform.position = Player.Instance.m_transform.position ;
+        skill.transform.localScale = new Vector3(0.5f + (float)Player.Instance._skill2, 0.5f + (float)Player.Instance._skill2, 0.5f + (float)Player.Instance._skill2);
         
         skill.gameObject.SetActive(true);
     }
     private void OngetSkill(SkillBase skill)
     {
         skill.transform.position = Player.Instance._meteorPoint.transform.position + new Vector3(0, 0.5f, 0);
+        skill.transform.rotation = Player.Instance.m_transform.rotation;
+        skill.gameObject.SetActive(true);
+    }
+    private void OngetFootStepEffect(SkillBase skill)
+    {
+        skill.transform.position = Player.Instance.m_transform.position + new Vector3(0, 0.065f, 0);
         skill.transform.rotation = Player.Instance.m_transform.rotation;
         skill.gameObject.SetActive(true);
     }
@@ -513,6 +543,7 @@ public class GamePlay : MonoBehaviour
         {
             Player.Instance.firsthunt = true;
             AchievementManager.instance.Unlock("firsthunt");
+            Player.Instance.Save();
         }
 
 

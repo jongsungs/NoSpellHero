@@ -33,6 +33,7 @@ public class Monster : BaseObject
 
 
     protected IObjectPool<Monster> _monsterpool;
+
     protected GameObject _player;
     public NavMeshAgent _navimeshAgent;
     public bool _onHit;
@@ -49,7 +50,8 @@ public class Monster : BaseObject
     public MoreMountains.Feedbacks.MMFloatingTextSpawner _floatingTextSpawner;
     public MoreMountains.Feedbacks.MMF_Player _mmfPlayer;
 
-   
+    public Color _hitColor;
+    public Color _slimeColor;
 
 
 
@@ -63,7 +65,9 @@ public class Monster : BaseObject
     public bool _attackOnce;
     public float _attackDistance;
     public List<SkinnedMeshRenderer> _listMaterial;
+    public MeshRenderer _onlySlime;
     public int _attackStack;
+    public Weapon _monsterAttack;
 
     private void Awake()
     {
@@ -75,6 +79,8 @@ public class Monster : BaseObject
         _floatingTextSpawner = transform.GetChild(0).GetChild(0).GetComponent<MoreMountains.Feedbacks.MMFloatingTextSpawner>();
         _mmfPlayer = transform.GetChild(0).GetChild(1).GetComponent<MoreMountains.Feedbacks.MMF_Player>();
         _navimeshAgent.stoppingDistance = _attackDistance;
+        _isAttack = false;
+
         if (_burn != null)
         _burn.SetActive(false);
         if(_frozen != null)
@@ -107,6 +113,11 @@ public class Monster : BaseObject
 
     private void LateUpdate()
     {
+        if(_monsterAttack != null)
+        {
+            _monsterAttack._damage = _atk * 5;
+
+        }
         if (_ccOn == true)
         {
             _ccDurationTime -= Time.deltaTime;
@@ -153,9 +164,20 @@ public class Monster : BaseObject
     }
 
     
+    public virtual void AttackOn()
+    {
+        if(_monsterAttack != null)
+        _monsterAttack._isOnce = true;
+        _isAttack = true;
+    }
+    public virtual void AttackOff()
+    {
+        if (_monsterAttack != null)
+            _monsterAttack._isOnce = false;
+        _isAttack = true;
+    }
 
-    
-
+   
     public virtual void Freezing()
     {
         CCrecovery();
@@ -358,5 +380,37 @@ public class Monster : BaseObject
         yield return null;
     }
 
+    public IEnumerator CoHit()
+    {
+        if(_monster != MonsterKind.Slime)
+        {
 
+            for (int i = 0; i < _listMaterial.Count; ++i)
+            {
+                _listMaterial[i].material.color = _hitColor;
+
+            }
+        }
+        else if(_monster == MonsterKind.Slime)
+        {
+            _onlySlime.material.color = _hitColor;
+        }
+        yield return new WaitForSeconds(0.3f);
+
+        if(_monster != MonsterKind.Slime)
+        {
+
+            for (int i = 0; i < _listMaterial.Count; ++i)
+            {
+                _listMaterial[i].material.color = Color.white;
+
+
+            }
+        }
+        else if(_monster == MonsterKind.Slime)
+        {
+            _onlySlime.material.color = _slimeColor;
+        }
+    }
+   
 }

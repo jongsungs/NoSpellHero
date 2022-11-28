@@ -9,11 +9,12 @@ public class Lobby : MonoBehaviour
 {
     [SerializeField] Player _player;
     public GameObject _closetPopUp;
-    public GameObject _achivementPopUp;
+    public AchievenmentListIngame _achivementPopUp;
     public GameObject _playerTitleText;
     public GameObject _statePopUp;
     public GameObject _checkOutPopUp;
     public GameObject _alarmPopUp;
+    public GameObject _settingPopUp;
 
     public List<GameObject> _listWeapon = new List<GameObject>();
     public List<GameObject> _listHelmet = new List<GameObject>();
@@ -36,10 +37,11 @@ public class Lobby : MonoBehaviour
     private void OnEnable()
     {
 
-        _statePopUp.SetActive(true);
+        _statePopUp.SetActive(false);
         _closetPopUp.SetActive(false);
         _checkOutPopUp.SetActive(false);
         _alarmPopUp.SetActive(false);
+        _settingPopUp.SetActive(false);
         for (int i = 0; i < _player._atk; ++i)
         {
             _listStatSpace[0].transform.GetChild(i).gameObject.SetActive(true);
@@ -1284,7 +1286,9 @@ public class Lobby : MonoBehaviour
         _player._basicSpeed = 0;
         _player._maxHp = 0;
         _player.Save();
-        for(int i = 0; i <_listStatSpace.Count; ++i)
+        Player.Instance._ingameHp = 50 + (Player.Instance._hp * 10);
+        Player.Instance._maxHp = 50 + (Player.Instance._hp * 10);
+        for (int i = 0; i <_listStatSpace.Count; ++i)
         {
             for(int j= 0; j < _listStatSpace[i].transform.childCount; ++j)
             {
@@ -1304,15 +1308,22 @@ public class Lobby : MonoBehaviour
     public void ExitClosetPopUP()
     {
         _closetPopUp.SetActive(false);
-        _statePopUp.SetActive(true);
     }
     public void EnterAchivementPopUp()
     {
-        _achivementPopUp.SetActive(true);
+        _achivementPopUp.ToggleWindow();
     }
     public void ExitAchivemntPopUp()
     {
-        _achivementPopUp.SetActive(false);
+        _achivementPopUp.ToggleWindow();
+    }
+    public void EnterSettingPopUp()
+    {
+        _settingPopUp.SetActive(true);
+    }
+    public void ExitSettingPopUp()
+    {
+        _settingPopUp.SetActive(false);
     }
 
     public void ChoiceWeapon(int cnt)
@@ -1965,7 +1976,14 @@ public class Lobby : MonoBehaviour
     {
         _alarmPopUp.SetActive(false);
     }
-
+    public void EnterStatePopUp()
+    {
+        _statePopUp.SetActive(true);
+    }
+    public void ExitStatePopUp()
+    {
+        _statePopUp.SetActive(false);
+    }
     public void achivementCheck(bool check,string str)
     {
         if (check == false)
@@ -1989,6 +2007,9 @@ public class Lobby : MonoBehaviour
                 _listStatSpace[i].transform.GetChild(z).gameObject.SetActive(false);
             }
         }
+
+        
+
     }
 
 

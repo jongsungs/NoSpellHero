@@ -15,7 +15,7 @@ public class FollowCamera2 : MonoBehaviour
 
     public float _delayTime;
 
-    private void LateUpdate()
+    private void FixedUpdate()
     {
 
         Vector3 fixedPos = new Vector3(_target.transform.position.x + _offsetX, _target.transform.position.y + _offsetY, _target.transform.position.z + _offsetZ);

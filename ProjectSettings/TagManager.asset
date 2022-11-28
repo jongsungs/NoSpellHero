@@ -11,6 +11,7 @@ TagManager:
   - Enemy
   - Thunder
   - Meteor
+  - Bone
   layers:
   - Default
   - TransparentFX

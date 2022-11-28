@@ -60,6 +60,7 @@ public class BaseObject : MonoBehaviour
     public bool _isAttack;
     public Animator _animator;
     public Rigidbody _rigidbody;
+
     virtual public void Idle()
     {
 

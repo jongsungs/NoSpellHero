@@ -33,6 +33,10 @@ public class Slime : Monster
             ChangeState(State.Die);
 
         }
+        if(Player.Instance._isAttack == false)
+        {
+            _onHit = false;
+        }
 
        
 
@@ -106,15 +110,12 @@ public class Slime : Monster
 
     private void OnTriggerEnter(Collider other)
     {
-        
-        
-     
-        if (other.CompareTag("Weapon") )
+        if (other.CompareTag("Weapon"))
         {
-            
-            if(other.GetComponent<Weapon>()._isOnce == true && Player.Instance._playerTitle == Player.PlayerTitle.JackFrost)
+
+            if (Player.Instance._isAttack == true && Player.Instance._playerTitle == Player.PlayerTitle.JackFrost)
             {
-                other.GetComponent<Weapon>()._isOnce = false;
+                Player.Instance._isAttack = false;
                 ChangeState(State.Hit);
                 int _30 = Random.Range(0, 3); // 30퍼확률로 빙결
                 if (_30 == 0)
@@ -126,57 +127,57 @@ public class Slime : Monster
 
                 var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
                 _ingameHp -= damage;
-                _mmfPlayer.PlayFeedbacks(this.transform.position,damage);
-              
+                _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+
             }
-            else if(other.GetComponent<Weapon>()._isOnce == true && Player.Instance._playerTitle == Player.PlayerTitle.Druid)
+            else if (Player.Instance._isAttack == true && Player.Instance._playerTitle == Player.PlayerTitle.Druid)
             {
-                other.GetComponent<Weapon>()._isOnce = false;
+                Player.Instance._isAttack = false;
                 ChangeState(State.Hit);
-                _ingameHp -= other.GetComponent<Weapon>()._damage;
+                _ingameHp -= Player.Instance._weapon._damage;
                 int rand = Random.Range(0, 10 - _player.GetComponent<Player>()._skill1);
 
-                if(rand == 0)
+                if (rand == 0)
                 {
-                
+
                     m_targetMask = 64;
-                    if(Player.Instance.druidfirstskill == false)
+                    if (Player.Instance.druidfirstskill == false)
                     {
                         Player.Instance.druidfirstskill = true;
                     }
                     Player.Instance._druidScore++;
                     AchievementManager.instance.AddAchievementProgress("druidskill100", Player.Instance._druidScore);
 
-                  //  if (Player.Instance._druidScore >= 100 && Player.Instance.druidskill100 == false)
-                  //  {
-                  //      Player.Instance.druidskill100 = true;
-                  //      AchievementManager.instance.Unlock("druidskill100");
-                  //  }
+                    //  if (Player.Instance._druidScore >= 100 && Player.Instance.druidskill100 == false)
+                    //  {
+                    //      Player.Instance.druidskill100 = true;
+                    //      AchievementManager.instance.Unlock("druidskill100");
+                    //  }
 
 
                 }
 
             }
-            else if(other.GetComponent<Weapon>()._isOnce == true && Player.Instance._playerTitle == Player.PlayerTitle.QRF && Player.Instance._skill2 >= 3f &&Player.Instance._isHanger == true)
+            else if (Player.Instance._isAttack == true && Player.Instance._playerTitle == Player.PlayerTitle.QRF && Player.Instance._skill2 >= 3f && Player.Instance._isHanger == true)
             {
-                other.GetComponent<Weapon>()._isOnce = false;
+                Player.Instance._isAttack = false;
                 ChangeState(State.Hit);
                 int rand = Random.Range(0, 3);
-                if(rand == 0)
+                if (rand == 0)
                 {
                     Stun();
                 }
             }
-            else if (other.GetComponent<Weapon>()._isOnce == true && Player.Instance._playerTitle == Player.PlayerTitle.Acupuncturist)
+            else if (Player.Instance._isAttack == true && Player.Instance._playerTitle == Player.PlayerTitle.Acupuncturist)
             {
-                other.GetComponent<Weapon>()._isOnce = false;
+                Player.Instance._isAttack = false;
                 ChangeState(State.Hit);
                 int rand = Random.Range(0, 100);
                 Player.Instance._comboInstantDie.Add(rand);
 
-                if(rand <Player.Instance._instantDeathProbablility)
+                if (rand < Player.Instance._instantDeathProbablility)
                 {
-                    
+
                     int damage = 999999;
                     _ingameHp -= damage;
                     _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
@@ -184,21 +185,23 @@ public class Slime : Monster
                     {
                         Player.Instance.acupuncturistfirstskill = true;
                         AchievementManager.instance.Unlock("acupuncturistfirstskill");
+                        Player.Instance.Save();
                     }
                 }
-                else if(rand >= Player.Instance._instantDeathProbablility)
+                else if (rand >= Player.Instance._instantDeathProbablility)
                 {
-                    var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
                     _ingameHp -= damage;
                     _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
                 }
 
-                if(Player.Instance._comboInstantDie.Count >=3 && Player.Instance._comboInstantDie.Exists(x => x < Player.Instance._instantDeathProbablility) == false && Player.Instance.acupuncturistcritical == false)
+                if (Player.Instance._comboInstantDie.Count >= 3 && Player.Instance._comboInstantDie.Exists(x => x < Player.Instance._instantDeathProbablility) == false && Player.Instance.acupuncturistcritical == false)
                 {
                     Player.Instance.acupuncturistcritical = true;
                     AchievementManager.instance.Unlock("acupuncturistcritical");
+                    Player.Instance.Save();
                 }
-                if(Player.Instance._comboInstantDie.Exists(x => x>= Player.Instance._instantDeathProbablility) == true)
+                if (Player.Instance._comboInstantDie.Exists(x => x >= Player.Instance._instantDeathProbablility) == true)
                 {
                     Player.Instance._comboInstantDie.Clear();
                 }
@@ -206,11 +209,11 @@ public class Slime : Monster
 
 
             }
-            else if (other.GetComponent<Weapon>()._isOnce == true && Player.Instance._playerTitle == Player.PlayerTitle.DokeV)
+            else if (Player.Instance._isAttack == true && Player.Instance._playerTitle == Player.PlayerTitle.DokeV)
             {
+                Player.Instance._isAttack = false;
                 int rand = Random.Range(0, 100);
-                other.GetComponent<Weapon>()._isOnce = false;
-                var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
+                var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
                 _ingameHp -= damage;
                 ChangeState(State.Hit);
                 _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
@@ -219,7 +222,7 @@ public class Slime : Monster
                 {
                     int rand2 = Random.Range(0, 9);
                     float stat;
-                    if(rand == 0)
+                    if (rand == 0)
                     {
                         stat = _basicHp - (_basicHp * 0.1f);
 
@@ -227,7 +230,7 @@ public class Slime : Monster
                         Player.Instance._hp += stat;
 
                     }
-                    else if(rand == 1)
+                    else if (rand == 1)
                     {
                         stat = _basicAtk - (_basicAtk * 0.1f);
 
@@ -284,12 +287,13 @@ public class Slime : Monster
                         Player.Instance._charm += stat;
                     }
 
-                    if(Player.Instance.dokevfirstskill == false)
+                    if (Player.Instance.dokevfirstskill == false)
                     {
                         Player.Instance.dokevfirstskill = true;
                         AchievementManager.instance.Unlock("dokevfirstskill");
+                        Player.Instance.Save();
                     }
-                    
+
                 }
 
 
@@ -298,71 +302,88 @@ public class Slime : Monster
 
 
             }
-            else if (other.GetComponent<Weapon>()._isOnce == true)
+            else if (_onHit == false && Player.Instance._isAttack == true)
             {
 
-                other.GetComponent<Weapon>()._isOnce = false;
-                Debug.Log("데미지텍스트");
+                _onHit = true;
 
-                //ChangeState(State.Hit);
-                var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
-                _ingameHp -= damage;
-                _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                if ( _category == MonsterCategory.Common)
+                {
+
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                    _ingameHp -= damage;
+                    _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                }
+                else if (_category == MonsterCategory.Boss)
+                {
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                    _ingameHp -= damage;
+                    _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                    GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+
+                }
+
+                StartCoroutine(CoHit());
+
             }
+
+
 
         }
         else if (other.CompareTag("IceBall"))
         {
 
-          //  ChangeState(State.Hit);
-            var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._matk * 5) - (_def * 3);
+            //  ChangeState(State.Hit);
+            var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
 
             int _30 = Random.Range(0, 3); // 30퍼확률로 빙결
 
             if (_30 == 0)
             {
                 Freezing();
-       
+
             }
         }
-        else if(other.CompareTag("FireBall") )
+        else if (other.CompareTag("FireBall"))
         {
-           // ChangeState(State.Hit);
-            var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._matk * 5) - (_def * 3);
+            // ChangeState(State.Hit);
+            var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
             int _30 = Random.Range(0, 3);
-            if(_30 == 0)
+            if (_30 == 0)
             {
                 Burn();
             }
         }
-        else if(other.CompareTag("Thunder"))
+        else if (other.CompareTag("Thunder"))
         {
-           // ChangeState(State.Hit);
-            var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._matk * 5) - (_def * 3);
+            // ChangeState(State.Hit);
+            var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
             _ingameHp -= damage;
             _mmfPlayer.PlayFeedbacks(transform.position, damage);
 
         }
-        else if(other.CompareTag("Meteor"))
+        else if (other.CompareTag("Meteor"))
         {
-           // ChangeState(State.Hit);
-            var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._matk * 5) - (_def * 3);
+            // ChangeState(State.Hit);
+            var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
             _ingameHp -= damage;
             _mmfPlayer.PlayFeedbacks(transform.position, damage);
         }
+
+
 
 
 
     }
-
+  
     public override void Walk()
     {
         ChangeState(State.Walk);
     }
 
-    public void AttackOff()
+    public override void AttackOff()
     {
-        _isAttack = false;
+        base.AttackOff();
         _attackOnce = true;
         Walk();
     }

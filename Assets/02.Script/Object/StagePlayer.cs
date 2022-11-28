@@ -22,6 +22,8 @@ public class StagePlayer : MonoBehaviour
     public GameObject _helenEffect;
     public GameObject _repairManEffect;
     public GameObject _dosaEffect;
+    public MoreMountains.Feedbacks.MMFloatingTextSpawner _floatingTextSpawner;
+    public MoreMountains.Feedbacks.MMF_Player _mmfPlayer;
 
     private void Start()
     {
@@ -365,6 +367,8 @@ public class StagePlayer : MonoBehaviour
         {
             _pristHiddenEffect.SetActive(false);
         }
+
+        
     }
 
     public void AttackOn()
@@ -375,6 +379,58 @@ public class StagePlayer : MonoBehaviour
     public void AttackOff()
     {
         Player.Instance.AttackOff();
+    }
+    public void Step()
+    {
+        GamePlay.Instance._footStepPool.Get();
+    }
+    private void OnTriggerEnter(Collider other)
+    {
+
+        if (other.CompareTag("Bone"))
+        {
+            var damage = other.GetComponent<SkillBase>()._skillDamage - (Player.Instance._def * 3f);
+            if(damage <=0)
+            {
+                damage = 0f;
+            }
+            Player.Instance._ingameHp -= damage;
+            GamePlay.Instance._playerHp.UpdateBar(Player.Instance._ingameHp, 0, Player.Instance._maxHp);
+            _mmfPlayer.PlayFeedbacks(transform.position, damage);
+
+
+            other.GetComponent<SkillBase>().SkillRelease();
+        }
+        else if (other.CompareTag("Enemy") && other.GetComponent<Weapon>() != null)
+        {
+            if( other.GetComponent<Weapon>()._isOnce == true)
+            {
+
+                other.GetComponent<Weapon>()._isOnce = false;
+                var damage = other.GetComponent<Weapon>()._damage - (Player.Instance._def * 3f);
+                if (damage <= 0)
+                {
+                    damage = 0f;
+                }
+                Player.Instance._ingameHp -= damage;
+                GamePlay.Instance._playerHp.UpdateBar(Player.Instance._ingameHp, 0, Player.Instance._maxHp);
+                _mmfPlayer.PlayFeedbacks(transform.position, damage);
+            }
+
+        }
+        else if (other.CompareTag("Enemy") && other.GetComponent<Weapon>() == null && other.GetComponent<Monster>()._isAttack == true && other.GetComponent<Monster>()._monster != Monster.MonsterKind.CaptainSkull)
+        {
+            other.GetComponent<Monster>()._isAttack = false;
+            var damage = (other.GetComponent<Monster>()._atk*5) - (Player.Instance._def * 3f);
+            if (damage <= 0)
+            {
+                damage = 0f;
+            }
+            Player.Instance._ingameHp -= damage;
+            GamePlay.Instance._playerHp.UpdateBar(Player.Instance._ingameHp, 0, Player.Instance._maxHp);
+            _mmfPlayer.PlayFeedbacks(transform.position, damage);
+        }
+
     }
 
 

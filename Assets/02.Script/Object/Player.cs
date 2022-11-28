@@ -765,7 +765,7 @@ public class Player : BaseObject
             _buySkinHead, _buynormalHair, _buyKnightTop, _buyMasicianTop, _buyDurumagiTop, _buyKnightBottom, _buyMasicianBottom, _buydurumagiBottom, _buyKnightShoes, _buySandal, _buyOldShoes, _buyEmptyHelmet, _buyNormalTop, _buyTrunkBottom, _buynormalShoes
             ,_isbasicStick,_buybasicStick);
         
-        _preSpeed = _speed;
+        _preSpeed = _speed + 1f;
 
         _ingameHp = 50f + (_hp * 10f);
         _maxHp = 50f + (_hp * 10f);
@@ -781,16 +781,7 @@ public class Player : BaseObject
         _basicCriticalDamage = _criticalDamage;
         _criticalProbability = 3f;
 
-        
-
-
-
-
-
-
-
-        
-
+     
         _listState.Add(_atk);
         _listState.Add(_matk);
         _listState.Add(_atkSpeed);
@@ -800,10 +791,202 @@ public class Player : BaseObject
         _listState.Add(_critical);
         _listState.Add(_handicraft);
         _listState.Add(_charm);
-        
 
-        
-     
+        #region CheckTitle
+        if (_atk == 5 && _matk == 5 && _hp == 5)
+        {
+            _playerTitle = Player.PlayerTitle.MagicalBlader;
+        }
+        else if (_atk == 5 && _matk == 5 && _critical == 5)
+        {
+            _playerTitle = Player.PlayerTitle.MadMan;
+
+
+
+        }
+        else if (_atk == 5 && _matk == 5 && _atkSpeed == 5)
+        {
+            _playerTitle = Player.PlayerTitle.StrongMan;
+        }
+        else if (_atk == 5 && _hp == 5 && _atkSpeed == 5)
+        {
+          _playerTitle = Player.PlayerTitle.Warrior;
+        }
+        else if (_atk == 5 && _hp == 5 && _handicraft == 5)
+        {
+           _playerTitle = Player.PlayerTitle.Dwarf;
+        }
+        else if (_atk == 5 && _hp == 5 && _charm == 5)
+        {
+           _playerTitle = Player.PlayerTitle.JackFrost;
+        }
+        else if (_atk == 5 && _hp == 5 && _speed == 5)
+        {
+            _playerTitle = Player.PlayerTitle.AssaultCaptain;
+        }
+        else if (_atk == 5 && _hp == 5 && _def == 5)
+        {
+           _playerTitle = Player.PlayerTitle.ZhangFei;
+
+        }
+        else if (_atk == 5 && _critical == 5 && _atkSpeed == 5)
+        {
+            _playerTitle = Player.PlayerTitle.Berserker;
+        }
+        else if (_atk == 5 && _critical == 5 && _handicraft == 5)
+        {
+            _playerTitle = Player.PlayerTitle.Critialer;
+        }
+        else if (_atk == 5 && _critical == 5 && _charm == 5)
+        {
+            _playerTitle = Player.PlayerTitle.Druid;
+        }
+        else if (_atk == 5 && _critical == 5 && _speed == 5)
+        {
+            _playerTitle = Player.PlayerTitle.Assassin;
+        }
+        else if (_atk == 5 && _atkSpeed == 5 && _handicraft == 5)
+        {
+            _playerTitle = Player.PlayerTitle.Ambidextrous;
+
+        }
+        else if (_atk == 5 && _handicraft == 5 && _charm == 5)
+        {
+            _playerTitle = Player.PlayerTitle.LuBu;
+
+        }
+        else if (_atk == 5 && _speed == 5 && _def == 5)
+        {
+            _playerTitle = Player.PlayerTitle.HeavyCavalry;
+
+        }
+        else if (_matk == 5 && _hp == 5 && _critical == 5)
+        {
+           _playerTitle = Player.PlayerTitle.HealthMagician;
+        }
+        else if (_matk == 5 && _hp == 5 && _def == 5)
+        {
+            _playerTitle = Player.PlayerTitle.Priest;
+        }
+        else if (_matk == 5 && _critical == 5 && _atkSpeed == 5)
+        {
+           _playerTitle = Player.PlayerTitle.Warlock;
+        }
+        else if (_matk == 5 && _critical == 5 && _handicraft == 5)
+        {
+            _playerTitle = Player.PlayerTitle.Salamander;
+        }
+        else if (_matk == 5 && _critical == 5 && _charm == 5)
+        {
+            _playerTitle = Player.PlayerTitle.Zeus;
+        }
+        else if (_matk == 5 && _atkSpeed == 5 && _handicraft == 5)
+        {
+            _playerTitle = Player.PlayerTitle.PracticeBug;
+        }
+        else if (_matk == 5 && _charm == 5 && _handicraft == 5)
+        {
+           _playerTitle = Player.PlayerTitle.Stranger;
+        }
+        else if (_matk == 5 && _handicraft == 5 && _def == 5)
+        {
+            //아직 미구현
+            //  _OnTitle = true;
+            //  _player._playerTitle = Player.PlayerTitle.GateKeeper;
+            //  _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+
+        }
+        else if (_hp == 5 && _atkSpeed == 5 && _handicraft == 5)
+        {
+            _playerTitle = Player.PlayerTitle.Cook;
+        }
+        else if (_hp == 5 && _atkSpeed == 5 && _speed == 5)
+        {
+            _playerTitle = Player.PlayerTitle.QRF;
+        }
+        else if (_hp == 5 && _handicraft == 5 && _charm == 5)
+        {
+            _playerTitle = Player.PlayerTitle.Servant;
+        }
+
+        else if (_hp == 5 && _handicraft == 5 && _speed == 5)
+        {
+            _playerTitle = Player.PlayerTitle.Athlete;
+        }
+        else if (_hp == 5 && _handicraft == 5 && _def == 5)
+        {
+           _playerTitle = Player.PlayerTitle.Versatile;
+        }
+        else if (_hp == 5 && _speed == 5 && _def == 5)
+        {
+            //미구현
+            // _OnTitle = true;
+            // _player._playerTitle = Player.PlayerTitle.Shieldbearer;
+            // _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            // achivementCheck(_player.getshield)
+        }
+        else if (_critical == 5 && _atkSpeed == 5 && _handicraft == 5)
+        {
+           _playerTitle = Player.PlayerTitle.Acupuncturist;
+        }
+        else if (_critical == 5 && _speed == 5 && _atkSpeed == 5)
+        {
+            _playerTitle = Player.PlayerTitle.SpoonKiller;
+        }
+        else if (_critical == 5 && _handicraft == 5 && _charm == 5)
+        {
+            
+            _playerTitle = Player.PlayerTitle.Helen;
+        }
+        else if (_critical == 5 && _speed == 5 && _handicraft == 5)
+        {
+            //미구현
+            // _OnTitle = true;
+            // _player._playerTitle = Player.PlayerTitle.Slicker;
+            // _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+            // achivementCheck(_player.getsli)
+            
+        }
+        else if (_critical == 5 && _speed == 5 && _charm == 5)
+        {
+            _playerTitle = Player.PlayerTitle.Rich;
+
+        }
+        else if (_atkSpeed == 5 && _handicraft == 5 && _charm == 5)
+        {
+            _playerTitle = Player.PlayerTitle.Swell;;
+        }
+        else if (_atkSpeed == 5 && _handicraft == 5 && _speed == 5)
+        {
+            _playerTitle = Player.PlayerTitle.Delivery;
+        }
+        else if (_atkSpeed == 5 && _handicraft == 5 && _def == 5)
+        {
+            _playerTitle = Player.PlayerTitle.Repairman;
+        }
+        else if (_atkSpeed == 5 && _charm == 5 && _speed == 5)
+        {
+            _playerTitle = Player.PlayerTitle.Dosa;
+        }
+        else if (_handicraft == 5 && _charm == 5 && _speed == 5)
+        {
+            _playerTitle = Player.PlayerTitle.Gambler;
+        }
+        else if (_handicraft == 5 && _charm == 5 && _def == 5)
+        {
+            _playerTitle = Player.PlayerTitle.SlowStarter;
+        }
+        else if (_handicraft == 5 && _def == 5 && _speed == 5)
+        {
+            _playerTitle = Player.PlayerTitle.Orpheus;
+        }
+        else if (_charm == 5 && _def == 5 && _speed == 5)
+        {
+            _playerTitle = Player.PlayerTitle.DokeV;
+        }
+        #endregion
+
+
 
     }
 
@@ -829,9 +1012,19 @@ public class Player : BaseObject
        // _half = UnityEngine.Random.Range(0, 2);
         _1_3 = UnityEngine.Random.Range(0, 3);
         _quater = UnityEngine.Random.Range(0, 4);
+        if (_animator != null)
+        {
+            _animator.speed = 1f + (_atkSpeed / 5f);
+            _animator.SetFloat("AtkSpeed", _animator.speed);
+            _animator.SetFloat("Speed", 1f + _speed);
+        }
         if (_ingameHp >= _maxHp)
         {
             _ingameHp = _maxHp;
+        }
+        if(_ingameHp <= 0)
+        {
+            Die();
         }
 
         //사제 히든
@@ -867,11 +1060,7 @@ public class Player : BaseObject
             }
         }
 
-        if (_animator != null)
-        {
-            _animator.speed = 0.5f + (_atkSpeed / 10f);
-            _animator.SetFloat("AtkSpeed", _animator.speed);
-        }
+       
         if (Input.GetKeyDown(KeyCode.Alpha1))
         {
             _skill1 += 1;
@@ -895,14 +1084,16 @@ public class Player : BaseObject
         if (Input.GetKeyDown(KeyCode.S))
         {
             Die();
-            GamePlay.Instance.ActiveResultPopUp();
         }
-        
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            Meteor();
+        }
 
-      
+
         //DrawView();
 
-       
+
 
     }
     public Vector3 DirFromAngle(float angleInDegrees)
@@ -1039,14 +1230,6 @@ public class Player : BaseObject
             else if(rand ==0)
             {
                 Roar();
-            }
-        }
-        else if(_playerTitle == PlayerTitle.Dosa)
-        {
-            rand = UnityEngine.Random.Range(0, 10);
-            if(rand < 1 + _skill1)
-            {
-                GamePlay.Instance._decoyPool.Get();
             }
         }
         else if (_playerTitle == PlayerTitle.Gambler)
@@ -1206,8 +1389,7 @@ public class Player : BaseObject
                 }
             }
         }
-        _ingameHp = 50f + (_hp * 10f);
-        _maxHp = 50f + (_hp * 10f);
+        
 
     }
     public void AttackOff()
@@ -1225,21 +1407,23 @@ public class Player : BaseObject
         {
             case State.Idle:
                 Vector3 direction = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
-                _rigidbody.velocity = (direction * (_basicSpeed * 50f) * Time.fixedDeltaTime);
+                _rigidbody.velocity = (direction * ((1f + _basicSpeed) * 50f) * Time.fixedDeltaTime);
                 m_transform.transform.rotation = Quaternion.LookRotation(direction);
                 m_transform.transform.Translate(Vector3.forward * _rotateSpeed * Time.deltaTime);
-               
+            
+
                 break;
             case State.Walk:
               
                     Vector3 direction2 = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
-                    _rigidbody.velocity = (direction2 * (_basicSpeed * 50f) * Time.fixedDeltaTime);
+                    _rigidbody.velocity = (direction2 * ((1f + _basicSpeed) * 50f) * Time.fixedDeltaTime);
                     m_transform.transform.rotation = Quaternion.LookRotation(direction2);
                     m_transform.transform.Translate(Vector3.forward * _rotateSpeed * Time.deltaTime);
+             
                
 
                 _isIdle = true;
-
+                _isAttack = false;
                 break;
             case State.Attack:
                
@@ -1254,22 +1438,28 @@ public class Player : BaseObject
                 {
                     earlydie = true;
                     AchievementManager.instance.Unlock("earlydie");
+                    Player.Instance.Save();
                 }
                 if(GamePlay.Instance._currentStage == GamePlay.GameState.Stage1 && _totalCreepScore == 0 && nonviolent == false)
                 {
                     nonviolent = true;
                     AchievementManager.instance.Unlock("nonviolent");
+                    Player.Instance.Save();
                 }
                 if(GamePlay.Instance._currentStage == GamePlay.GameState.Stage1 && _playerTitle == PlayerTitle.Helen && helenstage1die == false)
                 {
                     helenstage1die = true;
                     AchievementManager.instance.Unlock("helenstage1die");
+                    Player.Instance.Save();
                 }
                 if(_playerTitle == PlayerTitle.Orpheus && orpheusfirstdie == false)
                 {
                     orpheusfirstdie = true;
                     AchievementManager.instance.Unlock("orpheusfirstdie");
+                    Player.Instance.Save();
                 }
+
+                GamePlay.Instance.ActiveResultPopUp();
                 break;
             case State.Attack2:
               
@@ -1694,7 +1884,6 @@ public class Player : BaseObject
 
         }
         
-        Debug.Log("걸리");
     }
     public void HiddenSkill(PlayerTitle title)
     {
@@ -1906,6 +2095,12 @@ public class Player : BaseObject
             check = true;
             AchievementManager.instance.Unlock(str);
         }
+        Save();
+    }
+
+    public void Step()
+    {
+        GamePlay.Instance._footStepPool.Get();
     }
 
 
@@ -1964,12 +2159,13 @@ public class Player : BaseObject
         {
             firstmagic = true;
             AchievementManager.instance.Unlock("firstmagic");
+            Player.Instance.Save();
         }
 
     }
     
 
-
+  
     public IEnumerator CoLightning()
     {
         _count++;
@@ -2308,11 +2504,16 @@ public class Player : BaseObject
     public void Roar()
     {
 
-        achivementCheck(zhangfeiroar, "zhangfeiroar");
+    //    achivementCheck(zhangfeiroar, "zhangfeiroar");
 
+        GamePlay.Instance._roarPool.Get();
 
-        m_viewDistance = 2 + _skill2;
-
+        if(_skill2 < 3)
+        m_viewDistance = 0.5f + _skill2;
+        else if(_skill2 >=3 )
+        {
+            m_viewDistance = 60f;
+        }    
       
         
 
@@ -2332,7 +2533,7 @@ public class Player : BaseObject
         }
 
 
-        _listBlizzardMonster.Clear();
+       // _listBlizzardMonster.Clear();
 
     }
 

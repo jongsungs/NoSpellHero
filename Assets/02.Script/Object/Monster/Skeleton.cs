@@ -29,7 +29,10 @@ public class Skeleton : Monster
     private void Update()
     {
 
-
+        if (Player.Instance._isAttack == false)
+        {
+            _onHit = false;
+        }
 
         if (_ingameHp <= 0f)
         {
@@ -139,9 +142,9 @@ public class Skeleton : Monster
         if (other.CompareTag("Weapon"))
         {
 
-            if (other.GetComponent<Weapon>()._isOnce == true && Player.Instance._playerTitle == Player.PlayerTitle.JackFrost)
+            if (Player.Instance._isAttack == true && Player.Instance._playerTitle == Player.PlayerTitle.JackFrost)
             {
-                other.GetComponent<Weapon>()._isOnce = false;
+                Player.Instance._isAttack = false;
                 ChangeState(State.Hit);
                 int _30 = Random.Range(0, 3); // 30ÆÛÈ®·ü·Î ºù°á
                 if (_30 == 0)
@@ -156,11 +159,11 @@ public class Skeleton : Monster
                 _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
 
             }
-            else if (other.GetComponent<Weapon>()._isOnce == true && Player.Instance._playerTitle == Player.PlayerTitle.Druid)
+            else if (Player.Instance._isAttack == true && Player.Instance._playerTitle == Player.PlayerTitle.Druid)
             {
-                other.GetComponent<Weapon>()._isOnce = false;
+                Player.Instance._isAttack = false;
                 ChangeState(State.Hit);
-                _ingameHp -= other.GetComponent<Weapon>()._damage;
+                _ingameHp -= Player.Instance._weapon._damage;
                 int rand = Random.Range(0, 10 - _player.GetComponent<Player>()._skill1);
 
                 if (rand == 0)
@@ -184,9 +187,9 @@ public class Skeleton : Monster
                 }
 
             }
-            else if (other.GetComponent<Weapon>()._isOnce == true && Player.Instance._playerTitle == Player.PlayerTitle.QRF && Player.Instance._skill2 >= 3f && Player.Instance._isHanger == true)
+            else if (Player.Instance._isAttack == true && Player.Instance._playerTitle == Player.PlayerTitle.QRF && Player.Instance._skill2 >= 3f && Player.Instance._isHanger == true)
             {
-                other.GetComponent<Weapon>()._isOnce = false;
+                Player.Instance._isAttack = false;
                 ChangeState(State.Hit);
                 int rand = Random.Range(0, 3);
                 if (rand == 0)
@@ -194,9 +197,9 @@ public class Skeleton : Monster
                     Stun();
                 }
             }
-            else if (other.GetComponent<Weapon>()._isOnce == true && Player.Instance._playerTitle == Player.PlayerTitle.Acupuncturist)
+            else if (Player.Instance._isAttack == true && Player.Instance._playerTitle == Player.PlayerTitle.Acupuncturist)
             {
-                other.GetComponent<Weapon>()._isOnce = false;
+                Player.Instance._isAttack = false;
                 ChangeState(State.Hit);
                 int rand = Random.Range(0, 100);
                 Player.Instance._comboInstantDie.Add(rand);
@@ -211,11 +214,13 @@ public class Skeleton : Monster
                     {
                         Player.Instance.acupuncturistfirstskill = true;
                         AchievementManager.instance.Unlock("acupuncturistfirstskill");
+                        
+                        Player.Instance.Save();
                     }
                 }
                 else if (rand >= Player.Instance._instantDeathProbablility)
                 {
-                    var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
                     _ingameHp -= damage;
                     _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
                 }
@@ -224,6 +229,7 @@ public class Skeleton : Monster
                 {
                     Player.Instance.acupuncturistcritical = true;
                     AchievementManager.instance.Unlock("acupuncturistcritical");
+                    Player.Instance.Save();
                 }
                 if (Player.Instance._comboInstantDie.Exists(x => x >= Player.Instance._instantDeathProbablility) == true)
                 {
@@ -233,11 +239,11 @@ public class Skeleton : Monster
 
 
             }
-            else if (other.GetComponent<Weapon>()._isOnce == true && Player.Instance._playerTitle == Player.PlayerTitle.DokeV)
+            else if (Player.Instance._isAttack == true && Player.Instance._playerTitle == Player.PlayerTitle.DokeV)
             {
+                Player.Instance._isAttack = false;
                 int rand = Random.Range(0, 100);
-                other.GetComponent<Weapon>()._isOnce = false;
-                var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
+                var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
                 _ingameHp -= damage;
                 ChangeState(State.Hit);
                 _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
@@ -315,6 +321,7 @@ public class Skeleton : Monster
                     {
                         Player.Instance.dokevfirstskill = true;
                         AchievementManager.instance.Unlock("dokevfirstskill");
+                        Player.Instance.Save();
                     }
 
                 }
@@ -325,37 +332,39 @@ public class Skeleton : Monster
 
 
             }
-            else if (other.GetComponent<Weapon>()._isOnce == true)
+            else if (_onHit == false && Player.Instance._isAttack == true)
             {
 
-                other.GetComponent<Weapon>()._isOnce = false;
-                Debug.Log("µ¥¹ÌÁöÅØ½ºÆ®");
+                _onHit = true;
 
-                //ChangeState(State.Hit);
                 if (_monster == MonsterKind.Skull && _category == MonsterCategory.Common)
                 {
 
-                    var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
                     _ingameHp -= damage;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
                 }
                 else if (_monster == MonsterKind.CaptainSkull && _category == MonsterCategory.Boss)
                 {
-                    var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._atk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
                     _ingameHp -= damage;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
-                    GamePlay.Instance._test.UpdateBar(_hp, 0, _maxHp);
+                    GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
                     
                 }
 
+                StartCoroutine(CoHit());
+
             }
+            
+
 
         }
         else if (other.CompareTag("IceBall"))
         {
 
             //  ChangeState(State.Hit);
-            var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._matk * 5) - (_def * 3);
+            var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
 
             int _30 = Random.Range(0, 3); // 30ÆÛÈ®·ü·Î ºù°á
 
@@ -368,7 +377,7 @@ public class Skeleton : Monster
         else if (other.CompareTag("FireBall"))
         {
             // ChangeState(State.Hit);
-            var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._matk * 5) - (_def * 3);
+            var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
             int _30 = Random.Range(0, 3);
             if (_30 == 0)
             {
@@ -378,7 +387,7 @@ public class Skeleton : Monster
         else if (other.CompareTag("Thunder"))
         {
             // ChangeState(State.Hit);
-            var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._matk * 5) - (_def * 3);
+            var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
             _ingameHp -= damage;
             _mmfPlayer.PlayFeedbacks(transform.position, damage);
 
@@ -386,7 +395,7 @@ public class Skeleton : Monster
         else if (other.CompareTag("Meteor"))
         {
             // ChangeState(State.Hit);
-            var damage = other.GetComponent<Weapon>()._damage + (Player.Instance._matk * 5) - (_def * 3);
+            var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
             _ingameHp -= damage;
             _mmfPlayer.PlayFeedbacks(transform.position, damage);
         }
@@ -394,15 +403,16 @@ public class Skeleton : Monster
 
 
     }
+    
 
     public override void Walk()
     {
         ChangeState(State.Walk);
     }
 
-    public void AttackOff()
+    public override void AttackOff()
     {
-        _isAttack = false;
+        base.AttackOff();
         _attackOnce = true;
         Walk();
     }
