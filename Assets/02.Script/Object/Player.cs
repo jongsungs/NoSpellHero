@@ -479,6 +479,10 @@ public class Player : BaseObject
     public List<Animator> _listAnimator = new List<Animator>();
     public List<Rigidbody> _listRigidBody = new List<Rigidbody>();
 
+    public int _gold;
+    
+    public int _stat;
+    public int _currentStat;
     
     #region Cloth
     //////옷----------------------------------------
@@ -1523,6 +1527,7 @@ public class Player : BaseObject
                 break;
             case PlayerTitle.Warrior:
                 _atk = _basicAtk + (_basicAtk * 0.3f) + (_basicAtk * _skill1 / 10f);
+                _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill3 / 10f);
                 if(_skill1 >=3 )
                 {
                     achivementCheck(warriorskill1full, "warriorskill1full");
@@ -1547,8 +1552,9 @@ public class Player : BaseObject
 
                 break;
             case PlayerTitle.AssaultCaptain:
-                _speed = _basicSpeed + (_basicSpeed * 0.3f) + (_basicSpeed * _skill1 / 10f);
+                _speed = _basicSpeed + (_basicSpeed * 0.3f);
                 _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
+                _hp = _basicHp + (_basicHp * _skill1 / 10f);
                 if(_skill1 >= 3 || _skill2 >= 3)
                 {
                     achivementCheck(assaultcaptainfull, "assaultcaptainfull");
@@ -1592,7 +1598,7 @@ public class Player : BaseObject
 
                 break;
             case PlayerTitle.Druid:
-                _speed = _basicSpeed + (_basicSpeed * _skill2 / 10f);
+                _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill2 / 10f);
                 break;
             case PlayerTitle.Assassin:
                 if (_skill2 >= 3)
@@ -1626,7 +1632,9 @@ public class Player : BaseObject
 
                 
                 _atk = _basicAtk + (_basicAtk * 0.2f) + (_basicAtk * _skill1 / 10f);
-                _speed = _basicSpeed + (_basicSpeed * 0.2f) + (_basicSpeed * _skill2 / 10f);
+                _speed = _basicSpeed + (_basicSpeed * 0.2f);
+                _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill2 / 10f);
+
                 break;
             case PlayerTitle.HealthMagician:
                 _hp = _basicHp + (_basicHp * 0.3f) + (_basicHp * _skill1 / 5f);
@@ -1711,9 +1719,8 @@ public class Player : BaseObject
                 break;
             case PlayerTitle.QRF:
                 _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * 0.5f) + (_basicAtkSpeed * _skill1 / 10f);
-                _atk = _basicAtk + (_basicAtk * 0.1f);
-                _speed = _basicSpeed + (_basicSpeed * _skill2);
-
+                _atk = _basicAtk + (_basicAtk * 0.1f) + (_basicAtk * _skill2/10f);
+        
 
                 //히든
                 if (_skill2 >= 3)
@@ -1740,9 +1747,9 @@ public class Player : BaseObject
                 {
                     achivementCheck(ahleteskill2full, "ahleteskill2full");
                 }
-
+                _atk = _basicAtk + (_basicAtk * _skill1 / 10f);
                 _hp = _basicHp + (_basicHp * 0.3f) + (_basicHp * _skill2 / 10f);
-                _speed = _basicSpeed + (_basicSpeed * 0.2f) + (_basicSpeed * _skill1 / 10f);
+                _speed = _basicSpeed + (_basicSpeed * 0.2f);
 
                 _maxHp = 50f + (_hp * 10f);
                 break;
@@ -1795,7 +1802,7 @@ public class Player : BaseObject
                 break;
             case PlayerTitle.Rich:
                 _critical = _basicCritical + (_basicCritical * _skill1 / 10f);
-                _speed = _basicSpeed + (_basicSpeed * _skill2 / 10f);
+                _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
 
                 //죽인 몬스터 수 *  골드 획득 나중에 만들 것
                 break;
@@ -1825,10 +1832,10 @@ public class Player : BaseObject
                 {
                     achivementCheck(deliveryskill1full, "deliverryskill1full");
                 }
-                
-                
-                
-                _speed = _basicSpeed + _basicSpeed + (_basicSpeed * _skill1 / 10f);
+
+
+                _critical = _basicCritical + (_basicCritical * _skill1 / 10f);
+                _speed = _basicSpeed + _basicSpeed;
                 _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill2 / 10f);
 
                 //여유 생기면 만들기

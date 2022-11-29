@@ -104,7 +104,7 @@ public class Monster : BaseObject
         _basicCritical = _critical;
         _basicHandicraft = _handicraft;
         _basicCharm = _charm;
-
+        _isDead = false;
 
         StartCoroutine(CoFindEnemy());
         Debug.Log("몬스터 시작");

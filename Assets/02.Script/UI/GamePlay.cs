@@ -176,7 +176,6 @@ public class GamePlay : MonoBehaviour
     private void Update()
     {
         
-        _creepScoreText.GetComponent<TextMeshProUGUI>().text = Player.Instance._totalCreepScore.ToString();
       
        
 
@@ -614,6 +613,11 @@ public class GamePlay : MonoBehaviour
         _pausePopUp.gameObject.SetActive(false);
         Time.timeScale = 1f;
     }
+    public void GameOff()
+    {
+        Application.Quit();
+    }
+
     public void EnterChoicePopUp()
     {
         _choicePopUp.gameObject.SetActive(true);
@@ -622,362 +626,362 @@ public class GamePlay : MonoBehaviour
 
         if (Player.Instance._playerTitle == Player.PlayerTitle.Normal)
         {
-            _skill1Image = _listSkillIcon[0];
+            _skill1Image.sprite = _listSkillIcon[2].sprite;
             _skill1Text.text = "공격력 증가";
-            _skill2Image = _listSkillIcon[0];
+            _skill2Image.sprite = _listSkillIcon[5].sprite;
             _skill2Text.text = "공격속도 증가";
-            _skill3Image = _listSkillIcon[0];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.MagicalBlader)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[1].sprite;
             _skill1Text.text = "마력 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[2].sprite;
             _skill2Text.text = "공격력 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.MadMan)
         {
-            _skill1Image = _listSkillIcon[0];
+            _skill1Image.sprite = _listSkillIcon[2].sprite;
             _skill1Text.text = "공격력 증가";
-            _skill2Image = _listSkillIcon[0];
+            _skill2Image.sprite = _listSkillIcon[1].sprite;
             _skill2Text.text = "마력 증가";
-            _skill3Image = _listSkillIcon[0];
+            _skill3Image.sprite = _listSkillIcon[4].sprite;
             _skill3Text.text = "치명타 피해율 증가";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.StrongMan)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[5].sprite;
             _skill1Text.text = "공격속도 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[6].sprite;
             _skill2Text.text = "추가 공격 확률 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Warrior)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[2].sprite;
             _skill1Text.text = "공격력 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[3].sprite;
             _skill2Text.text = "체력 회복";
-            _skill3Image = _listSkillIcon[1];
-            _skill3Text.text = "골드 획득";
+            _skill3Image.sprite = _listSkillIcon[5].sprite;
+            _skill3Text.text = "공격속도 증가";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Dwarf)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[7].sprite;
             _skill1Text.text = "무기공격력 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[2].sprite;
             _skill2Text.text = "공격력 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.JackFrost)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[8].sprite;
             _skill1Text.text = "빙결확률 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[2].sprite;
             _skill2Text.text = "공격력 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[5].sprite;
             _skill3Text.text = "공격속도 증가";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.AssaultCaptain)
         {
-            _skill1Image = _listSkillIcon[1];
-            _skill1Text.text = "이동속도 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[14].sprite;
+            _skill1Text.text = "체력 증가";
+            _skill2Image.sprite = _listSkillIcon[2].sprite;
             _skill2Text.text = "공격력 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.ZhangFei)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[9].sprite;
             _skill1Text.text = "스턴 지속시간 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[0].sprite;
             _skill2Text.text = "스턴 범위 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Berserker)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[10].sprite;
             _skill1Text.text = "조건부 체력 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[2].sprite;
             _skill2Text.text = "공격력 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Critialer)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[4].sprite;
             _skill1Text.text = "치명타 피해율 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[2].sprite;
             _skill2Text.text = "공격력 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Druid)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[11].sprite;
             _skill1Text.text = "교화 확률 증가";
-            _skill2Image = _listSkillIcon[1];
-            _skill2Text.text = "이동속도 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[5].sprite;
+            _skill2Text.text = "공격속도 증가";
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Assassin)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[12].sprite;
             _skill1Text.text = "치명타확률 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[4].sprite;
             _skill2Text.text = "치명타 피해율 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[5].sprite;
             _skill3Text.text = "공격속도 증가";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Ambidextrous)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[5].sprite;
             _skill1Text.text = "공격속도 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[2].sprite;
             _skill2Text.text = "공격력 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.LuBu)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[2].sprite;
             _skill1Text.text = "공격력 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[5].sprite;
             _skill2Text.text = "공격속도 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[13].sprite;
             _skill3Text.text = "심신단련";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.HeavyCavalry)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[2].sprite;
             _skill1Text.text = "공격력 증가";
-            _skill2Image = _listSkillIcon[1];
-            _skill2Text.text = "이동속도 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[5].sprite;
+            _skill2Text.text = "공격속도 증가";
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.HealthMagician)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[14].sprite;
             _skill1Text.text = "체력 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[15].sprite;
             _skill2Text.text = "주문확률 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Priest)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[17].sprite;
             _skill1Text.text = "체력회복량 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[16].sprite;
             _skill2Text.text = "체력회복 확률 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Warlock)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[10].sprite;
             _skill1Text.text = "조건부 체력 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[1].sprite;
             _skill2Text.text = "마력 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Salamander)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[15].sprite;
             _skill1Text.text = "마법확률 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[18].sprite;
             _skill2Text.text = "메테오 확률 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Zeus)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[19].sprite;
             _skill1Text.text = "번개 전이횟수 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[1].sprite;
             _skill2Text.text = "마력 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.PracticeBug)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[1].sprite;
             _skill1Text.text = "마력 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[5].sprite;
             _skill2Text.text = "공격속도 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Stranger)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[20].sprite;
             _skill1Text.text = "블랙홀마법 확률 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[1].sprite;
             _skill2Text.text = "마력 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Cook)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[2].sprite;
             _skill1Text.text = "공격력 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[17].sprite;
             _skill2Text.text = "피해흡혈량 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[5].sprite;
             _skill3Text.text = "공격속도 증가";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.QRF)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[5].sprite;
             _skill1Text.text = "공격속도 증가";
-            _skill2Image = _listSkillIcon[1];
-            _skill2Text.text = "이동속도 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[2].sprite;
+            _skill2Text.text = "공격력 증가";
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Servant)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[14].sprite;
             _skill1Text.text = "체력 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[5].sprite;
             _skill2Text.text = "공격속도 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Athlete)
         {
-            _skill1Image = _listSkillIcon[1];
-            _skill1Text.text = "이동속도 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[2].sprite;
+            _skill1Text.text = "공격력 증가";
+            _skill2Image.sprite = _listSkillIcon[14].sprite;
             _skill2Text.text = "체력 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Versatile)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[7].sprite;
             _skill1Text.text = "무기공격력 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[5].sprite;
             _skill2Text.text = "공격속도 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Acupuncturist)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[23].sprite;
             _skill1Text.text = "즉사 확률 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[5].sprite;
             _skill2Text.text = "공격속도 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.SpoonKiller)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[5].sprite;
             _skill1Text.text = "공격속도 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[2].sprite;
             _skill2Text.text = "공격력 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Helen)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[8].sprite;
             _skill1Text.text = "빙결 확률 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[0].sprite;
             _skill2Text.text = "고유스킬 범위 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Rich)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[12].sprite;
             _skill1Text.text = "치명타확률 증가";
-            _skill2Image = _listSkillIcon[1];
-            _skill2Text.text = "이동속도 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[2].sprite;
+            _skill2Text.text = "공격력 증가";
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Swell)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[17].sprite;
             _skill1Text.text = "능력치 증가";
-            _skill2Image = _listSkillIcon[1];
-            _skill2Text.text = "골드 획득";
-            _skill3Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[3].sprite;
+            _skill2Text.text = "체력 회복";
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Delivery)
         {
-            _skill1Image = _listSkillIcon[1];
-            _skill1Text.text = "이동속도 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[12].sprite;
+            _skill1Text.text = "치명타확률 증가";
+            _skill2Image.sprite = _listSkillIcon[5].sprite;
             _skill2Text.text = "공격속도 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Repairman)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[17].sprite;
             _skill1Text.text = "체력 재생력 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[5].sprite;
             _skill2Text.text = "공격속도 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Dosa)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[27].sprite;
             _skill1Text.text = "분신 등장 확률 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[26].sprite;
             _skill2Text.text = "분신 지능 상승";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Gambler)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[17].sprite;
             _skill1Text.text = "능력치 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[24].sprite;
             _skill2Text.text = "좋은 능력치 가져올 확률 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.SlowStarter)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[17].sprite;
             _skill1Text.text = "능력치 증가";
-            _skill2Image = _listSkillIcon[1];
-            _skill2Text.text = "골드 획득";
-            _skill3Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[3].sprite;
+            _skill2Text.text = "체력 회복";
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Orpheus)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[25].sprite;
             _skill1Text.text = "공격력감소버프 강화";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[2].sprite;
             _skill2Text.text = "공격력 증가";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.DokeV)
         {
-            _skill1Image = _listSkillIcon[1];
+            _skill1Image.sprite = _listSkillIcon[24].sprite;
             _skill1Text.text = "고유스킬 확률 증가";
-            _skill2Image = _listSkillIcon[1];
+            _skill2Image.sprite = _listSkillIcon[24].sprite;
             _skill2Text.text = "훔쳐오는 능력치 추가 획득";
-            _skill3Image = _listSkillIcon[1];
+            _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
 
@@ -1351,6 +1355,7 @@ public class GamePlay : MonoBehaviour
 
             Player.Instance._skill1++;
 
+
         }
         else if (cnt == 2)
         {
@@ -1372,7 +1377,7 @@ public class GamePlay : MonoBehaviour
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Warrior)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
+                Player.Instance._ingameHp = Player.Instance._maxHp;
               //  _skill2Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Dwarf)
@@ -1485,7 +1490,7 @@ public class GamePlay : MonoBehaviour
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Swell)
             {
-                _skill2Text.text = "골드 획득";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Delivery)
             {
@@ -1505,7 +1510,7 @@ public class GamePlay : MonoBehaviour
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.SlowStarter)
             {
-                _skill2Text.text = "골드 획득";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Orpheus)
             {
@@ -1527,19 +1532,20 @@ public class GamePlay : MonoBehaviour
 
 
             Player.Instance._skill2++;
+
         }
         else if(cnt ==3)
         {
 
             if (Player.Instance._playerTitle == Player.PlayerTitle.Normal)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
+                Player.Instance._ingameHp = Player.Instance._maxHp;
                 //_skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.MagicalBlader)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-               // _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                // _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.MadMan)
             {
@@ -1548,18 +1554,18 @@ public class GamePlay : MonoBehaviour
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.StrongMan)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
+                Player.Instance._ingameHp = Player.Instance._maxHp;
                 //_skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Warrior)
             {
                 
-                _skill3Text.text = "골드 획득";
+                //공격속도증가
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Dwarf)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-               // _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                // _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.JackFrost)
             {
@@ -1568,28 +1574,28 @@ public class GamePlay : MonoBehaviour
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.AssaultCaptain)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
+                Player.Instance._ingameHp = Player.Instance._maxHp;
                 //_skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.ZhangFei)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
+                Player.Instance._ingameHp = Player.Instance._maxHp;
                 //_skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Berserker)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
+                Player.Instance._ingameHp = Player.Instance._maxHp;
                 //_skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Critialer)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-              //  _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                //  _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Druid)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-               // _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                // _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Assassin)
             {
@@ -1598,8 +1604,8 @@ public class GamePlay : MonoBehaviour
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Ambidextrous)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-               // _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                // _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.LuBu)
             {
@@ -1608,43 +1614,43 @@ public class GamePlay : MonoBehaviour
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.HeavyCavalry)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-              //  _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                //  _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.HealthMagician)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-             //   _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                //   _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Priest)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-               // _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                // _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Warlock)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-               // _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                // _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Salamander)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-               // _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                // _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Zeus)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-             //   _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                //   _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.PracticeBug)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-               // _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                // _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Stranger)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-              //  _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                //  _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Cook)
             {
@@ -1653,92 +1659,93 @@ public class GamePlay : MonoBehaviour
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.QRF)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-              //  _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                //  _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Servant)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-               // _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                // _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Athlete)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-              //  _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                //  _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Versatile)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-              //  _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                //  _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Acupuncturist)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-               // _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                // _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.SpoonKiller)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-              //  _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                //  _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Helen)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-              //  _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                //  _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Rich)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-              //  _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                //  _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Swell)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-               // _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                // _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Delivery)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-              //  _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                //  _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Repairman)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-              //  _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                //  _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Dosa)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-               // _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                // _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Gambler)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-               // _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                // _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.SlowStarter)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-              //  _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                //  _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.Orpheus)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-              //  _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                //  _skill3Text.text = "체력 회복";
             }
             else if (Player.Instance._playerTitle == Player.PlayerTitle.DokeV)
             {
-                Player.Instance._hp = Player.Instance._maxHp;
-              //  _skill3Text.text = "체력 회복";
+                Player.Instance._ingameHp = Player.Instance._maxHp;
+                //  _skill3Text.text = "체력 회복";
             }
 
 
 
 
             Player.Instance._skill3++;
+
         }
 
-        _choicePopUp.gameObject.SetActive(false);
+        _choicePopUp.SetActive(false);
         Time.timeScale = 1f;
         if(Player.Instance._playerTitle != Player.PlayerTitle.Priest)
         {

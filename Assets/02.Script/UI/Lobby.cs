@@ -15,6 +15,11 @@ public class Lobby : MonoBehaviour
     public GameObject _checkOutPopUp;
     public GameObject _alarmPopUp;
     public GameObject _settingPopUp;
+    public TextMeshProUGUI _goldText;
+    public TextMeshProUGUI _statText;
+    public TextMeshProUGUI _alarmText;
+    public TextMeshProUGUI _CheckOutText;
+
 
     public List<GameObject> _listWeapon = new List<GameObject>();
     public List<GameObject> _listHelmet = new List<GameObject>();
@@ -31,12 +36,20 @@ public class Lobby : MonoBehaviour
 
     public int _choiceNumber;
 
+    public int _weaponCost;
+    public int _closetCost;
 
     public List<GameObject> _listStatSpace = new List<GameObject>();
     
-    private void OnEnable()
+    private void Start()
     {
-
+        for (int i = 0; i < _listStatSpace.Count; ++i)
+        {
+            for (int z = 0; z < _listStatSpace[i].transform.childCount; ++z)
+            {
+                _listStatSpace[i].transform.GetChild(z).gameObject.SetActive(false);
+            }
+        }
         _statePopUp.SetActive(false);
         _closetPopUp.SetActive(false);
         _checkOutPopUp.SetActive(false);
@@ -78,7 +91,8 @@ public class Lobby : MonoBehaviour
         {
             _listStatSpace[8].transform.GetChild(i).gameObject.SetActive(true);
         }
-        
+
+        _player._currentStat = _player._stat - (int)_player._atk - (int)_player._matk - (int)_player._atkSpeed - (int)_player._def - (int)_player._hp - (int)_player._charm - (int)_player._handicraft - (int)_player._critical;
 
     }
 
@@ -454,6 +468,7 @@ public class Lobby : MonoBehaviour
             _player.firststat == false)
         {
             achivementCheck(_player.firststat, "firststat");
+            _player.firststat = true;
         }
         if ((_player._hp > 4 || _player._atk > 4 || _player._matk > 4 || _player._atkSpeed > 4 || _player._def > 4 || _player._speed > 4 || _player._critical > 4 || _player._handicraft > 4 || _player._charm > 4) &&
             _player.firstmaster == false)
@@ -1140,127 +1155,172 @@ public class Lobby : MonoBehaviour
 
         #endregion
 
+
+        _player._currentStat = _player._stat - (int)_player._atk - (int)_player._matk - (int)_player._atkSpeed - (int)_player._def - (int)_player._hp - (int)_player._charm - (int)_player._handicraft - (int)_player._critical;
+        _goldText.text = Player.Instance._gold.ToString();
+        _statText.text = Player.Instance._currentStat.ToString();
+
     }
 
     public void ATKUP()
     {
         
-        _player._atk += 1;
-        if(_player._atk >= 5)
+        if(_player._currentStat >0)
         {
-            _player._atk = 5f;
-        }
-        _player.Save();
-        for(int i = 0; i <_player._atk; ++i)
-        {
-            _listStatSpace[0].transform.GetChild(i).gameObject.SetActive(true);
+
+            _player._atk += 1;
+            if (_player._atk >= 5)
+            {
+                _player._atk = 5f;
+            }
+            for (int i = 0; i < _player._atk; ++i)
+            {
+                _listStatSpace[0].transform.GetChild(i).gameObject.SetActive(true);
+            }
+
+            _player._currentStat--;
+            _player.Save();
         }
     }
 
     public void HPUP()
     {
-        _player._hp += 1;
-        if (_player._hp >= 5)
+        if (_player._currentStat > 0)
         {
-            _player._hp = 5f;
-        }
-        
-        _player.Save();
-        for (int i = 0; i < _player._hp; ++i)
-        {
-            _listStatSpace[3].transform.GetChild(i).gameObject.SetActive(true);
+
+            _player._hp += 1;
+            if (_player._hp >= 5)
+            {
+                _player._hp = 5f;
+            }
+
+            for (int i = 0; i < _player._hp; ++i)
+            {
+                _listStatSpace[3].transform.GetChild(i).gameObject.SetActive(true);
+            }
+            _player._currentStat--;
+            _player.Save();
         }
     }
     public void MATKUP()
     {
-        _player._matk += 1;
-        if (_player._matk >= 5)
+
+        if (_player._currentStat > 0)
         {
-            _player._matk = 5f;
-        }
-        _player.Save();
-        for (int i = 0; i < _player._matk; ++i)
-        {
-            _listStatSpace[1].transform.GetChild(i).gameObject.SetActive(true);
+            _player._matk += 1;
+            if (_player._matk >= 5)
+            {
+                _player._matk = 5f;
+            }
+            for (int i = 0; i < _player._matk; ++i)
+            {
+                _listStatSpace[1].transform.GetChild(i).gameObject.SetActive(true);
+            }
+            _player._currentStat--;
+            _player.Save();
         }
     }
     public void ATKSPEEDUP()
     {
-        _player._atkSpeed += 1;
-        if (_player._atkSpeed >= 5)
+        if (_player._currentStat > 0)
         {
-            _player._atkSpeed = 5f;
-        }
-        _player.Save();
-        for (int i = 0; i < _player._atkSpeed; ++i)
-        {
-            _listStatSpace[2].transform.GetChild(i).gameObject.SetActive(true);
+            _player._atkSpeed += 1;
+            if (_player._atkSpeed >= 5)
+            {
+                _player._atkSpeed = 5f;
+            }
+            for (int i = 0; i < _player._atkSpeed; ++i)
+            {
+                _listStatSpace[2].transform.GetChild(i).gameObject.SetActive(true);
+            }
+            _player._currentStat--;
+            _player.Save();
         }
     }
     public void DEFUP()
     {
-        _player._def += 1;
-        if (_player._def >= 5)
+        if (_player._currentStat > 0)
         {
-            _player._def = 5f;
-        }
-        _player.Save();
-        for (int i = 0; i < _player._def; ++i)
-        {
-            _listStatSpace[4].transform.GetChild(i).gameObject.SetActive(true);
+            _player._def += 1;
+            if (_player._def >= 5)
+            {
+                _player._def = 5f;
+            }
+            for (int i = 0; i < _player._def; ++i)
+            {
+                _listStatSpace[4].transform.GetChild(i).gameObject.SetActive(true);
+            }
+            _player._currentStat--;
+            _player.Save();
         }
     }
     public void SPEEDUP()
     {
-        _player._speed += 1;
+        if (_player._currentStat > 0)
+        {
+            _player._speed += 1;
 
-        if (_player._speed >= 5)
-        {
-            _player._speed = 5f;
-        }
-        _player.Save();
-        for (int i = 0; i < _player._speed; ++i)
-        {
-            _listStatSpace[5].transform.GetChild(i).gameObject.SetActive(true);
+            if (_player._speed >= 5)
+            {
+                _player._speed = 5f;
+            }
+            for (int i = 0; i < _player._speed; ++i)
+            {
+                _listStatSpace[5].transform.GetChild(i).gameObject.SetActive(true);
+            }
+            _player._currentStat--;
+            _player.Save();
         }
     }
     public void CRITICALUP()
     {
-        _player._critical += 1;
-        if (_player._critical >= 5)
+        if (_player._currentStat > 0)
         {
-            _player._critical = 5f;
-        }
-        _player.Save();
-        for (int i = 0; i < _player._critical; ++i)
-        {
-            _listStatSpace[6].transform.GetChild(i).gameObject.SetActive(true);
+            _player._critical += 1;
+            if (_player._critical >= 5)
+            {
+                _player._critical = 5f;
+            }
+            for (int i = 0; i < _player._critical; ++i)
+            {
+                _listStatSpace[6].transform.GetChild(i).gameObject.SetActive(true);
+            }
+            _player._currentStat--;
+            _player.Save();
         }
     }
     public void HANDICRAFTUP()
     {
-        _player._handicraft += 1;
-        if (_player._handicraft >= 5)
+        if (_player._currentStat > 0)
         {
-            _player._handicraft = 5f;
-        }
-        _player.Save();
-        for (int i = 0; i < _player._handicraft; ++i)
-        {
-            _listStatSpace[7].transform.GetChild(i).gameObject.SetActive(true);
+            _player._handicraft += 1;
+            if (_player._handicraft >= 5)
+            {
+                _player._handicraft = 5f;
+            }
+            for (int i = 0; i < _player._handicraft; ++i)
+            {
+                _listStatSpace[7].transform.GetChild(i).gameObject.SetActive(true);
+            }
+            _player.Save();
+            _player._currentStat--;
         }
     }
     public void CHARMUP()
     {
-        _player._charm += 1;
-        if (_player._charm >= 5)
+        if (_player._currentStat > 0)
         {
-            _player._charm = 5f;
-        }
-        _player.Save();
-        for (int i = 0; i < _player._charm; ++i)
-        {
-            _listStatSpace[8].transform.GetChild(i).gameObject.SetActive(true);
+            _player._charm += 1;
+            if (_player._charm >= 5)
+            {
+                _player._charm = 5f;
+            }
+            for (int i = 0; i < _player._charm; ++i)
+            {
+                _listStatSpace[8].transform.GetChild(i).gameObject.SetActive(true);
+            }
+            _player._currentStat--;
+            _player.Save();
         }
     }
 
@@ -1348,6 +1408,7 @@ public class Lobby : MonoBehaviour
         }
         else if(cnt == 0 && _listScreen[0].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?"; 
             EnterCheckOutPopUp();
         }
         else if (cnt == 1&& _listScreen[1].activeSelf == false)
@@ -1368,6 +1429,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 1 && _listScreen[1].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 2 && _listScreen[2].activeSelf == false)
@@ -1388,6 +1450,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 2 && _listScreen[2].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 3 && _listScreen[3].activeSelf == false)
@@ -1408,6 +1471,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 3 && _listScreen[3].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 4 && _listScreen[4].activeSelf == false)
@@ -1428,6 +1492,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 4 && _listScreen[4].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 5 && _listScreen[5].activeSelf == false)
@@ -1448,6 +1513,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 5 && _listScreen[5].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 6 && _listScreen[6].activeSelf == false)
@@ -1468,6 +1534,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 6 && _listScreen[6].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 7 && _listScreen[7].activeSelf == false)
@@ -1488,6 +1555,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 7 && _listScreen[7].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 8 && _listScreen[8].activeSelf == false)
@@ -1508,6 +1576,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 8 && _listScreen[8].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 9 && _listScreen[9].activeSelf == false)
@@ -1528,6 +1597,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 9 && _listScreen[9].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 10 && _listScreen[10].activeSelf == false)
@@ -1548,6 +1618,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 10 && _listScreen[10].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 11 && _listScreen[11].activeSelf == false)
@@ -1568,6 +1639,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 11 && _listScreen[11].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 30 && _listScreen[30].activeSelf == false)
@@ -1588,6 +1660,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 30 && _listScreen[30].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         _player.Save();
@@ -1605,6 +1678,7 @@ public class Lobby : MonoBehaviour
         }
         else if(cnt == 26 && _listScreen[12].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 12 && _listScreen[13].activeSelf == false)
@@ -1616,6 +1690,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 12 && _listScreen[13].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 13 && _listScreen[14].activeSelf == false)
@@ -1627,6 +1702,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 13 && _listScreen[14].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 14 && _listScreen[15].activeSelf == false)
@@ -1638,6 +1714,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 14 && _listScreen[15].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         _player.Save();
@@ -1653,6 +1730,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 16 && _listScreen[16].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 15 && _listScreen[17].activeSelf == false)
@@ -1662,6 +1740,7 @@ public class Lobby : MonoBehaviour
         }
         else if(cnt == 15 && _listScreen[17].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
 
@@ -1683,6 +1762,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 27 && _listScreen[18].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if(cnt == 17 && _listScreen[19].activeSelf == false)
@@ -1694,6 +1774,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 17 && _listScreen[19].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if(cnt == 18 && _listScreen[20].activeSelf == false)
@@ -1705,6 +1786,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 18 && _listScreen[20].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 19 && _listScreen[21].activeSelf == false)
@@ -1716,6 +1798,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 19 && _listScreen[21].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         _player.Save();
@@ -1734,6 +1817,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 28 && _listScreen[22].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 20 && _listScreen[23].activeSelf == false)
@@ -1745,6 +1829,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 20 && _listScreen[23].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 21 && _listScreen[24].activeSelf == false)
@@ -1756,6 +1841,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 21 && _listScreen[24].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 22 && _listScreen[25].activeSelf == false)
@@ -1767,6 +1853,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 22 && _listScreen[25].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         _player.Save();
@@ -1785,6 +1872,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 29 && _listScreen[26].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 23 && _listScreen[27].activeSelf == false)
@@ -1796,6 +1884,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 23 && _listScreen[27].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 24 && _listScreen[28].activeSelf == false)
@@ -1807,6 +1896,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 24 && _listScreen[28].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
         else if (cnt == 25 && _listScreen[29].activeSelf == false)
@@ -1818,6 +1908,7 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 25 && _listScreen[29].activeSelf == true)
         {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
         }
     }
@@ -1837,130 +1928,150 @@ public class Lobby : MonoBehaviour
     }
     public void CheckOutPopUpYes()
     {
-        if(_choiceNumber  == 0)
+        if(_player._gold >= _weaponCost)
         {
-            Player.Instance._buybasicStick = true;
+
+            if (_choiceNumber == 0)
+            {
+                Player.Instance._buybasicStick = true;
+            }
+            else if (_choiceNumber == 1)
+            {
+                Player.Instance._buySward1 = true;
+            }
+            else if (_choiceNumber == 2)
+            {
+                Player.Instance._buySward2 = true;
+            }
+            else if (_choiceNumber == 3)
+            {
+                Player.Instance._buyBroom = true;
+            }
+            else if (_choiceNumber == 4)
+            {
+                Player.Instance._buyClub = true;
+            }
+            else if (_choiceNumber == 5)
+            {
+                Player.Instance._buyShortSward = true;
+            }
+            else if (_choiceNumber == 6)
+            {
+                Player.Instance._buyHanger = true;
+            }
+            else if (_choiceNumber == 7)
+            {
+                Player.Instance._buyMace = true;
+            }
+            else if (_choiceNumber == 8)
+            {
+                Player.Instance._buyShield = true;
+            }
+            else if (_choiceNumber == 9)
+            {
+                Player.Instance._buySpear = true;
+            }
+            else if (_choiceNumber == 10)
+            {
+                Player.Instance._buyUmbrella = true;
+            }
+            else if (_choiceNumber == 11)
+            {
+                Player.Instance._buyWaldo = true;
+            }
+            else if (_choiceNumber == 30)
+            {
+                Player.Instance._buybasicStick = true;
+            }
         }
-        else if (_choiceNumber == 1)
+        else if(_player._gold <_weaponCost)
         {
-            Player.Instance._buySward1 = true;
+            _alarmText.text = "골드가 부족합니다.";
+            EnterAlarmPopUp();
         }
-        else if (_choiceNumber == 2)
+
+        if(_player._gold >= _closetCost)
         {
-            Player.Instance._buySward2 = true;
+            if (_choiceNumber == 12)
+            {
+                Player.Instance._buyKightHelmet = true;
+            }
+            else if (_choiceNumber == 13)
+            {
+                Player.Instance._buyMasicianHat = true;
+            }
+            else if (_choiceNumber == 14)
+            {
+                Player.Instance._buyGat = true;
+            }
+            else if (_choiceNumber == 15)
+            {
+                Player.Instance._buySkinHead = true;
+            }
+            else if (_choiceNumber == 16)
+            {
+                Player.Instance._buynormalHair = true;
+            }
+            else if (_choiceNumber == 17)
+            {
+                Player.Instance._buyKnightTop = true;
+            }
+            else if (_choiceNumber == 18)
+            {
+                Player.Instance._buyMasicianTop = true;
+            }
+            else if (_choiceNumber == 19)
+            {
+                Player.Instance._buyDurumagiTop = true;
+            }
+            else if (_choiceNumber == 20)
+            {
+                Player.Instance._buyKnightBottom = true;
+            }
+            else if (_choiceNumber == 21)
+            {
+                Player.Instance._buyMasicianBottom = true;
+            }
+            else if (_choiceNumber == 22)
+            {
+                Player.Instance._buydurumagiBottom = true;
+            }
+            else if (_choiceNumber == 23)
+            {
+                Player.Instance._buyKnightShoes = true;
+            }
+            else if (_choiceNumber == 24)
+            {
+                Player.Instance._buySandal = true;
+            }
+            else if (_choiceNumber == 25)
+            {
+                Player.Instance._buyOldShoes = true;
+            }
+            else if (_choiceNumber == 26)
+            {
+                Player.Instance._buyEmptyHelmet = true;
+            }
+            else if (_choiceNumber == 27)
+            {
+                Player.Instance._buyNormalTop = true;
+            }
+            else if (_choiceNumber == 28)
+            {
+                Player.Instance._buyTrunkBottom = true;
+            }
+            else if (_choiceNumber == 29)
+            {
+                Player.Instance._buynormalShoes = true;
+            }
+
         }
-        else if (_choiceNumber == 3)
+        else if (_player._gold < _closetCost)
         {
-            Player.Instance._buyBroom = true;
+            _alarmText.text = "골드가 부족합니다.";
+            EnterAlarmPopUp();
         }
-        else if (_choiceNumber == 4)
-        {
-            Player.Instance._buyClub = true;
-        }
-        else if (_choiceNumber == 5)
-        {
-            Player.Instance._buyShortSward = true;
-        }
-        else if (_choiceNumber == 6)
-        {
-            Player.Instance._buyHanger = true;
-        }
-        else if (_choiceNumber == 7)
-        {
-            Player.Instance._buyMace = true;
-        }
-        else if (_choiceNumber == 8)
-        {
-            Player.Instance._buyShield = true;
-        }
-        else if (_choiceNumber == 9)
-        {
-            Player.Instance._buySpear = true;
-        }
-        else if (_choiceNumber == 10)
-        {
-            Player.Instance._buyUmbrella = true;
-        }
-        else if (_choiceNumber == 11)
-        {
-            Player.Instance._buyWaldo = true;
-        }
-        else if (_choiceNumber == 12)
-        {
-            Player.Instance._buyKightHelmet = true;
-        }
-        else if (_choiceNumber == 13)
-        {
-            Player.Instance._buyMasicianHat = true;
-        }
-        else if (_choiceNumber == 14)
-        {
-            Player.Instance._buyGat = true;
-        }
-        else if (_choiceNumber == 15)
-        {
-            Player.Instance._buySkinHead = true;
-        }
-        else if (_choiceNumber == 16)
-        {
-            Player.Instance._buynormalHair = true;
-        }
-        else if (_choiceNumber == 17)
-        {
-            Player.Instance._buyKnightTop = true;
-        }
-        else if (_choiceNumber == 18)
-        {
-            Player.Instance._buyMasicianTop = true;
-        }
-        else if (_choiceNumber == 19)
-        {
-            Player.Instance._buyDurumagiTop = true;
-        }
-        else if (_choiceNumber == 20)
-        {
-            Player.Instance._buyKnightBottom = true;
-        }
-        else if (_choiceNumber == 21)
-        {
-            Player.Instance._buyMasicianBottom = true;
-        }
-        else if (_choiceNumber == 22)
-        {
-            Player.Instance._buydurumagiBottom = true;
-        }
-        else if (_choiceNumber == 23)
-        {
-            Player.Instance._buyKnightShoes = true;
-        }
-        else if (_choiceNumber == 24)
-        {
-            Player.Instance._buySandal = true;
-        }
-        else if (_choiceNumber == 25)
-        {
-            Player.Instance._buyOldShoes = true;
-        }
-        else if (_choiceNumber == 26)
-        {
-            Player.Instance._buyEmptyHelmet = true;
-        }
-        else if (_choiceNumber == 27)
-        {
-            Player.Instance._buyNormalTop = true;
-        }
-        else if (_choiceNumber == 28)
-        {
-            Player.Instance._buyTrunkBottom = true;
-        }
-        else if (_choiceNumber == 29)
-        {
-            Player.Instance._buynormalShoes = true;
-        }
-        else if (_choiceNumber == 30)
-        {
-            Player.Instance._buybasicStick = true;
-        }
+        _player.Save();
         ExitCheckOutPopUp();
 
     }
@@ -1979,18 +2090,39 @@ public class Lobby : MonoBehaviour
     public void EnterStatePopUp()
     {
         _statePopUp.SetActive(true);
+        _closetPopUp.SetActive(false);
     }
     public void ExitStatePopUp()
     {
         _statePopUp.SetActive(false);
+        
     }
     public void achivementCheck(bool check,string str)
     {
         if (check == false)
         {
-            check = true;
             AchievementManager.instance.Unlock(str);
         }
+    }
+    public void PlusStat()
+    {
+        if(_player._gold >= 300 && _player._stat < 37)
+        {
+            _player._stat++;
+            _player._gold -= 300;
+
+        }
+        else if (_player._gold <300)
+        {
+            _alarmText.text = "골드가 부족합니다.";
+            EnterAlarmPopUp();
+        }
+        else if(_player._stat >= 37)
+        {
+            _alarmText.text = "능력치 보유한도에 도달하였습니다.";
+            EnterAlarmPopUp();
+        }
+
     }
     public void StartGame()
     {

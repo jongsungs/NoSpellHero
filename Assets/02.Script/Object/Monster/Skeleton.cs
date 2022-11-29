@@ -99,6 +99,13 @@ public class Skeleton : Monster
             case State.Die:
                 _speed = 0f;
                 StartCoroutine(CoDie());
+                if(_category == MonsterCategory.Boss && _isDead == false)
+                {
+                    _isDead = true;
+                    GamePlay.Instance.BossDie(GamePlay.Instance._currentStage + 1);
+                    GamePlay.Instance.ChangeStage();
+                }
+
                 break;
             case State.Attack2:
                 _speed = 0f;

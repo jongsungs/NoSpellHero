@@ -56,6 +56,7 @@
     <Analyzer Include="C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\Common7\IDE\Extensions\Microsoft\Visual Studio Tools for Unity\Analyzers\Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assets\02.Script\Object\Weapon\WolfAttack.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\SceneResources\Other\RFX4_Debug.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\RFX4_TornadoParticles.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\EffectSettings\RFX4_EffectSettings.cs" />
@@ -65,8 +66,8 @@
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\RFX4_ParticleCollisionGameObject.cs" />
     <Compile Include="Assets\02.Script\UI\DamageText.cs" />
     <Compile Include="Assets\02.Script\Skill\ChainLightnig.cs" />
+    <Compile Include="Assets\02.Script\Object\Weapon\Umbrella.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\VariableJoystick.cs" />
-    <Compile Include="Assets\02.Script\Object\Monster\Dragon.cs" />
     <Compile Include="Assets\02.Script\UI\Lobby.cs" />
     <Compile Include="Assets\Scripts\UnityPurchasing\generated\GooglePlayTangle.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_A.cs" />
@@ -75,13 +76,14 @@
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\RFX4_StartDelay.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\RFX4_ParticleGravityPoint.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\Curves\RFX4_ShaderFloatCurve.cs" />
-    <Compile Include="Assets\02.Script\Object\Monster\DemonKing.cs" />
+    <Compile Include="Assets\02.Script\Object\StagePlayer.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeA.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\Curves\RFX4_WindCurves.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\EffectSettings\RFX4_EffectSettingsInspector.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\RFX4_TrailRenderer.cs" />
     <Compile Include="Assets\02.Script\Object\Monster\Wolf.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\RFX4_OnEnableResetTransform.cs" />
+    <Compile Include="Assets\02.Script\Object\Weapon\Broom.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\SceneResources\Other\RFX4_RealtimeReflection.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshProFloatingText.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexShakeB.cs" />
@@ -100,7 +102,9 @@
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\RFX4_UVScroll.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\DynamicJoystick.cs" />
+    <Compile Include="Assets\02.Script\Object\Weapon\Hanger.cs" />
     <Compile Include="Assets\AchievementSystem\Example\ExampleScript.cs" />
+    <Compile Include="Assets\02.Script\Object\Weapon\Shield.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\ParticleSysem\RFX4_Turbulence.cs" />
     <Compile Include="Assets\02.Script\Object\Player.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\RFX4_CustomLight.cs" />
@@ -108,15 +112,18 @@
     <Compile Include="Assets\02.Script\Object\Monster\Slime.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\ParticleSysem\RFX4_ParticleLight.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
+    <Compile Include="Assets\02.Script\Object\Monster\Skeleton.cs" />
+    <Compile Include="Assets\02.Script\Object\Weapon\Waldo.cs" />
+    <Compile Include="Assets\02.Script\Skill\Thunder.cs" />
     <Compile Include="Assets\02.Script\Object\Weapon\Swoard.cs" />
     <Compile Include="Assets\02.Script\Effect\Effect.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TextMeshSpawner.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\ParticleSysem\RFX4_ParticleTrail.cs" />
-    <Compile Include="Assets\02.Script\Object\Monster\Skull.cs" />
     <Compile Include="Assets\02.Script\Manager\GameFlowManager.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\Curves\RFX4_ShaderColorGradient.cs" />
     <Compile Include="Assets\Unity-Logs-Viewer\Reporter\ReporterMessageReceiver.cs" />
     <Compile Include="Assets\02.Script\Base\Weapon.cs" />
+    <Compile Include="Assets\02.Script\Manager\NewBehaviourScript.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexJitter.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextEventHandler.cs" />
     <Compile Include="Assets\Scripts\UnityPurchasing\generated\AppleStoreKitTestTangle.cs" />
@@ -126,6 +133,7 @@
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\RFX4_RaycastCollision.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\RFX4_CopyPosition.cs" />
     <Compile Include="Assets\02.Script\Skill\effectCollider.cs" />
+    <Compile Include="Assets\02.Script\Object\Weapon\Club.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\DropdownSample.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\Curves\RFX4_ScaleCurves.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_PhoneNumberValidator.cs" />
@@ -133,18 +141,19 @@
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\RFX4_MaterialQueue.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TeleType.cs" />
     <Compile Include="Assets\02.Script\Skill\IceBall.cs" />
+    <Compile Include="Assets\02.Script\Object\PlayerHpBar.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\RFX4_PhysicsMotion.cs" />
     <Compile Include="Assets\AchievementSystem\Scripts\AchievenmentListIngame.cs" />
     <Compile Include="Assets\02.Script\Object\PlayerDummy.cs" />
     <Compile Include="Assets\Unity-Logs-Viewer\Reporter\Test\Rotate.cs" />
-    <Compile Include="Assets\02.Script\Object\Monster\Ork.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\RFX4_CameraShake.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SimpleScript.cs" />
     <Compile Include="Assets\AchievementSystem\Scripts\UIAchievement.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\RFX4_ReplaceModelOnCollision.cs" />
     <Compile Include="Assets\Joystick Pack\Scripts\Joysticks\FixedJoystick.cs" />
+    <Compile Include="Assets\02.Script\Object\Weapon\Mace.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\ParticleSysem\RFX4_CollisionPropertyDeactiavtion.cs" />
     <Compile Include="Assets\02.Script\UI\ButtonClick.cs" />
     <Compile Include="Assets\Unity-Logs-Viewer\Reporter\Reporter.cs" />
@@ -152,18 +161,20 @@
     <Compile Include="Assets\02.Script\Base\BaseObject.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark01_UGUI.cs" />
     <Compile Include="Assets\02.Script\Manager\PlayerManager.cs" />
-    <Compile Include="Assets\02.Script\Object\Monster\CaptainSkull.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
+    <Compile Include="Assets\02.Script\Object\Weapon\BasicStick.cs" />
     <Compile Include="Assets\AchievementSystem\Scripts\AchievementManager.cs" />
     <Compile Include="Assets\02.Script\Manager\LoadSceneManager.cs" />
     <Compile Include="Assets\02.Script\Skill\FireBall.cs" />
     <Compile Include="Assets\Unity-Logs-Viewer\Reporter\Test\TestReporter.cs" />
+    <Compile Include="Assets\02.Script\Object\Weapon\SkeletonAttack.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\Curves\RFX4_ShaderProperties.cs" />
+    <Compile Include="Assets\02.Script\Object\Weapon\Sward2.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\RFX4_DeactivateByTime.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_UiFrameRateCounter.cs" />
+    <Compile Include="Assets\02.Script\UI\ttetetet.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ObjectSpin.cs" />
-    <Compile Include="Assets\02.Script\Object\Monster\Golem.cs" />
     <Compile Include="Assets\02.Script\UI\FollowCamera2.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\Rendering\RFX4_PerPlatformSettings.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\RFX4_RotateAround.cs" />
@@ -181,6 +192,7 @@
     <Compile Include="Assets\02.Script\Manager\IAPMain.cs" />
     <Compile Include="Assets\02.Script\UI\FPS_Check.cs" />
     <Compile Include="Assets\Unity-Logs-Viewer\Reporter\MultiKeyDictionary.cs" />
+    <Compile Include="Assets\02.Script\Object\Weapon\Dando.cs" />
     <Compile Include="Assets\LightningBolt\LightningBoltScript.cs" />
     <Compile Include="Assets\02.Script\UI\GamePlay.cs" />
     <Compile Include="Assets\02.Script\UI\RespawnZone.cs" />
@@ -189,18 +201,20 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark03.cs" />
     <Compile Include="Assets\Joystick Pack\Examples\JoystickSetterExample.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\RFX4_UVAnimation.cs" />
+    <Compile Include="Assets\02.Script\Object\Weapon\Spear.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\RFX4_ColorHelper.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\Curves\RFX4_AudioCurves.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\ParticleSysem\RFX4_ParticleGravityDelay.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\RFX4_DeactivateRigidbodyByTime.cs" />
     <Compile Include="Assets\AchievementSystem\Scripts\AchievenmentStack.cs" />
+    <Compile Include="Assets\02.Script\Skill\Bone.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
+    <Compile Include="Assets\02.Script\Object\Weapon\Stick.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\Curves\RFX4_PhysicsForceCurves.cs" />
     <Compile Include="Assets\02.Script\Base\Monster.cs" />
     <Compile Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Scripts\RFX4_PhysXSetImpulse.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\VertexZoom.cs" />
-    <Compile Include="Assets\02.Script\UI\ttetetet.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
@@ -245,6 +259,7 @@
     <None Include="Assets\TextMesh Pro\Shaders\TMP_SDF-Mobile.shader" />
     <None Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Shaders\RFX4_CutoutBorder.shader" />
     <None Include="Assets\KriptoFX\Realistic Effects Pack v4\Effects\Shaders\RFX4_ParallaxDecal.shader" />
+    <None Include="Assets\HandPainted Lava Textures\Documentation\Documentation.txt" />
     <None Include="Assets\TextMesh Pro\Shaders\TMP_Sprite.shader" />
     <None Include="Assets\TextMesh Pro\Examples &amp; Extras\Fonts\Bangers - OFL.txt" />
   </ItemGroup>
@@ -1114,6 +1129,10 @@
     <ProjectReference Include="MoreMountains.Feedbacks.HDRP.csproj">
       <Project>{17718827-38FF-B4C0-4CFC-3B0AEFB8D68C}</Project>
       <Name>MoreMountains.Feedbacks.HDRP</Name>
+    </ProjectReference>
+    <ProjectReference Include="MoreMountains.Feedbacks.Authorizations.csproj">
+      <Project>{2E5A6550-6C18-9695-F994-418644499170}</Project>
+      <Name>MoreMountains.Feedbacks.Authorizations</Name>
     </ProjectReference>
     <ProjectReference Include="MoreMountains.Feedbacks.MMTools.csproj">
       <Project>{4C55A189-D63B-1364-281F-B603544F7006}</Project>
