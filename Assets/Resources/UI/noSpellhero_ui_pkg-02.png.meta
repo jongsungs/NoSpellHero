@@ -880,6 +880,27 @@ TextureImporter:
       indices: 
       edges: []
       weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-02_37
+      rect:
+        serializedVersion: 2
+        x: 1148
+        y: 0
+        width: 900
+        height: 450
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4ad6542f4cbcf44f956f58f10eb910b
+      internalID: 1397414716
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
@@ -902,6 +923,7 @@ TextureImporter:
       noSpellhero_ui_pkg-02_26: 1762248813
       noSpellhero_ui_pkg-02_34: 1277693550
       noSpellhero_ui_pkg-02_3: 367914947
+      noSpellhero_ui_pkg-02_37: 1397414716
       noSpellhero_ui_pkg-02_4: -444021934
       noSpellhero_ui_pkg-02_29: 309083287
       noSpellhero_ui_pkg-02_31: 194165741

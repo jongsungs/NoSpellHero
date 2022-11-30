@@ -973,7 +973,7 @@ TextureImporter:
         width: 100
         height: 105
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -981,6 +981,48 @@ TextureImporter:
       bones: []
       spriteID: 734ef8ce4fddb704bafd55b2ce9ac5fb
       internalID: 1166527316
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-01_42
+      rect:
+        serializedVersion: 2
+        x: 1946
+        y: 1593
+        width: 80
+        height: 90
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68e469e4e2b279445916fb9328bd6168
+      internalID: 211128435
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: noSpellhero_ui_pkg-01_43
+      rect:
+        serializedVersion: 2
+        x: 1477
+        y: 1552
+        width: 101
+        height: 97
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4ae74eca7532a1e4294d189f211cb5e7
+      internalID: 1261166627
       vertices: []
       indices: 
       edges: []
@@ -996,47 +1038,49 @@ TextureImporter:
     weights: []
     secondaryTextures: []
     nameFileIdTable:
-      noSpellhero_ui_pkg-01_24: 1415374077
       noSpellhero_ui_pkg-01_9: -405354363
-      noSpellhero_ui_pkg-01_7: -1031558006
-      noSpellhero_ui_pkg-01_20: -1522865357
-      noSpellhero_ui_pkg-01_34: 844610541
       noSpellhero_ui_pkg-01_16: -183331938
       noSpellhero_ui_pkg-01_21: -2113056626
       noSpellhero_ui_pkg-01_0: -1336985422
-      noSpellhero_ui_pkg-01_17: -1837358032
-      noSpellhero_ui_pkg-01_31: 781733423
       noSpellhero_ui_pkg-01_15: -920321831
-      noSpellhero_ui_pkg-01_19: 918571236
       noSpellhero_ui_pkg-01_23: -704655102
       noSpellhero_ui_pkg-01_2: 46047045
       noSpellhero_ui_pkg-01_36: 1008346373
-      noSpellhero_ui_pkg-01_30: -617171861
-      noSpellhero_ui_pkg-01_29: -189208141
       noSpellhero_ui_pkg-01_25: -1811059256
       noSpellhero_ui_pkg-01_39: -1051156840
-      noSpellhero_ui_pkg-01_5: -2088914201
       noSpellhero_ui_pkg-01_8: 937884564
       noSpellhero_ui_pkg-01_3: 1952070718
       noSpellhero_ui_pkg-01_27: 266675548
-      noSpellhero_ui_pkg-01_10: -151197760
-      noSpellhero_ui_pkg-01_26: -81251448
       noSpellhero_ui_pkg-01_11: -1823450057
       noSpellhero_ui_pkg-01_28: 336587358
       noSpellhero_ui_pkg-01_41: 1166527316
-      noSpellhero_ui_pkg-01_40: 1365151366
-      noSpellhero_ui_pkg-01_22: -1764106682
-      noSpellhero_ui_pkg-01_14: -212686449
-      noSpellhero_ui_pkg-01_13: 334624891
-      noSpellhero_ui_pkg-01_38: -555993358
+      noSpellhero_ui_pkg-01_43: 1261166627
       noSpellhero_ui_pkg-01_18: -1668333735
-      noSpellhero_ui_pkg-01_1: -1121574154
       noSpellhero_ui_pkg-01_4: 26451145
-      noSpellhero_ui_pkg-01_6: 1239369592
       noSpellhero_ui_pkg-01_37: 1089731370
       noSpellhero_ui_pkg-01_32: 7045986
       noSpellhero_ui_pkg-01_12: -1200631591
       noSpellhero_ui_pkg-01_35: -277925889
+      noSpellhero_ui_pkg-01_24: 1415374077
+      noSpellhero_ui_pkg-01_34: 844610541
+      noSpellhero_ui_pkg-01_7: -1031558006
+      noSpellhero_ui_pkg-01_20: -1522865357
+      noSpellhero_ui_pkg-01_17: -1837358032
+      noSpellhero_ui_pkg-01_31: 781733423
+      noSpellhero_ui_pkg-01_42: 211128435
+      noSpellhero_ui_pkg-01_19: 918571236
+      noSpellhero_ui_pkg-01_30: -617171861
+      noSpellhero_ui_pkg-01_29: -189208141
+      noSpellhero_ui_pkg-01_5: -2088914201
+      noSpellhero_ui_pkg-01_10: -151197760
+      noSpellhero_ui_pkg-01_40: 1365151366
+      noSpellhero_ui_pkg-01_26: -81251448
+      noSpellhero_ui_pkg-01_38: -555993358
+      noSpellhero_ui_pkg-01_22: -1764106682
+      noSpellhero_ui_pkg-01_14: -212686449
+      noSpellhero_ui_pkg-01_13: 334624891
+      noSpellhero_ui_pkg-01_1: -1121574154
+      noSpellhero_ui_pkg-01_6: 1239369592
       noSpellhero_ui_pkg-01_33: -2119028733
   spritePackingTag: 
   pSDRemoveMatte: 0
