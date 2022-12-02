@@ -98,7 +98,6 @@ public class LightningBoltScript : MonoBehaviour
     private bool orthographic;
 
     public IObjectPool<LightningBoltScript> _lightningPool;
-    public Player _player;
 
 
     public void SetPool(IObjectPool<LightningBoltScript> pool)
@@ -332,7 +331,7 @@ public class LightningBoltScript : MonoBehaviour
         }
         else
         {
-            start = StartObject.transform.position + StartPosition;
+            start = StartObject.transform.position + StartPosition + new Vector3 ( 0f, 1.5f,0f);
         }
         if (EndObject == null)
         {

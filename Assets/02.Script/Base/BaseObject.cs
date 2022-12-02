@@ -25,6 +25,7 @@ public class BaseObject : MonoBehaviour
         Freezing,
         ElectricShock,
         Stun,
+        fascination,
 
     }
 

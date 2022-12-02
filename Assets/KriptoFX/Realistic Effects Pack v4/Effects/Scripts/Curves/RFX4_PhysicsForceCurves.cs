@@ -67,7 +67,10 @@ public class RFX4_PhysicsForceCurves : MonoBehaviour
                 }
                 if(UseDistanceScale && hitCollider.CompareTag("Enemy"))
                 {
-                    hitCollider.transform.localScale = DistanceScaleCurve.Evaluate(dist) * hitCollider.transform.localScale;
+                    if (hitCollider.GetComponent<Monster>()._category == Monster.MonsterCategory.Common)
+                    {
+                        hitCollider.transform.localScale = DistanceScaleCurve.Evaluate(dist) * hitCollider.transform.localScale;
+                    }
 
                 }
               
@@ -75,6 +78,9 @@ public class RFX4_PhysicsForceCurves : MonoBehaviour
                 {
                     if(hitCollider.CompareTag("Enemy"))
                     {
+                        if(hitCollider.GetComponent<Monster>()._category == Monster.MonsterCategory.Common)
+                        {
+
                         //∫Ì∑¢»¶ ¥Ÿ¿Ã
                         hitCollider.GetComponent<Monster>().MonsterRelease();
                         Player.Instance._strangerblackholeScore++;
@@ -84,6 +90,7 @@ public class RFX4_PhysicsForceCurves : MonoBehaviour
                        // {
                        //     Player.Instance.stangerskill100 = true;
                        // }
+                        }
 
                     }
                     //Destroy(hitCollider.gameObject);

@@ -11,6 +11,10 @@ public class StagePlayer : MonoBehaviour
     public List<GameObject> _listTop = new List<GameObject>();
     public List<GameObject> _listBottom = new List<GameObject>();
     public List<GameObject> _listShoes = new List<GameObject>();
+    public List<GameObject> _listTopDeco = new List<GameObject>();
+    public List<GameObject> _listBottomDeco = new List<GameObject>();
+    public List<GameObject> _listShoesDeco = new List<GameObject>();
+    public List<GameObject> _listSkin = new List<GameObject>();
 
     public List<GameObject> _listLubuEffect = new List<GameObject>();
     public GameObject _warlockEffect;
@@ -45,7 +49,7 @@ public class StagePlayer : MonoBehaviour
 
 
         #region weapon
-        if (Player.Instance._isStick == true)
+        if (Player.Instance._isbasicStick == true)
         {
 
             for(int i = 0; i < _listWeapon.Count; ++i)
@@ -155,6 +159,15 @@ public class StagePlayer : MonoBehaviour
             _listWeapon[11].SetActive(true);
             Player.Instance._weapon = Player.Instance._Waldo;
         }
+        else if (Player.Instance._isStick == true)
+        {
+            for (int i = 0; i < _listWeapon.Count; ++i)
+            {
+                _listWeapon[i].SetActive(false);
+            }
+            _listWeapon[12].SetActive(true);
+            Player.Instance._weapon = Player.Instance._Stick;
+        }
         #endregion
 
         #region Helmet
@@ -223,8 +236,18 @@ public class StagePlayer : MonoBehaviour
             {
                 _listTop[i].SetActive(false);
             }
-            _listTop[0].SetActive(true);
+            for(int i = 0; i < _listTopDeco.Count; ++i)
+            {
+                _listTopDeco[i].SetActive(false);
+            }
+            for(int i = 0; i < _listSkin.Count; ++i)
+            {
+                _listSkin[i].SetActive(false);
+            }
 
+            _listTop[0].SetActive(true);
+            _listTopDeco[0].SetActive(true);
+            _listSkin[0].SetActive(true);
         }
         else if (Player.Instance._isMasicianTop == true)
         {
@@ -232,7 +255,18 @@ public class StagePlayer : MonoBehaviour
             {
                 _listTop[i].SetActive(false);
             }
+            for (int i = 0; i < _listTopDeco.Count; ++i)
+            {
+                _listTopDeco[i].SetActive(false);
+            }
+            for (int i = 0; i < _listSkin.Count; ++i)
+            {
+                _listSkin[i].SetActive(false);
+            }
+
+            _listTopDeco[1].SetActive(true);
             _listTop[1].SetActive(true);
+
         }
         else if (Player.Instance._isDurumagiTop == true)
         {
@@ -240,6 +274,16 @@ public class StagePlayer : MonoBehaviour
             {
                 _listTop[i].SetActive(false);
             }
+            for (int i = 0; i < _listTopDeco.Count; ++i)
+            {
+                _listTopDeco[i].SetActive(false);
+            }
+            for (int i = 0; i < _listSkin.Count; ++i)
+            {
+                _listSkin[i].SetActive(false);
+            }
+            _listSkin[1].SetActive(true);
+            _listTopDeco[2].SetActive(true);
             _listTop[2].SetActive(true);
         }
         else if (Player.Instance._isNormalTop == true)
@@ -247,6 +291,14 @@ public class StagePlayer : MonoBehaviour
             for (int i = 0; i < _listTop.Count; ++i)
             {
                 _listTop[i].SetActive(false);
+            }
+            for (int i = 0; i < _listTopDeco.Count; ++i)
+            {
+                _listTopDeco[i].SetActive(false);
+            }
+            for (int i = 0; i < _listSkin.Count; ++i)
+            {
+                _listSkin[i].SetActive(false);
             }
             _listTop[3].SetActive(true);
         }
@@ -261,8 +313,12 @@ public class StagePlayer : MonoBehaviour
             {
                 _listBottom[i].SetActive(false);
             }
+            for(int i = 0; i < _listBottomDeco.Count; ++i)
+            {
+                _listBottomDeco[i].SetActive(false);
+            }
             _listBottom[0].SetActive(true);
-
+            _listBottomDeco[0].SetActive(true);
         }
         else if (Player.Instance._isMasicianBottom == true)
         {
@@ -270,21 +326,35 @@ public class StagePlayer : MonoBehaviour
             {
                 _listBottom[i].SetActive(false);
             }
+            for (int i = 0; i < _listBottomDeco.Count; ++i)
+            {
+                _listBottomDeco[i].SetActive(false);
+            }
             _listBottom[1].SetActive(true);
+            _listBottomDeco[1].SetActive(true);
         }
-        else if (Player.Instance._durumagiBottom == true)
+        else if (Player.Instance._isdurumagiBottom == true)
         {
             for (int i = 0; i < _listBottom.Count; ++i)
             {
                 _listBottom[i].SetActive(false);
             }
+            for (int i = 0; i < _listBottomDeco.Count; ++i)
+            {
+                _listBottomDeco[i].SetActive(false);
+            }
             _listBottom[2].SetActive(true);
+            _listBottomDeco[2].SetActive(true);
         }
-        else if (Player.Instance._trunkBottom == true)
+        else if (Player.Instance._isTrunkBottom == true)
         {
             for (int i = 0; i < _listBottom.Count; ++i)
             {
                 _listBottom[i].SetActive(false);
+            }
+            for (int i = 0; i < _listBottomDeco.Count; ++i)
+            {
+                _listBottomDeco[i].SetActive(false);
             }
             _listBottom[3].SetActive(true);
         }
@@ -299,7 +369,15 @@ public class StagePlayer : MonoBehaviour
             {
                 _listShoes[i].SetActive(false);
             }
+            for(int i = 0; i < _listShoesDeco.Count; ++i)
+            {
+                _listShoesDeco[i].SetActive(false);
+            }
+
+            _listShoesDeco[0].SetActive(true);
+            _listShoesDeco[1].SetActive(true);
             _listShoes[0].SetActive(true);
+            _listShoes[1].SetActive(true);
 
         }
         else if (Player.Instance._isSandal == true)
@@ -308,7 +386,13 @@ public class StagePlayer : MonoBehaviour
             {
                 _listShoes[i].SetActive(false);
             }
-            _listShoes[1].SetActive(true);
+            for (int i = 0; i < _listShoesDeco.Count; ++i)
+            {
+                _listShoesDeco[i].SetActive(false);
+            }
+
+            _listShoes[2].SetActive(true);
+            _listShoes[3].SetActive(true);
         }
         else if (Player.Instance._isOldShoes == true)
         {
@@ -316,7 +400,13 @@ public class StagePlayer : MonoBehaviour
             {
                 _listShoes[i].SetActive(false);
             }
-            _listShoes[2].SetActive(true);
+            for (int i = 0; i < _listShoesDeco.Count; ++i)
+            {
+                _listShoesDeco[i].SetActive(false);
+            }
+
+            _listShoes[4].SetActive(true);
+            _listShoes[5].SetActive(true);
         }
         else if (Player.Instance._isnormalShoes == true)
         {
@@ -324,7 +414,13 @@ public class StagePlayer : MonoBehaviour
             {
                 _listShoes[i].SetActive(false);
             }
-            _listShoes[3].SetActive(true);
+            for (int i = 0; i < _listShoesDeco.Count; ++i)
+            {
+                _listShoesDeco[i].SetActive(false);
+            }
+
+            _listShoes[6].SetActive(true);
+            _listShoes[7].SetActive(true);
         }
         #endregion
 
@@ -356,6 +452,7 @@ public class StagePlayer : MonoBehaviour
             _listLubuEffect[1].SetActive(true);
         }
 
+       
 
 
 
@@ -400,8 +497,9 @@ public class StagePlayer : MonoBehaviour
 
 
             other.GetComponent<SkillBase>().SkillRelease();
+            Player.Instance._hitCount++;
         }
-        else if (other.CompareTag("Enemy") && other.GetComponent<Weapon>() != null)
+        else if (other.CompareTag("Weapon") && other.transform.root.GetComponent<Monster>() != null)
         {
             if( other.GetComponent<Weapon>()._isOnce == true)
             {
@@ -415,6 +513,7 @@ public class StagePlayer : MonoBehaviour
                 Player.Instance._ingameHp -= damage;
                 GamePlay.Instance._playerHp.UpdateBar(Player.Instance._ingameHp, 0, Player.Instance._maxHp);
                 _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                Player.Instance._hitCount++;
             }
 
         }
@@ -429,6 +528,7 @@ public class StagePlayer : MonoBehaviour
             Player.Instance._ingameHp -= damage;
             GamePlay.Instance._playerHp.UpdateBar(Player.Instance._ingameHp, 0, Player.Instance._maxHp);
             _mmfPlayer.PlayFeedbacks(transform.position, damage);
+            Player.Instance._hitCount++;
         }
 
     }

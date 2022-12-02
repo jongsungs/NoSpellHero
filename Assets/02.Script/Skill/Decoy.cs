@@ -94,7 +94,7 @@ public class Decoy : Monster
     }
 
 
-    public void AttackOn()
+    public override void AttackOn()
     {
         _isAttack = true;
         int spell;
@@ -117,7 +117,7 @@ public class Decoy : Monster
 
         }
     }
-    public void AttackOff()
+    public override void AttackOff()
     {
         _isAttack = false;
         _attackOnce = true;

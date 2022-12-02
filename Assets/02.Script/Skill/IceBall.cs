@@ -6,9 +6,16 @@ public class IceBall : SkillBase
 {
 
 
-    private void Update()
+    private void OnEnable()
     {
-        transform.Translate(Vector3.forward * _skillSpeed * Time.deltaTime,Space.Self);   
+        StartCoroutine(CoRelease());
+    }
+
+
+    public IEnumerator CoRelease()
+    {
+        yield return new WaitForSeconds(_skillDurationTime);
+        _skillPool.Release(this);
     }
 
 }

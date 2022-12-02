@@ -272,12 +272,32 @@ public class PlayerData
     public bool m_stage1clear;
     public bool m_stage2clear;
 
+    public int m_totalCreepScore;
+    public int m_jackfrostScore;
+    public int m_druidScore;
+    public int m_strangerblackholeScore;
+    public int m_helenScore;
+    public int m_dosaDieAvatar;
+    public int m_dokevHiddenSkillScore;
+    public int m_gold;
+    public int m_stat;
+    ///-----------------------------------인앱결제-----------------
+    public bool m_expX2;
+
+    public float m_effectSound;
+    public float m_bgmSound;
+
     public PlayerData(float hp, float atk, float matk, float atkspeed, float def, float speed, float critical, float handicraft, float charm,float criticalDamage,bool kighthelmet,bool masicianhat, bool gat, bool skinhead, bool normalhair,
         bool knighttop,bool masiciantop,bool durumagitop, bool knightbottom,bool masicianbottom,bool durumagibottom,bool knightshoes,bool sandal, bool oldshoes,bool emptyhelmet,bool normaltop,bool trunkbottom,bool normalshoes,
         bool stick,bool sward1,bool sward2,bool broom,bool club, bool shortsward,bool hanger,bool mace,bool shield,bool spear,bool umbrella, bool waldo,
         bool buystick, bool buysward1, bool buysward2, bool buybroom, bool buyclub, bool buyshortsward, bool buyhanger, bool buymace, bool buyshield, bool buyspear, bool buyumbrella, bool buywaldo,
         bool buyknighthelmet, bool buymasicianhat, bool buygat, bool buyskinhead, bool buynormalhair, bool buyknighttop, bool buymasiciantop, bool buydurumagitop, bool buyknightbottom, bool buymasicianbottom, bool buydurumagibottom, bool buyknightshoes, bool buysandal, bool buyoldshoes, bool buyemptyhelmet,bool buynormaltop,bool buytrunkbottom,bool buynormalshoes,
-        bool basicstick, bool buybasicstick)
+        bool basicstick, bool buybasicstick,bool firststat,bool firstmaster,bool firstjob, bool earlydie, bool nonviolent, bool firstmagic, bool firsthunt, bool getmagicalblader, bool magicalbladerhidden, bool getmadman, bool mamdmanmadness, bool getstrongman, bool strongmanhidden, bool strongmanskill1full, bool getwarrior, bool warriorskill1full, bool getdwarf, bool dwarfskill1full, bool getjackfrost,
+        bool jackfrosthidden, bool jackfrosttuna, bool getassaultcaptain, bool assaultcaptainfull, bool getzhangfei, bool zhangfeiroar, bool zhangfeirowhp, bool zhangfeihidden, bool getberserker, bool berserkerskill1full, bool berserkerhidden, bool berserkerclear, bool getcriticaler, bool criticalerskill1full, bool getdruid, bool druidfirstskill, bool druidskill100, bool getassassin, bool assassinskill2full, bool getambidextrous,
+        bool getlubu, bool lubuhidden, bool lubuskill1full, bool getheavycavalry, bool gethealthmagician, bool healthmagicianskill2full, bool healthmagiciangidden, bool getprist, bool pristhpfull, bool pristjesus, bool pristhidden, bool getwarlock, bool warlockskill1full, bool warlockclear, bool warlockhidden, bool getsalamander, bool salamandermeteor, bool salamandermeteor3, bool salamanderhidden, bool getcook, bool cookfullhp, bool cookhidden, bool getzeus, bool zeusskill1first,
+        bool zeushidden, bool getpracticebug, bool practicebugskill1full, bool practicebugskill2full, bool getstranger, bool strangerfirstskill, bool strangerskill100, bool getqrf, bool qrfputhanger, bool qrfhidden, bool getservant,bool servantskill1first ,bool servanthidden, bool getathlete, bool ahlerteskill2full, bool ahleteclear, bool getversatile, bool versatilehidden, bool getaacupuncturist, bool acupuncturistfirstskill, bool acupuncturistcritical, bool acupuncturistskill2full, bool acupuncturistclear,
+        bool getspoonkiller, bool spoonkillerskill1full, bool spoonkkillerskill2full, bool spoonkillerclear, bool gethelen, bool helenskill100, bool helenhidden, bool helenstage1die, bool helenclear, bool getrich, bool richget1000gold, bool getswell, bool swellskill1full, bool swellclear, bool getdelivery, bool deliveryskill1full, bool deliveryclear, bool getrepairman, bool repairmanhidden, bool repairmanclear, bool getdosa, bool dosafirstskill, bool dosaskilldie20, bool dosahidden, bool getgambler, bool gamblerlose, bool gamblerwin, bool gamblerskill2,
+        bool getslowstarter, bool slowstarterclear, bool getorpheus, bool orpheusskill1full, bool orpheusfirstdie, bool getdokev, bool dokevfirstskill, bool dokevhidden, bool dokevhidden50, bool statlv5, bool stage1clear, bool stage2clear, int totalcreepscore,int jackfrostscore,int druidscore, int strangerblackholescore, int helenscore, int dosadieavatar,int dokevhiddenskillscore,int gold,int stat,float effectsound,float bgmsound)
     {
         m_hp = hp;
         m_atk = atk;
@@ -358,6 +378,145 @@ public class PlayerData
         m_buyNormalTop = buynormaltop;
         m_buyTrunkBottom = buytrunkbottom;
         m_buynormalShoes = buynormalshoes;
+
+
+        m_firststat = firststat;
+        m_firstmaster = firstmaster;
+        m_firstjob = firstjob;
+        m_earlydie = earlydie;
+        m_nonviolent = nonviolent;
+        m_firstmagic = firstmagic;
+        m_firsthunt = firsthunt;
+        m_getmagicalblader = getmagicalblader;
+        m_magicalbladerhidden = magicalbladerhidden;
+        m_getmadman = getmadman;
+        m_madmanmadness = mamdmanmadness;
+        m_getstrongman = getstrongman;
+        m_strongmanhidden = strongmanhidden;
+        m_strongmanskill1full = strongmanskill1full;
+        m_getwarrior = getwarrior;
+        m_warriorskill1full = warriorskill1full;
+        m_getdwarf = getdwarf;
+        m_dwarfskill1full = dwarfskill1full;
+        m_getjackfrost = getjackfrost;
+        m_jackfrosthidden = jackfrosthidden;
+        m_jackfrosttuna = jackfrosttuna;
+        m_getassaultcaptain = getassaultcaptain;
+        m_assaultcaptainfull = assaultcaptainfull;
+        m_getzhangfei = getzhangfei;
+        m_zhangfeiroar = zhangfeiroar;
+        m_zhangfeirowhp = zhangfeiroar;
+        m_zhangfeihidden = zhangfeihidden;
+        m_getberserker = getberserker;
+        m_berserkerskill1full = berserkerskill1full;
+        m_berserkerhidden = berserkerhidden;
+        m_berserkerclear = berserkerclear;
+        m_getcriticaler = getcriticaler;
+        m_criticalerskill1full = criticalerskill1full;
+        m_getdruid = getdruid;
+        m_druidfirstskill = druidfirstskill;
+        m_druidskill100 = druidskill100;
+        m_getassassin = getassassin;
+        m_assassinskill2full = assassinskill2full;
+        m_getambidextrous = getambidextrous;
+        m_getlubu = getlubu;
+        m_lubuhidden = lubuhidden;
+        m_lubuskill1full = lubuskill1full;
+        m_getheavycavalry = getheavycavalry;
+        m_gethealthmagician = gethealthmagician;
+        m_healthmagicianskill2full = healthmagicianskill2full;
+        m_healthmagicianhidden = healthmagiciangidden;
+        m_getprist = getprist;
+        m_pristhpfull = pristhpfull;
+        m_pristjesus = pristjesus;
+        m_pristhidden = pristhidden;
+        m_getwarlock = getwarlock;
+        m_warlockskill1full = warlockskill1full;
+        m_warlockclear = warlockclear;
+        m_warlcokhidden = warlockhidden;
+        m_getsalamander = getsalamander;
+        m_salamandermeteor = salamandermeteor;
+        m_salamandermeteor3 = salamandermeteor3;
+        m_salamanderhidden = salamanderhidden;
+        m_getcook = getcook;
+        m_cookfullhp = cookfullhp;
+        m_cookhidden = cookhidden ;
+        m_getzeus = getzeus;
+        m_zeusskill1first = zeusskill1first;
+        m_zeushidden = zeushidden;
+        m_getpracticebug = getpracticebug;
+        m_practicebugskill1full = practicebugskill1full;
+        m_practicebugskill2full = practicebugskill2full;
+        m_getstranger = getstranger;
+        m_strangerfirstskill = strangerfirstskill;
+        m_stangerskill100 = strangerskill100;
+        m_getqrf = getqrf;
+        m_qrfputhanger = qrfputhanger;
+        m_qrfhidden = qrfhidden;
+        m_getservant = getservant;
+        m_servantskill1first = servantskill1first;
+        m_servanthidden = servanthidden;
+        m_getathlete = getathlete;
+        m_ahleteskill2full = ahlerteskill2full;
+        m_ahleteclear = ahleteclear;
+        m_getversatile = getversatile;
+        m_versatilehidden = versatilehidden;
+        m_getacupuncturist = getaacupuncturist;
+        m_acupuncturistfirstskill = acupuncturistfirstskill;
+        m_acupuncturistcritical = acupuncturistcritical;
+        m_acupuncturistskill2full = acupuncturistskill2full;
+        m_acupuncturistclear = acupuncturistclear;
+        m_getspoonkiller = getspoonkiller;
+        m_spoonkillerskill1full = spoonkillerskill1full;
+        m_spoonkillerskill2full = spoonkkillerskill2full;
+        m_spoonkillerclear = spoonkillerclear;
+        m_gethelen = gethelen;
+        m_helenskill100 = helenskill100;
+        m_helenhidden = helenhidden;
+        m_helenstage1die = helenstage1die;
+        m_helenclear = helenclear;
+        m_getrich = getrich;
+        m_richget1000gold = richget1000gold;
+        m_getswell = getswell;
+        m_swellskill1full = swellskill1full;
+        m_swellclear = swellclear;
+        m_getdelivery = getdelivery;
+        m_deliveryskill1full = deliveryskill1full;
+        m_deliveryclear = deliveryclear;
+        m_getrepairman = getrepairman;
+        m_repairmanhidden = repairmanhidden;
+        m_repairmanclear = repairmanclear;
+        m_getdosa = getdosa;
+        m_dosafirstskill = dosafirstskill;
+        m_dosaskilldie20 = dosaskilldie20;
+        m_dosahidden = dosahidden;
+        m_getgambler = getgambler;
+        m_gamblerlose = gamblerlose;
+        m_gamblerwin = gamblerwin;
+        m_gamblerskill2 = gamblerskill2;
+        m_getslowstarter = getslowstarter;
+        m_slowstarterclear = slowstarterclear;
+        m_getorpheus = getorpheus;
+        m_orpheusskill1full = orpheusskill1full;
+        m_orpheusfirstdie = orpheusfirstdie;
+        m_getdokev = getdokev;
+        m_dokevfirstskill = dokevfirstskill;
+        m_dokevhidden = dokevhidden;
+        m_dokevhidden50 = dokevhidden50;
+        m_statlv5 = statlv5;
+        m_stage1clear = stage1clear;
+        m_stage2clear = stage2clear;
+        m_totalCreepScore = totalcreepscore;
+        m_jackfrostScore = jackfrostscore;
+        m_druidScore = druidscore;
+        m_strangerblackholeScore = strangerblackholescore;
+        m_helenScore = helenscore;
+        m_dosaDieAvatar = dosadieavatar;
+        m_dokevHiddenSkillScore = dokevhiddenskillscore;
+        m_gold = gold;
+        m_stat = stat;
+        m_effectSound = effectsound;
+        m_bgmSound = bgmsound;
 
 
 
@@ -456,6 +615,8 @@ public class Player : BaseObject
   
     public bool _isWalk;
     public bool _ishalfHp;
+    public bool _isDead;
+
 
     public int _skill1;
     public int _skill2;
@@ -463,14 +624,30 @@ public class Player : BaseObject
 
     public int _totalCreepScore;
     public int _jackfrostScore;
-    public int _druidScore;
+    public int _druidScore;             
     public int _strangerblackholeScore;
     public int _helenScore;
-    public int _getGold;
     public int _dosaDieAvatar;
     public int _dokevHiddenSkillScore;
-    public int _spellScore;
+    public int _gold;
+    public int _stat;
+    ///-----------------------------------인앱결제-----------------
+    public bool _expX2;
 
+    //--------------------------------------------------------------
+
+
+    public int _deadCreepScore;    //     //결과창
+    public int _getGold;            //
+    public int _spellScore;         //
+    public int _attckCount;         //
+    public int _hitCount;           //
+    public int _freezingCount;      //
+    public int _burnCount;          //
+
+    public float _effectSound;
+    public float _bgmSound;
+    
     public List<int> _comboPristHeal = new List<int>();
     public List<int> _comboMeteor = new List<int>();
     public List<int> _comboInstantDie = new List<int>();
@@ -479,11 +656,9 @@ public class Player : BaseObject
     public List<Animator> _listAnimator = new List<Animator>();
     public List<Rigidbody> _listRigidBody = new List<Rigidbody>();
 
-    public int _gold;
     
-    public int _stat;
     public int _currentStat;
-    
+   
     #region Cloth
     //////옷----------------------------------------
 
@@ -532,10 +707,7 @@ public class Player : BaseObject
 
 
     //투구
-    public GameObject _knightHelmet;    //기사 투구
-    public GameObject _masicianHat;     //마법사모자
-    public GameObject _gat; //갓
-    public GameObject _emptyHelmet;
+ 
 
     public bool _isKightHelmet;
     public bool _isMasicianHat;
@@ -548,8 +720,7 @@ public class Player : BaseObject
     public bool _buyEmptyHelmet;
 
     //머리
-    public GameObject _skinHead;//민머리
-    public GameObject _normalHair;
+   
 
     public bool _isSkinHead;
     public bool _isnormalHair;
@@ -558,10 +729,7 @@ public class Player : BaseObject
     public bool _buynormalHair;
 
     //상의
-    public GameObject _knightTop;   //기사 상의
-    public GameObject _masicianTop; //마법사 상의
-    public GameObject _durumagiTop; //두루마기
-    public GameObject _normalTop; // 나시티
+
 
     public bool _isKnightTop;
     public bool _isMasicianTop;
@@ -574,10 +742,7 @@ public class Player : BaseObject
     public bool _buyNormalTop;
 
     //하의
-    public GameObject _knightBottom;    //기사 하의
-    public GameObject _masicianBottom;  //마법사 하의
-    public GameObject _durumagiBottom;  //두루마기 하의
-    public GameObject _trunkBottom; // 반바지
+
 
     public bool _isKnightBottom;
     public bool _isMasicianBottom;
@@ -590,10 +755,7 @@ public class Player : BaseObject
     public bool _buyTrunkBottom;
 
     //신발
-    public GameObject _knightShoes; //기사 신발
-    public GameObject _sandal;  //샌달
-    public GameObject _oldShoes;    //옛날 신발
-    public GameObject _normalShoes;// 맨발
+
 
     public bool _isKnightShoes;
     public bool _isSandal;
@@ -767,7 +929,10 @@ public class Player : BaseObject
         _data = new PlayerData(_hp, _atk, _matk, _atkSpeed, _def, _speed, _critical, _handicraft, _charm, _criticalDamage,
             _isKightHelmet, _isMasicianHat, _isGat, _isSkinHead, _isnormalHair, _isKnightTop, _isMasicianTop, _isDurumagiTop, _isKnightBottom, _isMasicianBottom, _isdurumagiBottom, _isKnightShoes, _isSandal, _isOldShoes, _isEmptyHelmet, _isNormalTop, _isTrunkBottom, _isnormalShoes, _isStick, _isSward1, _isSward2, _isBroom, _isClub, _isShortSward, _isHanger, _isMace, _isShield, _isSpear, _isUmbrella, _isWaldo, _buyStick, _buySward1, _buySward2, _buyBroom, _buyClub, _buyShortSward, _buyHanger, _buyMace, _buyShield, _buySpear, _buyUmbrella, _buyWaldo, _buyKightHelmet, _buyMasicianHat, _buyGat,
             _buySkinHead, _buynormalHair, _buyKnightTop, _buyMasicianTop, _buyDurumagiTop, _buyKnightBottom, _buyMasicianBottom, _buydurumagiBottom, _buyKnightShoes, _buySandal, _buyOldShoes, _buyEmptyHelmet, _buyNormalTop, _buyTrunkBottom, _buynormalShoes
-            ,_isbasicStick,_buybasicStick);
+            ,_isbasicStick,_buybasicStick,firststat,firstmaster,firstjob,earlydie,nonviolent,firstmagic,firsthunt,getmagicalblader,magicalbladerhidden,getmadman,madmanmadness,getstrongman,strongmanhidden,strongmanskill1full,getwarrior,warriorskill1full,getdwarf,dwarfskill1full,getjackfrost,jackfrosthidden,jackfrosttuna,getassaultcaptain,assaultcaptainfull,
+            getzhangfei,zhangfeiroar,zhangfeirowhp,zhangfeihidden,getberserker,berserkerskill1full,berserkerhidden,berserkerclear,getcriticaler,criticalerskill1full,getdruid,druidfirstskill,druidskill100,getassassin,assassinskill2full,getambidextrous,getlubu,lubuhidden,lubuskill1full,getheavycavalry,gethealthmagician,healthmagicianskill2full,healthmagicianhidden,getprist,pristhpfull,pristjesus,pristhidden,getwarlock,warlockskill1full,warlockclear,warlcokhidden,getsalamander,salamandermeteor,salamandermeteor3,salamanderhidden,getcook,cookfullhp,cookhidden,
+            getzeus,zeusskill1first,zeushidden,getpracticebug,practicebugskill1full,practicebugskill2full,getstranger,strangerfirstskill,stangerskill100,getqrf,qrfputhanger,qrfhidden,getservant,servantskill1first,servanthidden,getathlete,ahleteskill2full,ahleteclear,getversatile,versatilehidden,getacupuncturist,acupuncturistfirstskill,acupuncturistcritical,acupuncturistskill2full,acupuncturistclear,getspoonkiller,spoonkillerskill1full,spoonkillerskill2full,spoonkillerclear,gethelen,helenskill100,helenhidden,helenstage1die,helenclear,getrich,richget1000gold,getswell,swellskill1full,swellclear,getdelivery,deliveryskill1full,
+            deliveryclear,getrepairman,repairmanhidden,repairmanclear,getdosa,dosafirstskill,dosaskilldie20,dosahidden,getgambler,gamblerlose,gamblerwin,gamblerskill2,getslowstarter,slowstarterclear,getorpheus,orpheusskill1full,orpheusfirstdie,getdokev,dokevfirstskill,dokevhidden,dokevhidden50,statlv5,stage1clear,stage2clear,_totalCreepScore,_jackfrostScore,_druidScore,_strangerblackholeScore,_helenScore,_dosaDieAvatar,_dokevHiddenSkillScore,_gold,_stat,_effectSound,_bgmSound);
         
         _preSpeed = _speed + 1f;
 
@@ -783,9 +948,14 @@ public class Player : BaseObject
         _basicHandicraft = _handicraft;
         _basicCharm = _charm;
         _basicCriticalDamage = _criticalDamage;
-        _criticalProbability = 3f;
-
-     
+        _criticalProbability = _critical * 15f;
+        _criticalDamage = 2f;
+        _isDead = false;
+        _fireBallProbability = 30f;
+        _iceBallProbability = 30f;
+        _chainLightProbability = 30f;
+        _jumpStack = 3;
+        _basicJumpStack = _jumpStack;
         _listState.Add(_atk);
         _listState.Add(_matk);
         _listState.Add(_atkSpeed);
@@ -988,6 +1158,10 @@ public class Player : BaseObject
         {
             _playerTitle = Player.PlayerTitle.DokeV;
         }
+        else
+        {
+            _playerTitle = PlayerTitle.Normal;
+        }
         #endregion
 
 
@@ -997,11 +1171,7 @@ public class Player : BaseObject
     private void Start()
     {
         
-        _fireBallProbability = 30f;
-        _iceBallProbability = 30f;
-        _chainLightProbability = 30f;
-        _jumpStack = 3;
-        _basicJumpStack = _jumpStack;
+       
         if(GamePlay.Instance != null)
         GamePlay.Instance.ChangeStage();
         if(_meteorPoint != null)
@@ -1013,9 +1183,7 @@ public class Player : BaseObject
 
     private void Update()
     {
-       // _half = UnityEngine.Random.Range(0, 2);
-        _1_3 = UnityEngine.Random.Range(0, 3);
-        _quater = UnityEngine.Random.Range(0, 4);
+      
         if (_animator != null)
         {
             _animator.speed = 1f + (_atkSpeed / 5f);
@@ -1082,20 +1250,12 @@ public class Player : BaseObject
         }
         if(Input.GetKeyDown(KeyCode.A))
         {
-            
-            Attack();
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            Die();
-        }
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Meteor();
-        }
 
+            FireBall();
+        }
+       
+       
 
-        //DrawView();
 
 
 
@@ -1177,12 +1337,13 @@ public class Player : BaseObject
 
     public void AttackOn()
     {
+        _attckCount++;
         int rand;
         _isAttack = true;
         int spell;
         spell = UnityEngine.Random.Range(0, 100);
 
-
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._attck);
         if(spell <_spellCastProbability + _weapon._spellProbability )
         {
             Spell(_iceBallProbability,_fireBallProbability,_chainLightProbability);
@@ -1279,7 +1440,9 @@ public class Player : BaseObject
                 {
                     _charm = _basicCharm + (_basicCharm * (0.1f + _skill1 / 10f));
                 }
-        
+
+                SoundManager.Instance.EffectPlay(SoundManager.Instance._buff);
+
             }
             else if (rand > 50 + _skill2)
             {
@@ -1321,6 +1484,8 @@ public class Player : BaseObject
                 {
                     _charm = _basicCharm - (_basicCharm * (0.1f + _skill1 / 10f));
                 }
+
+                SoundManager.Instance.EffectPlay(SoundManager.Instance._debuff);
             }
 
 
@@ -1348,6 +1513,7 @@ public class Player : BaseObject
             if (rand == 0)
             {
                 _ingameHp += _maxHp / 10f + (_maxHp / (10 - (_skill1 * 2)));
+                Heal();
             }
           
             
@@ -1438,6 +1604,7 @@ public class Player : BaseObject
                 _isIdle = true;
                 break;
             case State.Die:
+                
                 if(GamePlay.Instance._currentStage == GamePlay.GameState.Stage1 && earlydie == false)
                 {
                     earlydie = true;
@@ -1463,7 +1630,13 @@ public class Player : BaseObject
                     Player.Instance.Save();
                 }
 
-                GamePlay.Instance.ActiveResultPopUp();
+                if(_isDead == false)
+                {
+                    _isDead = true;
+
+                    StartCoroutine(CoDie());
+
+                }
                 break;
             case State.Attack2:
               
@@ -1788,7 +1961,7 @@ public class Player : BaseObject
                 }
 
                 _atk = (_basicAtk * 0.5f) + (_basicAtk * _skill2 / 10f);
-                _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill1 / 10f);
+                _atkSpeed = (_basicAtkSpeed  * 3 )+ (_basicAtkSpeed * _skill1 / 10f);
 
                 break;
             case PlayerTitle.Helen:
@@ -2108,6 +2281,7 @@ public class Player : BaseObject
     public void Step()
     {
         GamePlay.Instance._footStepPool.Get();
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._step);
     }
 
 
@@ -2118,6 +2292,8 @@ public class Player : BaseObject
 
     public void Spell(float ice,float fire,float light)
     {
+
+        _spellScore++;
         float rand = UnityEngine.Random.Range(0, (ice + fire + light));
         int blackhole = UnityEngine.Random.Range(0, 100);
         if(_playerTitle == PlayerTitle.Stranger && blackhole < _blackholeProbablility)
@@ -2127,8 +2303,7 @@ public class Player : BaseObject
         
         if(rand <=ice)
         {
-            //아이스볼
-            Debug.Log("아이스볼");
+            IceBall();
         }
         else if(rand <=ice + fire && rand > ice)
         {
@@ -2153,12 +2328,11 @@ public class Player : BaseObject
 
             }
 
-            //파이어볼
-            Debug.Log("불공");
+            FireBall();
         }
         else if (rand >= ice + fire && rand <= ice + fire + light)
         {
-            Debug.Log("체라");
+            ChainLightning();
 
         }
 
@@ -2176,10 +2350,12 @@ public class Player : BaseObject
     public IEnumerator CoLightning()
     {
         _count++;
+        int critical = UnityEngine.Random.Range(0, 100);
 
         Collider[] targets = Physics.OverlapSphere(m_transform.position, m_viewDistance, m_targetMask);
 
-        
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._chainlightning);
+
 
         if (_count % 2 == 0 && _count != 0)//짝수
         {
@@ -2215,7 +2391,24 @@ public class Player : BaseObject
                             _listLightning.Add(obj);
                             light.StartObject = this.gameObject;
                             light.EndObject = _listMonster[i].gameObject;
-                            light.EndObject.GetComponent<Monster>()._hp -= 1f;
+                            float damage = 0;
+                            if(critical <_criticalProbability)
+                            {
+                               damage = (_weapon._damage + (_matk * 2f)) *_criticalDamage ;
+                            }
+                            else if(critical >= _criticalProbability)
+                            {
+                                damage = (_weapon._damage + (_matk * 2f));
+                            }
+                            light.EndObject.GetComponent<Monster>()._ingameHp -= damage;
+                            light.EndObject.GetComponent<Monster>()._mmfPlayer.PlayFeedbacks((light.EndObject.GetComponent<Monster>()._mmfPlayer.transform.position), damage);
+                            if(light.EndObject.GetComponent<Monster>()._category == Monster.MonsterCategory.Boss)
+                            {
+                                GamePlay.Instance._bossHpbarPlayer.UpdateBar(light.EndObject.GetComponent<Monster>()._ingameHp, 0, light.EndObject.GetComponent<Monster>()._maxHp);
+                            }
+
+
+
 
                         }
                         else if (i != 0 && i <= _jumpStack && _listLightning.Count < targets.Length)
@@ -2227,7 +2420,21 @@ public class Player : BaseObject
                             var light = obj.GetComponent<LightningBoltScript>();
                             light.StartObject = _listMonster[i - 1].gameObject;
                             light.EndObject = _listMonster[i].gameObject;
-                            light.EndObject.GetComponent<Monster>()._hp -= 1f;
+                            float damage = 0;
+                            if(critical <_criticalProbability)
+                            {
+                               damage = (_weapon._damage + (_matk * 2f)) *_criticalDamage ;
+                            }
+                            else if(critical >= _criticalProbability)
+                            {
+                                damage = (_weapon._damage + (_matk * 2f));
+                            }
+                            light.EndObject.GetComponent<Monster>()._ingameHp -= damage;
+                            light.EndObject.GetComponent<Monster>()._mmfPlayer.PlayFeedbacks((light.EndObject.GetComponent<Monster>()._mmfPlayer.transform.position), damage);
+                            if(light.EndObject.GetComponent<Monster>()._category == Monster.MonsterCategory.Boss)
+                            {
+                                GamePlay.Instance._bossHpbarPlayer.UpdateBar(light.EndObject.GetComponent<Monster>()._ingameHp, 0, light.EndObject.GetComponent<Monster>()._maxHp);
+                            }
                         }
                         else if (i == 0 && _listLightning.Count >= targets.Length)
                         {
@@ -2236,7 +2443,24 @@ public class Player : BaseObject
                             if (_listMonster[i] != null)
                                 _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster[i].gameObject;
                             if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
-                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
+                            {
+                                float damage = 0;
+                                if (critical < _criticalProbability)
+                                {
+                                    damage = (_weapon._damage + (_matk * 2f)) * _criticalDamage;
+                                }
+                                else if (critical >= _criticalProbability)
+                                {
+                                    damage = (_weapon._damage + (_matk * 2f));
+                                }
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._ingameHp -= damage;
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._mmfPlayer.PlayFeedbacks((_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._mmfPlayer.transform.position), damage);
+                                if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._category == Monster.MonsterCategory.Boss)
+                                {
+                                    GamePlay.Instance._bossHpbarPlayer.UpdateBar(_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._ingameHp, 0, _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._maxHp);
+                                }
+
+                            }
                         }
                         else if (i != 0 && i <= _jumpStack && _listLightning.Count >= targets.Length && _listMonster.Count != 0)
                         {
@@ -2247,7 +2471,23 @@ public class Player : BaseObject
                             if (_listMonster[i] != null)
                                 _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster[i].gameObject;
                             if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
-                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
+                            {
+                                float damage = 0;
+                                if (critical < _criticalProbability)
+                                {
+                                    damage = (_weapon._damage + (_matk * 2f)) * _criticalDamage;
+                                }
+                                else if (critical >= _criticalProbability)
+                                {
+                                    damage = (_weapon._damage + (_matk * 2f));
+                                }
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._ingameHp -= damage;
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._mmfPlayer.PlayFeedbacks((_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._mmfPlayer.transform.position), damage);
+                                if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._category == Monster.MonsterCategory.Boss)
+                                {
+                                    GamePlay.Instance._bossHpbarPlayer.UpdateBar(_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._ingameHp, 0, _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._maxHp);
+                                }
+                            }
 
 
                         }
@@ -2281,8 +2521,22 @@ public class Player : BaseObject
                             var light = obj.GetComponent<LightningBoltScript>();
                             _listLightning.Add(obj);
                             light.StartObject = this.gameObject;
-                            light.EndObject = _listMonster[i].gameObject;
-                            light.EndObject.GetComponent<Monster>()._hp -= 1f;
+                            light.EndObject = _listMonster[i].gameObject; 
+                            float damage = 0;
+                            if (critical < _criticalProbability)
+                            {
+                                damage = (_weapon._damage + (_matk * 2f)) * _criticalDamage;
+                            }
+                            else if (critical >= _criticalProbability)
+                            {
+                                damage = (_weapon._damage + (_matk * 2f));
+                            }
+                            light.EndObject.GetComponent<Monster>()._ingameHp -= damage;
+                            light.EndObject.GetComponent<Monster>()._mmfPlayer.PlayFeedbacks((light.EndObject.GetComponent<Monster>()._mmfPlayer.transform.position), damage);
+                            if (light.EndObject.GetComponent<Monster>()._category == Monster.MonsterCategory.Boss)
+                            {
+                                GamePlay.Instance._bossHpbarPlayer.UpdateBar(light.EndObject.GetComponent<Monster>()._ingameHp, 0, light.EndObject.GetComponent<Monster>()._maxHp);
+                            }
 
                         }
                         else if (i != 0  && _listLightning.Count < targets.Length)
@@ -2294,7 +2548,21 @@ public class Player : BaseObject
                             var light = obj.GetComponent<LightningBoltScript>();
                             light.StartObject = _listMonster[i - 1].gameObject;
                             light.EndObject = _listMonster[i].gameObject;
-                            light.EndObject.GetComponent<Monster>()._hp -= 1f;
+                            float damage = 0;
+                            if (critical < _criticalProbability)
+                            {
+                                damage = (_weapon._damage + (_matk * 2f)) * _criticalDamage;
+                            }
+                            else if (critical >= _criticalProbability)
+                            {
+                                damage = (_weapon._damage + (_matk * 2f));
+                            }
+                            light.EndObject.GetComponent<Monster>()._ingameHp -= damage;
+                            light.EndObject.GetComponent<Monster>()._mmfPlayer.PlayFeedbacks((light.EndObject.GetComponent<Monster>()._mmfPlayer.transform.position), damage);
+                            if (light.EndObject.GetComponent<Monster>()._category == Monster.MonsterCategory.Boss)
+                            {
+                                GamePlay.Instance._bossHpbarPlayer.UpdateBar(light.EndObject.GetComponent<Monster>()._ingameHp, 0, light.EndObject.GetComponent<Monster>()._maxHp);
+                            }
                         }
                         else if (i == 0 && _listLightning.Count >= targets.Length)
                         {
@@ -2303,7 +2571,23 @@ public class Player : BaseObject
                             if (_listMonster[i] != null)
                                 _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster[i].gameObject;
                             if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
-                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
+                            {
+                                float damage = 0;
+                                if (critical < _criticalProbability)
+                                {
+                                    damage = (_weapon._damage + (_matk * 2f)) * _criticalDamage;
+                                }
+                                else if (critical >= _criticalProbability)
+                                {
+                                    damage = (_weapon._damage + (_matk * 2f));
+                                }
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._ingameHp -= damage;
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._mmfPlayer.PlayFeedbacks((_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._mmfPlayer.transform.position), damage);
+                                if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._category == Monster.MonsterCategory.Boss)
+                                {
+                                    GamePlay.Instance._bossHpbarPlayer.UpdateBar(_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._ingameHp, 0, _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._maxHp);
+                                }
+                            }
                         }
                         else if (i != 0 && _listLightning.Count >= targets.Length && _listMonster.Count != 0)
                         {
@@ -2314,7 +2598,23 @@ public class Player : BaseObject
                             if (_listMonster[i] != null)
                                 _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster[i].gameObject;
                             if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
-                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
+                            {
+                                float damage = 0;
+                                if (critical < _criticalProbability)
+                                {
+                                    damage = (_weapon._damage + (_matk * 2f)) * _criticalDamage;
+                                }
+                                else if (critical >= _criticalProbability)
+                                {
+                                    damage = (_weapon._damage + (_matk * 2f));
+                                }
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._ingameHp -= damage;
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._mmfPlayer.PlayFeedbacks((_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._mmfPlayer.transform.position), damage);
+                                if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._category == Monster.MonsterCategory.Boss)
+                                {
+                                    GamePlay.Instance._bossHpbarPlayer.UpdateBar(_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._ingameHp, 0, _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._maxHp);
+                                }
+                            }
 
 
                         }
@@ -2364,7 +2664,21 @@ public class Player : BaseObject
                             _listLightning.Add(obj);
                             light.StartObject = this.gameObject;
                             light.EndObject = _listMonster2[i].gameObject;
-                            light.EndObject.GetComponent<Monster>()._hp -= 1f;
+                            float damage = 0;
+                            if (critical < _criticalProbability)
+                            {
+                                damage = (_weapon._damage + (_matk * 2f)) * _criticalDamage;
+                            }
+                            else if (critical >= _criticalProbability)
+                            {
+                                damage = (_weapon._damage + (_matk * 2f));
+                            }
+                            light.EndObject.GetComponent<Monster>()._ingameHp -= damage;
+                            light.EndObject.GetComponent<Monster>()._mmfPlayer.PlayFeedbacks((light.EndObject.GetComponent<Monster>()._mmfPlayer.transform.position), damage);
+                            if (light.EndObject.GetComponent<Monster>()._category == Monster.MonsterCategory.Boss)
+                            {
+                                GamePlay.Instance._bossHpbarPlayer.UpdateBar(light.EndObject.GetComponent<Monster>()._ingameHp, 0, light.EndObject.GetComponent<Monster>()._maxHp);
+                            }
 
                         }
                         else if (i != 0 && i <= _jumpStack && _listLightning.Count < targets.Length)
@@ -2376,7 +2690,21 @@ public class Player : BaseObject
                             var light = obj.GetComponent<LightningBoltScript>();
                             light.StartObject = _listMonster2[i - 1].gameObject;
                             light.EndObject = _listMonster2[i].gameObject;
-                            light.EndObject.GetComponent<Monster>()._hp -= 1f;
+                            float damage = 0;
+                            if (critical < _criticalProbability)
+                            {
+                                damage = (_weapon._damage + (_matk * 2f)) * _criticalDamage;
+                            }
+                            else if (critical >= _criticalProbability)
+                            {
+                                damage = (_weapon._damage + (_matk * 2f));
+                            }
+                            light.EndObject.GetComponent<Monster>()._ingameHp -= damage;
+                            light.EndObject.GetComponent<Monster>()._mmfPlayer.PlayFeedbacks((light.EndObject.GetComponent<Monster>()._mmfPlayer.transform.position), damage);
+                            if (light.EndObject.GetComponent<Monster>()._category == Monster.MonsterCategory.Boss)
+                            {
+                                GamePlay.Instance._bossHpbarPlayer.UpdateBar(light.EndObject.GetComponent<Monster>()._ingameHp, 0, light.EndObject.GetComponent<Monster>()._maxHp);
+                            }
                         }
                         else if (i == 0 && _listLightning.Count >= targets.Length)
                         {
@@ -2385,7 +2713,23 @@ public class Player : BaseObject
                             if (_listMonster2[i] != null)
                                 _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster2[i].gameObject;
                             if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
-                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
+                            {
+                                float damage = 0;
+                                if (critical < _criticalProbability)
+                                {
+                                    damage = (_weapon._damage + (_matk * 2f)) * _criticalDamage;
+                                }
+                                else if (critical >= _criticalProbability)
+                                {
+                                    damage = (_weapon._damage + (_matk * 2f));
+                                }
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._ingameHp -= damage;
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._mmfPlayer.PlayFeedbacks((_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._mmfPlayer.transform.position), damage);
+                                if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._category == Monster.MonsterCategory.Boss)
+                                {
+                                    GamePlay.Instance._bossHpbarPlayer.UpdateBar(_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._ingameHp, 0, _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._maxHp);
+                                }
+                            }
                         }
                         else if (i != 0 && i <= _jumpStack && _listLightning.Count >= targets.Length && _listMonster2.Count != 0)
                         {
@@ -2396,7 +2740,23 @@ public class Player : BaseObject
                             if (_listMonster2[i]  != null)
                                 _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster2[i].gameObject;
                             if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
-                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
+                            {
+                                float damage = 0;
+                                if (critical < _criticalProbability)
+                                {
+                                    damage = (_weapon._damage + (_matk * 2f)) * _criticalDamage;
+                                }
+                                else if (critical >= _criticalProbability)
+                                {
+                                    damage = (_weapon._damage + (_matk * 2f));
+                                }
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._ingameHp -= damage;
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._mmfPlayer.PlayFeedbacks((_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._mmfPlayer.transform.position), damage);
+                                if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._category == Monster.MonsterCategory.Boss)
+                                {
+                                    GamePlay.Instance._bossHpbarPlayer.UpdateBar(_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._ingameHp, 0, _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._maxHp);
+                                }
+                            }
 
 
                         }
@@ -2425,7 +2785,21 @@ public class Player : BaseObject
                             _listLightning.Add(obj);
                             light.StartObject = this.gameObject;
                             light.EndObject = _listMonster2[i].gameObject;
-                            light.EndObject.GetComponent<Monster>()._hp -= 1f;
+                            float damage = 0;
+                            if (critical < _criticalProbability)
+                            {
+                                damage = (_weapon._damage + (_matk * 2f)) * _criticalDamage;
+                            }
+                            else if (critical >= _criticalProbability)
+                            {
+                                damage = (_weapon._damage + (_matk * 2f));
+                            }
+                            light.EndObject.GetComponent<Monster>()._ingameHp -= damage;
+                            light.EndObject.GetComponent<Monster>()._mmfPlayer.PlayFeedbacks((light.EndObject.GetComponent<Monster>()._mmfPlayer.transform.position), damage);
+                            if (light.EndObject.GetComponent<Monster>()._category == Monster.MonsterCategory.Boss)
+                            {
+                                GamePlay.Instance._bossHpbarPlayer.UpdateBar(light.EndObject.GetComponent<Monster>()._ingameHp, 0, light.EndObject.GetComponent<Monster>()._maxHp);
+                            }
 
                         }
                         else if (i != 0  && _listLightning.Count < targets.Length)
@@ -2437,7 +2811,21 @@ public class Player : BaseObject
                             var light = obj.GetComponent<LightningBoltScript>();
                             light.StartObject = _listMonster2[i - 1].gameObject;
                             light.EndObject = _listMonster2[i].gameObject;
-                            light.EndObject.GetComponent<Monster>()._hp -= 1f;
+                            float damage = 0;
+                            if (critical < _criticalProbability)
+                            {
+                                damage = (_weapon._damage + (_matk * 2f)) * _criticalDamage;
+                            }
+                            else if (critical >= _criticalProbability)
+                            {
+                                damage = (_weapon._damage + (_matk * 2f));
+                            }
+                            light.EndObject.GetComponent<Monster>()._ingameHp -= damage;
+                            light.EndObject.GetComponent<Monster>()._mmfPlayer.PlayFeedbacks((light.EndObject.GetComponent<Monster>()._mmfPlayer.transform.position), damage);
+                            if (light.EndObject.GetComponent<Monster>()._category == Monster.MonsterCategory.Boss)
+                            {
+                                GamePlay.Instance._bossHpbarPlayer.UpdateBar(light.EndObject.GetComponent<Monster>()._ingameHp, 0, light.EndObject.GetComponent<Monster>()._maxHp);
+                            }
                         }
                         else if (i == 0 && _listLightning.Count >= targets.Length)
                         {
@@ -2446,7 +2834,23 @@ public class Player : BaseObject
                             if (_listMonster2[i].gameObject != null)
                                 _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster2[i].gameObject;
                             if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
-                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
+                            {
+                                float damage = 0;
+                                if (critical < _criticalProbability)
+                                {
+                                    damage = (_weapon._damage + (_matk * 2f)) * _criticalDamage;
+                                }
+                                else if (critical >= _criticalProbability)
+                                {
+                                    damage = (_weapon._damage + (_matk * 2f));
+                                }
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._ingameHp -= damage;
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._mmfPlayer.PlayFeedbacks((_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._mmfPlayer.transform.position), damage);
+                                if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._category == Monster.MonsterCategory.Boss)
+                                {
+                                    GamePlay.Instance._bossHpbarPlayer.UpdateBar(_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._ingameHp, 0, _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._maxHp);
+                                }
+                            }
                         }
                         else if (i != 0  && _listLightning.Count >= targets.Length && _listMonster2.Count != 0)
                         {
@@ -2457,7 +2861,23 @@ public class Player : BaseObject
                             if (_listMonster2[i] != null)
                                 _listLightning[i].GetComponent<LightningBoltScript>().EndObject = _listMonster2[i].gameObject;
                             if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject != null)
-                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._hp -= 1f;
+                            {
+                                float damage = 0;
+                                if (critical < _criticalProbability)
+                                {
+                                    damage = (_weapon._damage + (_matk * 2f)) * _criticalDamage;
+                                }
+                                else if (critical >= _criticalProbability)
+                                {
+                                    damage = (_weapon._damage + (_matk * 2f));
+                                }
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._ingameHp -= damage;
+                                _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._mmfPlayer.PlayFeedbacks((_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._mmfPlayer.transform.position), damage);
+                                if (_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._category == Monster.MonsterCategory.Boss)
+                                {
+                                    GamePlay.Instance._bossHpbarPlayer.UpdateBar(_listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._ingameHp, 0, _listLightning[i].GetComponent<LightningBoltScript>().EndObject.GetComponent<Monster>()._maxHp);
+                                }
+                            }
 
 
                         }
@@ -2488,6 +2908,7 @@ public class Player : BaseObject
     public IEnumerator Blizzard()
     {
         GamePlay.Instance.ActiveBlizzard();
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._blizard);
         Collider[] targets = Physics.OverlapSphere(m_transform.position, m_viewDistance, m_targetMask);
 
 
@@ -2499,7 +2920,7 @@ public class Player : BaseObject
         for(int i = 0; i < _listBlizzardMonster.Count; ++i)
         {
             _listBlizzardMonster[i].Freezing();
-            _listBlizzardMonster[i]._hp -= 5;
+            _listBlizzardMonster[i]._ingameHp -= (_atk + _weapon._damage) /2f;
         }
 
         yield return new WaitForSeconds(4f);
@@ -2514,8 +2935,8 @@ public class Player : BaseObject
     //    achivementCheck(zhangfeiroar, "zhangfeiroar");
 
         GamePlay.Instance._roarPool.Get();
-
-        if(_skill2 < 3)
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._meteorex);
+        if (_skill2 < 3)
         m_viewDistance = 0.5f + _skill2;
         else if(_skill2 >=3 )
         {
@@ -2548,12 +2969,23 @@ public class Player : BaseObject
     {
       //  achivementCheck(salamandermeteor, "salamandermeteor");
         GamePlay.Instance._meteorEffectPool.Get();
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._meteor);
     }
 
     public void BlackHole()
     {
         //achivementCheck(strangerfirstskill, "strangerfirstskill");
         GamePlay.Instance._blackHolePool.Get();
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._blackHole);
+    }
+    public void IceBall()
+    {
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._iceball);
+        GamePlay.Instance._iceballPool.Get();
+    }
+    public void ChainLightning()
+    {
+        StartCoroutine(CoLightning());
     }
     public IEnumerator Immolation()
     {
@@ -2562,7 +2994,7 @@ public class Player : BaseObject
             var obj = Physics.OverlapSphere(m_transform.position, m_viewDistance, m_targetMask);
             for(int i = 0; i < obj.Length; ++i)
             {
-                obj[i].GetComponent<Monster>()._hp -= 1f;
+                obj[i].GetComponent<Monster>()._ingameHp -= _matk / 2f; 
             }
 
             yield return new WaitForSeconds(1f);
@@ -2652,7 +3084,8 @@ public class Player : BaseObject
     public void DecoySpawn()
     {
         GamePlay.Instance._decoyPool.Get();
-        
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._spawn);
+
     }
 
     public IEnumerator Thunder()
@@ -2661,12 +3094,30 @@ public class Player : BaseObject
         {
             yield return new WaitForSeconds(0.5f);
             GamePlay.Instance._thunderPool.Get();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._thunder);
 
 
         }
     }
 
+    public void FireBall()
+    {
+        GamePlay.Instance._fireBallPool.Get();
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._fireball);
+    }
+    public void Heal()
+    {
+        GamePlay.Instance._healPool.Get();
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._heal);
 
+    }
+    public IEnumerator CoDie()
+    {
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._playerdie);
+        yield return new WaitForSeconds(2f);
+
+        GamePlay.Instance.ActiveResultPopUp();
+    }
 
 
     #endregion
@@ -2900,7 +3351,18 @@ public class Player : BaseObject
         stage1clear = data.m_stage1clear;
         stage2clear = data.m_stage2clear;
 
-
+        _totalCreepScore = data.m_totalCreepScore;
+        _jackfrostScore = data.m_jackfrostScore;
+        _druidScore = data.m_druidScore;
+        _strangerblackholeScore = data.m_strangerblackholeScore;
+        _helenScore = data.m_helenScore;
+        _dosaDieAvatar = data.m_dosaDieAvatar;
+        _dokevHiddenSkillScore = data.m_dokevHiddenSkillScore;
+        _gold = data.m_gold;
+        _stat = data.m_stat;
+        _expX2 = data.m_expX2;
+        _effectSound = data.m_effectSound;
+        _bgmSound = data.m_bgmSound;
 
     }
     public void DataSave()
@@ -3114,6 +3576,19 @@ public class Player : BaseObject
         _data.m_statlv5 = statlv5;
         _data.m_stage1clear = stage1clear;
         _data.m_stage2clear = stage2clear;
+
+        _data.m_totalCreepScore = _totalCreepScore;
+        _data.m_jackfrostScore = _jackfrostScore;
+        _data.m_druidScore = _druidScore;
+        _data.m_strangerblackholeScore = _strangerblackholeScore;
+        _data.m_helenScore = _helenScore; 
+        _data.m_dosaDieAvatar = _dosaDieAvatar;
+        _data.m_dokevHiddenSkillScore = _dokevHiddenSkillScore;
+        _data.m_gold = _gold;
+        _data.m_stat = _stat;
+        _data.m_expX2 = _expX2;
+        _data.m_effectSound = _effectSound;
+        _data.m_bgmSound = _bgmSound;
 
 
     }

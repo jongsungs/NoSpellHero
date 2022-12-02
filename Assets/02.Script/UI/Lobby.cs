@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -15,10 +15,15 @@ public class Lobby : MonoBehaviour
     public GameObject _checkOutPopUp;
     public GameObject _alarmPopUp;
     public GameObject _settingPopUp;
+    public GameObject _resetCheckPopUp;
     public TextMeshProUGUI _goldText;
     public TextMeshProUGUI _statText;
     public TextMeshProUGUI _alarmText;
     public TextMeshProUGUI _CheckOutText;
+    public TextMeshProUGUI _skillDescription;
+    public Text _getExpX2;
+    public Slider _effectSoundSlider;
+    public Slider _bgmSoundSlider;
 
 
     public List<GameObject> _listWeapon = new List<GameObject>();
@@ -27,6 +32,10 @@ public class Lobby : MonoBehaviour
     public List<GameObject> _listTop = new List<GameObject>();
     public List<GameObject> _listBottom = new List<GameObject>();
     public List<GameObject> _listShoes = new List<GameObject>();
+    public List<GameObject> _listTopDeco = new List<GameObject>();
+    public List<GameObject> _listBottomDeco = new List<GameObject>();
+    public List<GameObject> _listShoesDeco = new List<GameObject>();
+    public List<GameObject> _listSkin = new List<GameObject>();
 
     public List<GameObject> _listScreen = new List<GameObject>();
 
@@ -55,6 +64,7 @@ public class Lobby : MonoBehaviour
         _checkOutPopUp.SetActive(false);
         _alarmPopUp.SetActive(false);
         _settingPopUp.SetActive(false);
+        _resetCheckPopUp.SetActive(false);
         for (int i = 0; i < _player._atk; ++i)
         {
             _listStatSpace[0].transform.GetChild(i).gameObject.SetActive(true);
@@ -108,17 +118,20 @@ public class Lobby : MonoBehaviour
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.MagicalBlader;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "마검사";
                 achivementCheck(_player.getmagicalblader, "getmagicalblader");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "공격력 혹은 \n마력 2배증가";
+
             }
             else if (_player._atk == 5 && _player._matk == 5 && _player._critical == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.MadMan;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "광인";
                 achivementCheck(_player.getmadman, "getmadman");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "공격력 마력 25% 감소 \n 치명타 피해율 100% 증가";
 
 
 
@@ -127,181 +140,201 @@ public class Lobby : MonoBehaviour
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.StrongMan;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "괴력몬";
                 
                 achivementCheck(_player.getstrongman, "getstrongman");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "일정 확률로 공격시 \n추가타 발동";
             }
             else if (_player._atk == 5 && _player._hp == 5 && _player._atkSpeed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Warrior;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "전사";
                
                 achivementCheck(_player.getwarrior, "getwarrior");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "공격력 30% 증가";
             }
             else if (_player._atk == 5 && _player._hp == 5 && _player._handicraft == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Dwarf;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "난쟁이";
            
                 achivementCheck(_player.getdwarf, "getdwarf");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "무기공격력 20% 증가";
             }
             else if (_player._atk == 5 && _player._hp == 5 && _player._charm == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.JackFrost;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "동장군";
                 
                 achivementCheck(_player.getjackfrost, "getjackfrost");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "공격시 일정확률로 빙결";
             }
             else if (_player._atk == 5 && _player._hp == 5 && _player._speed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.AssaultCaptain;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "돌격대장";
                
                 achivementCheck(_player.getassaultcaptain, "getassaultcaptain");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "이동속도 30% 증가";
             }
             else if (_player._atk == 5 && _player._hp == 5 && _player._def == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.ZhangFei;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "장비";
                
                 achivementCheck(_player.getzhangfei, "getzhangfei");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "공격시 일정확률로 \n기합스킬 발동";
 
             }
             else if (_player._atk == 5 && _player._critical == 5 && _player._atkSpeed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Berserker;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "광전사";
                 
                 achivementCheck(_player.getberserker, "getberserker");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "일정체력미만일 때\n 공격력 100% 증가";
             }
             else if (_player._atk == 5 && _player._critical == 5 && _player._handicraft == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Critialer;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "급소킬러";
                
                 achivementCheck(_player.getcriticaler, "getcriticaler");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "치명타확률 100% 고정 \n 공격력 30% 감소";
             }
             else if (_player._atk == 5 && _player._critical == 5 && _player._charm == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Druid;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "드루이드";
                 
                 achivementCheck(_player.getdruid, "getdruid");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "공격시 일정확률로\n 아군으로 만듬";
             }
             else if (_player._atk == 5 && _player._critical == 5 && _player._speed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Assassin;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "암살자";
                
                 achivementCheck(_player.getassassin,"getassassin");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "치명타 피해율 20% 증가";
             }
             else if (_player._atk == 5 && _player._atkSpeed == 5 && _player._handicraft == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Ambidextrous;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "양손잡이";
                
                 achivementCheck(_player.getambidextrous, "getambidextrous");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "공격속도 50% 증가";
 
             }
             else if (_player._atk == 5 && _player._handicraft == 5 && _player._charm == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.LuBu;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "여포";
                
                 achivementCheck(_player.getlubu, "getlubu");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "공격력 300%증가\n 이동속도 2단계 고정";
 
             }
             else if (_player._atk == 5 && _player._speed == 5 && _player._def == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.HeavyCavalry;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "개마무사";
                 achivementCheck(_player.getheavycavalry, "getheavycavalry");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "공격력 및 이동속도 20% 증가";
 
             }
             else if (_player._matk == 5 && _player._hp == 5 && _player._critical == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.HealthMagician;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "덩치법사";
                 achivementCheck(_player.gethealthmagician, "gethealthmagician");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "체력 30%증가 \n 스킬확률 50% 고정";
             }
             else if (_player._matk == 5 && _player._hp == 5 && _player._def == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Priest;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "사제";
                 achivementCheck(_player.getprist, "getprist");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "스킬사용시 \n일정확률로 체력 회복";
             }
             else if (_player._matk == 5 && _player._critical == 5 && _player._atkSpeed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Warlock;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "흑마법사";
                 achivementCheck(_player.getwarlock, "getwarlock");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "일정체력미만일 때 \n마력 100% 증가";
             }
             else if (_player._matk == 5 && _player._critical == 5 && _player._handicraft == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Salamander;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "불도마뱀";
                 achivementCheck(_player.getsalamander, "getsalamander");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "스킬사용시 일정확률로 \n운석 소환";
             }
             else if (_player._matk == 5 && _player._critical == 5 && _player._charm == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Zeus;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "제우스";
                 achivementCheck(_player.getzeus, "getzeus");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "모든 마법을 연쇄번개로 전환 \n 번개 전이횟수 증가";
             }
             else if (_player._matk == 5 && _player._atkSpeed == 5 && _player._handicraft == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.PracticeBug;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "연습벌레";
                 achivementCheck(_player.getpracticebug, "getpracticebug");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "공격시 100%확률로 \n스킬 발동";
             }
             else if (_player._matk == 5 && _player._charm == 5 && _player._handicraft == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Stranger;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "스트레인저";
                 achivementCheck(_player.getstranger, "getstranger");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "스킬사용시 일정확률로 \n블랙홀 소환";
             }
             else if (_player._matk == 5 && _player._handicraft == 5 && _player._def == 5)
             {
-                //���� �̱���
+                //아직 미구현
               //  _OnTitle = true;
               //  _player._playerTitle = Player.PlayerTitle.GateKeeper;
               //  _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
@@ -311,46 +344,51 @@ public class Lobby : MonoBehaviour
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Cook;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "요리사";
                 achivementCheck(_player.getcook, "getcook");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "가한피해를 \n체력으로 전환";
             }
             else if (_player._hp == 5 && _player._atkSpeed == 5 && _player._speed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.QRF;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "번개조";
                 achivementCheck(_player.getqrf, "getqrf");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "공격속도 50% \n공격력 10% 증가";
             }
             else if (_player._hp == 5 && _player._handicraft == 5 && _player._charm == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Servant;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "돌쇠";
                 achivementCheck(_player.getservant, "getservant");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "체력 100% 증가";
             }
             
             else if (_player._hp == 5 && _player._handicraft == 5 && _player._speed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Athlete;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "운동선수";
                 achivementCheck(_player.getathlete, "getathlete");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "체력 30% \n이동속도 20% 증가";
             }
             else if (_player._hp == 5 && _player._handicraft == 5 && _player._def == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Versatile;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "다재다능";
                 achivementCheck(_player.getversatile, "getversatile");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "무기공격력 100% 증가";
             }
             else if (_player._hp == 5 && _player._speed == 5 && _player._def == 5)
             {
-                //�̱���
+                //미구현
                // _OnTitle = true;
                // _player._playerTitle = Player.PlayerTitle.Shieldbearer;
                // _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
@@ -360,29 +398,32 @@ public class Lobby : MonoBehaviour
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Acupuncturist;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "침술사";
                 achivementCheck(_player.getacupuncturist, "getacupuncturist");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "공격시 일정확률로\n 적 즉사";
             }
             else if (_player._critical == 5 && _player._speed == 5 && _player._atkSpeed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.SpoonKiller;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "숟가락살인마";
                 achivementCheck(_player.getspoonkiller, "getspoonkiller");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "공격력 50% 감소\n 공격속도 200% 증가";
             }
             else if (_player._critical == 5 && _player._handicraft == 5 && _player._charm == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Helen;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "절세미인";
                 achivementCheck(_player.gethelen, "gethelen");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "주변 적 일정확률로 빙결";
             }
             else if (_player._critical == 5 && _player._speed == 5 && _player._handicraft == 5)
             {
-               //�̱���
+               //미구현
                // _OnTitle = true;
                // _player._playerTitle = Player.PlayerTitle.Slicker;
                // _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
@@ -392,74 +433,89 @@ public class Lobby : MonoBehaviour
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Rich;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "부자";
                 achivementCheck(_player.getrich, "getrich");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "골드 획득 3배";
 
             }
             else if (_player._atkSpeed == 5 && _player._handicraft == 5 && _player._charm == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Swell;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "달인";
                 achivementCheck(_player.getswell, "getswell");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "모든능력치 20% 증가";
             }
             else if (_player._atkSpeed == 5 && _player._handicraft == 5 && _player._speed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Delivery;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "배달부";
                 achivementCheck(_player.getdelivery, "getdelivery");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "이동속도 100% 증가";
             }
             else if (_player._atkSpeed == 5 && _player._handicraft == 5 && _player._def == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Repairman;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "수리공";
                 achivementCheck(_player.getrepairman, "getrepairman");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "체력재생능력 획득";
             }
             else if (_player._atkSpeed == 5 && _player._charm == 5 && _player._speed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Dosa;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "전우치";
                 achivementCheck(_player.getdosa, "getdosa");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "공격시 일정확률로 \n분신 소환";
             }
             else if (_player._handicraft == 5 && _player._charm == 5 && _player._speed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Gambler;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "도박사";
                 achivementCheck(_player.getgambler, "getgambler");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "공격시 50% 확률로 \n능력치 증가 혹은 감소";
             }
             else if (_player._handicraft == 5 && _player._charm == 5 && _player._def == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.SlowStarter;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "슬로우스타터";
                 achivementCheck(_player.getslowstarter, "getslowstarter");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "스테이지 종료시 \n모든능력치 20% 상승";
             }
             else if (_player._handicraft == 5 && _player._def == 5 && _player._speed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.Orpheus;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "오르페우스";
                 achivementCheck(_player.getorpheus, "getorpheus");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "주변 적 공격력 감소";
             }
             else if (_player._charm == 5 && _player._def == 5 && _player._speed == 5)
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.DokeV;
-                _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "도꺠비";
                 achivementCheck(_player.getdokev, "getdokev");
                 achivementCheck(_player.firstjob, "firstjob");
+                _skillDescription.text = "공격시 일정확률로 \n적의 능력치 착취";
+            }
+            else
+            {
+                _player._playerTitle = Player.PlayerTitle.Normal;
+                _playerTitleText.GetComponent<TextMeshProUGUI>().text = "백수";
+                _skillDescription.text = " ";
             }
         }
         #endregion
@@ -714,7 +770,7 @@ public class Lobby : MonoBehaviour
 
         if (_player._isSkinHead == true)
         {
-            _listHair[1].SetActive(true);
+            _listHair[1].SetActive(false);
         }
         else if (_player._isSkinHead == false)
         {
@@ -742,11 +798,11 @@ public class Lobby : MonoBehaviour
             _listHelmet[1].SetActive(false);
         }
 
-        if (_player._masicianHat == true)
+        if (_player._isMasicianHat == true)
         {
             _listHelmet[2].SetActive(true);
         }
-        else if (_player._masicianHat == false)
+        else if (_player._isMasicianHat == false)
         {
             _listHelmet[2].SetActive(false);
         }
@@ -773,28 +829,38 @@ public class Lobby : MonoBehaviour
         if (_player._isKnightTop == true)
         {
             _listTop[1].SetActive(true);
+            _listTopDeco[0].SetActive(true);
+            _listSkin[1].SetActive(true);
         }
         else if (_player._isKnightTop == false)
         {
             _listTop[1].SetActive(false);
+            _listTopDeco[0].SetActive(false);
+            _listSkin[1].SetActive(false);
         }
 
         if (_player._isMasicianTop == true)
         {
             _listTop[2].SetActive(true);
+            _listTopDeco[1].SetActive(true);
         }
         else if (_player._isMasicianTop == false)
         {
             _listTop[2].SetActive(false);
+            _listTopDeco[1].SetActive(false);
         }
 
         if (_player._isDurumagiTop == true)
         {
             _listTop[3].SetActive(true);
+            _listTopDeco[2].SetActive(true);
+            _listSkin[2].SetActive(true);
         }
         else if (_player._isDurumagiTop == false)
         {
             _listTop[3].SetActive(false);
+            _listTopDeco[2].SetActive(false);
+            _listSkin[2].SetActive(false);
         }
         #endregion
         #region Bottom
@@ -810,19 +876,23 @@ public class Lobby : MonoBehaviour
         if (_player._isKnightBottom == true)
         {
             _listBottom[1].SetActive(true);
+            _listBottomDeco[0].SetActive(true);
         }
         else if (_player._isKnightBottom == false)
         {
             _listBottom[1].SetActive(false);
+            _listBottomDeco[0].SetActive(false);
         }
 
         if (_player._isMasicianBottom == true)
         {
             _listBottom[2].SetActive(true);
+            _listBottomDeco[1].SetActive(true);
         }
         else if (_player._isMasicianBottom == false)
         {
             _listBottom[2].SetActive(false);
+            _listBottomDeco[1].SetActive(false);
         }
 
         if (_player._isdurumagiBottom == true)
@@ -838,37 +908,49 @@ public class Lobby : MonoBehaviour
         if (_player._isnormalShoes == true)
         {
             _listShoes[0].SetActive(true);
+            _listShoes[1].SetActive(true);
         }
         else if (_player._isnormalShoes == false)
         {
             _listShoes[0].SetActive(false);
+            _listShoes[1].SetActive(false);
         }
 
         if (_player._isKnightShoes == true)
         {
-            _listShoes[1].SetActive(true);
+            _listShoes[2].SetActive(true);
+            _listShoes[3].SetActive(true);
+            _listShoesDeco[0].SetActive(true);
+            _listShoesDeco[1].SetActive(true);
         }
         else if (_player._isKnightShoes == false)
         {
-            _listShoes[1].SetActive(false);
+            _listShoes[2].SetActive(false);
+            _listShoes[3].SetActive(false);
+            _listShoesDeco[0].SetActive(false);
+            _listShoesDeco[1].SetActive(false);
         }
 
         if (_player._isSandal == true)
         {
-            _listShoes[2].SetActive(true);
+            _listShoes[4].SetActive(true);
+            _listShoes[5].SetActive(true);
         }
         else if (_player._isSandal == false)
         {
-            _listShoes[2].SetActive(false);
+            _listShoes[4].SetActive(false);
+            _listShoes[5].SetActive(false);
         }
 
         if (_player._isOldShoes == true)
         {
-            _listShoes[3].SetActive(true);
+            _listShoes[6].SetActive(true);
+            _listShoes[7].SetActive(true);
         }
         else if (_player._isOldShoes == false)
         {
-            _listShoes[3].SetActive(false);
+            _listShoes[6].SetActive(false);
+            _listShoes[7].SetActive(false);
         }
         #endregion
         #region UnpackItem
@@ -1179,8 +1261,10 @@ public class Lobby : MonoBehaviour
             }
 
             _player._currentStat--;
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
             _player.Save();
         }
+        
     }
 
     public void HPUP()
@@ -1199,8 +1283,11 @@ public class Lobby : MonoBehaviour
                 _listStatSpace[3].transform.GetChild(i).gameObject.SetActive(true);
             }
             _player._currentStat--;
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
             _player.Save();
+
         }
+      
     }
     public void MATKUP()
     {
@@ -1217,8 +1304,10 @@ public class Lobby : MonoBehaviour
                 _listStatSpace[1].transform.GetChild(i).gameObject.SetActive(true);
             }
             _player._currentStat--;
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
             _player.Save();
         }
+       
     }
     public void ATKSPEEDUP()
     {
@@ -1234,8 +1323,10 @@ public class Lobby : MonoBehaviour
                 _listStatSpace[2].transform.GetChild(i).gameObject.SetActive(true);
             }
             _player._currentStat--;
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
             _player.Save();
         }
+      
     }
     public void DEFUP()
     {
@@ -1251,8 +1342,10 @@ public class Lobby : MonoBehaviour
                 _listStatSpace[4].transform.GetChild(i).gameObject.SetActive(true);
             }
             _player._currentStat--;
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
             _player.Save();
         }
+      
     }
     public void SPEEDUP()
     {
@@ -1269,6 +1362,7 @@ public class Lobby : MonoBehaviour
                 _listStatSpace[5].transform.GetChild(i).gameObject.SetActive(true);
             }
             _player._currentStat--;
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
             _player.Save();
         }
     }
@@ -1286,6 +1380,7 @@ public class Lobby : MonoBehaviour
                 _listStatSpace[6].transform.GetChild(i).gameObject.SetActive(true);
             }
             _player._currentStat--;
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
             _player.Save();
         }
     }
@@ -1302,8 +1397,9 @@ public class Lobby : MonoBehaviour
             {
                 _listStatSpace[7].transform.GetChild(i).gameObject.SetActive(true);
             }
-            _player.Save();
             _player._currentStat--;
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
+            _player.Save();
         }
     }
     public void CHARMUP()
@@ -1320,6 +1416,7 @@ public class Lobby : MonoBehaviour
                 _listStatSpace[8].transform.GetChild(i).gameObject.SetActive(true);
             }
             _player._currentStat--;
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
             _player.Save();
         }
     }
@@ -1358,32 +1455,50 @@ public class Lobby : MonoBehaviour
         _player._playerTitle = Player.PlayerTitle.Normal;
         _playerTitleText.GetComponent<TextMeshProUGUI>().text = _player._playerTitle.ToString();
         _OnTitle = false;
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
     }
 
     public void EnterClosetPopUP()
     {
         _closetPopUp.SetActive(true);
         _statePopUp.SetActive(false);
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._pop2);
     }
     public void ExitClosetPopUP()
     {
         _closetPopUp.SetActive(false);
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
     }
     public void EnterAchivementPopUp()
     {
         _achivementPopUp.ToggleWindow();
+
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._pop2);
     }
     public void ExitAchivemntPopUp()
     {
         _achivementPopUp.ToggleWindow();
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
     }
     public void EnterSettingPopUp()
     {
         _settingPopUp.SetActive(true);
+        _effectSoundSlider.value = Player.Instance._effectSound;
+        _bgmSoundSlider.value = Player.Instance._bgmSound;
+        if(Player.Instance._expX2 == false)
+        {
+            _getExpX2.text = " ₩ 1,000";
+        }
+        else if(Player.Instance._expX2 == true)
+        {
+            _getExpX2.text = "활성화";
+        }
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._pop2);
     }
     public void ExitSettingPopUp()
     {
         _settingPopUp.SetActive(false);
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
     }
 
     public void ChoiceWeapon(int cnt)
@@ -1408,8 +1523,9 @@ public class Lobby : MonoBehaviour
         }
         else if(cnt == 0 && _listScreen[0].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _weaponCost.ToString() + "\n �����Ͻðڽ��ϱ�?"; 
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?"; 
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 1&& _listScreen[1].activeSelf == false)
         {
@@ -1429,8 +1545,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 1 && _listScreen[1].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _weaponCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 2 && _listScreen[2].activeSelf == false)
         {
@@ -1450,8 +1567,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 2 && _listScreen[2].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _weaponCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 3 && _listScreen[3].activeSelf == false)
         {
@@ -1471,8 +1589,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 3 && _listScreen[3].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _weaponCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 4 && _listScreen[4].activeSelf == false)
         {
@@ -1492,8 +1611,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 4 && _listScreen[4].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _weaponCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 5 && _listScreen[5].activeSelf == false)
         {
@@ -1513,8 +1633,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 5 && _listScreen[5].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _weaponCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 6 && _listScreen[6].activeSelf == false)
         {
@@ -1534,8 +1655,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 6 && _listScreen[6].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _weaponCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 7 && _listScreen[7].activeSelf == false)
         {
@@ -1555,8 +1677,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 7 && _listScreen[7].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _weaponCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 8 && _listScreen[8].activeSelf == false)
         {
@@ -1576,8 +1699,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 8 && _listScreen[8].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _weaponCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 9 && _listScreen[9].activeSelf == false)
         {
@@ -1597,8 +1721,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 9 && _listScreen[9].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _weaponCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 10 && _listScreen[10].activeSelf == false)
         {
@@ -1618,8 +1743,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 10 && _listScreen[10].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _weaponCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 11 && _listScreen[11].activeSelf == false)
         {
@@ -1639,8 +1765,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 11 && _listScreen[11].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _weaponCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 30 && _listScreen[30].activeSelf == false)
         {
@@ -1660,8 +1787,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 30 && _listScreen[30].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _weaponCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _weaponCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         _player.Save();
     }
@@ -1678,8 +1806,9 @@ public class Lobby : MonoBehaviour
         }
         else if(cnt == 26 && _listScreen[12].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _closetCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 12 && _listScreen[13].activeSelf == false)
         {
@@ -1690,8 +1819,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 12 && _listScreen[13].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _closetCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 13 && _listScreen[14].activeSelf == false)
         {
@@ -1702,8 +1832,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 13 && _listScreen[14].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _closetCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 14 && _listScreen[15].activeSelf == false)
         {
@@ -1714,8 +1845,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 14 && _listScreen[15].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _closetCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         _player.Save();
     }
@@ -1730,8 +1862,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 16 && _listScreen[16].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _closetCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 15 && _listScreen[17].activeSelf == false)
         {
@@ -1740,8 +1873,9 @@ public class Lobby : MonoBehaviour
         }
         else if(cnt == 15 && _listScreen[17].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _closetCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
 
         _player.Save();
@@ -1762,8 +1896,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 27 && _listScreen[18].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _closetCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if(cnt == 17 && _listScreen[19].activeSelf == false)
         {
@@ -1774,8 +1909,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 17 && _listScreen[19].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _closetCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if(cnt == 18 && _listScreen[20].activeSelf == false)
         {
@@ -1786,8 +1922,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 18 && _listScreen[20].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _closetCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 19 && _listScreen[21].activeSelf == false)
         {
@@ -1798,8 +1935,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 19 && _listScreen[21].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _closetCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         _player.Save();
     }
@@ -1817,8 +1955,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 28 && _listScreen[22].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _closetCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 20 && _listScreen[23].activeSelf == false)
         {
@@ -1829,8 +1968,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 20 && _listScreen[23].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _closetCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 21 && _listScreen[24].activeSelf == false)
         {
@@ -1841,8 +1981,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 21 && _listScreen[24].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _closetCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 22 && _listScreen[25].activeSelf == false)
         {
@@ -1853,8 +1994,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 22 && _listScreen[25].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _closetCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         _player.Save();
     }
@@ -1872,8 +2014,10 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 29 && _listScreen[26].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _closetCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 23 && _listScreen[27].activeSelf == false)
         {
@@ -1884,8 +2028,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 23 && _listScreen[27].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _closetCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 24 && _listScreen[28].activeSelf == false)
         {
@@ -1896,8 +2041,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 24 && _listScreen[28].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _closetCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if (cnt == 25 && _listScreen[29].activeSelf == false)
         {
@@ -1908,8 +2054,9 @@ public class Lobby : MonoBehaviour
         }
         else if (cnt == 25 && _listScreen[29].activeSelf == true)
         {
-            _CheckOutText.text = "�ʿ� ��� : " + _closetCost.ToString() + "\n �����Ͻðڽ��ϱ�?";
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
     }
 
@@ -1921,10 +2068,13 @@ public class Lobby : MonoBehaviour
     public void EnterCheckOutPopUp()
     {
         _checkOutPopUp.SetActive(true);
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
     }
     public void ExitCheckOutPopUp()
     {
         _checkOutPopUp.SetActive(false);
+
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
     }
     public void CheckOutPopUpYes()
     {
@@ -1983,10 +2133,14 @@ public class Lobby : MonoBehaviour
             {
                 Player.Instance._buybasicStick = true;
             }
+
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
         else if(_player._gold <_weaponCost)
         {
-            _alarmText.text = "��尡 �����մϴ�.";
+            _alarmText.text = "골드가 부족합니다. \n 필요골드 : " + _weaponCost;
+
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._decline);
             EnterAlarmPopUp();
         }
 
@@ -2065,10 +2219,14 @@ public class Lobby : MonoBehaviour
                 Player.Instance._buynormalShoes = true;
             }
 
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
+
         }
         else if (_player._gold < _closetCost)
         {
-            _alarmText.text = "��尡 �����մϴ�.";
+            _alarmText.text = "골드가 부족합니다. \n 필요골드 : " + _closetCost;
+
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._decline);
             EnterAlarmPopUp();
         }
         _player.Save();
@@ -2078,24 +2236,46 @@ public class Lobby : MonoBehaviour
     public void CheckOutPopUpNo()
     {
         ExitCheckOutPopUp();
+
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
     }
     public void EnterAlarmPopUp()
     {
         _alarmPopUp.SetActive(true);
+
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
     }
     public void ExitAlarmPopUp()
     {
         _alarmPopUp.SetActive(false);
+
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
     }
     public void EnterStatePopUp()
     {
         _statePopUp.SetActive(true);
         _closetPopUp.SetActive(false);
+
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._pop2);
     }
     public void ExitStatePopUp()
     {
         _statePopUp.SetActive(false);
-        
+
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
+
+    }
+    public void EnterResetCheckPopUp()
+    {
+        _resetCheckPopUp.SetActive(true);
+
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
+    }
+    public void ExitResetCheckPopUp()
+    {
+        _resetCheckPopUp.SetActive(false);
+
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
     }
     public void achivementCheck(bool check,string str)
     {
@@ -2114,13 +2294,17 @@ public class Lobby : MonoBehaviour
         }
         else if (_player._gold <300)
         {
-            _alarmText.text = "��尡 �����մϴ�.";
+            _alarmText.text = "골드가 부족합니다. \n 필요골드 : " + 300;
             EnterAlarmPopUp();
+
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._decline);
         }
         else if(_player._stat >= 37)
         {
-            _alarmText.text = "�ɷ�ġ �����ѵ��� �����Ͽ����ϴ�.";
+            _alarmText.text = "능력치 보유한도에 도달하였습니다.";
             EnterAlarmPopUp();
+
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._decline);
         }
 
     }
@@ -2128,22 +2312,216 @@ public class Lobby : MonoBehaviour
     {
         LoadSceneManager.LoadScene("GamePlay");
         GameFlowManager.Instance._isLobby = true;
+
     }
-    public void ReState()
+    public void AllReSet()
     {
-        _isSet = true;
-        for (int i = 0; i < _listStatSpace.Count; ++i)
-        {
-            for (int z = 0; z < _listStatSpace[i].transform.childCount; ++z)
-            {
-                _listStatSpace[i].transform.GetChild(z).gameObject.SetActive(false);
-            }
-        }
+        StatReset();
+        AchievementManager.instance.ResetAchievementState();
 
-        
+        Player.Instance.firststat = false;
+        Player.Instance.firstmaster = false;
+        Player.Instance.firstjob = false;
+        Player.Instance.earlydie = false;
+        Player.Instance.nonviolent = false;
+        Player.Instance.firstmagic = false;
+        Player.Instance.firsthunt = false;
+        Player.Instance.getmagicalblader = false;
+        Player.Instance.magicalbladerhidden = false;
+        Player.Instance.getmadman = false;
+        Player.Instance.madmanmadness = false;
+        Player.Instance.getstrongman = false;
+        Player.Instance.strongmanhidden = false;
+        Player.Instance.strongmanskill1full = false;
+        Player.Instance.getwarrior = false;
+        Player.Instance.warriorskill1full = false;
+        Player.Instance.getdwarf = false;
+        Player.Instance.dwarfskill1full = false;
+        Player.Instance.getjackfrost = false;
+        Player.Instance.jackfrosthidden = false;
+        Player.Instance.jackfrosttuna = false;
+        Player.Instance.getassaultcaptain = false;
+        Player.Instance.assaultcaptainfull = false;
+        Player.Instance.getzhangfei = false;
+        Player.Instance.zhangfeiroar = false;
+        Player.Instance.zhangfeirowhp = false;
+        Player.Instance.zhangfeihidden = false;
+        Player.Instance.getberserker = false;
+        Player.Instance.berserkerskill1full = false;
+        Player.Instance.berserkerhidden = false;
+        Player.Instance.berserkerclear = false;
+        Player.Instance.getcriticaler = false;
+        Player.Instance.criticalerskill1full = false;
+        Player.Instance.getdruid = false;
+        Player.Instance.druidfirstskill = false;
+        Player.Instance.druidskill100 = false;
+        Player.Instance.getassassin = false;
+        Player.Instance.assassinskill2full = false;
+        Player.Instance.getambidextrous = false;
+        Player.Instance.getlubu = false;
+        Player.Instance.lubuhidden = false;
+        Player.Instance.lubuskill1full = false;
+        Player.Instance.getheavycavalry = false;
+        Player.Instance.gethealthmagician = false;
+        Player.Instance.healthmagicianskill2full = false;
+        Player.Instance.healthmagicianhidden = false;
+        Player.Instance.getprist = false;
+        Player.Instance.pristhpfull = false;
+        Player.Instance.pristjesus = false;
+        Player.Instance.pristhidden = false;
+        Player.Instance.getwarlock = false;
+        Player.Instance.warlockskill1full = false;
+        Player.Instance.warlockclear = false;
+        Player.Instance.warlcokhidden = false;
+        Player.Instance.getsalamander = false;
+        Player.Instance.salamandermeteor = false;
+        Player.Instance.salamandermeteor3 = false;
+        Player.Instance.salamanderhidden = false;
+        Player.Instance.getcook = false;
+        Player.Instance.cookfullhp = false;
+        Player.Instance.cookhidden = false; 
+        Player.Instance.getzeus = false;
+        Player.Instance.zeusskill1first = false;
+        Player.Instance.zeushidden = false;
+        Player.Instance.getpracticebug = false;
+        Player.Instance.practicebugskill1full = false;
+        Player.Instance.practicebugskill2full = false;
+        Player.Instance.getstranger = false;
+        Player.Instance.strangerfirstskill = false;
+        Player.Instance.stangerskill100 = false;
+        Player.Instance.getqrf = false;
+        Player.Instance.qrfputhanger = false;
+        Player.Instance.qrfhidden = false;
+        Player.Instance.getservant = false;
+        Player.Instance.servantskill1first = false;
+        Player.Instance.servanthidden = false;
+        Player.Instance.getathlete = false;
+        Player.Instance.ahleteskill2full = false;
+        Player.Instance.ahleteclear = false;
+        Player.Instance.getversatile = false;
+        Player.Instance.versatilehidden = false;
+        Player.Instance.getacupuncturist = false;
+        Player.Instance.acupuncturistfirstskill = false;
+        Player.Instance.acupuncturistcritical = false;
+        Player.Instance.acupuncturistskill2full = false;
+        Player.Instance.acupuncturistclear = false;
+        Player.Instance.getspoonkiller = false;
+        Player.Instance.spoonkillerskill1full = false;
+        Player.Instance.spoonkillerskill2full = false;
+        Player.Instance.spoonkillerclear = false;
+        Player.Instance.gethelen = false;
+        Player.Instance.helenskill100 = false;
+        Player.Instance.helenhidden = false;
+        Player.Instance.helenstage1die = false;
+        Player.Instance.helenclear = false;
+        Player.Instance.getrich = false;
+        Player.Instance.richget1000gold = false;
+        Player.Instance.getswell = false;
+        Player.Instance.swellskill1full = false;
+        Player.Instance.swellclear = false;
+        Player.Instance.getdelivery = false;
+        Player.Instance.deliveryskill1full = false;
+        Player.Instance.deliveryclear = false;
+        Player.Instance.getrepairman = false;
+        Player.Instance.repairmanhidden = false;
+        Player.Instance.repairmanclear = false;
+        Player.Instance.getdosa = false;
+        Player.Instance.dosafirstskill = false;
+        Player.Instance.dosaskilldie20 = false;
+        Player.Instance.dosahidden  = false;
+        Player.Instance.getgambler = false;
+        Player.Instance.gamblerlose = false;
+        Player.Instance.gamblerwin = false;
+        Player.Instance.gamblerskill2 = false;
+        Player.Instance.getslowstarter = false;
+        Player.Instance.slowstarterclear = false;
+        Player.Instance.getorpheus = false;
+        Player.Instance.orpheusskill1full = false;
+        Player.Instance.orpheusfirstdie = false;
+        Player.Instance.getdokev = false;
+        Player.Instance.dokevfirstskill = false;
+        Player.Instance.dokevhidden = false;
+        Player.Instance.dokevhidden50 = false;
+        Player.Instance.statlv5 = false;
+        Player.Instance.stage1clear = false;
+        Player.Instance.stage2clear = false;
+        Player.Instance._isbasicStick = true;
+        Player.Instance._isStick = false;
+        Player.Instance._isSward1 = false;
+        Player.Instance._isSward2 = false;
+        Player.Instance._isBroom = false;
+        Player.Instance._isClub = false;
+        Player.Instance._isShortSward = false;
+        Player.Instance._isHanger = false;
+        Player.Instance._isMace = false;
+        Player.Instance._isShield = false;
+        Player.Instance._isSpear = false;
+        Player.Instance._isUmbrella = false;
+        Player.Instance._isWaldo = false;
+        Player.Instance._buybasicStick = true;
+        Player.Instance._buyStick = false;
+        Player.Instance._buySward1 = false;
+        Player.Instance._buySward2 = false;
+        Player.Instance._buyBroom = false;
+        Player.Instance._buyClub = false;
+        Player.Instance._buyShortSward = false;
+        Player.Instance._buyHanger = false;
+        Player.Instance._buyMace = false;
+        Player.Instance._buyShield = false;
+        Player.Instance._buySpear = false;
+        Player.Instance._buyUmbrella = false;
+        Player.Instance._buyWaldo = false;
+        Player.Instance._isKightHelmet = false;
+        Player.Instance._isMasicianHat = false;
+        Player.Instance._isGat = false;
+        Player.Instance._isEmptyHelmet = true;
+        Player.Instance._buyKightHelmet = false;
+        Player.Instance._buyMasicianHat = false;
+        Player.Instance._buyGat = false;
+        Player.Instance._buyEmptyHelmet = true;
+        Player.Instance._isSkinHead = false;
+        Player.Instance._isnormalHair = true;
+        Player.Instance._buySkinHead = false;
+        Player.Instance._buynormalHair =  true;
+        Player.Instance._isKnightTop = false;
+        Player.Instance._isMasicianTop = false;
+        Player.Instance._isDurumagiTop = false;
+        Player.Instance._isNormalTop = true;
+        Player.Instance._buyKnightTop = false;
+        Player.Instance._buyMasicianTop = false;
+        Player.Instance._buyDurumagiTop = false;
+        Player.Instance._buyNormalTop = true;
+        Player.Instance._isKnightBottom = false;
+        Player.Instance._isMasicianBottom = false;
+        Player.Instance._isdurumagiBottom = false;
+        Player.Instance._isTrunkBottom = true;
+        Player.Instance._buyKnightBottom = false;
+        Player.Instance._buyMasicianBottom = false;
+        Player.Instance._buydurumagiBottom = false;
+        Player.Instance._buyTrunkBottom = true;
+        Player.Instance._isKnightShoes = false;
+        Player.Instance._isSandal = false;
+        Player.Instance._isOldShoes = false;
+        Player.Instance._isnormalShoes = true;
+        Player.Instance._buyKnightShoes = false;
+        Player.Instance._buySandal = false;
+        Player.Instance._buyOldShoes = false;
+        Player.Instance._buynormalShoes = true;
+        Player.Instance._totalCreepScore = 0;
+        Player.Instance._jackfrostScore=0;
+        Player.Instance._druidScore = 0;
+        Player.Instance._strangerblackholeScore = 0;
+        Player.Instance._helenScore = 0;
+        Player.Instance._dosaDieAvatar = 0;
+        Player.Instance._dokevHiddenSkillScore = 0;
+        Player.Instance._gold = 0;
+        Player.Instance._stat = 0;
 
+
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._debuff);
     }
 
+   
 
 
 }

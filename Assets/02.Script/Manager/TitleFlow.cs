@@ -26,8 +26,8 @@ public class TitleFlow : MonoBehaviour
         yield return new WaitForSeconds(2f);
         _logoFade.FadeOut(1f);
         yield return new WaitForSeconds(2f);
-        _titleFade.FadeIn(1f);
-
+        LoadSceneManager.LoadScene("Lobby");
+        
 
 
     }

@@ -25,7 +25,6 @@ public class GamePlay : MonoBehaviour
     public GameObject _choicePopUp;
     public GameObject _bossHPBar;
     public GameObject _resultPopUp;
-    public GameObject _creepScoreText;
     public Monster _wolf;
     public Monster _slime;
     public Monster _captainSkull;
@@ -49,7 +48,11 @@ public class GamePlay : MonoBehaviour
     public SkillBase _thunder;
     public SkillBase _footStep;
 
+    public Slider _effectSoundSlider;
+    public Slider _bgmSouundSlider;
+
     public List<GameObject> _listPlayers = new List<GameObject>();
+    public List<GameObject> _stageground = new List<GameObject>();
 
 
     
@@ -96,6 +99,7 @@ public class GamePlay : MonoBehaviour
     public IObjectPool<SkillBase> _meteorEffectPool;
     public IObjectPool<SkillBase> _thunderPool;
     public IObjectPool<SkillBase> _footStepPool;
+    public IObjectPool<SkillBase> _iceballPool;
 
 
 
@@ -125,6 +129,20 @@ public class GamePlay : MonoBehaviour
     public TextMeshProUGUI _skill2Text;
     public TextMeshProUGUI _skill3Text;
 
+    public Text _result1Text;
+    public Text _result2Text;
+    public Text _result3Text;
+    public Text _result4Text;
+
+    public Text _result1ScoreText;
+    public Text _result2ScoreText;
+    public Text _result3ScoreText;
+    public Text _result4ScoreText;
+
+    public Text _bossName;
+    
+
+
 
     public int _spawnChannelCount;
 
@@ -153,6 +171,7 @@ public class GamePlay : MonoBehaviour
         _thunderPool = new ObjectPool<SkillBase>(CreateThunder, OngetThunder, OnReleaseSkill, OnDestroySkill, maxSize: 10);
         _healPool = new ObjectPool<SkillBase>(CreateHeal, OngetEffectSkill, OnReleaseSkill, OnDestroySkill, maxSize: 20);
         _footStepPool = new ObjectPool<SkillBase>(CreateFootStepEffect, OngetFootStepEffect, OnReleaseSkill, OnDestroySkill, maxSize: 50);
+        _iceballPool = new ObjectPool<SkillBase>(CreateIceBall, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 10);
 
         _bossHPBar.SetActive(false);
 
@@ -250,7 +269,7 @@ public class GamePlay : MonoBehaviour
 
     private Monster CreatSlime()
     {
-        var monster = Instantiate(_slime, _randomSpawn.Return_RandomPosition(), Quaternion.identity,_objectPool.transform);
+        var monster = Instantiate(_slime, _randomSpawn.Return_RandomPosition(), Quaternion.identity);
         monster.SetPool(_slimePool);
         monster._floatingTextSpawner.Channel = _spawnChannelCount;
         monster._mmfPlayer.FeedbacksList[0].Channel = _spawnChannelCount;
@@ -263,7 +282,7 @@ public class GamePlay : MonoBehaviour
     }
     private Monster CreatWolf()
     {
-        var monster = Instantiate(_wolf, _randomSpawn.Return_RandomPosition() ,Quaternion.identity, _objectPool.transform);
+        var monster = Instantiate(_wolf, _randomSpawn.Return_RandomPosition() ,Quaternion.identity);
         monster.SetPool(_wolfpool);
         monster._floatingTextSpawner.Channel = _spawnChannelCount;
         monster._mmfPlayer.FeedbacksList[0].Channel = _spawnChannelCount;
@@ -274,14 +293,14 @@ public class GamePlay : MonoBehaviour
     }
     private Monster CreatCaptainSkull()
     {
-        var monster = Instantiate(_captainSkull, _randomSpawn.Return_RandomPosition(), Quaternion.identity, _objectPool.transform);
+        var monster = Instantiate(_captainSkull, _randomSpawn.Return_RandomPosition(), Quaternion.identity);
         monster.SetPool(_captainSkullPool);
 
         return monster;
     }
     private Monster CreatSkeleton()
     {
-        var monster = Instantiate(_skeleton, _randomSpawn.Return_RandomPosition(), Quaternion.identity, _objectPool.transform);
+        var monster = Instantiate(_skeleton, _randomSpawn.Return_RandomPosition(), Quaternion.identity);
         monster.SetPool(_skeletonPool);
         return monster;
     }
@@ -386,6 +405,12 @@ public class GamePlay : MonoBehaviour
         var thunder = Instantiate(_thunder, _randomSpawn.Return_RandomPosition(), Quaternion.identity, _objectPool.transform);
         thunder.SetPool(_thunderPool);
         return thunder;
+    }
+    private SkillBase CreateIceBall()
+    {
+        var blackHole = Instantiate(_iceBall, Player.Instance._meteorPoint.transform.position + new Vector3(0, 0.5f, 0), Player.Instance.m_transform.rotation, _objectPool.transform);
+        blackHole.SetPool(_iceballPool);
+        return blackHole;
     }
 
     
@@ -599,18 +624,108 @@ public class GamePlay : MonoBehaviour
 
     public void ActiveResultPopUp()
     {
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._result);
+        List<int> _list = new List<int>();
+        List<string> _stack = new List<string>();
+        List<int> _stack2 = new List<int>();
         Time.timeScale = 0f;
+        int[] arry = GetRandomInt(3, 0, 6);
+        
+        for(int i = 0; i < arry.Length; ++i)
+        {
+            _list.Add(arry[i]);
+        }
+        
+        if(_list.Contains(0) == true)
+        {
+            string str = "Ã³Ä¡ÇÑ ¸ó½ºÅÍ ¼ö";
+            _stack.Add(str);
+            _stack2.Add(Player.Instance._deadCreepScore);
+        }
+        if (_list.Contains(1) == true)
+        {
+            string str = "½ºÅ³ »ç¿ë È½¼ö";
+            _stack.Add(str);
+            _stack2.Add(Player.Instance._spellScore);
+        }
+        if (_list.Contains(2) == true)
+        {
+            string str = "°ø°Ý È½¼ö";
+            _stack.Add(str);
+            _stack2.Add(Player.Instance._attckCount);
+        }
+        if (_list.Contains(3) == true)
+        {
+            string str = "°ø°Ý´çÇÑ È½¼ö";
+            _stack.Add(str);
+            _stack2.Add(Player.Instance._hitCount);
+        }
+        if (_list.Contains(4) == true)
+        {
+            string str = "¸ó½ºÅÍ¸¦ ¾ó¸° È½¼ö";
+            _stack.Add(str);
+            _stack2.Add(Player.Instance._freezingCount);
+        }
+        if (_list.Contains(5) == true)
+        {
+            string str = "È­»ó ÀÔÈù È½¼ö";
+            _stack.Add(str);
+            _stack2.Add(Player.Instance._burnCount);
+        }
+
+
+        _result1Text.text = _stack[0];
+        _result1ScoreText.text = _stack2[0].ToString();
+        _result2Text.text = _stack[1];
+        _result2ScoreText.text = _stack2[1].ToString();
+        _result3Text.text = _stack[2];
+        _result3ScoreText.text = _stack2[2].ToString();
+        if(Player.Instance._playerTitle != Player.PlayerTitle.Rich && Player.Instance._expX2 == false)
+        {
+             Player.Instance._getGold = (Player.Instance._deadCreepScore + 5) +(((int)_currentStage+1) * 100);
+        }
+        else if(Player.Instance._playerTitle != Player.PlayerTitle.Rich && Player.Instance._expX2 == true)
+        {
+            Player.Instance._getGold = ((Player.Instance._deadCreepScore + 5) + (((int)_currentStage + 1) * 100))*2;
+        }
+        else if(Player.Instance._playerTitle == Player.PlayerTitle.Rich && Player.Instance._expX2 == false)
+        {
+            Player.Instance._getGold = ((Player.Instance._deadCreepScore + 5) + (((int)_currentStage + 1) * 100)) * 3;
+        }
+        else if (Player.Instance._playerTitle == Player.PlayerTitle.Rich && Player.Instance._expX2 == true)
+        {
+            Player.Instance._getGold = ((Player.Instance._deadCreepScore + 5) + (((int)_currentStage + 1) * 100)) * 6;
+        }
+        _result4Text.text = "È¹µæÇÑ °ñµå";
+        _result4ScoreText.text = Player.Instance._getGold.ToString();
+        Player.Instance._gold += Player.Instance._getGold;
+        if(Player.Instance._gold >= 999999)
+        {
+            Player.Instance._gold = 999999;
+        }
+        Player.Instance._totalCreepScore += Player.Instance._deadCreepScore;
+
+        Player.Instance.Save();
+
+
+
         _resultPopUp.gameObject.SetActive(true);
     }
 
     public void EnterPausePopUp()
     {
+
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._gameplaySettingPopUp);
         _pausePopUp.gameObject.SetActive(true);
+        _effectSoundSlider.value = Player.Instance._effectSound;
+        _bgmSouundSlider.value = Player.Instance._bgmSound;
         Time.timeScale = 0f;
     }
     public void ExitPausePopUp()
     {
         _pausePopUp.gameObject.SetActive(false);
+
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._gameplaySettingPopUpClose);
         Time.timeScale = 1f;
     }
     public void GameOff()
@@ -621,6 +736,8 @@ public class GamePlay : MonoBehaviour
     public void EnterChoicePopUp()
     {
         _choicePopUp.gameObject.SetActive(true);
+
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._gameplaySettingPopUp);
         Time.timeScale = 0f;
 
 
@@ -1083,10 +1200,22 @@ public class GamePlay : MonoBehaviour
         {
             yield return new WaitForSeconds(0.05f);
             _ground.transform.Rotate(Vector3.forward * 5f);
+            if(_currentStage == GameState.Stage2)
+            {
+                _stageground[1].transform.position = new Vector3(0, 0, 0);
+            }
         }
-
+       
         Player.Instance._rigidbody.isKinematic = false;
         _listPlayers[(int)_currentStage - 1].gameObject.SetActive(false);
+        if(_currentStage == GameState.Stage2)
+        {
+            _stageground[0].SetActive(false);
+        }
+        else if (_currentStage == GameState.Stage4)
+        {
+            _stageground[2].SetActive(false);
+        }
        
 
         
@@ -1113,9 +1242,12 @@ public class GamePlay : MonoBehaviour
         {
             yield return new WaitForSeconds(0.05f);
             _ground.transform.Rotate(Vector3.forward * -5f);
+            _stageground[1].transform.position = new Vector3(0, -0.4f, 0);
         }
         Player.Instance._rigidbody.isKinematic = false;
+     
         _listPlayers[(int)_currentStage -1].gameObject.SetActive(false);
+        _stageground[1].SetActive(false);
   
 
         
@@ -1152,6 +1284,7 @@ public class GamePlay : MonoBehaviour
             Player.Instance.m_transform = _listPlayers[(int)_currentStage].GetComponent<Transform>();
             Player.Instance.ChangeState(BaseObject.State.None);
             Player.Instance._followCamera._target = _listPlayers[(int)_currentStage].gameObject;
+
             
             
 
@@ -1159,8 +1292,10 @@ public class GamePlay : MonoBehaviour
         else if((int)_currentStage %2 == 1) // È¦¼ö 2¶ó¿îµå 4¶ó¿îµå
         {
             
-            StartCoroutine(ReverseGround());
             
+
+            StartCoroutine(ReverseGround());
+          
             Debug.Log("24¶ó");
 
         }
@@ -1176,6 +1311,7 @@ public class GamePlay : MonoBehaviour
             Player.Instance.ChangeState(BaseObject.State.None);
            // Player.Instance._followCamera._target = _listPlayers[0].gameObject;
             _listStage[(int)_currentStage].SetActive(true);
+            
            
             Debug.Log("1¶ó");
         }
@@ -1745,6 +1881,7 @@ public class GamePlay : MonoBehaviour
 
         }
 
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         _choicePopUp.SetActive(false);
         Time.timeScale = 1f;
         if(Player.Instance._playerTitle != Player.PlayerTitle.Priest)
@@ -1821,5 +1958,60 @@ public class GamePlay : MonoBehaviour
             _timer = 120f;
         }
     }
-  
+
+
+
+    public int[] GetRandomInt(int length, int min, int max)
+    {
+        int[] randarray = new int[length];
+        bool isSame;
+
+        for(int i = 0; i < length; ++i)
+        {
+            while(true)
+            {
+                randarray[i] = Random.Range(min, max);
+                isSame = false;
+                for(int j = 0; j <i; ++j)
+                {
+                    if(randarray[j] == randarray[i])
+                    {
+                        isSame = true;
+                        break;
+                    }
+                }
+                if (!isSame) break;
+            }
+        }
+        return randarray;
+    }
+    public IEnumerator CoReSpawn()
+    {
+        while (true)
+        {
+            int rand = Random.Range(0, 4);
+            yield return new WaitForSeconds(5 - (int)_currentStage);
+            if (_currentStage == GameState.Stage1)
+            {
+                if(rand == 0)
+                {
+                    _slimePool.Get();
+
+                }
+                else if(rand == 1)
+                {
+                    _wolfpool.Get();
+                }
+                else if(rand == 2)
+                {
+                    _skeletonPool.Get();
+                }
+                else if(rand == 3)
+                {
+                    continue;
+                }
+            }
+        }
+    }
+    
 }

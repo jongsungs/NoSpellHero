@@ -26,4 +26,10 @@ public class IAPMain : MonoBehaviour
 
     }
 
+
+    public void GetExpX2()
+    {
+        Player.Instance._expX2 = true;
+        Player.Instance.Save();
+    }
 }

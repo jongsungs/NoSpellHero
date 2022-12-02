@@ -47,6 +47,7 @@ public class Monster : BaseObject
     public GameObject _frozen;
     public GameObject _burn;
     public GameObject _sturn;
+    public GameObject _fascination;
     public MoreMountains.Feedbacks.MMFloatingTextSpawner _floatingTextSpawner;
     public MoreMountains.Feedbacks.MMF_Player _mmfPlayer;
 
@@ -69,6 +70,20 @@ public class Monster : BaseObject
     public int _attackStack;
     public Weapon _monsterAttack;
 
+
+   public Gradient whitegrad = new Gradient();
+   public Gradient redgrad = new Gradient();
+    Color _red = new Color(1, 0, 0);
+    Color _white = new Color(1, 1, 1);
+    GradientColorKey[] redkey = new GradientColorKey[2];
+    GradientAlphaKey[] redakey = new GradientAlphaKey[2];
+    GradientColorKey[] whitekey = new GradientColorKey[2];
+    GradientAlphaKey[] whiteakey = new GradientAlphaKey[2];
+
+
+
+
+
     private void Awake()
     {
        
@@ -87,8 +102,28 @@ public class Monster : BaseObject
         _frozen.SetActive(false);
         if (_sturn != null)
             _sturn.SetActive(false);
+        if (_fascination != null)
+            _fascination.SetActive(false);
         _attackOnce = true;
         GamePlay._eventHandler += MonsterRelease;
+        redkey[0].color = _red;
+        redkey[0].time = 0;
+        redkey[1].color = _white;
+        redkey[1].time = 1;
+        redakey[0].alpha = 1;
+        redakey[0].time = 0;
+        redakey[1].alpha = 1;
+        redakey[1].time = 1;
+        whitekey[0].color = _white;
+        whitekey[0].time = 0;
+        whitekey[1].color = _white;
+        whitekey[1].time = 1;
+        whiteakey[0].alpha = 1;
+        whiteakey[0].time = 0;
+        whiteakey[1].alpha = 1;
+        whiteakey[1].time = 1;
+        whitegrad.SetKeys(whitekey, whiteakey);
+        redgrad.SetKeys(redkey, redakey);
     }
     private void OnEnable()
     {
@@ -196,9 +231,10 @@ public class Monster : BaseObject
         {
             Player.Instance._helenScore++;
             AchievementManager.instance.AddAchievementProgress("helenskill100", Player.Instance._helenScore);
-            
-
-
+        }
+        else if(Player.Instance._playerTitle != Player.PlayerTitle.Helen)
+        {
+            Player.Instance._freezingCount++;
         }
 
     }
@@ -211,6 +247,7 @@ public class Monster : BaseObject
         _atk = _basicAtk / 2;
         _ccOn = true;
         _burn.SetActive(true);
+        Player.Instance._burnCount++;
 
     }
     public virtual void Stun()
@@ -341,6 +378,7 @@ public class Monster : BaseObject
         _layerMask = 0;
         StartCoroutine(CoFadeOut(1f));
         yield return new WaitForSeconds(2f);
+        Player.Instance._deadCreepScore++;
         if (_CC == CrowdControl.Freezing && Player.Instance._playerTitle == Player.PlayerTitle.JackFrost)
         {
             Player.Instance._jackfrostScore++;
@@ -382,6 +420,7 @@ public class Monster : BaseObject
 
     public IEnumerator CoHit()
     {
+        Debug.Log("±ôºý");
         if(_monster != MonsterKind.Slime)
         {
 
