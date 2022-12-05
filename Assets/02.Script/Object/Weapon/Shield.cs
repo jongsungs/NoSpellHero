@@ -4,5 +4,10 @@ using UnityEngine;
 
 public class Shield : Weapon
 {
-    
+    private void Start()
+    {
+        _damage = 10f;
+        _basicDamage = _damage;
+        _spellProbability = 10;
+    }
 }

@@ -7,6 +7,7 @@ public class Meteor : SkillBase
 
     public SkillBase _effect;
     MeshRenderer _render;
+   
     private void OnEnable()
     {
         _render = GetComponent<MeshRenderer>();
@@ -21,7 +22,14 @@ public class Meteor : SkillBase
         {
             _render.enabled = false;
             _effect.gameObject.SetActive(true);
+            if(_isOnce == false)
+            {
+                _isOnce = true;
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._meteorex);
+
+            }
         }
+        transform.Rotate(Vector3.forward * Time.deltaTime * 100f);
     }
 
 

@@ -19,7 +19,6 @@ public class Wolf : Monster
         FadeIn();
 
         _state = State.Walk;
-        Debug.Log("늑대 시작");
     }
 
     private void Update()
@@ -30,23 +29,10 @@ public class Wolf : Monster
         }
 
 
-        if (_hp <= 0f)
+        if (_ingameHp <= 0f)
         {
             ChangeState(State.Die);
 
-        }
-
-        if (Input.GetKeyDown(KeyCode.M))
-        {
-            Freezing();
-        }
-        if (Input.GetKeyDown(KeyCode.N))
-        {
-            Burn();
-        }
-        if (Input.GetKeyDown(KeyCode.B))
-        {
-            Stun();
         }
 
 
@@ -92,8 +78,14 @@ public class Wolf : Monster
 
                 break;
             case State.Die:
-                _speed = 0f;
+                _speed = 0f; 
                 StartCoroutine(CoDie());
+                if (_category == MonsterCategory.Boss && _isDead == false)
+                {
+                    _isDead = true;
+                    GamePlay.Instance.BossDie();
+                    // GamePlay.Instance.ChangeStage();
+                }
                 break;
         }
     }
@@ -121,7 +113,6 @@ public class Wolf : Monster
 
         }
 
-        Debug.Log("회복");
     }
 
     private void OnTriggerEnter(Collider other)
@@ -136,7 +127,6 @@ public class Wolf : Monster
                 if (_30 == 0)
                 {
                     Freezing();
-                    Debug.Log("동장군 등장");
 
                 }
 
@@ -150,7 +140,12 @@ public class Wolf : Monster
                     if (_category == MonsterCategory.Common)
                     {
 
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -160,7 +155,12 @@ public class Wolf : Monster
                     }
                     else if (_category == MonsterCategory.Boss)
                     {
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -174,7 +174,12 @@ public class Wolf : Monster
                 {
                     if (_category == MonsterCategory.Common)
                     {
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -183,7 +188,12 @@ public class Wolf : Monster
                     else if (_category == MonsterCategory.Boss)
                     {
 
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -209,7 +219,12 @@ public class Wolf : Monster
                     if (_category == MonsterCategory.Common)
                     {
 
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -219,7 +234,12 @@ public class Wolf : Monster
                     }
                     else if (_category == MonsterCategory.Boss)
                     {
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -233,7 +253,13 @@ public class Wolf : Monster
                 {
                     if (_category == MonsterCategory.Common)
                     {
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -242,7 +268,12 @@ public class Wolf : Monster
                     else if (_category == MonsterCategory.Boss)
                     {
 
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -255,6 +286,7 @@ public class Wolf : Monster
                 if (rand2 == 0 && _category == MonsterCategory.Common)
                 {
 
+                    SoundManager.Instance.EffectPlay(SoundManager.Instance._fasniftion);
                     _fascination.SetActive(true);
                     m_targetMask = 64;
                     this.gameObject.layer = 3;
@@ -262,6 +294,7 @@ public class Wolf : Monster
                     if (Player.Instance.druidfirstskill == false)
                     {
                         Player.Instance.druidfirstskill = true;
+                        AchievementManager.instance.Unlock("druidfirstskill");
                     }
                     Player.Instance._druidScore++;
                     AchievementManager.instance.AddAchievementProgress("druidskill100", Player.Instance._druidScore);
@@ -287,7 +320,12 @@ public class Wolf : Monster
                     if (_category == MonsterCategory.Common)
                     {
 
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -297,7 +335,12 @@ public class Wolf : Monster
                     }
                     else if (_category == MonsterCategory.Boss)
                     {
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -311,7 +354,12 @@ public class Wolf : Monster
                 {
                     if (_category == MonsterCategory.Common)
                     {
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -320,7 +368,12 @@ public class Wolf : Monster
                     else if (_category == MonsterCategory.Boss)
                     {
 
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -333,6 +386,11 @@ public class Wolf : Monster
                 if (rand2 == 0)
                 {
                     Stun();
+                    if (Player.Instance.qrfhidden == false)
+                    {
+                        Player.Instance.qrfhidden = true;
+                        AchievementManager.instance.Unlock("qrfhidden");
+                    }
                 }
                 StartCoroutine(CoHit());
             }
@@ -348,6 +406,10 @@ public class Wolf : Monster
                     {
 
                         int damage = 999999;
+                        if (damage <= 0f)
+                        {
+                            damage = 0;
+                        }
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = redgrad;
 
@@ -361,7 +423,12 @@ public class Wolf : Monster
                     }
                     else if (_category == MonsterCategory.Boss)
                     {
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -374,7 +441,12 @@ public class Wolf : Monster
                 {
                     if (_category == MonsterCategory.Common)
                     {
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -383,7 +455,12 @@ public class Wolf : Monster
                     else if (_category == MonsterCategory.Boss)
                     {
 
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -417,7 +494,12 @@ public class Wolf : Monster
                     if (_category == MonsterCategory.Common)
                     {
 
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -427,7 +509,12 @@ public class Wolf : Monster
                     }
                     else if (_category == MonsterCategory.Boss)
                     {
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -441,7 +528,12 @@ public class Wolf : Monster
                 {
                     if (_category == MonsterCategory.Common)
                     {
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -450,7 +542,12 @@ public class Wolf : Monster
                     else if (_category == MonsterCategory.Boss)
                     {
 
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -462,7 +559,7 @@ public class Wolf : Monster
 
                 if (rand < Player.Instance._dokevSkillProbability)
                 {
-                    int rand2 = Random.Range(0, 9);
+                    int rand2 = Random.Range(0, 7);
                     float stat;
                     if (rand == 0)
                     {
@@ -514,26 +611,21 @@ public class Wolf : Monster
                         _critical = stat;
                         Player.Instance._critical += stat;
                     }
-                    else if (rand == 7)
-                    {
-                        stat = _basicHandicraft - (_basicHandicraft * 0.1f);
 
-                        _critical = stat;
-                        Player.Instance._critical += stat;
-                    }
-                    else if (rand == 8)
-                    {
-                        stat = _basicCharm - (_basicCharm * 0.1f);
-
-                        _charm = stat;
-                        Player.Instance._charm += stat;
-                    }
 
                     if (Player.Instance.dokevfirstskill == false)
                     {
                         Player.Instance.dokevfirstskill = true;
                         AchievementManager.instance.Unlock("dokevfirstskill");
                         Player.Instance.Save();
+                    }
+
+                    Player.Instance._ingameHp = 200f + (Player.Instance._hp * 10f);
+                    Player.Instance._maxHp = 200f + (Player.Instance._hp * 10f);
+                    Player.Instance._criticalProbability = Player.Instance._critical * 15f;
+                    if (Player.Instance._criticalProbability >= 100)
+                    {
+                        Player.Instance._criticalProbability = 100;
                     }
 
                 }
@@ -557,7 +649,12 @@ public class Wolf : Monster
 
                     if (rand < Player.Instance._criticalProbability)
                     {
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -568,11 +665,15 @@ public class Wolf : Monster
                     }
                     else if (rand >= Player.Instance._criticalProbability)
                     {
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
-                        GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
 
 
                     }
@@ -585,7 +686,12 @@ public class Wolf : Monster
 
                     if (rand < Player.Instance._criticalProbability)
                     {
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -597,7 +703,12 @@ public class Wolf : Monster
                     }
                     else if (rand >= Player.Instance._criticalProbability)
                     {
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -610,7 +721,93 @@ public class Wolf : Monster
                 StartCoroutine(CoHit());
 
             }
-          
+            else if (_onHit == false && other.transform.root.GetComponent<Decoy>() != null)
+            {
+                if (other.transform.root.GetComponent<Decoy>()._isAttack == true)
+                {
+
+                    other.transform.root.GetComponent<Decoy>()._isAttack = false;
+
+                    if (_category == MonsterCategory.Common)
+                    {
+                        int rand = Random.Range(0, 100);
+
+
+
+                        if (rand < Player.Instance._criticalProbability)
+                        {
+                            var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                            if (damage <= 0f)
+                            {
+                                damage = 0f;
+                            }
+                            damage = Mathf.Round(damage);
+                            _ingameHp -= damage;
+
+
+                            _floatingTextSpawner.AnimateColorGradient = redgrad;
+
+
+                            _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                        }
+                        else if (rand >= Player.Instance._criticalProbability)
+                        {
+                            var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                            if (damage <= 0f)
+                            {
+                                damage = 0f;
+                            }
+                            damage = Mathf.Round(damage);
+                            _ingameHp -= damage;
+                            _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                            _mmfPlayer.PlayFeedbacks(transform.position, damage);
+
+
+                        }
+                    }
+                    else if (_category == MonsterCategory.Boss)
+                    {
+                        int rand = Random.Range(0, 100);
+
+
+
+                        if (rand < Player.Instance._criticalProbability)
+                        {
+                            var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                            if (damage <= 0f)
+                            {
+                                damage = 0f;
+                            }
+                            damage = Mathf.Round(damage);
+                            _ingameHp -= damage;
+
+                            _floatingTextSpawner.AnimateColorGradient = redgrad;
+
+
+                            _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                            GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                        }
+                        else if (rand >= Player.Instance._criticalProbability)
+                        {
+                            var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                            if (damage <= 0f)
+                            {
+                                damage = 0f;
+                            }
+                            damage = Mathf.Round(damage);
+                            _ingameHp -= damage;
+                            _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                            _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                            GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+
+
+                        }
+                    }
+                    StartCoroutine(CoHit());
+                }
+
+            }
+
 
 
         }
@@ -628,7 +825,12 @@ public class Wolf : Monster
                 if (_category == MonsterCategory.Common)
                 {
 
-                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 4f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
 
 
@@ -638,7 +840,12 @@ public class Wolf : Monster
                 }
                 else if (_category == MonsterCategory.Boss)
                 {
-                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 4f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
 
 
@@ -652,7 +859,12 @@ public class Wolf : Monster
             {
                 if (_category == MonsterCategory.Common)
                 {
-                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 4f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
                     _floatingTextSpawner.AnimateColorGradient = whitegrad;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -661,7 +873,12 @@ public class Wolf : Monster
                 else if (_category == MonsterCategory.Boss)
                 {
 
-                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 4f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
                     _floatingTextSpawner.AnimateColorGradient = whitegrad;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -692,7 +909,12 @@ public class Wolf : Monster
                 if (_category == MonsterCategory.Common)
                 {
 
-                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
 
 
@@ -702,7 +924,12 @@ public class Wolf : Monster
                 }
                 else if (_category == MonsterCategory.Boss)
                 {
-                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
 
 
@@ -716,7 +943,12 @@ public class Wolf : Monster
             {
                 if (_category == MonsterCategory.Common)
                 {
-                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
                     _floatingTextSpawner.AnimateColorGradient = whitegrad;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -725,7 +957,12 @@ public class Wolf : Monster
                 else if (_category == MonsterCategory.Boss)
                 {
 
-                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
                     _floatingTextSpawner.AnimateColorGradient = whitegrad;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -754,7 +991,12 @@ public class Wolf : Monster
                 if (_category == MonsterCategory.Common)
                 {
 
-                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
 
 
@@ -764,7 +1006,12 @@ public class Wolf : Monster
                 }
                 else if (_category == MonsterCategory.Boss)
                 {
-                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
 
 
@@ -778,7 +1025,12 @@ public class Wolf : Monster
             {
                 if (_category == MonsterCategory.Common)
                 {
-                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
                     _floatingTextSpawner.AnimateColorGradient = whitegrad;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -787,7 +1039,12 @@ public class Wolf : Monster
                 else if (_category == MonsterCategory.Boss)
                 {
 
-                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
                     _floatingTextSpawner.AnimateColorGradient = whitegrad;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -810,7 +1067,12 @@ public class Wolf : Monster
                 if (_category == MonsterCategory.Common)
                 {
 
-                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 10f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
 
 
@@ -820,7 +1082,12 @@ public class Wolf : Monster
                 }
                 else if (_category == MonsterCategory.Boss)
                 {
-                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 10f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
 
 
@@ -834,7 +1101,12 @@ public class Wolf : Monster
             {
                 if (_category == MonsterCategory.Common)
                 {
-                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
                     _floatingTextSpawner.AnimateColorGradient = whitegrad;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -843,8 +1115,14 @@ public class Wolf : Monster
                 else if (_category == MonsterCategory.Boss)
                 {
 
-                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
+
                     _floatingTextSpawner.AnimateColorGradient = whitegrad;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
                     GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
@@ -863,6 +1141,7 @@ public class Wolf : Monster
                 {
                     damage = 0f;
                 }
+                damage = Mathf.Round(damage);
                 _ingameHp -= damage;
                 _mmfPlayer.PlayFeedbacks(transform.position, damage);
 
@@ -891,7 +1170,12 @@ public class Wolf : Monster
                 if (_category == MonsterCategory.Common)
                 {
 
-                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 8f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
 
 
@@ -901,7 +1185,12 @@ public class Wolf : Monster
                 }
                 else if (_category == MonsterCategory.Boss)
                 {
-                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 8f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
 
 
@@ -915,7 +1204,12 @@ public class Wolf : Monster
             {
                 if (_category == MonsterCategory.Common)
                 {
-                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 8f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
                     _floatingTextSpawner.AnimateColorGradient = whitegrad;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -924,7 +1218,12 @@ public class Wolf : Monster
                 else if (_category == MonsterCategory.Boss)
                 {
 
-                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 8f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
                     _floatingTextSpawner.AnimateColorGradient = whitegrad;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -941,6 +1240,7 @@ public class Wolf : Monster
             }
         }
     }
+
     public override void Walk()
     {
         ChangeState(State.Walk);
@@ -956,7 +1256,7 @@ public class Wolf : Monster
 
     public override void MonsterRelease()
     {
-        _hp = 0f;
+        _ingameHp = 0f;
     }
     public void ChangeIndex(List<Color> list, int index, float cnt, Color temp)
     {

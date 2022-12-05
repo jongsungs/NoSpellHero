@@ -6,6 +6,7 @@ using System.IO;
 using Newtonsoft.Json;
 using System.Text;
 using System;
+using UnityEngine.SceneManagement;
 
 public enum EquipmentWeapon : int
 {
@@ -906,7 +907,6 @@ public class Player : BaseObject
     public int _1_3;
     public int _quater;
     public int _1_5;
-    public int _strongManProbability;
     public int _spellCastProbability;
     public float _fireBallProbability;
     public float _iceBallProbability;
@@ -917,6 +917,7 @@ public class Player : BaseObject
     public int _decoyProbability;
     public int _dokevSkillProbability;
     [SerializeField] float m_viewAngle;    //시야각
+    public bool _seconAttack;
 
 
 
@@ -925,7 +926,23 @@ public class Player : BaseObject
     private void Awake()
     {
         Instance = this;
-        Load();
+        if(File.Exists(Application.persistentDataPath + "/" + "PlayerData.json") == false && SceneManager.GetActiveScene().name != "GamePlay")
+        {
+            _data = new PlayerData(_hp, _atk, _matk, _atkSpeed, _def, _speed, _critical, _handicraft, _charm, _criticalDamage,
+           _isKightHelmet, _isMasicianHat, _isGat, _isSkinHead, _isnormalHair, _isKnightTop, _isMasicianTop, _isDurumagiTop, _isKnightBottom, _isMasicianBottom, _isdurumagiBottom, _isKnightShoes, _isSandal, _isOldShoes, _isEmptyHelmet, _isNormalTop, _isTrunkBottom, _isnormalShoes, _isStick, _isSward1, _isSward2, _isBroom, _isClub, _isShortSward, _isHanger, _isMace, _isShield, _isSpear, _isUmbrella, _isWaldo, _buyStick, _buySward1, _buySward2, _buyBroom, _buyClub, _buyShortSward, _buyHanger, _buyMace, _buyShield, _buySpear, _buyUmbrella, _buyWaldo, _buyKightHelmet, _buyMasicianHat, _buyGat,
+           _buySkinHead, _buynormalHair, _buyKnightTop, _buyMasicianTop, _buyDurumagiTop, _buyKnightBottom, _buyMasicianBottom, _buydurumagiBottom, _buyKnightShoes, _buySandal, _buyOldShoes, _buyEmptyHelmet, _buyNormalTop, _buyTrunkBottom, _buynormalShoes
+           , _isbasicStick, _buybasicStick, firststat, firstmaster, firstjob, earlydie, nonviolent, firstmagic, firsthunt, getmagicalblader, magicalbladerhidden, getmadman, madmanmadness, getstrongman, strongmanhidden, strongmanskill1full, getwarrior, warriorskill1full, getdwarf, dwarfskill1full, getjackfrost, jackfrosthidden, jackfrosttuna, getassaultcaptain, assaultcaptainfull,
+           getzhangfei, zhangfeiroar, zhangfeirowhp, zhangfeihidden, getberserker, berserkerskill1full, berserkerhidden, berserkerclear, getcriticaler, criticalerskill1full, getdruid, druidfirstskill, druidskill100, getassassin, assassinskill2full, getambidextrous, getlubu, lubuhidden, lubuskill1full, getheavycavalry, gethealthmagician, healthmagicianskill2full, healthmagicianhidden, getprist, pristhpfull, pristjesus, pristhidden, getwarlock, warlockskill1full, warlockclear, warlcokhidden, getsalamander, salamandermeteor, salamandermeteor3, salamanderhidden, getcook, cookfullhp, cookhidden,
+           getzeus, zeusskill1first, zeushidden, getpracticebug, practicebugskill1full, practicebugskill2full, getstranger, strangerfirstskill, stangerskill100, getqrf, qrfputhanger, qrfhidden, getservant, servantskill1first, servanthidden, getathlete, ahleteskill2full, ahleteclear, getversatile, versatilehidden, getacupuncturist, acupuncturistfirstskill, acupuncturistcritical, acupuncturistskill2full, acupuncturistclear, getspoonkiller, spoonkillerskill1full, spoonkillerskill2full, spoonkillerclear, gethelen, helenskill100, helenhidden, helenstage1die, helenclear, getrich, richget1000gold, getswell, swellskill1full, swellclear, getdelivery, deliveryskill1full,
+           deliveryclear, getrepairman, repairmanhidden, repairmanclear, getdosa, dosafirstskill, dosaskilldie20, dosahidden, getgambler, gamblerlose, gamblerwin, gamblerskill2, getslowstarter, slowstarterclear, getorpheus, orpheusskill1full, orpheusfirstdie, getdokev, dokevfirstskill, dokevhidden, dokevhidden50, statlv5, stage1clear, stage2clear, _totalCreepScore, _jackfrostScore, _druidScore, _strangerblackholeScore, _helenScore, _dosaDieAvatar, _dokevHiddenSkillScore, _gold, _stat, _effectSound, _bgmSound);
+
+            Save();
+        }
+        else if(File.Exists(Application.persistentDataPath + "/" + "PlayerData.json") == true)
+        {
+            Load();
+
+        }
         _data = new PlayerData(_hp, _atk, _matk, _atkSpeed, _def, _speed, _critical, _handicraft, _charm, _criticalDamage,
             _isKightHelmet, _isMasicianHat, _isGat, _isSkinHead, _isnormalHair, _isKnightTop, _isMasicianTop, _isDurumagiTop, _isKnightBottom, _isMasicianBottom, _isdurumagiBottom, _isKnightShoes, _isSandal, _isOldShoes, _isEmptyHelmet, _isNormalTop, _isTrunkBottom, _isnormalShoes, _isStick, _isSward1, _isSward2, _isBroom, _isClub, _isShortSward, _isHanger, _isMace, _isShield, _isSpear, _isUmbrella, _isWaldo, _buyStick, _buySward1, _buySward2, _buyBroom, _buyClub, _buyShortSward, _buyHanger, _buyMace, _buyShield, _buySpear, _buyUmbrella, _buyWaldo, _buyKightHelmet, _buyMasicianHat, _buyGat,
             _buySkinHead, _buynormalHair, _buyKnightTop, _buyMasicianTop, _buyDurumagiTop, _buyKnightBottom, _buyMasicianBottom, _buydurumagiBottom, _buyKnightShoes, _buySandal, _buyOldShoes, _buyEmptyHelmet, _buyNormalTop, _buyTrunkBottom, _buynormalShoes
@@ -936,8 +953,8 @@ public class Player : BaseObject
         
         _preSpeed = _speed + 1f;
 
-        _ingameHp = 50f + (_hp * 10f);
-        _maxHp = 50f + (_hp * 10f);
+        _ingameHp = 200f + (_hp * 10f);
+        _maxHp = 200f + (_hp * 10f);
         _basicHp = _hp;
         _basicAtk = _atk;
         _basicMatk = _matk;
@@ -951,6 +968,8 @@ public class Player : BaseObject
         _criticalProbability = _critical * 15f;
         _criticalDamage = 2f;
         _isDead = false;
+        if(_weapon != null)
+        _spellCastProbability = 10 + _weapon._spellProbability;
         _fireBallProbability = 30f;
         _iceBallProbability = 30f;
         _chainLightProbability = 30f;
@@ -1170,12 +1189,16 @@ public class Player : BaseObject
 
     private void Start()
     {
-        
-       
-        if(GamePlay.Instance != null)
-        GamePlay.Instance.ChangeStage();
+
+        if (GamePlay.Instance != null)
+            GamePlay.Instance.ChangeStage();
         if(_meteorPoint != null)
         _meteorPoint = _listMeteorPoint[0];
+        if (SceneManager.GetActiveScene().name == "GamePlay")
+        {
+            ChangeTitle(_playerTitle);
+            SoundManager.Instance.BGMPlay(SoundManager.Instance._gamePlayBgm);
+        }
         
         
 
@@ -1232,28 +1255,11 @@ public class Player : BaseObject
             }
         }
 
-       
-        if (Input.GetKeyDown(KeyCode.Alpha1))
+      
+       if(Input.GetKeyDown(KeyCode.K))
         {
-            _skill1 += 1;
-            ChangeTitle(_playerTitle);
+            Meteor();
         }
-        if (Input.GetKeyDown(KeyCode.Alpha2))
-        {
-            _skill2 += 1;
-            ChangeTitle(_playerTitle);
-        }
-        if (Input.GetKeyDown(KeyCode.Alpha3))
-        {
-            _skill3 += 1;
-            ChangeTitle(_playerTitle);
-        }
-        if(Input.GetKeyDown(KeyCode.A))
-        {
-
-            FireBall();
-        }
-       
        
 
 
@@ -1266,20 +1272,20 @@ public class Player : BaseObject
         angleInDegrees += transform.eulerAngles.y;
         return new Vector3(Mathf.Sin(angleInDegrees * Mathf.Deg2Rad), 0, Mathf.Cos(angleInDegrees * Mathf.Deg2Rad));
     }
-    public void DrawView()
-    {
-        Vector3 leftBoundary = DirFromAngle(-m_viewAngle / 2);
-        Vector3 rightBoundary = DirFromAngle(m_viewAngle / 2);
-        Debug.DrawLine(transform.position, transform.position + leftBoundary * m_viewDistance, Color.blue);
-        Debug.DrawLine(transform.position, m_transform.position + rightBoundary * m_viewDistance, Color.blue);
-    }
+    
+
+  
 
     public void FixedUpdate()
     {
         if (variableJoystick != null)
         {
 
-            if (variableJoystick._isStop && _isIdle == true)
+            if(_seconAttack == true && _playerTitle == PlayerTitle.StrongMan)
+            {
+                ChangeState(State.Attack2);
+            }
+            else if (variableJoystick._isStop && _isIdle == true)
             {
                 _basicSpeed = 0f;
                ChangeState(State.Idle);
@@ -1317,22 +1323,7 @@ public class Player : BaseObject
     public override void Attack2()
     {
 
-        if (_playerTitle == PlayerTitle.StrongMan)
-        {
-
-            _half = UnityEngine.Random.Range(0, 2);
-
-            if (_half == 0)
-            {
-                Debug.Log("터졌다");
-                ChangeState(State.Attack2);
-            }
-            else if (_half == 1)
-            {
-                _isIdle = true;
-                ChangeState(State.Idle);
-            }
-        }
+        
     }
 
     public void AttackOn()
@@ -1344,7 +1335,7 @@ public class Player : BaseObject
         spell = UnityEngine.Random.Range(0, 100);
 
         SoundManager.Instance.EffectPlay(SoundManager.Instance._attck);
-        if(spell <_spellCastProbability + _weapon._spellProbability )
+        if(spell <_spellCastProbability )
         {
             Spell(_iceBallProbability,_fireBallProbability,_chainLightProbability);
 
@@ -1352,31 +1343,14 @@ public class Player : BaseObject
 
 
 
-        if (_playerTitle == PlayerTitle.StrongMan)
-        {
-            int max = 3 - _skill2;
 
-            rand = UnityEngine.Random.Range(0, 4);
-
-            if (rand >max)
-            {
-                Debug.Log("터졌다");
-                ChangeState(State.Attack2);
-            }
-            else if (rand < max)
-            {
-                _isIdle = true;
-                ChangeState(State.Idle);
-            }
-        }
-        else if (_playerTitle == PlayerTitle.JackFrost)
+        if (_playerTitle == PlayerTitle.JackFrost)
         {
             //동장군 히든
-            if(_skill1 >= 3)
+            if (_skill1 >= 3)
             {
                 achivementCheck(jackfrosthidden, "jackfrosthidden");
                 rand = UnityEngine.Random.Range(0, 10);
-                Debug.Log(rand);
                 if (rand == 0 && GamePlay.Instance._isBlizzard == false)
                 {
                     StartCoroutine(Blizzard());
@@ -1402,7 +1376,7 @@ public class Player : BaseObject
             rand = UnityEngine.Random.Range(1, 101);
             if(rand <= 50 + _skill2) 
             {
-                int rand2 = UnityEngine.Random.Range(0, 9);
+                int rand2 = UnityEngine.Random.Range(0, 7);
 
                 if(rand2 == 0)
                 {
@@ -1432,21 +1406,13 @@ public class Player : BaseObject
                 {
                     _critical = _basicCritical + (_basicCritical * (0.1f + _skill1 / 10f));
                 }
-                if (rand2 == 7)
-                {
-                    _handicraft = _basicHandicraft + (_basicHandicraft * (0.1f + _skill1 / 10f));
-                }
-                if (rand2 == 8)
-                {
-                    _charm = _basicCharm + (_basicCharm * (0.1f + _skill1 / 10f));
-                }
 
                 SoundManager.Instance.EffectPlay(SoundManager.Instance._buff);
 
             }
             else if (rand > 50 + _skill2)
             {
-                int rand2 = UnityEngine.Random.Range(0, 9);
+                int rand2 = UnityEngine.Random.Range(0, 7);
 
                 if (rand2 == 0)
                 {
@@ -1476,34 +1442,30 @@ public class Player : BaseObject
                 {
                     _critical = _basicCritical - (_basicCritical * (0.1f + _skill1 / 10f));
                 }
-                if (rand2 == 7)
-                {
-                    _handicraft = _basicHandicraft - (_basicHandicraft * (0.1f + _skill1 / 10f));
-                }
-                if (rand2 == 8)
-                {
-                    _charm = _basicCharm - (_basicCharm * (0.1f + _skill1 / 10f));
-                }
-
+            
                 SoundManager.Instance.EffectPlay(SoundManager.Instance._debuff);
             }
 
 
             if(_hp <= _basicHp* 0.5f &&_atk <= _basicAtk*0.5f && _matk <= _basicMatk*0.5f && _speed <= _basicSpeed * 0.5f && 
-                _def <= _basicDef *0.5f && _atkSpeed <= _basicAtkSpeed * 0.5f && _critical <= _basicCritical * 0.5f && _handicraft <= _basicHandicraft*0.5f && _charm <= _basicCharm * 0.5
-                && gamblerlose == false)
+                _def <= _basicDef *0.5f && _atkSpeed <= _basicAtkSpeed * 0.5f && _critical <= _basicCritical * 0.5f && gamblerlose == false)
             {
                 achivementCheck(gamblerlose, "gamblerlose");
+                gamblerlose = true;
             }
             if (_hp >= _basicHp + (_basicHp * 0.5f) && _atk >= _basicAtk + (_basicAtk * 0.5f) && _matk >= _basicMatk+(_basicMatk * 0.5f) && _speed >= _basicSpeed+(_basicSpeed * 0.5f) &&
-                _def >= _basicDef+(_basicDef * 0.5f) && _atkSpeed >= _basicAtkSpeed+(_basicAtkSpeed * 0.5f) && _critical >= _basicCritical+(_basicCritical * 0.5f) && _handicraft >= _basicHandicraft+(_basicHandicraft * 0.5f) && _charm >= _basicCharm+(_basicCharm * 0.5)
-                && gamblerwin == false)
+                _def >= _basicDef+(_basicDef * 0.5f) && _atkSpeed >= _basicAtkSpeed+(_basicAtkSpeed * 0.5f) && _critical >= _basicCritical+(_basicCritical * 0.5f) && gamblerwin == false)
             {
                 achivementCheck(gamblerwin, "gamblerwin");
+                gamblerwin = true;
             }
 
-
-
+            _maxHp = 50f + (_hp * 10f);
+            _criticalProbability = _critical * 15f;
+            if(_criticalProbability >= 100)
+            {
+                _criticalProbability = 100;
+            }
 
         }
         else if (_playerTitle == PlayerTitle.Priest)
@@ -1520,6 +1482,7 @@ public class Player : BaseObject
             if(_comboPristHeal.Count >=5 && _comboPristHeal.Exists(x => x != 0) == false && pristjesus == false)
             {
                 achivementCheck(pristjesus, "pristjesus");
+                pristjesus = true;
             }
             if (_comboPristHeal.Exists(x => x == 0) == true)
             {
@@ -1552,7 +1515,7 @@ public class Player : BaseObject
 
                 _dokevHiddenSkillScore++;
                 achivementCheck(dokevhidden, "dokevhidden");
-                AchievementManager.instance.AddAchievementProgress("dokevhidden", _dokevHiddenSkillScore);
+                AchievementManager.instance.AddAchievementProgress("dokevhidden50", _dokevHiddenSkillScore);
                 if(_dokevHiddenSkillScore >= 50 && dokevhidden50 ==false)
                 {
                     dokevhidden50 = true;
@@ -1565,8 +1528,24 @@ public class Player : BaseObject
     public void AttackOff()
     {
         _isAttack = false;
+        _seconAttack = false;   
     }
+    public void Attack2nd()
+    {
+        if (_playerTitle == PlayerTitle.StrongMan)
+        {
+            int max = 3 - _skill2;
 
+           int rand = UnityEngine.Random.Range(0, 5);
+
+            if (rand >= max)
+            {
+                _seconAttack = true;
+            _isAttack = false;
+                ChangeState(State.Attack2);
+            }
+        }
+    }
 
     public override void ChangeState(State state)
     {
@@ -1604,8 +1583,8 @@ public class Player : BaseObject
                 _isIdle = true;
                 break;
             case State.Die:
-                
-                if(GamePlay.Instance._currentStage == GamePlay.GameState.Stage1 && earlydie == false)
+                variableJoystick._isStop = true;
+                if (GamePlay.Instance._currentStage == GamePlay.GameState.Stage1 && earlydie == false)
                 {
                     earlydie = true;
                     AchievementManager.instance.Unlock("earlydie");
@@ -1695,6 +1674,7 @@ public class Player : BaseObject
                 if(_skill1 >= 3)
                 {
                     achivementCheck(strongmanskill1full, "strongmanskill1full");
+                    strongmanskill1full = true;
                 }
 
                 break;
@@ -1704,6 +1684,7 @@ public class Player : BaseObject
                 if(_skill1 >=3 )
                 {
                     achivementCheck(warriorskill1full, "warriorskill1full");
+                    warriorskill1full = true;
                 }
 
                 break;
@@ -1713,6 +1694,7 @@ public class Player : BaseObject
                 if(_skill1 >= 3)
                 {
                     achivementCheck(dwarfskill1full, "dwarfskill1full");
+                    dwarfskill1full = true;
                 }
                 break;
             case PlayerTitle.JackFrost:
@@ -1731,6 +1713,7 @@ public class Player : BaseObject
                 if(_skill1 >= 3 || _skill2 >= 3)
                 {
                     achivementCheck(assaultcaptainfull, "assaultcaptainfull");
+                    assaultcaptainfull = true;
                 }
 
 
@@ -1745,11 +1728,13 @@ public class Player : BaseObject
                 if(_skill1 >= 3)
                 {
                     achivementCheck(berserkerskill1full, "berserkerskill1full");
+                    berserkerskill1full = true;
                 }
 
                 if (_skill2 >= 3)
                 {
                     achivementCheck(berserkerhidden, "berserkerhidden");
+                    berserkerhidden = true;
                     _maxHp = _basicHp * 0.2f;
                     _atk = (_basicAtk * 2f) + (_basicAtk * 2f);
                 }
@@ -1761,10 +1746,11 @@ public class Player : BaseObject
                 if(_skill1 >= 3)
                 {
                     achivementCheck(criticalerskill1full, "criticalerskill1full");
+                    criticalerskill1full = true;
                 }
                 
                 
-                _criticalProbability = 1f;
+                _criticalProbability = 100f;
                 _criticalDamage = _basicCriticalDamage + (_basicCriticalDamage * _skill1 / 10f);
                 _atk = (_basicAtk * 0.3f) + (_basicAtk * _skill2 / 10f);
 
@@ -1777,6 +1763,7 @@ public class Player : BaseObject
                 if (_skill2 >= 3)
                 {
                     achivementCheck(assassinskill2full, "assassinskill2full");
+                    assassinskill2full = true;
                 }
 
                 _criticalDamage = _basicCriticalDamage + (_basicCriticalDamage * 0.2f) + (_basicCriticalDamage * _skill1 / 10f);
@@ -1794,6 +1781,7 @@ public class Player : BaseObject
                 if(_skill1 >= 3)
                 {
                     achivementCheck(lubuskill1full, "lubuskill1full");
+                    lubuskill1full = true;
                 }
                 _atk = (_basicAtk * 3f) + (_basicAtk * _skill1 / 10f);
                 _atkSpeed = 2f + (_skill2 / 10f);
@@ -1815,9 +1803,10 @@ public class Player : BaseObject
                 if (_skill2 >= 3)
                 {
                     achivementCheck(healthmagicianskill2full, "healthmagicianskill2full");
+                    healthmagicianskill2full = true;
                 }
 
-                _spellCastProbability = 50;
+                _spellCastProbability = 50 + _weapon._spellProbability;
                 _maxHp = 50f + (_hp * 10f);
 
                 break;
@@ -1829,6 +1818,7 @@ public class Player : BaseObject
                 if(_skill1>= 3)
                 {
                     achivementCheck(warlockskill1full, "warlockskill1full");
+                    warlockskill1full = true;
                 }
 
                 _matk = _basicMatk + (_basicMatk * _skill2 / 10f);
@@ -1846,13 +1836,14 @@ public class Player : BaseObject
                 _iceBallProbability = 0f;
                 _chainLightProbability = 0f;
                 _fireBallProbability = 100f;
-                _spellCastProbability += _skill1 * 10;
-                _meteorProbablility = 10 + _skill2 * 5;
+                _spellCastProbability = 10 +(_skill1 * 10) + _weapon._spellProbability;
+                _meteorProbablility = 10 + (_skill2 * 5);
                 break;
             case PlayerTitle.Zeus:
                 if(_skill1>= 1)
                 {
                     achivementCheck(zeusskill1first, "zeusskill1first");
+                    zeusskill1first = true;
                 }
 
 
@@ -1865,10 +1856,12 @@ public class Player : BaseObject
                 if(_skill1 >= 3)
                 {
                     achivementCheck(practicebugskill1full, "practicebugskill1full");
+                    practicebugskill1full = true;
                 }
                 if(_skill2 >= 3)
                 {
                     achivementCheck(practicebugskill2full, "practicebugskill2full");
+                    practicebugskill2full = true;
                 }
 
                 _spellCastProbability = 100;
@@ -1880,7 +1873,7 @@ public class Player : BaseObject
 
                 _matk = _basicMatk + (_basicMatk * _skill2 / 10f);
 
-                _blackholeProbablility = 5 + (_skill1 * 5);
+                _blackholeProbablility = 10 + (_skill1 * 5);
 
                 break;
             case PlayerTitle.GateKeeper:
@@ -1895,17 +1888,14 @@ public class Player : BaseObject
                 _atk = _basicAtk + (_basicAtk * 0.1f) + (_basicAtk * _skill2/10f);
         
 
-                //히든
-                if (_skill2 >= 3)
-                {
-                    //공격시 스턴 구현 완료
-                }
+             
                 break;
             case PlayerTitle.Servant:
 
                 if(_skill1 >=1)
                 {
-                    achivementCheck(servantskill1first, "sercantskill1first");
+                    achivementCheck(servantskill1first, "servantskill1first");
+                    servantskill1first = true;
                 }
 
                 _hp = _basicHp * 2f + (_basicHp * _skill1 / 5f);
@@ -1919,6 +1909,7 @@ public class Player : BaseObject
                 if(_skill2 >= 3)
                 {
                     achivementCheck(ahleteskill2full, "ahleteskill2full");
+                    ahleteskill2full = true;
                 }
                 _atk = _basicAtk + (_basicAtk * _skill1 / 10f);
                 _hp = _basicHp + (_basicHp * 0.3f) + (_basicHp * _skill2 / 10f);
@@ -1942,6 +1933,7 @@ public class Player : BaseObject
                 if(_skill2 >= 3)
                 {
                     achivementCheck(acupuncturistskill2full, "acupuncturistskill2full");
+                    acupuncturistskill2full = true;
                 }
 
 
@@ -1954,10 +1946,12 @@ public class Player : BaseObject
                 if(_skill1 >= 3)
                 {
                     achivementCheck(spoonkillerskill1full, "spoonkillerskill1full");
+                    spoonkillerskill1full = true;
                 }
                 if(_skill2 >= 3)
                 {
                     achivementCheck(spoonkillerskill2full, "spoonkillerskill2full");
+                    spoonkillerskill2full = true;
                 }
 
                 _atk = (_basicAtk * 0.5f) + (_basicAtk * _skill2 / 10f);
@@ -1976,14 +1970,18 @@ public class Player : BaseObject
             case PlayerTitle.Rich:
                 _critical = _basicCritical + (_basicCritical * _skill1 / 10f);
                 _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
-
-                //죽인 몬스터 수 *  골드 획득 나중에 만들 것
+                _criticalProbability = _critical * 15f;
+                if(_criticalProbability >= 100)
+                {
+                    _criticalProbability = 100;
+                }
                 break;
             case PlayerTitle.Swell:
 
                 if(_skill1 >= 3)
                 {
                     achivementCheck(swellskill1full, "swellskill1full");
+                    swellskill1full = true;
                 }
 
 
@@ -1998,18 +1996,29 @@ public class Player : BaseObject
                 _charm = _basicCharm + (_basicCharm * 0.2f) + (_basicCharm * _skill1 / 10f);
 
                 _maxHp = 50f + (_hp * 10f);
+                _criticalProbability = _critical * 15f;
+                if (_criticalProbability >= 100)
+                {
+                    _criticalProbability = 100;
+                }
                 break;
             case PlayerTitle.Delivery:
                 
                 if(_skill1 >= 3)
                 {
-                    achivementCheck(deliveryskill1full, "deliverryskill1full");
+                    achivementCheck(deliveryskill1full, "deliveryskill1full");
+                    deliveryskill1full = true;
                 }
 
 
                 _critical = _basicCritical + (_basicCritical * _skill1 / 10f);
                 _speed = _basicSpeed + _basicSpeed;
                 _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill2 / 10f);
+                _criticalProbability = _critical * 15f;
+                if (_criticalProbability >= 100)
+                {
+                    _criticalProbability = 100;
+                }
 
                 //여유 생기면 만들기
                 if (_skill1 >= 3)
@@ -2022,7 +2031,6 @@ public class Player : BaseObject
                 
 
                 _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
-                //체력에대한 공식 성립되면 추가
                
                     StartCoroutine(HealingFactor());
 
@@ -2035,6 +2043,7 @@ public class Player : BaseObject
                 if(_skill2 >= 3)
                 {
                     achivementCheck(gamblerskill2, "gamblerskill2");
+                    gamblerskill2 = true;
                 }
                 //완료
                 break;
@@ -2049,12 +2058,22 @@ public class Player : BaseObject
                 _handicraft = _basicHandicraft + (_basicHandicraft * 0.2f) + (_basicHandicraft * _skill1 / 10f);
                 _charm = _basicCharm + (_basicCharm * 0.2f) + (_basicCharm * _skill1 / 10f);
 
-                _maxHp = 50f + (_hp * 10f);
+                _maxHp = 50f + (_hp * 10f); _criticalProbability = _critical * 15f;
+                if (_criticalProbability >= 100)
+                {
+                    _criticalProbability = 100;
+                }
                 break;
             case PlayerTitle.Orpheus:
                 StopCoroutine(MonsterAtkDown());
 
                 _atk = _basicAtk + (_basicAtk + _skill2 / 10f);
+                if(orpheusskill1full == false)
+                {
+                    orpheusskill1full = true;
+                    AchievementManager.instance.Unlock("orpheusskill1full");
+                }
+
                 StartCoroutine(MonsterAtkDown());
                 break;
             case PlayerTitle.DokeV:
@@ -2077,11 +2096,13 @@ public class Player : BaseObject
                 if (_skill1 == 3)
                 {
                     achivementCheck(magicalbladerhidden,"magicalbladerhidden");
+                    magicalbladerhidden = true;
                     _atk = _basicAtk + _basicAtk + (_basicAtk * 0.5f);
                 }
                 else if (_skill2 >= 3)
                 {
                     achivementCheck(magicalbladerhidden, "magicalbladerhidden");
+                    magicalbladerhidden = true;
                     _matk = _basicMatk + _basicMatk + (_basicMatk * 0.5f);
                 }
                 break;
@@ -2091,6 +2112,7 @@ public class Player : BaseObject
                 if(_skill2 >= 3)
                 {
                     achivementCheck(strongmanhidden, "strongmanhidden");
+                    strongmanhidden = true;
                 }
                 break;
             case PlayerTitle.Warrior:
@@ -2107,6 +2129,7 @@ public class Player : BaseObject
                 if (_skill2 >= 3)
                 {
                     achivementCheck(zhangfeihidden, "zhangfeihidden");
+                    zhangfeihidden = true;
                     m_viewDistance = 60f;
                 }
                 break;
@@ -2131,6 +2154,7 @@ public class Player : BaseObject
                 if (_skill3 >= 3)
                 {
                     achivementCheck(lubuhidden, "lubuhidden");
+                    lubuhidden = true;
                     _atk = (_basicAtk * 5f);
                 }
                 break;
@@ -2141,6 +2165,7 @@ public class Player : BaseObject
                 if (_skill1 >= 3)
                 {
                     achivementCheck(healthmagicianhidden, "healthmagicianhidden");
+                    healthmagicianhidden = true;
                     _matk = (_maxHp / 10f) + _basicMatk;
                     _atk = (_maxHp / 10f) + _basicAtk;
                    
@@ -2150,6 +2175,7 @@ public class Player : BaseObject
                 if (_skill1 >= 3 && _ingameHp >= _maxHp)
                 {
                     achivementCheck(pristhidden, "pristhidden");
+                    pristhidden = true;
                     _matk = _basicMatk * 3f;
                 }
                 else if(_skill1 >= 3 && _ingameHp < _maxHp)
@@ -2162,7 +2188,8 @@ public class Player : BaseObject
                 if (_skill2 >= 3)
                 {
                     achivementCheck(warlcokhidden, "warlcokhidden");
-                    _spellCastProbability = 70;
+                    warlcokhidden = true;
+                    _spellCastProbability = 70 + _weapon._spellProbability;
                 }
                 break;
             case PlayerTitle.Salamander:
@@ -2170,6 +2197,7 @@ public class Player : BaseObject
                 if (_skill2 >= 3)
                 {
                     achivementCheck(salamanderhidden, "salamanderhidden");
+                    salamanderhidden = true;
                     StartCoroutine(Immolation());
                 }
                 break;
@@ -2178,6 +2206,7 @@ public class Player : BaseObject
                 if (_skill1 >= 3)
                 {
                     achivementCheck(zeushidden, "zeushidden");
+                    zeushidden = true;
                     StartCoroutine(Thunder());
                 }
                 break;
@@ -2192,6 +2221,7 @@ public class Player : BaseObject
                 if (_skill2 >= 3)
                 {
                     achivementCheck(cookhidden, "cookhidden");
+                    cookhidden = true;
                     _atk = _basicAtk * 2f;
                 }
                 break;
@@ -2207,6 +2237,7 @@ public class Player : BaseObject
                 if (_skill1 >= 3)
                 {
                     achivementCheck(servanthidden, "servanthidden");
+                    servanthidden = true;
                     _matk = (_maxHp / 10f) + _basicMatk;
                     _atk = (_maxHp / 10f) + _basicAtk;
                 }
@@ -2218,7 +2249,8 @@ public class Player : BaseObject
                 if (_skill2 >= 3)
                 {
                     achivementCheck(versatilehidden, "versatilehidden");
-                    _spellCastProbability = 70;
+                    versatilehidden = true;
+                    _spellCastProbability = 70 + _weapon._spellProbability;
                 }
                 break;
             case PlayerTitle.Shieldbearer:
@@ -2231,6 +2263,7 @@ public class Player : BaseObject
                 if(_skill2 >= 3)
                 {
                     achivementCheck(helenhidden, "helenhidden");
+                    helenhidden = true;
                 }
                 break;
             case PlayerTitle.Slicker:
@@ -2246,6 +2279,7 @@ public class Player : BaseObject
                 if (_skill1 >= 3)
                 {
                     achivementCheck(repairmanhidden, "repairmanhidden");
+                    repairmanhidden = true;
                 }
                 break;
             case PlayerTitle.Dosa:
@@ -2318,6 +2352,7 @@ public class Player : BaseObject
                 if (_comboMeteor.Count >= 3 && _comboPristHeal.Exists(x => x < _meteorProbablility) == false && salamandermeteor3 == false)
                 {
                     achivementCheck(salamandermeteor3, "salamandermeteor3");
+                    salamandermeteor3 = true;
                 }
                 if (_comboPristHeal.Exists(x => x > _meteorProbablility) == true)
                 {
@@ -3024,7 +3059,7 @@ public class Player : BaseObject
                 if(_skill2 >= 3)
                 {
 
-                    obj[i].GetComponent<Monster>()._ingameHp -= _atk/3;
+                    obj[i].GetComponent<Monster>()._ingameHp -= _atk;
                 }
 
             }
@@ -3128,18 +3163,23 @@ public class Player : BaseObject
     {
         DataSave();
         string data = ObjectToJason(_data);
-        string path = Path.Combine(Application.dataPath + "/04.Json/PlayerData.json");
-        File.WriteAllText(path, data);
+
+        FileStream fs = new FileStream(Application.persistentDataPath + "/" + "PlayerData.json", FileMode.Create, FileAccess.Write);
+        string path = Path.Combine(Application.dataPath + "Json/PlayerData.json");
+        fs.Close();
+        Debug.Log("세이브");
+        File.WriteAllText(fs.Name, data);
 
     }
 
     public void Load()
     {
-        string path = Path.Combine(Application.dataPath + "/04.Json/PlayerData.json");
-        string getJson = File.ReadAllText(path);
+        string path = Application.persistentDataPath + "/"+ "PlayerData.json";
+        var getJson = File.ReadAllText(path);
 
         PlayerData json = JsonToObject<PlayerData>(getJson);
         InsertData(json);
+        Debug.Log("로드");
     }
     public void InsertData(PlayerData data)
     {

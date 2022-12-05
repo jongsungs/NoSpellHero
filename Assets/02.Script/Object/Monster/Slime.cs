@@ -6,7 +6,7 @@ using UnityEngine.AI;
 public class Slime : Monster
 {
 
-    MeshRenderer _material;
+    public MeshRenderer _material;
     MeshRenderer _tempMaterial;
 
     private void Start()
@@ -15,12 +15,10 @@ public class Slime : Monster
 
         _monster = MonsterKind.Slime;
         
-        _material = GetComponent<MeshRenderer>();
         _tempMaterial = _material;
         FadeIn();
         
         _state = State.Walk;
-        Debug.Log("슬라임 시작");
     }
 
     private void Update()
@@ -105,7 +103,7 @@ public class Slime : Monster
         base.CCrecovery();
         _material.material.color = Color.green;
        
-        Debug.Log("회복");
+      
     }
 
     private void OnTriggerEnter(Collider other)
@@ -120,7 +118,6 @@ public class Slime : Monster
                 if (_30 == 0)
                 {
                     Freezing();
-                    Debug.Log("동장군 등장");
 
                 }
 
@@ -134,7 +131,12 @@ public class Slime : Monster
                     if (_category == MonsterCategory.Common)
                     {
 
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -144,7 +146,12 @@ public class Slime : Monster
                     }
                     else if (_category == MonsterCategory.Boss)
                     {
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -158,7 +165,12 @@ public class Slime : Monster
                 {
                     if (_category == MonsterCategory.Common)
                     {
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -167,7 +179,12 @@ public class Slime : Monster
                     else if (_category == MonsterCategory.Boss)
                     {
 
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -193,7 +210,12 @@ public class Slime : Monster
                     if (_category == MonsterCategory.Common)
                     {
 
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -203,7 +225,12 @@ public class Slime : Monster
                     }
                     else if (_category == MonsterCategory.Boss)
                     {
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -217,7 +244,13 @@ public class Slime : Monster
                 {
                     if (_category == MonsterCategory.Common)
                     {
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -226,7 +259,12 @@ public class Slime : Monster
                     else if (_category == MonsterCategory.Boss)
                     {
 
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -239,6 +277,7 @@ public class Slime : Monster
                 if (rand2 == 0 && _category == MonsterCategory.Common)
                 {
 
+                    SoundManager.Instance.EffectPlay(SoundManager.Instance._fasniftion);
                     _fascination.SetActive(true);
                     m_targetMask = 64;
                     this.gameObject.layer = 3;
@@ -246,6 +285,7 @@ public class Slime : Monster
                     if (Player.Instance.druidfirstskill == false)
                     {
                         Player.Instance.druidfirstskill = true;
+                        AchievementManager.instance.Unlock("druidfirstskill");
                     }
                     Player.Instance._druidScore++;
                     AchievementManager.instance.AddAchievementProgress("druidskill100", Player.Instance._druidScore);
@@ -271,7 +311,12 @@ public class Slime : Monster
                     if (_category == MonsterCategory.Common)
                     {
 
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -281,7 +326,12 @@ public class Slime : Monster
                     }
                     else if (_category == MonsterCategory.Boss)
                     {
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -295,7 +345,12 @@ public class Slime : Monster
                 {
                     if (_category == MonsterCategory.Common)
                     {
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -304,7 +359,12 @@ public class Slime : Monster
                     else if (_category == MonsterCategory.Boss)
                     {
 
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -317,6 +377,11 @@ public class Slime : Monster
                 if (rand2 == 0)
                 {
                     Stun();
+                    if (Player.Instance.qrfhidden == false)
+                    {
+                        Player.Instance.qrfhidden = true;
+                        AchievementManager.instance.Unlock("qrfhidden");
+                    }
                 }
                 StartCoroutine(CoHit());
             }
@@ -332,6 +397,10 @@ public class Slime : Monster
                     {
 
                         int damage = 999999;
+                        if (damage <= 0f)
+                        {
+                            damage = 0;
+                        }
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = redgrad;
 
@@ -345,7 +414,12 @@ public class Slime : Monster
                     }
                     else if (_category == MonsterCategory.Boss)
                     {
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -358,7 +432,12 @@ public class Slime : Monster
                 {
                     if (_category == MonsterCategory.Common)
                     {
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -367,7 +446,12 @@ public class Slime : Monster
                     else if (_category == MonsterCategory.Boss)
                     {
 
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -401,7 +485,12 @@ public class Slime : Monster
                     if (_category == MonsterCategory.Common)
                     {
 
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -411,7 +500,12 @@ public class Slime : Monster
                     }
                     else if (_category == MonsterCategory.Boss)
                     {
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -425,7 +519,12 @@ public class Slime : Monster
                 {
                     if (_category == MonsterCategory.Common)
                     {
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -434,7 +533,12 @@ public class Slime : Monster
                     else if (_category == MonsterCategory.Boss)
                     {
 
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -446,7 +550,7 @@ public class Slime : Monster
 
                 if (rand < Player.Instance._dokevSkillProbability)
                 {
-                    int rand2 = Random.Range(0, 9);
+                    int rand2 = Random.Range(0, 7);
                     float stat;
                     if (rand == 0)
                     {
@@ -498,26 +602,21 @@ public class Slime : Monster
                         _critical = stat;
                         Player.Instance._critical += stat;
                     }
-                    else if (rand == 7)
-                    {
-                        stat = _basicHandicraft - (_basicHandicraft * 0.1f);
 
-                        _critical = stat;
-                        Player.Instance._critical += stat;
-                    }
-                    else if (rand == 8)
-                    {
-                        stat = _basicCharm - (_basicCharm * 0.1f);
-
-                        _charm = stat;
-                        Player.Instance._charm += stat;
-                    }
 
                     if (Player.Instance.dokevfirstskill == false)
                     {
                         Player.Instance.dokevfirstskill = true;
                         AchievementManager.instance.Unlock("dokevfirstskill");
                         Player.Instance.Save();
+                    }
+
+                    Player.Instance._ingameHp = 200f + (Player.Instance._hp * 10f);
+                    Player.Instance._maxHp = 200f + (Player.Instance._hp * 10f);
+                    Player.Instance._criticalProbability = Player.Instance._critical * 15f;
+                    if (Player.Instance._criticalProbability >= 100)
+                    {
+                        Player.Instance._criticalProbability = 100;
                     }
 
                 }
@@ -541,7 +640,12 @@ public class Slime : Monster
 
                     if (rand < Player.Instance._criticalProbability)
                     {
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -552,11 +656,15 @@ public class Slime : Monster
                     }
                     else if (rand >= Player.Instance._criticalProbability)
                     {
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
-                        GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
 
 
                     }
@@ -569,7 +677,12 @@ public class Slime : Monster
 
                     if (rand < Player.Instance._criticalProbability)
                     {
-                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
 
 
@@ -581,7 +694,12 @@ public class Slime : Monster
                     }
                     else if (rand >= Player.Instance._criticalProbability)
                     {
-                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5) - (_def * 3);
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -594,7 +712,93 @@ public class Slime : Monster
                 StartCoroutine(CoHit());
 
             }
-           
+            else if (_onHit == false && other.transform.root.GetComponent<Decoy>() != null)
+            {
+                if (other.transform.root.GetComponent<Decoy>()._isAttack == true)
+                {
+
+                    other.transform.root.GetComponent<Decoy>()._isAttack = false;
+
+                    if (_category == MonsterCategory.Common)
+                    {
+                        int rand = Random.Range(0, 100);
+
+
+
+                        if (rand < Player.Instance._criticalProbability)
+                        {
+                            var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                            if (damage <= 0f)
+                            {
+                                damage = 0f;
+                            }
+                            damage = Mathf.Round(damage);
+                            _ingameHp -= damage;
+
+
+                            _floatingTextSpawner.AnimateColorGradient = redgrad;
+
+
+                            _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                        }
+                        else if (rand >= Player.Instance._criticalProbability)
+                        {
+                            var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                            if (damage <= 0f)
+                            {
+                                damage = 0f;
+                            }
+                            damage = Mathf.Round(damage);
+                            _ingameHp -= damage;
+                            _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                            _mmfPlayer.PlayFeedbacks(transform.position, damage);
+
+
+                        }
+                    }
+                    else if (_category == MonsterCategory.Boss)
+                    {
+                        int rand = Random.Range(0, 100);
+
+
+
+                        if (rand < Player.Instance._criticalProbability)
+                        {
+                            var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                            if (damage <= 0f)
+                            {
+                                damage = 0f;
+                            }
+                            damage = Mathf.Round(damage);
+                            _ingameHp -= damage;
+
+                            _floatingTextSpawner.AnimateColorGradient = redgrad;
+
+
+                            _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                            GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                        }
+                        else if (rand >= Player.Instance._criticalProbability)
+                        {
+                            var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                            if (damage <= 0f)
+                            {
+                                damage = 0f;
+                            }
+                            damage = Mathf.Round(damage);
+                            _ingameHp -= damage;
+                            _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                            _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                            GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+
+
+                        }
+                    }
+                    StartCoroutine(CoHit());
+                }
+
+            }
+
 
 
         }
@@ -612,7 +816,12 @@ public class Slime : Monster
                 if (_category == MonsterCategory.Common)
                 {
 
-                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 4f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
 
 
@@ -622,7 +831,12 @@ public class Slime : Monster
                 }
                 else if (_category == MonsterCategory.Boss)
                 {
-                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 4f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
 
 
@@ -636,7 +850,12 @@ public class Slime : Monster
             {
                 if (_category == MonsterCategory.Common)
                 {
-                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 4f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
                     _floatingTextSpawner.AnimateColorGradient = whitegrad;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -645,7 +864,12 @@ public class Slime : Monster
                 else if (_category == MonsterCategory.Boss)
                 {
 
-                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 4f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
                     _floatingTextSpawner.AnimateColorGradient = whitegrad;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -676,7 +900,12 @@ public class Slime : Monster
                 if (_category == MonsterCategory.Common)
                 {
 
-                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
 
 
@@ -686,7 +915,12 @@ public class Slime : Monster
                 }
                 else if (_category == MonsterCategory.Boss)
                 {
-                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
 
 
@@ -700,7 +934,12 @@ public class Slime : Monster
             {
                 if (_category == MonsterCategory.Common)
                 {
-                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
                     _floatingTextSpawner.AnimateColorGradient = whitegrad;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -709,7 +948,12 @@ public class Slime : Monster
                 else if (_category == MonsterCategory.Boss)
                 {
 
-                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
                     _floatingTextSpawner.AnimateColorGradient = whitegrad;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -738,7 +982,12 @@ public class Slime : Monster
                 if (_category == MonsterCategory.Common)
                 {
 
-                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
 
 
@@ -748,7 +997,12 @@ public class Slime : Monster
                 }
                 else if (_category == MonsterCategory.Boss)
                 {
-                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
 
 
@@ -762,7 +1016,12 @@ public class Slime : Monster
             {
                 if (_category == MonsterCategory.Common)
                 {
-                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
                     _floatingTextSpawner.AnimateColorGradient = whitegrad;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -771,7 +1030,12 @@ public class Slime : Monster
                 else if (_category == MonsterCategory.Boss)
                 {
 
-                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
                     _floatingTextSpawner.AnimateColorGradient = whitegrad;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -794,7 +1058,12 @@ public class Slime : Monster
                 if (_category == MonsterCategory.Common)
                 {
 
-                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 10f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
 
 
@@ -804,7 +1073,12 @@ public class Slime : Monster
                 }
                 else if (_category == MonsterCategory.Boss)
                 {
-                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 10f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
 
 
@@ -818,7 +1092,12 @@ public class Slime : Monster
             {
                 if (_category == MonsterCategory.Common)
                 {
-                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
                     _floatingTextSpawner.AnimateColorGradient = whitegrad;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -827,8 +1106,14 @@ public class Slime : Monster
                 else if (_category == MonsterCategory.Boss)
                 {
 
-                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
+
                     _floatingTextSpawner.AnimateColorGradient = whitegrad;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
                     GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
@@ -847,13 +1132,14 @@ public class Slime : Monster
                 {
                     damage = 0f;
                 }
+                damage = Mathf.Round(damage);
                 _ingameHp -= damage;
                 _mmfPlayer.PlayFeedbacks(transform.position, damage);
 
-                StartCoroutine(CoHit());
+
                 other.GetComponent<SkillBase>().SkillRelease();
             }
-            
+            StartCoroutine(CoHit());
         }
 
 
@@ -875,7 +1161,12 @@ public class Slime : Monster
                 if (_category == MonsterCategory.Common)
                 {
 
-                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 8f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
 
 
@@ -885,7 +1176,12 @@ public class Slime : Monster
                 }
                 else if (_category == MonsterCategory.Boss)
                 {
-                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5)) * Player.Instance._criticalDamage - (_def * 3);
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 8f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
 
 
@@ -899,7 +1195,12 @@ public class Slime : Monster
             {
                 if (_category == MonsterCategory.Common)
                 {
-                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 8f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
                     _floatingTextSpawner.AnimateColorGradient = whitegrad;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -908,7 +1209,12 @@ public class Slime : Monster
                 else if (_category == MonsterCategory.Boss)
                 {
 
-                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5) - (_def * 3);
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 8f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
                     _ingameHp -= damage;
                     _floatingTextSpawner.AnimateColorGradient = whitegrad;
                     _mmfPlayer.PlayFeedbacks(transform.position, damage);
@@ -925,6 +1231,7 @@ public class Slime : Monster
             }
         }
     }
+
     public override void Walk()
     {
         ChangeState(State.Walk);

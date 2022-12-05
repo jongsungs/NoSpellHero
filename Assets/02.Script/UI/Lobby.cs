@@ -65,6 +65,7 @@ public class Lobby : MonoBehaviour
         _alarmPopUp.SetActive(false);
         _settingPopUp.SetActive(false);
         _resetCheckPopUp.SetActive(false);
+        SoundManager.Instance.BGMPlay(SoundManager.Instance._lobbyBgm);
         for (int i = 0; i < _player._atk; ++i)
         {
             _listStatSpace[0].transform.GetChild(i).gameObject.SetActive(true);
@@ -113,8 +114,8 @@ public class Lobby : MonoBehaviour
         #region PlayerTitle
         if (_OnTitle == false)
         {
-            
-            if (_player._atk == 5 && _player._matk == 5 && _player._hp == 5)
+
+            if (_player._atk == 5 && _player._matk == 5 && _player._hp == 5) 
             {
                 _OnTitle = true;
                 _player._playerTitle = Player.PlayerTitle.MagicalBlader;
@@ -1471,13 +1472,13 @@ public class Lobby : MonoBehaviour
     }
     public void EnterAchivementPopUp()
     {
-        _achivementPopUp.ToggleWindow();
+        AchievenmentListIngame.instance.ToggleWindow();
 
         SoundManager.Instance.EffectPlay(SoundManager.Instance._pop2);
     }
     public void ExitAchivemntPopUp()
     {
-        _achivementPopUp.ToggleWindow();
+        AchievenmentListIngame.instance.ToggleWindow();
         SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
     }
     public void EnterSettingPopUp()
@@ -2135,6 +2136,7 @@ public class Lobby : MonoBehaviour
             }
 
             SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
+            Player.Instance._gold -= _weaponCost;
         }
         else if(_player._gold <_weaponCost)
         {
@@ -2219,6 +2221,7 @@ public class Lobby : MonoBehaviour
                 Player.Instance._buynormalShoes = true;
             }
 
+            Player.Instance._gold -= _closetCost;
             SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
 
         }
@@ -2311,8 +2314,11 @@ public class Lobby : MonoBehaviour
     public void StartGame()
     {
         LoadSceneManager.LoadScene("GamePlay");
-        GameFlowManager.Instance._isLobby = true;
 
+    }
+    public void ExitGame()
+    {
+        Application.Quit();
     }
     public void AllReSet()
     {

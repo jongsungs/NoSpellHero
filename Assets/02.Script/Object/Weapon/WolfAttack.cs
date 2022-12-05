@@ -4,5 +4,10 @@ using UnityEngine;
 
 public class WolfAttack : Weapon
 {
-    
+    private void Start()
+    {
+        _damage = transform.root.GetComponent<Monster>()._atk * 3f;
+        _basicDamage = _damage;
+        _spellProbability = 20;
+    }
 }

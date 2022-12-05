@@ -27,6 +27,7 @@ public class Monster : BaseObject
         Ork,
         Dragon,
         None,
+        WolfKing,
 
     }
     
@@ -105,7 +106,6 @@ public class Monster : BaseObject
         if (_fascination != null)
             _fascination.SetActive(false);
         _attackOnce = true;
-        GamePlay._eventHandler += MonsterRelease;
         redkey[0].color = _red;
         redkey[0].time = 0;
         redkey[1].color = _white;
@@ -127,8 +127,6 @@ public class Monster : BaseObject
     }
     private void OnEnable()
     {
-        _ingameHp = 50 + (_hp * 10);
-        _maxHp = 50 + (_hp * 10);
         _basicHp = _hp;
         _maxHp = _basicHp;
         _basicAtk = _atk;
@@ -139,11 +137,36 @@ public class Monster : BaseObject
         _basicCritical = _critical;
         _basicHandicraft = _handicraft;
         _basicCharm = _charm;
+        if(_category == MonsterCategory.Common)
+        {
+            _ingameHp = 50 + (_hp * 10);
+            _maxHp = 50 + (_hp * 10);
+        }
+        else if(_category == MonsterCategory.Boss)
+        {
+            _ingameHp = 200 + (_hp * 10);
+            _maxHp = 200 + (_hp * 10);
+        }
+        CCrecovery();
         _isDead = false;
+        if(_category != MonsterCategory.Boss)
+        GamePlay._eventHandler += MonsterRelease;
+        if(_category == MonsterCategory.Boss)
+        {
+            GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+        }
+
+        if (_monster == MonsterKind.Slime)
+            _onlySlime.material.color = _slimeColor;
+        else if(_monster != MonsterKind.Slime)
+        {
+            for(int i = 0; i < _listMaterial.Count; ++i)
+            {
+                _listMaterial[i].material.color = Color.white;
+            }
+        }
 
         StartCoroutine(CoFindEnemy());
-        Debug.Log("몬스터 시작");
-
     }
 
     private void LateUpdate()
@@ -203,6 +226,11 @@ public class Monster : BaseObject
     {
         if(_monsterAttack != null)
         _monsterAttack._isOnce = true;
+        if(_monster != MonsterKind.CaptainSkull)
+        {
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._monsterAttack);
+
+        }
         _isAttack = true;
     }
     public virtual void AttackOff()
@@ -217,7 +245,6 @@ public class Monster : BaseObject
     {
         CCrecovery();
         _CC = CrowdControl.Freezing;
-        Debug.Log("얼었다");
         _animator.speed = 0f;
         _navimeshAgent.speed = 0f;
         _ccDurationTime += 3f;
@@ -243,7 +270,6 @@ public class Monster : BaseObject
         CCrecovery();
         _CC = CrowdControl.Burn;
         _ccDurationTime += 3f;
-        Debug.Log("으이구 이 화상아");
         _atk = _basicAtk / 2;
         _ccOn = true;
         _burn.SetActive(true);
@@ -259,7 +285,6 @@ public class Monster : BaseObject
         _navimeshAgent.speed = 0f;
         _ccOn = true;
         _sturn.SetActive(true);
-        Debug.Log("스턴");
     }
     public virtual void CCrecovery()
     {
@@ -284,7 +309,7 @@ public class Monster : BaseObject
 
     public virtual void MonsterRelease()
     {
-       
+        _ingameHp = 0f;
     }
 
     // 투명 -> 불투명
@@ -369,7 +394,6 @@ public class Monster : BaseObject
         {
             yield return new WaitForSeconds(1f);
             FindVisibleTargets();
-            Debug.Log("아직 안끝났다.");
         }
 
     }
@@ -420,7 +444,8 @@ public class Monster : BaseObject
 
     public IEnumerator CoHit()
     {
-        Debug.Log("깜빡");
+
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._monsterhit);
         if(_monster != MonsterKind.Slime)
         {
 

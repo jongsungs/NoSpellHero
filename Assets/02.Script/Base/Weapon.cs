@@ -14,11 +14,7 @@ public class Weapon : MonoBehaviour
     public bool _isOnce = true;
 
 
-    private void Awake()
-    {
-        
-        _basicDamage = _damage;
-    }
+    
 
 
 

@@ -472,7 +472,10 @@ public class StagePlayer : MonoBehaviour
     {
         Player.Instance.AttackOn();
     }
-
+    public void Attack2nd()
+    {
+        Player.Instance.Attack2nd();
+    }
     public void AttackOff()
     {
         Player.Instance.AttackOff();
@@ -487,19 +490,20 @@ public class StagePlayer : MonoBehaviour
         if (other.CompareTag("Bone"))
         {
             var damage = other.GetComponent<SkillBase>()._skillDamage - (Player.Instance._def * 3f);
-            if(damage <=0)
+            if (damage <= 0)
             {
                 damage = 0f;
             }
+            damage = Mathf.Round(damage);
             Player.Instance._ingameHp -= damage;
             GamePlay.Instance._playerHp.UpdateBar(Player.Instance._ingameHp, 0, Player.Instance._maxHp);
             _mmfPlayer.PlayFeedbacks(transform.position, damage);
 
-
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._playerHit);
             other.GetComponent<SkillBase>().SkillRelease();
             Player.Instance._hitCount++;
         }
-        else if (other.CompareTag("Weapon") && other.transform.root.GetComponent<Monster>() != null)
+        else if (other.CompareTag("Weapon") && other.transform.root.GetComponent<Monster>() != null && other.transform.root.gameObject.layer == 6)
         {
             if( other.GetComponent<Weapon>()._isOnce == true)
             {
@@ -510,9 +514,11 @@ public class StagePlayer : MonoBehaviour
                 {
                     damage = 0f;
                 }
+                damage = Mathf.Round(damage);
                 Player.Instance._ingameHp -= damage;
                 GamePlay.Instance._playerHp.UpdateBar(Player.Instance._ingameHp, 0, Player.Instance._maxHp);
                 _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                SoundManager.Instance.EffectPlay(SoundManager.Instance._playerHit);
                 Player.Instance._hitCount++;
             }
 
@@ -520,12 +526,14 @@ public class StagePlayer : MonoBehaviour
         else if (other.CompareTag("Enemy") && other.GetComponent<Weapon>() == null && other.GetComponent<Monster>()._isAttack == true && other.GetComponent<Monster>()._monster != Monster.MonsterKind.CaptainSkull)
         {
             other.GetComponent<Monster>()._isAttack = false;
-            var damage = (other.GetComponent<Monster>()._atk*5) - (Player.Instance._def * 3f);
+            var damage = (other.GetComponent<Monster>()._atk*4) - (Player.Instance._def * 3f);
             if (damage <= 0)
             {
                 damage = 0f;
             }
+            damage = Mathf.Round(damage);
             Player.Instance._ingameHp -= damage;
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._playerHit);
             GamePlay.Instance._playerHp.UpdateBar(Player.Instance._ingameHp, 0, Player.Instance._maxHp);
             _mmfPlayer.PlayFeedbacks(transform.position, damage);
             Player.Instance._hitCount++;

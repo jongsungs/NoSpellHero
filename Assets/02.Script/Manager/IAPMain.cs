@@ -16,11 +16,11 @@ public class IAPMain : MonoBehaviour
     {
         this._btnRemoveAd.onPurchaseComplete.AddListener(new UnityAction<Product>((product) =>
         {
-            Debug.LogFormat("구매 성공" , product.transactionID);
+            //Debug.LogFormat("구매 성공" , product.transactionID);
         }));
         this._btnRemoveAd.onPurchaseFailed.AddListener(new UnityAction<Product, PurchaseFailureReason>((product, reason) =>
         {
-            Debug.LogFormat("구매 실패: ", product.transactionID, reason);
+            //Debug.LogFormat("구매 실패: ", product.transactionID, reason);
         }));
         
 

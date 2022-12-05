@@ -14,7 +14,7 @@ public class Decoy : Monster
 
     private IObjectPool<Monster> _decoypool;
 
-    private void OnEnable()
+    private  void OnEnable()
     {
 
          _myWeapon = Player.Instance._weapon;
@@ -23,7 +23,7 @@ public class Decoy : Monster
         _matk = Player.Instance._matk;
         _atkSpeed = Player.Instance._atkSpeed;
         _def = Player.Instance._def;
-        _speed = Player.Instance._speed + 0.5f;
+        _speed = Player.Instance._speed + 1f ;
         _critical = Player.Instance._critical;
         _handicraft = Player.Instance._handicraft;
         _charm = Player.Instance._charm;
@@ -39,10 +39,10 @@ public class Decoy : Monster
         _basicCharm = _charm;
 
 
-        _ingameHp = 50 + (_hp * 5);
-        _maxHp = 50 + (_hp * 5);
+        GamePlay._eventHandler += MonsterRelease;
+        _ingameHp = 25 + (_hp * 5);
+        _maxHp = 25 + (_hp * 5);
         StartCoroutine(CoFindEnemy());
-        Debug.Log("디코이");
     }
 
     private void Update()
@@ -64,8 +64,6 @@ public class Decoy : Monster
             _navimeshAgent.speed = _speed;
 
         }
-        DrawView();  // Scene뷰에 시야범위 그리기
-                     // FindVisibleTargets(); // Enemy인지 장애물인지 판별
 
     }
 
@@ -109,9 +107,9 @@ public class Decoy : Monster
                 Player.Instance.Save();
             }
 
-            if (spell < Player.Instance._spellCastProbability + Player.Instance._weapon._spellProbability)
+            if (spell < Player.Instance._spellCastProbability)
             {
-                Spell(Player.Instance._iceBallProbability, Player.Instance._fireBallProbability, Player.Instance._chainLightProbability);
+                Spell(Player.Instance._iceBallProbability, Player.Instance._fireBallProbability);
 
             }
 
@@ -159,38 +157,92 @@ public class Decoy : Monster
 
     public override void MonsterRelease()
     {
-        _hp = 0f;
+        _ingameHp = 0f;
     }
-
-    public void Spell(float ice, float fire, float light)
+    private void OnTriggerEnter(Collider other)
     {
-        float rand = UnityEngine.Random.Range(0, (ice + fire + light));
 
+        if (other.CompareTag("Bone"))
+        {
+            var damage = other.GetComponent<SkillBase>()._skillDamage - (_def * 3f);
+            if (damage <= 0)
+            {
+                damage = 0f;
+            }
+            _ingameHp -= damage;
+            _mmfPlayer.PlayFeedbacks(transform.position, damage);
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._playerHit);
+            if(other.GetComponent<SkillBase>() != null)
+            other.GetComponent<SkillBase>().SkillRelease();
+        }
+        else if (other.CompareTag("Weapon") && other.transform.root.GetComponent<Monster>() != null&& other.transform.root.gameObject.layer == 6)
+        {
+            if (other.GetComponent<Weapon>()._isOnce == true)
+            {
 
+                other.GetComponent<Weapon>()._isOnce = false;
+                var damage = other.GetComponent<Weapon>()._damage - (_def * 3f);
+                if (damage <= 0)
+                {
+                    damage = 0f;
+                }
+                _ingameHp -= damage;
+                _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                SoundManager.Instance.EffectPlay(SoundManager.Instance._playerHit);
+            }
+
+        }
+        else if (other.CompareTag("Enemy") && other.GetComponent<Weapon>() == null && other.GetComponent<Monster>()._isAttack == true && other.GetComponent<Monster>()._monster != Monster.MonsterKind.CaptainSkull)
+        {
+            other.GetComponent<Monster>()._isAttack = false;
+            var damage = (other.GetComponent<Monster>()._atk * 5) - (_def * 3f);
+            if (damage <= 0)
+            {
+                damage = 0f;
+            }
+            _ingameHp -= damage;
+            _mmfPlayer.PlayFeedbacks(transform.position, damage);
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._playerHit);
+            Player.Instance._hitCount++;
+        }
+
+    }
+    public void Spell(float ice, float fire)
+    {
+
+   
+        float rand = UnityEngine.Random.Range(0, (ice + fire));
+     
 
         if (rand <= ice)
         {
-            //아이스볼
-            Debug.Log("아이스볼");
+            IceBall();
         }
         else if (rand <= ice + fire && rand > ice)
         {
+           
 
-
-
-
-
-
-            //파이어볼
-            Debug.Log("불공");
+            FireBall();
         }
-        else if (rand >= ice + fire && rand <= ice + fire + light)
-        {
-            Debug.Log("체라");
+       
 
-        }
+       
+
+    }
 
 
+
+    
+    public void IceBall()
+    {
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._iceball);
+        GamePlay.Instance._iceballPool.Get();
+    }
+ 
+    public void FireBall()
+    {
+        GamePlay.Instance._fireBallPool.Get();
+        SoundManager.Instance.EffectPlay(SoundManager.Instance._fireball);
     }
 }
 

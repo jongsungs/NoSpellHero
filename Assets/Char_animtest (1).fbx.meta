@@ -225,8 +225,15 @@ ModelImporter:
         floatParameter: 0
         intParameter: 0
         messageOptions: 0
-      - time: 0.4739336
+      - time: 0.5520586
         functionName: AttackOff
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.70813406
+        functionName: Attack2nd
         data: 
         objectReferenceParameter: {instanceID: 0}
         floatParameter: 0

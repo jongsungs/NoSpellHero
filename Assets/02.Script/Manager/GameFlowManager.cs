@@ -27,25 +27,6 @@ public class GameFlowManager : MonoBehaviour
 
     private void Update()
     {
-        if (_isLobby)
-        {
-            if (Input.GetKeyDown(KeyCode.Z))
-            {
-                _fade.FadeOut(2f);
-            }
-
-            if (Input.GetKeyDown(KeyCode.X))
-            {
-                _fade.FadeIn(2f);
-            }
-            if (Input.GetKeyDown(KeyCode.C))
-            {
-                LoadSceneManager.LoadScene("GamePlay");
-                _isLobby = false;
-            }
-
-        }
-
     }
 
    

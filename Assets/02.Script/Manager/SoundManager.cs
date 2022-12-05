@@ -46,6 +46,9 @@ public class SoundManager : MonoBehaviour
     public AudioClip _decline;
     public AudioClip _blackHole;
     public AudioClip _result;
+    public AudioClip _monsterAttack;
+    public AudioClip _lobbyBgm;
+    public AudioClip _gamePlayBgm;
 
 
     private void Awake()

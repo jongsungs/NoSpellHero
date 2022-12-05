@@ -34,4 +34,11 @@ public class Bone : SkillBase
         }
     }
 
+    private void OnBecameInvisible()
+    {
+        _skillPool.Release(this);
+    }
+
+
+
 }

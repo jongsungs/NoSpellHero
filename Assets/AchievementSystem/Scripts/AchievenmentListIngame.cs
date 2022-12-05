@@ -14,15 +14,22 @@ public class AchievenmentListIngame : MonoBehaviour
     [HideInInspector] public Text CompleteText;
     [HideInInspector] public Scrollbar Scrollbar;
 
-    private bool MenuOpen = false;
+    public bool MenuOpen = false;
     [Tooltip("Key used to open UI menu. Set to \"None\" to prevent menu from opening with any key press")]
     public KeyCode OpenMenuKey; //Key to open in-game menu
-
+    public static AchievenmentListIngame instance = null; //Singleton Instance
     /// <summary>
     /// Adds all achievements to the UI based on a filter
     /// </summary>
     /// <param name="Filter">Filter to use (All, Achieved or Unachieved)</param>
-    private void AddAchievements(string Filter)
+    void Awake()
+    {
+        if (instance == null)
+        {
+            instance = this;
+        }
+    }
+private void AddAchievements(string Filter)
     {  
         foreach (Transform child in scrollContent.transform)
         {

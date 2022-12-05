@@ -21,7 +21,6 @@ public class ButtonClick : MonoBehaviour,IPointerDownHandler,IPointerUpHandler
 
         
 
-        Debug.Log("눌렀다");
     }
 
     public void OnPointerUp(PointerEventData eventData)

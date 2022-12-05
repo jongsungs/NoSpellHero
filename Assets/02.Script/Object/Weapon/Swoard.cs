@@ -6,12 +6,12 @@ public class Swoard : Weapon
 {
     private void Start()
     {
-        _damage = 1f;
-        //_spellCastProbability = 0.3f;
-
+        _damage = 10f;
+        _basicDamage = _damage;
+        _spellProbability = 5;
     }
 
-   
+
 
 
 
