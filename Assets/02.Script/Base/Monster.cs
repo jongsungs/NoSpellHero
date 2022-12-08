@@ -366,7 +366,7 @@ public class Monster : BaseObject
                     {
                         _speed = 0f;
                     }
-                    else if (_monster == MonsterKind.CaptainSkull && _category == MonsterCategory.Boss && _attackStack >= 500)
+                    else if (_monster == MonsterKind.CaptainSkull && _category == MonsterCategory.Boss && _attackStack >= 5)
                     {
                         ChangeState(State.Attack2);
 
