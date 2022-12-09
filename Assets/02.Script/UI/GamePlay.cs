@@ -189,7 +189,43 @@ public class GamePlay : MonoBehaviour
 
         
     }
-  
+
+
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Alpha1))
+        {
+            _slimePool.Get();
+        }
+        if(Input.GetKeyDown(KeyCode.Alpha2))
+        {
+            _wolfpool.Get();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            _skeletonPool.Get();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha4))
+        {
+            _captainSkullNormalPool.Get();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha5))
+        {
+            _captainSkullPool.Get();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha6))
+        {
+            _wolfkingPool.Get();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha7))
+        {
+            _wolfkingNormalPool.Get();
+        }
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            _meteorEffectPool.Get();
+        }
+    }
 
     private Monster CreatSlime()
     {
@@ -489,7 +525,7 @@ public class GamePlay : MonoBehaviour
     {
 
         meteor.gameObject.SetActive(true);
-        meteor.transform.position = Player.Instance.m_transform.position + new Vector3(0, 10, 0);
+        meteor.transform.position = Player.Instance.m_transform.position + new Vector3(5, 8, 0);
 
 
         if (_listMeteor.Count <= 1)
@@ -1374,7 +1410,7 @@ public class GamePlay : MonoBehaviour
             Player.Instance.ChangeState(BaseObject.State.None);
             Player.Instance._followCamera._target = _listPlayers[(int)_currentStage].gameObject;
 
-            StartCoroutine(CoTimer());
+           // StartCoroutine(CoTimer());
 
 
 
@@ -1386,7 +1422,7 @@ public class GamePlay : MonoBehaviour
 
             StartCoroutine(ReverseGround());
 
-            StartCoroutine(CoTimer());
+          //  StartCoroutine(CoTimer());
 
         }
         else // 시작 1라운드
@@ -1404,7 +1440,7 @@ public class GamePlay : MonoBehaviour
             Camera.main.backgroundColor = new Color32(255, 133, 71,255);
 
 
-            StartCoroutine(CoTimer());
+         //   StartCoroutine(CoTimer());
         }
 
     }

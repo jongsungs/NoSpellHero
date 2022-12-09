@@ -7,12 +7,16 @@ public class Meteor : SkillBase
 
     public SkillBase _effect;
     MeshRenderer _render;
+    SphereCollider _collider;
    
     private void OnEnable()
     {
         _render = GetComponent<MeshRenderer>();
         _effect.gameObject.SetActive(false);
         _target = GamePlay.Instance._listMeteorTarget[0];
+        _collider = GetComponent<SphereCollider>();
+        _collider.enabled = true;
+        _isOnce = false;
         StartCoroutine(Target());
     }
 
@@ -21,6 +25,7 @@ public class Meteor : SkillBase
         if(transform.position.y  <= _target.transform.position.y)
         {
             _render.enabled = false;
+            _collider.enabled = false;
             _effect.gameObject.SetActive(true);
             if(_isOnce == false)
             {

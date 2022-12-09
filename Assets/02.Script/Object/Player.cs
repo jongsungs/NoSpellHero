@@ -1285,7 +1285,7 @@ public class Player : BaseObject
             {
                 ChangeState(State.Attack2);
             }
-            else if (variableJoystick._isStop && _isIdle == true)
+            else if (variableJoystick._isStop  && _isAttack == false)
             {
                 _basicSpeed = 0f;
                ChangeState(State.Idle);
@@ -1527,6 +1527,7 @@ public class Player : BaseObject
     }
     public void AttackOff()
     {
+
         _isAttack = false;
         _seconAttack = false;   
     }
@@ -1541,7 +1542,8 @@ public class Player : BaseObject
             if (rand >= max)
             {
                 _seconAttack = true;
-            _isAttack = false;
+
+                _isAttack = false;
                 ChangeState(State.Attack2);
             }
         }
@@ -1572,6 +1574,7 @@ public class Player : BaseObject
                
 
                 _isIdle = true;
+
                 _isAttack = false;
                 break;
             case State.Attack:

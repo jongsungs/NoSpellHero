@@ -2525,6 +2525,7 @@ public class Lobby : MonoBehaviour
 
 
         SoundManager.Instance.EffectPlay(SoundManager.Instance._debuff);
+        Player.Instance.Save();
     }
 
    

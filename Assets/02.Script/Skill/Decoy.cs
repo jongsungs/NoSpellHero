@@ -94,7 +94,6 @@ public class Decoy : Monster
 
     public override void AttackOn()
     {
-        _isAttack = true;
         int spell;
         spell = UnityEngine.Random.Range(0, 100);
 
@@ -117,7 +116,7 @@ public class Decoy : Monster
     }
     public override void AttackOff()
     {
-        _isAttack = false;
+        
         _attackOnce = true;
         Idle();
     }
@@ -138,7 +137,6 @@ public class Decoy : Monster
                 _speed = _basicSpeed;
                 break;
             case State.Attack:
-                _isAttack = true;
                 _attackOnce = false;
                 _speed = 0f;
                 break;
@@ -150,7 +148,6 @@ public class Decoy : Monster
                 StartCoroutine(CoDie());
                 break;
             case State.Attack2:
-                _isAttack = true;
                 break;
         }
     }

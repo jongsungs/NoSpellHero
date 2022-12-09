@@ -523,21 +523,7 @@ public class StagePlayer : MonoBehaviour
             }
 
         }
-        else if (other.CompareTag("Enemy") && other.GetComponent<Weapon>() == null && other.GetComponent<Monster>()._isAttack == true && other.GetComponent<Monster>()._monster != Monster.MonsterKind.CaptainSkull)
-        {
-            other.GetComponent<Monster>()._isAttack = false;
-            var damage = (other.GetComponent<Monster>()._atk*4) - (Player.Instance._def * 3f);
-            if (damage <= 0)
-            {
-                damage = 0f;
-            }
-            damage = Mathf.Round(damage);
-            Player.Instance._ingameHp -= damage;
-            SoundManager.Instance.EffectPlay(SoundManager.Instance._playerHit);
-            GamePlay.Instance._playerHp.UpdateBar(Player.Instance._ingameHp, 0, Player.Instance._maxHp);
-            _mmfPlayer.PlayFeedbacks(transform.position, damage);
-            Player.Instance._hitCount++;
-        }
+       
 
     }
 
