@@ -31,9 +31,13 @@ public class GamePlay : MonoBehaviour
     public Monster _captainSkullNormal;
     public Monster _wolfKing;
     public Monster _wolfKingNormal;
+    public Monster _ork;
 
     public Monster _demonKing;
     public Monster _skeleton;
+
+
+
     public GameObject _objectPool;
     public GameObject _damageTextPoolParent;
     public RespawnZone _randomSpawn;
@@ -89,6 +93,7 @@ public class GamePlay : MonoBehaviour
     private IObjectPool<Monster> _captainSkullNormalPool;
     private IObjectPool<Monster> _wolfkingNormalPool;
     public IObjectPool<Monster> _skeletonPool;
+    public IObjectPool<Monster> _orkPool;
 
     private IObjectPool<Monster> _demonkingPool;
     public IObjectPool<LightningBoltScript> _lightningPool;
@@ -164,6 +169,7 @@ public class GamePlay : MonoBehaviour
         _skeletonPool = new ObjectPool<Monster>(CreatSkeleton, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 20);
         _wolfkingPool = new ObjectPool<Monster>(CreateWolfKing, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
         _wolfkingNormalPool = new ObjectPool<Monster>(CreateWolfKingNormal, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
+        _orkPool = new ObjectPool<Monster>(CreateOrk, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
 
         _demonkingPool = new ObjectPool<Monster>(CreatDemonKing, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
         _lightningPool = new ObjectPool<LightningBoltScript>(CreateLightning, OngetLightningBolt, OnRelaseLightning, OnDestroyLightning, maxSize: 30);
@@ -221,7 +227,11 @@ public class GamePlay : MonoBehaviour
         {
             _wolfkingNormalPool.Get();
         }
-        if(Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Alpha8))
+        {
+            _orkPool.Get();
+        }
+        if (Input.GetKeyDown(KeyCode.Space))
         {
             _meteorEffectPool.Get();
         }
@@ -283,7 +293,12 @@ public class GamePlay : MonoBehaviour
         monster.SetPool(_wolfkingNormalPool);
         return monster;
     }
-
+    private Monster CreateOrk()
+    {
+        var monster = Instantiate(_ork, _randomSpawn.Return_RandomPosition(), Quaternion.identity);
+        monster.SetPool(_orkPool);
+        return monster;
+    }
     private Monster CreatDemonKing()
     {
         var monster = Instantiate(_demonKing, _randomSpawn.Return_RandomPosition(), Quaternion.identity, _objectPool.transform);

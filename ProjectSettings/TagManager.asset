@@ -12,6 +12,7 @@ TagManager:
   - Thunder
   - Meteor
   - Bone
+  - Rock
   layers:
   - Default
   - TransparentFX

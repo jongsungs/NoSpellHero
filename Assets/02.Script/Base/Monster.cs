@@ -369,6 +369,11 @@ public class Monster : BaseObject
                         ChangeState(State.Attack2);
 
                     }
+                    else if (_monster == MonsterKind.Ork && _attackStack >0)
+                    {
+                        transform.LookAt(target);
+                        ChangeState(State.Attack2);
+                    }
                     else if (distToTarget <= _attackDistance && _attackOnce == true)
                     {
                         transform.LookAt(target);
@@ -483,14 +488,14 @@ public class Monster : BaseObject
 
         if (other.CompareTag("Weapon"))
         {
-            if(other.transform.root.gameObject.layer == 8)
+            if(other.transform.root.gameObject.layer == 8) // ²¿¼ËÀ»¶§
             {
                 if(_onHit == false && other.GetComponent<Weapon>() != null)
                 {
                     if(other.GetComponent<Weapon>()._isOnce == true)
                     {
                         _onHit = true;
-
+            
                         var damage = other.GetComponent<Weapon>()._damage - (_def * 3f);
                         if (damage <= 0f)
                         {
@@ -498,11 +503,38 @@ public class Monster : BaseObject
                         }
                         damage = Mathf.Round(damage);
                         _ingameHp -= damage;
-
-
+            
+            
                         _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-
+            
                         StartCoroutine(CoHit());
+                    }
+                }
+            }
+            else if (this.gameObject.layer == 8)
+            {
+                if (other.transform.root.gameObject.layer == 6) // ÀûÀÏ¶§
+                {
+
+                    if (_onHit == false && other.GetComponent<Weapon>() != null)
+                    {
+                        if (other.GetComponent<Weapon>()._isOnce == true)
+                        {
+                            _onHit = true;
+
+                            var damage = other.GetComponent<Weapon>()._damage - (_def * 3f);
+                            if (damage <= 0f)
+                            {
+                                damage = 0f;
+                            }
+                            damage = Mathf.Round(damage);
+                            _ingameHp -= damage;
+
+
+                            _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+
+                            StartCoroutine(CoHit());
+                        }
                     }
                 }
             }
@@ -1527,7 +1559,7 @@ public class Monster : BaseObject
                 StartCoroutine(CoHit());
             }
        }
-       else if (this.gameObject.layer == 3)
+       else if (this.gameObject.layer == 8)
        {
            if (other.CompareTag("Bone"))
            {
@@ -1543,7 +1575,22 @@ public class Monster : BaseObject
   
                other.GetComponent<SkillBase>().SkillRelease();
            }
-           StartCoroutine(CoHit());
+           else if (other.CompareTag("Rock"))
+            {
+                var damage = other.GetComponent<SkillBase>()._skillDamage - (_def * 3f);
+                if (damage <= 0)
+                {
+                    damage = 0f;
+                }
+                damage = Mathf.Round(damage);
+                _ingameHp -= damage;
+                _mmfPlayer.PlayFeedbacks(transform.position, damage);
+
+
+                other.GetComponent<SkillBase>().SkillRelease();
+            }
+         
+            StartCoroutine(CoHit());
        }
   
   
