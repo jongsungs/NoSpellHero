@@ -96,7 +96,7 @@ public class Skeleton : Monster
             case State.Attack2:
                 _speed = 0f;
                 _attackOnce = false;
-                SkeletonSpawn();
+                
                 break;
         }
     }

@@ -182,7 +182,21 @@ ModelImporter:
       bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
       curves: []
       events:
-      - time: 0.6657383
+      - time: 0.23444973
+        functionName: SkeletonSpawn
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.7124251
+        functionName: SkeletonSpawn
+        data: 
+        objectReferenceParameter: {instanceID: 0}
+        floatParameter: 0
+        intParameter: 0
+        messageOptions: 0
+      - time: 0.8969883
         functionName: AttackOff2
         data: 
         objectReferenceParameter: {instanceID: 0}

@@ -1668,7 +1668,7 @@ public class Player : BaseObject
             case PlayerTitle.MadMan:
                 _atk = (_basicAtk * 0.75f) + (_basicAtk * _skill1 / 10f);
                 _matk = (_basicMatk * 0.75f) + (_basicMatk * _skill2 / 10f);
-                _criticalDamage = (_basicCriticalDamage * 2f) + (_basicCriticalDamage * _skill3 / 10f);
+                _criticalDamage = (_basicCriticalDamage * 2f) + (_basicCriticalDamage * _skill3 / 5f);
 
                 break;
             case PlayerTitle.StrongMan:
@@ -2100,13 +2100,13 @@ public class Player : BaseObject
                 {
                     achivementCheck(magicalbladerhidden,"magicalbladerhidden");
                     magicalbladerhidden = true;
-                    _atk = _basicAtk + _basicAtk + (_basicAtk * 0.5f);
+                    _atk = _basicAtk + _basicAtk + _basicAtk * 0.5f;
                 }
                 else if (_skill2 >= 3)
                 {
                     achivementCheck(magicalbladerhidden, "magicalbladerhidden");
                     magicalbladerhidden = true;
-                    _matk = _basicMatk + _basicMatk + (_basicMatk * 0.5f);
+                    _matk = _basicMatk + _basicMatk + _basicMatk ;
                 }
                 break;
             case PlayerTitle.MadMan:

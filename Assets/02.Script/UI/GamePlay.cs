@@ -32,6 +32,8 @@ public class GamePlay : MonoBehaviour
     public Monster _wolfKing;
     public Monster _wolfKingNormal;
     public Monster _ork;
+    public Monster _golemBoss;
+    public Monster _golemNormal;
 
     public Monster _demonKing;
     public Monster _skeleton;
@@ -94,6 +96,8 @@ public class GamePlay : MonoBehaviour
     private IObjectPool<Monster> _wolfkingNormalPool;
     public IObjectPool<Monster> _skeletonPool;
     public IObjectPool<Monster> _orkPool;
+    public IObjectPool<Monster> _golemBossPool;
+    public IObjectPool<Monster> _golemNormalPool;
 
     private IObjectPool<Monster> _demonkingPool;
     public IObjectPool<LightningBoltScript> _lightningPool;
@@ -170,6 +174,10 @@ public class GamePlay : MonoBehaviour
         _wolfkingPool = new ObjectPool<Monster>(CreateWolfKing, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
         _wolfkingNormalPool = new ObjectPool<Monster>(CreateWolfKingNormal, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
         _orkPool = new ObjectPool<Monster>(CreateOrk, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
+        _golemBossPool = new ObjectPool<Monster>(CreateGolemBoss, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
+        _golemNormalPool = new ObjectPool<Monster>(CreateGolemNormal, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
+
+
 
         _demonkingPool = new ObjectPool<Monster>(CreatDemonKing, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
         _lightningPool = new ObjectPool<LightningBoltScript>(CreateLightning, OngetLightningBolt, OnRelaseLightning, OnDestroyLightning, maxSize: 30);
@@ -231,9 +239,40 @@ public class GamePlay : MonoBehaviour
         {
             _orkPool.Get();
         }
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Alpha9))
         {
-            _meteorEffectPool.Get();
+            _golemBossPool.Get();
+        }
+        if (Input.GetKeyDown(KeyCode.Alpha0))
+        {
+            _golemNormalPool.Get();
+        }
+
+
+
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            ChangeStage(GameState.Stage2);
+            EnterChoicePopUp();
+            ChangeStage();
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            ChangeStage(GameState.Stage3);
+            EnterChoicePopUp();
+            ChangeStage();
+        }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            ChangeStage(GameState.Stage4);
+            EnterChoicePopUp();
+            ChangeStage();
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            ChangeStage(GameState.Result);
+            EnterChoicePopUp();
+            ChangeStage();
         }
     }
 
@@ -299,6 +338,22 @@ public class GamePlay : MonoBehaviour
         monster.SetPool(_orkPool);
         return monster;
     }
+    private Monster CreateGolemBoss()
+    {
+        var monster = Instantiate(_golemBoss, _randomSpawn.Return_RandomPosition(), Quaternion.identity);
+        monster.SetPool(_golemBossPool);
+        return monster;
+    }
+    private Monster CreateGolemNormal()
+    {
+        var monster = Instantiate(_golemNormal, _randomSpawn.Return_RandomPosition(), Quaternion.identity);
+        monster.SetPool(_golemNormalPool);
+        return monster;
+    }
+
+
+
+
     private Monster CreatDemonKing()
     {
         var monster = Instantiate(_demonKing, _randomSpawn.Return_RandomPosition(), Quaternion.identity, _objectPool.transform);
@@ -359,6 +414,7 @@ public class GamePlay : MonoBehaviour
         roar.SetPool(_roarPool);
         return roar;
     }
+    
     private SkillBase CreateHeal()
     {
         var heal = Instantiate(_heal, Player.Instance.m_transform.position, Quaternion.identity, Player.Instance.m_transform);
@@ -681,16 +737,17 @@ public class GamePlay : MonoBehaviour
 
     public void EnterLobby()
     {
-         Player.Instance._atk = Player.Instance._basicAtk;
-         Player.Instance._matk = Player.Instance._basicMatk;
-         Player.Instance._hp = Player.Instance._basicHp;
-         Player.Instance._def = Player.Instance._basicDef;
-         Player.Instance._speed = Player.Instance._basicSpeed;
-         Player.Instance._atkSpeed = Player.Instance._basicAtkSpeed;
-         Player.Instance._critical = Player.Instance._basicCritical;
-         Player.Instance._handicraft = Player.Instance._basicHandicraft;
-         Player.Instance._charm = Player.Instance._basicCharm;
-         Player.Instance.Save();
+        Player.Instance._atk = Player.Instance._basicAtk;
+        Player.Instance._matk = Player.Instance._basicMatk;
+        Player.Instance._hp = Player.Instance._basicHp;
+        Player.Instance._def = Player.Instance._basicDef;
+        Player.Instance._speed = Player.Instance._basicSpeed;
+        Player.Instance._atkSpeed = Player.Instance._basicAtkSpeed;
+        Player.Instance._critical = Player.Instance._basicCritical;
+        Player.Instance._handicraft = Player.Instance._basicHandicraft;
+        Player.Instance._charm = Player.Instance._basicCharm;
+        Player.Instance._criticalDamage = Player.Instance._basicCriticalDamage;
+        Player.Instance.Save();
 
 
 
@@ -847,14 +904,14 @@ public class GamePlay : MonoBehaviour
             _skill2Image.sprite = _listSkillIcon[1].sprite;
             _skill2Text.text = "마력 증가";
             _skill3Image.sprite = _listSkillIcon[4].sprite;
-            _skill3Text.text = "치명타 피해율 증가";
+            _skill3Text.text = "치명타 피해율 \n 증가";
         }
         else if (Player.Instance._playerTitle == Player.PlayerTitle.StrongMan)
         {
             _skill1Image.sprite = _listSkillIcon[5].sprite;
             _skill1Text.text = "공격속도 증가";
             _skill2Image.sprite = _listSkillIcon[6].sprite;
-            _skill2Text.text = "추가 공격 확률 증가";
+            _skill2Text.text = "추가 공격 \n 확률 증가";
             _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
@@ -1330,7 +1387,7 @@ public class GamePlay : MonoBehaviour
         _listPlayers[(int)_currentStage].transform.position = new Vector3(0, 0, 0);
         _listPlayers[(int)_currentStage].transform.rotation = Quaternion.Euler(0, -180, 180);
         Player.Instance._animator = _listPlayers[(int)_currentStage].GetComponent<Animator>();
-        Player.Instance.m_transform = _listPlayers[(int)_currentStage].GetComponent<Transform>();
+        Player.Instance.m_transform = _listPlayers[4].transform;
         Player.Instance.ChangeState(BaseObject.State.None);
         Player.Instance._followCamera._target = _listPlayers[(int)_currentStage].gameObject;
 
@@ -1346,8 +1403,9 @@ public class GamePlay : MonoBehaviour
         }
        
         Player.Instance._rigidbody.isKinematic = false;
+        Player.Instance.m_transform = _listPlayers[(int)_currentStage].GetComponent<Transform>();
         _listPlayers[(int)_currentStage - 1].gameObject.SetActive(false);
-        if(_currentStage == GameState.Stage2)
+        if (_currentStage == GameState.Stage2)
         {
             _stageground[0].SetActive(false);
             Camera.main.backgroundColor = new Color32(1, 34, 156, 255);
@@ -1371,7 +1429,8 @@ public class GamePlay : MonoBehaviour
         _listPlayers[(int)_currentStage].transform.position = new Vector3(0, 0, 0);
         _listPlayers[(int)_currentStage].transform.rotation = Quaternion.Euler(0, -180, 180);
         Player.Instance._animator = _listPlayers[(int)_currentStage].GetComponent<Animator>();
-        Player.Instance.m_transform = _listPlayers[(int)_currentStage].GetComponent<Transform>();
+        Player.Instance.m_transform = _listPlayers[4].transform;
+        
         Player.Instance.ChangeState(BaseObject.State.None);
         Player.Instance._followCamera._target = _listPlayers[(int)_currentStage].gameObject;
         _listStage[(int)_currentStage - 2].SetActive(false);
@@ -1384,9 +1443,8 @@ public class GamePlay : MonoBehaviour
             _stageground[1].transform.position = new Vector3(0, -0.4f, 0);
         }
         Player.Instance._rigidbody.isKinematic = false;
-     
+        Player.Instance.m_transform = _listPlayers[(int)_currentStage].GetComponent<Transform>();
         _listPlayers[(int)_currentStage -1].gameObject.SetActive(false);
-
         Camera.main.backgroundColor = new Color32(40, 40, 41, 255);
         _stageground[1].SetActive(false);
   
@@ -1421,7 +1479,7 @@ public class GamePlay : MonoBehaviour
             _listPlayers[(int)_currentStage].transform.position = new Vector3(0, 0, 0);
             _listPlayers[(int)_currentStage].transform.rotation = Quaternion.Euler(0, -180, 180);
             Player.Instance._animator = _listPlayers[(int)_currentStage].GetComponent<Animator>();
-            Player.Instance.m_transform = _listPlayers[(int)_currentStage].GetComponent<Transform>();
+         //   Player.Instance.m_transform = _listPlayers[(int)_currentStage].GetComponent<Transform>();
             Player.Instance.ChangeState(BaseObject.State.None);
             Player.Instance._followCamera._target = _listPlayers[(int)_currentStage].gameObject;
 
@@ -2025,6 +2083,7 @@ public class GamePlay : MonoBehaviour
         SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         _choicePopUp.SetActive(false);
         ChangeStage(_currentStage);
+       Player.Instance.ChangeTitle(Player.Instance._playerTitle);
         Time.timeScale = 1f;
         if(Player.Instance._playerTitle != Player.PlayerTitle.Priest)
         {
@@ -2339,7 +2398,7 @@ public class GamePlay : MonoBehaviour
     }
 
 
-    public IEnumerator coStart()
+    public IEnumerator CoStart()
     {
         yield return new WaitForSeconds(2f);
         ChangeStage();

@@ -66,6 +66,8 @@ public class Lobby : MonoBehaviour
         _settingPopUp.SetActive(false);
         _resetCheckPopUp.SetActive(false);
         SoundManager.Instance.BGMPlay(SoundManager.Instance._lobbyBgm);
+        _effectSoundSlider.value = Player.Instance._effectSound;
+        _bgmSoundSlider.value = Player.Instance._bgmSound;
         for (int i = 0; i < _player._atk; ++i)
         {
             _listStatSpace[0].transform.GetChild(i).gameObject.SetActive(true);
@@ -1443,6 +1445,8 @@ public class Lobby : MonoBehaviour
         _player._basicMatk = 0;
         _player._basicSpeed = 0;
         _player._maxHp = 0;
+        _player._criticalDamage = 2f;
+        _player._basicCriticalDamage = 2f;
         _player.Save();
         Player.Instance._ingameHp = 50 + (Player.Instance._hp * 10);
         Player.Instance._maxHp = 50 + (Player.Instance._hp * 10);

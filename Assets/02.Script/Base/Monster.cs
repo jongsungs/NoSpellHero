@@ -30,7 +30,7 @@ public class Monster : BaseObject
         WolfKing,
 
     }
-    
+
 
 
     protected IObjectPool<Monster> _monsterpool;
@@ -59,7 +59,7 @@ public class Monster : BaseObject
 
     protected Transform m_transform;
     [SerializeField] float m_viewAngle;    //시야각
-    [SerializeField] float m_viewDistance; //시야거리
+    public float m_viewDistance; //시야거리
 
     public LayerMask m_targetMask;  //Enemy 레이어마스크 지정을 위한 변수
     public LayerMask m_obstacleMask; //Obstacle 레이어마스크 지정을 위한 변수
@@ -72,8 +72,8 @@ public class Monster : BaseObject
     public Weapon _monsterWeapon;
 
 
-   public Gradient whitegrad = new Gradient();
-   public Gradient redgrad = new Gradient();
+    public Gradient whitegrad = new Gradient();
+    public Gradient redgrad = new Gradient();
     Color _red = new Color(1, 0, 0);
     Color _white = new Color(1, 1, 1);
     GradientColorKey[] redkey = new GradientColorKey[2];
@@ -87,7 +87,7 @@ public class Monster : BaseObject
 
     private void Awake()
     {
-       
+
         _navimeshAgent = GetComponent<NavMeshAgent>();
         _animator = GetComponent<Animator>();
         _rigidbody = GetComponent<Rigidbody>();
@@ -95,12 +95,12 @@ public class Monster : BaseObject
         _floatingTextSpawner = transform.GetChild(0).GetChild(0).GetComponent<MoreMountains.Feedbacks.MMFloatingTextSpawner>();
         _mmfPlayer = transform.GetChild(0).GetChild(1).GetComponent<MoreMountains.Feedbacks.MMF_Player>();
         _navimeshAgent.stoppingDistance = _attackDistance;
-    
+
 
         if (_burn != null)
-        _burn.SetActive(false);
-        if(_frozen != null)
-        _frozen.SetActive(false);
+            _burn.SetActive(false);
+        if (_frozen != null)
+            _frozen.SetActive(false);
         if (_sturn != null)
             _sturn.SetActive(false);
         if (_fascination != null)
@@ -137,30 +137,30 @@ public class Monster : BaseObject
         _basicCritical = _critical;
         _basicHandicraft = _handicraft;
         _basicCharm = _charm;
-        if(_category == MonsterCategory.Common)
+        if (_category == MonsterCategory.Common)
         {
             _ingameHp = 50 + (_hp * 10);
             _maxHp = 50 + (_hp * 10);
         }
-        else if(_category == MonsterCategory.Boss)
+        else if (_category == MonsterCategory.Boss)
         {
             _ingameHp = 200 + (_hp * 10);
             _maxHp = 200 + (_hp * 10);
         }
         CCrecovery();
         _isDead = false;
-        if(_category != MonsterCategory.Boss)
-        GamePlay._eventHandler += MonsterRelease;
-        if(_category == MonsterCategory.Boss)
+        if (_category != MonsterCategory.Boss)
+            GamePlay._eventHandler += MonsterRelease;
+        if (_category == MonsterCategory.Boss)
         {
             GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
         }
 
         if (_monster == MonsterKind.Slime)
             _onlySlime.material.color = _slimeColor;
-        else if(_monster != MonsterKind.Slime)
+        else if (_monster != MonsterKind.Slime)
         {
-            for(int i = 0; i < _listMaterial.Count; ++i)
+            for (int i = 0; i < _listMaterial.Count; ++i)
             {
                 _listMaterial[i].material.color = Color.white;
             }
@@ -171,7 +171,7 @@ public class Monster : BaseObject
 
     private void LateUpdate()
     {
-        if(_monsterWeapon != null)
+        if (_monsterWeapon != null)
         {
             _monsterWeapon._damage = _atk * 5;
 
@@ -188,7 +188,7 @@ public class Monster : BaseObject
         }
         if (_ccDurationTime <= 0 && _ccOn == true)
         {
-            if(_CC == CrowdControl.Freezing)
+            if (_CC == CrowdControl.Freezing)
             {
                 _frozen.SetActive(false);
                 CCrecovery();
@@ -198,35 +198,36 @@ public class Monster : BaseObject
                 _burn.SetActive(false);
                 CCrecovery();
             }
-            else if(_CC == CrowdControl.Stun)
+            else if (_CC == CrowdControl.Stun)
             {
                 _sturn.SetActive(false);
                 CCrecovery();
             }
         }
-        if(_CC == CrowdControl.Burn)
+        if (_CC == CrowdControl.Burn)
         {
-            _ingameHp -= (Player.Instance._matk / 10f) * Time.deltaTime ;
+            _ingameHp -= (Player.Instance._matk / 10f) * Time.deltaTime;
         }
-        
+
 
 
     }
 
-    
-   
+
+
 
     public void SetPool(IObjectPool<Monster> pool)
     {
         _monsterpool = pool;
     }
 
-    
+
     public virtual void AttackOn()
     {
-        if(_monsterWeapon != null)
+        if (_monsterWeapon != null)
             _monsterWeapon._isOnce = true;
-        if(_monster != MonsterKind.CaptainSkull)
+        Debug.Log("여기여기여기");
+        if (_monster != MonsterKind.CaptainSkull)
         {
             SoundManager.Instance.EffectPlay(SoundManager.Instance._monsterAttack);
 
@@ -238,7 +239,7 @@ public class Monster : BaseObject
             _monsterWeapon._isOnce = false;
     }
 
-   
+
     public virtual void Freezing()
     {
         CCrecovery();
@@ -252,12 +253,12 @@ public class Monster : BaseObject
         _frozen.transform.GetChild(2).GetComponent<RFX4_DeactivateByTime>().currentTime = 0;
         _frozen.transform.GetChild(2).GetComponent<RFX4_DeactivateByTime>().DeactivatedGameObject.SetActive(true);
         _ccOn = true;
-        if(Player.Instance._playerTitle == Player.PlayerTitle.Helen)
+        if (Player.Instance._playerTitle == Player.PlayerTitle.Helen)
         {
             Player.Instance._helenScore++;
             AchievementManager.instance.AddAchievementProgress("helenskill100", Player.Instance._helenScore);
         }
-        else if(Player.Instance._playerTitle != Player.PlayerTitle.Helen)
+        else if (Player.Instance._playerTitle != Player.PlayerTitle.Helen)
         {
             Player.Instance._freezingCount++;
         }
@@ -279,7 +280,7 @@ public class Monster : BaseObject
         CCrecovery();
         _CC = CrowdControl.Stun;
         _ccDurationTime += 1f;
-        _animator.speed = 0f; 
+        _animator.speed = 0f;
         _navimeshAgent.speed = 0f;
         _ccOn = true;
         _sturn.SetActive(true);
@@ -291,15 +292,15 @@ public class Monster : BaseObject
         _navimeshAgent.speed = _speed;
         _atk = _basicAtk;
         _ccOn = false;
-        if(_sturn.activeSelf == true)
+        if (_sturn.activeSelf == true)
         {
             _sturn.SetActive(false);
         }
-        if(_frozen.activeSelf == true)
+        if (_frozen.activeSelf == true)
         {
             _frozen.SetActive(false);
         }
-        if(_burn.activeSelf == true)
+        if (_burn.activeSelf == true)
         {
             _burn.SetActive(false);
         }
@@ -313,19 +314,19 @@ public class Monster : BaseObject
     // 투명 -> 불투명
     public void FadeIn()
     {
-      //  var sr = this.gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
-      //  Color tempColor = sr.material.color;
-      //  while (tempColor.a < 1f)
-      //  {
-      //      tempColor.a += 1f;
-      //      sr.material.color = tempColor;
-      //
-      //      if (tempColor.a >= 1f) tempColor.a = 1f;
-      //
-      //
-      //  }
-        
-      //  sr.material.color = tempColor;
+        //  var sr = this.gameObject.transform.GetChild(1).GetComponent<SkinnedMeshRenderer>();
+        //  Color tempColor = sr.material.color;
+        //  while (tempColor.a < 1f)
+        //  {
+        //      tempColor.a += 1f;
+        //      sr.material.color = tempColor;
+        //
+        //      if (tempColor.a >= 1f) tempColor.a = 1f;
+        //
+        //
+        //  }
+
+        //  sr.material.color = tempColor;
     }
     public Vector3 DirFromAngle(float angleInDegrees)
     {
@@ -360,16 +361,22 @@ public class Monster : BaseObject
                 {
                     Debug.DrawLine(m_transform.position, target.position, Color.red);
 
-                    if(_CC == CrowdControl.Stun || _CC == CrowdControl.Freezing)
+                    if (_CC == CrowdControl.Stun || _CC == CrowdControl.Freezing)
                     {
                         _speed = 0f;
+                    }
+                    else if (_monster == MonsterKind.Golem && _category == MonsterCategory.Boss && _attackStack >= 3)
+                    {
+                        transform.LookAt(target);
+                        ChangeState(State.Attack2);
+
                     }
                     else if (_monster == MonsterKind.CaptainSkull && _category == MonsterCategory.Boss && _attackStack >= 5)
                     {
                         ChangeState(State.Attack2);
 
                     }
-                    else if (_monster == MonsterKind.Ork && _attackStack >0)
+                    else if (_monster == MonsterKind.Ork && _attackStack > 0)
                     {
                         transform.LookAt(target);
                         ChangeState(State.Attack2);
@@ -379,7 +386,7 @@ public class Monster : BaseObject
                         transform.LookAt(target);
                         ChangeState(State.Attack);
                     }
-                    
+
                     else if (distToTarget > _attackDistance)
                     {
                         ChangeState(State.Walk);
@@ -412,17 +419,17 @@ public class Monster : BaseObject
             AchievementManager.instance.AddAchievementProgress("jackfrosttuna", Player.Instance._jackfrostScore);
 
         }
-        
-         if(Player.Instance._jackfrostScore >= 1000 && Player.Instance.jackfrosttuna == false)
-         {
-             Player.Instance.jackfrosttuna = true;
-         }
-        if(Player.Instance._playerTitle == Player.PlayerTitle.Dosa)
+
+        if (Player.Instance._jackfrostScore >= 1000 && Player.Instance.jackfrosttuna == false)
+        {
+            Player.Instance.jackfrosttuna = true;
+        }
+        if (Player.Instance._playerTitle == Player.PlayerTitle.Dosa)
         {
             Player.Instance._dosaDieAvatar++;
             AchievementManager.instance.AddAchievementProgress("dosaskilldie20", Player.Instance._dosaDieAvatar);
 
-            if(Player.Instance._dosaDieAvatar >= 20 && Player.Instance.dosaskilldie20 == false)
+            if (Player.Instance._dosaDieAvatar >= 20 && Player.Instance.dosaskilldie20 == false)
             {
                 Player.Instance.dosaskilldie20 = true;
             }
@@ -434,7 +441,7 @@ public class Monster : BaseObject
         _monsterpool.Release(this);
     }
     // 투명 -> 불투명
-   public virtual IEnumerator CoFadeIn(float fadeOutTime, System.Action nextEvent = null)
+    public virtual IEnumerator CoFadeIn(float fadeOutTime, System.Action nextEvent = null)
     {
         yield return null;
     }
@@ -449,7 +456,7 @@ public class Monster : BaseObject
     {
 
         SoundManager.Instance.EffectPlay(SoundManager.Instance._monsterhit);
-        if(_monster != MonsterKind.Slime)
+        if (_monster != MonsterKind.Slime)
         {
 
             for (int i = 0; i < _listMaterial.Count; ++i)
@@ -458,13 +465,13 @@ public class Monster : BaseObject
 
             }
         }
-        else if(_monster == MonsterKind.Slime)
+        else if (_monster == MonsterKind.Slime)
         {
             _onlySlime.material.color = _hitColor;
         }
         yield return new WaitForSeconds(0.3f);
 
-        if(_monster != MonsterKind.Slime)
+        if (_monster != MonsterKind.Slime)
         {
 
             for (int i = 0; i < _listMaterial.Count; ++i)
@@ -474,28 +481,29 @@ public class Monster : BaseObject
 
             }
         }
-        else if(_monster == MonsterKind.Slime)
+        else if (_monster == MonsterKind.Slime)
         {
             _onlySlime.material.color = _slimeColor;
         }
+        //yield return new WaitForSeconds(0.1f);
         _onHit = false;
     }
 
 
-   private void OnTriggerEnter(Collider other)
-   {
+    private void OnTriggerEnter(Collider other)
+    {
 
 
         if (other.CompareTag("Weapon"))
         {
-            if(other.transform.root.gameObject.layer == 8) // 꼬셧을때
+            if (other.transform.root.gameObject.layer == 8) // 꼬셧을때
             {
-                if(_onHit == false && other.GetComponent<Weapon>() != null)
+                if (_onHit == false && other.GetComponent<Weapon>() != null)
                 {
-                    if(other.GetComponent<Weapon>()._isOnce == true)
+                    if (other.GetComponent<Weapon>()._isOnce == true)
                     {
                         _onHit = true;
-            
+
                         var damage = other.GetComponent<Weapon>()._damage - (_def * 3f);
                         if (damage <= 0f)
                         {
@@ -503,10 +511,10 @@ public class Monster : BaseObject
                         }
                         damage = Mathf.Round(damage);
                         _ingameHp -= damage;
-            
-            
+
+
                         _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-            
+
                         StartCoroutine(CoHit());
                     }
                 }
@@ -538,694 +546,713 @@ public class Monster : BaseObject
                     }
                 }
             }
+            
             else if (_onHit == false && Player.Instance._isAttack == true && Player.Instance._playerTitle == Player.PlayerTitle.JackFrost)
             {
-                
 
-                    _onHit = true;
-                    int _30 = Random.Range(0, 3); // 30퍼확률로 빙결
-                    if (_30 == 0)
+
+                _onHit = true;
+                int _30 = Random.Range(0, 3); // 30퍼확률로 빙결
+                if (_30 == 0)
+                {
+                    Freezing();
+
+                }
+
+                int rand = Random.Range(0, 100);
+
+
+
+                if (rand < Player.Instance._criticalProbability)
+                {
+
+                    if (_category == MonsterCategory.Common)
                     {
-                        Freezing();
+
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+
+
+                        _floatingTextSpawner.AnimateColorGradient = redgrad;
+                        _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                        StartCoroutine(CoHit());
 
                     }
+                    else if (_category == MonsterCategory.Boss)
+                    {
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
 
-                    int rand = Random.Range(0, 100);
 
+                        _floatingTextSpawner.AnimateColorGradient = redgrad;
+                        _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                        GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                        StartCoroutine(CoHit());
+                    }
 
+                }
+                else if (rand >= Player.Instance._criticalProbability)
+                {
+                    if (_category == MonsterCategory.Common)
+                    {
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+                        _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                        _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                        StartCoroutine(CoHit());
+                    }
 
-                    if (rand < Player.Instance._criticalProbability)
+                    else if (_category == MonsterCategory.Boss)
                     {
 
-                        if (_category == MonsterCategory.Common)
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
                         {
-
-                            var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-
-
-                            _floatingTextSpawner.AnimateColorGradient = redgrad;
-                            _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-
+                            damage = 0f;
                         }
-                        else if (_category == MonsterCategory.Boss)
-                        {
-                            var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-
-
-                            _floatingTextSpawner.AnimateColorGradient = redgrad;
-                            _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-                            GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
-                        }
-
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+                        _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                        _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                        GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                        StartCoroutine(CoHit());
                     }
-                    else if (rand >= Player.Instance._criticalProbability)
-                    {
-                        if (_category == MonsterCategory.Common)
-                        {
-                            var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-                            _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                            _mmfPlayer.PlayFeedbacks(transform.position, damage);
-                        }
-
-                        else if (_category == MonsterCategory.Boss)
-                        {
-
-                            var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-                            _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                            _mmfPlayer.PlayFeedbacks(transform.position, damage);
-                            GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
-                        }
 
 
-                    }
-                StartCoroutine(CoHit());
-                
+                }
+
 
             }
             else if (_onHit == false && Player.Instance._isAttack == true && Player.Instance._playerTitle == Player.PlayerTitle.Druid)
             {
 
-                
-                    _onHit = true;
 
-                    int rand = Random.Range(0, 100);
+                _onHit = true;
+
+                int rand = Random.Range(0, 100);
 
 
 
-                    if (rand < Player.Instance._criticalProbability)
+                if (rand < Player.Instance._criticalProbability)
+                {
+
+                    if (_category == MonsterCategory.Common)
                     {
 
-                        if (_category == MonsterCategory.Common)
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
                         {
-
-                            var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-
-
-                            _floatingTextSpawner.AnimateColorGradient = redgrad;
-                            _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-
+                            damage = 0f;
                         }
-                        else if (_category == MonsterCategory.Boss)
-                        {
-                            var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
 
 
-                            _floatingTextSpawner.AnimateColorGradient = redgrad;
-                            _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-                            GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
-                        }
+                        _floatingTextSpawner.AnimateColorGradient = redgrad;
+                        _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                        StartCoroutine(CoHit());
 
                     }
-                    else if (rand >= Player.Instance._criticalProbability)
+                    else if (_category == MonsterCategory.Boss)
                     {
-                        if (_category == MonsterCategory.Common)
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
                         {
-                            var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
-
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-                            _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                            _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                            damage = 0f;
                         }
-
-                        else if (_category == MonsterCategory.Boss)
-                        {
-
-                            var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-                            _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                            _mmfPlayer.PlayFeedbacks(transform.position, damage);
-                            GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
-                        }
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
 
 
+                        _floatingTextSpawner.AnimateColorGradient = redgrad;
+                        _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                        GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                        StartCoroutine(CoHit());
                     }
-                    int rand2 = Random.Range(0, 1/* - Player.Instance._skill1*/);
-                    if (rand2 == 0 && _category == MonsterCategory.Common)
+
+                }
+                else if (rand >= Player.Instance._criticalProbability)
+                {
+                    if (_category == MonsterCategory.Common)
+                    {
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+                        _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                        _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                        StartCoroutine(CoHit());
+                    }
+
+                    else if (_category == MonsterCategory.Boss)
                     {
 
-                        SoundManager.Instance.EffectPlay(SoundManager.Instance._fasniftion);
-                        _fascination.SetActive(true);
-                        m_targetMask = 64;
-                        this.gameObject.layer = 8;
-                        if (Player.Instance.druidfirstskill == false)
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
                         {
-                            Player.Instance.druidfirstskill = true;
-                            AchievementManager.instance.Unlock("druidfirstskill");
+                            damage = 0f;
                         }
-                        Player.Instance._druidScore++;
-                        AchievementManager.instance.AddAchievementProgress("druidskill100", Player.Instance._druidScore);
-
-                     
-
-
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+                        _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                        _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                        GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                        StartCoroutine(CoHit());
                     }
-                    StartCoroutine(CoHit());
-                
+
+
+                }
+                int rand2 = Random.Range(0, 1/* - Player.Instance._skill1*/);
+                if (rand2 == 0 && _category == MonsterCategory.Common)
+                {
+
+                    SoundManager.Instance.EffectPlay(SoundManager.Instance._fasniftion);
+                    _fascination.SetActive(true);
+                    m_targetMask = 64;
+                    this.gameObject.layer = 8;
+                    if (Player.Instance.druidfirstskill == false)
+                    {
+                        Player.Instance.druidfirstskill = true;
+                        AchievementManager.instance.Unlock("druidfirstskill");
+                    }
+                    Player.Instance._druidScore++;
+                    AchievementManager.instance.AddAchievementProgress("druidskill100", Player.Instance._druidScore);
+
+
+
+
+                }
+
             }
             else if (_onHit == false && Player.Instance._isAttack == true && Player.Instance._playerTitle == Player.PlayerTitle.QRF && Player.Instance._skill2 >= 3f && Player.Instance._isHanger == true)
             {
-                
-                    _onHit = true;
-                    int rand = Random.Range(0, 100);
-                    if (rand < Player.Instance._criticalProbability)
+
+                _onHit = true;
+                int rand = Random.Range(0, 100);
+                if (rand < Player.Instance._criticalProbability)
+                {
+
+                    if (_category == MonsterCategory.Common)
                     {
 
-                        if (_category == MonsterCategory.Common)
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
                         {
-
-                            var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-
-
-                            _floatingTextSpawner.AnimateColorGradient = redgrad;
-                            _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-
+                            damage = 0f;
                         }
-                        else if (_category == MonsterCategory.Boss)
-                        {
-                            var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
 
 
-                            _floatingTextSpawner.AnimateColorGradient = redgrad;
-                            _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-                            GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
-                        }
+                        _floatingTextSpawner.AnimateColorGradient = redgrad;
+                        _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                        StartCoroutine(CoHit());
 
                     }
-                    else if (rand >= Player.Instance._criticalProbability)
+                    else if (_category == MonsterCategory.Boss)
                     {
-                        if (_category == MonsterCategory.Common)
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
                         {
-                            var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-                            _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                            _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                            damage = 0f;
                         }
-
-                        else if (_category == MonsterCategory.Boss)
-                        {
-
-                            var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-                            _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                            _mmfPlayer.PlayFeedbacks(transform.position, damage);
-                            GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
-                        }
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
 
 
+                        _floatingTextSpawner.AnimateColorGradient = redgrad;
+                        _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                        GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                        StartCoroutine(CoHit());
                     }
-                    int rand2 = Random.Range(0, 3);
-                    if (rand2 == 0)
+
+                }
+                else if (rand >= Player.Instance._criticalProbability)
+                {
+                    if (_category == MonsterCategory.Common)
                     {
-                        Stun();
-                        if (Player.Instance.qrfhidden == false)
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
                         {
-                            Player.Instance.qrfhidden = true;
-                            AchievementManager.instance.Unlock("qrfhidden");
+                            damage = 0f;
                         }
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+                        _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                        _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                        StartCoroutine(CoHit());
                     }
-                    StartCoroutine(CoHit());
-                
+
+                    else if (_category == MonsterCategory.Boss)
+                    {
+
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+                        _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                        _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                        GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                        StartCoroutine(CoHit());
+                    }
+
+
+                }
+                int rand2 = Random.Range(0, 3);
+                if (rand2 == 0)
+                {
+                    Stun();
+                    if (Player.Instance.qrfhidden == false)
+                    {
+                        Player.Instance.qrfhidden = true;
+                        AchievementManager.instance.Unlock("qrfhidden");
+                    }
+                }
+
             }
             else if (_onHit == false && Player.Instance._isAttack == true && Player.Instance._playerTitle == Player.PlayerTitle.Acupuncturist)
             {
-                
-                    _onHit = true;
-                    int rand = Random.Range(0, 100);
-                    Player.Instance._comboInstantDie.Add(rand);
 
-                    if (rand < Player.Instance._instantDeathProbablility)
+                _onHit = true;
+                int rand = Random.Range(0, 100);
+                Player.Instance._comboInstantDie.Add(rand);
+
+                if (rand < Player.Instance._instantDeathProbablility)
+                {
+                    if (_category == MonsterCategory.Common)
                     {
-                        if (_category == MonsterCategory.Common)
+
+                        int damage = 999999;
+                        if (damage <= 0f)
                         {
-
-                            int damage = 999999;
-                            if (damage <= 0f)
-                            {
-                                damage = 0;
-                            }
-                            _ingameHp -= damage;
-                            _floatingTextSpawner.AnimateColorGradient = redgrad;
-
-                            _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-                            if (Player.Instance.acupuncturistfirstskill == false)
-                            {
-                                Player.Instance.acupuncturistfirstskill = true;
-                                AchievementManager.instance.Unlock("acupuncturistfirstskill");
-                                Player.Instance.Save();
-                            }
+                            damage = 0;
                         }
-                        else if (_category == MonsterCategory.Boss)
+                        _ingameHp -= damage;
+                        _floatingTextSpawner.AnimateColorGradient = redgrad;
+
+                        _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                        StartCoroutine(CoHit());
+                        if (Player.Instance.acupuncturistfirstskill == false)
                         {
-                            var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-
-
-                            _floatingTextSpawner.AnimateColorGradient = redgrad;
-                            _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-                            GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                            Player.Instance.acupuncturistfirstskill = true;
+                            AchievementManager.instance.Unlock("acupuncturistfirstskill");
+                            Player.Instance.Save();
                         }
                     }
-                    else if (rand >= Player.Instance._instantDeathProbablility)
+                    else if (_category == MonsterCategory.Boss)
                     {
-                        if (_category == MonsterCategory.Common)
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
                         {
-                            var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-                            _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                            _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                            damage = 0f;
                         }
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
 
-                        else if (_category == MonsterCategory.Boss)
+
+                        _floatingTextSpawner.AnimateColorGradient = redgrad;
+                        _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                        GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                        StartCoroutine(CoHit());
+                    }
+                }
+                else if (rand >= Player.Instance._instantDeathProbablility)
+                {
+                    if (_category == MonsterCategory.Common)
+                    {
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
                         {
-
-                            var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-                            _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                            _mmfPlayer.PlayFeedbacks(transform.position, damage);
-                            GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                            damage = 0f;
                         }
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+                        _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                        _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                        StartCoroutine(CoHit());
                     }
 
-                    if (Player.Instance._comboInstantDie.Count >= 3 && Player.Instance._comboInstantDie.Exists(x => x < Player.Instance._instantDeathProbablility) == false && Player.Instance.acupuncturistcritical == false)
+                    else if (_category == MonsterCategory.Boss)
                     {
-                        Player.Instance.acupuncturistcritical = true;
-                        AchievementManager.instance.Unlock("acupuncturistcritical");
-                        Player.Instance.Save();
-                    }
-                    if (Player.Instance._comboInstantDie.Exists(x => x >= Player.Instance._instantDeathProbablility) == true)
-                    {
-                        Player.Instance._comboInstantDie.Clear();
-                    }
 
-                    StartCoroutine(CoHit());
-                
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+                        _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                        _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                        GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                        StartCoroutine(CoHit());
+                    }
+                }
+
+                if (Player.Instance._comboInstantDie.Count >= 3 && Player.Instance._comboInstantDie.Exists(x => x < Player.Instance._instantDeathProbablility) == false && Player.Instance.acupuncturistcritical == false)
+                {
+                    Player.Instance.acupuncturistcritical = true;
+                    AchievementManager.instance.Unlock("acupuncturistcritical");
+                    Player.Instance.Save();
+                }
+                if (Player.Instance._comboInstantDie.Exists(x => x >= Player.Instance._instantDeathProbablility) == true)
+                {
+                    Player.Instance._comboInstantDie.Clear();
+                }
+
+
             }
             else if (_onHit == false && Player.Instance._isAttack == true && Player.Instance._playerTitle == Player.PlayerTitle.DokeV)
             {
-                
-                    _onHit = true;
-                    int rand = Random.Range(0, 100);
+
+                _onHit = true;
+                int rand = Random.Range(0, 100);
 
 
-                    if (rand < Player.Instance._criticalProbability)
+                if (rand < Player.Instance._criticalProbability)
+                {
+
+                    if (_category == MonsterCategory.Common)
                     {
 
-                        if (_category == MonsterCategory.Common)
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
                         {
-
-                            var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-
-
-                            _floatingTextSpawner.AnimateColorGradient = redgrad;
-                            _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-
+                            damage = 0f;
                         }
-                        else if (_category == MonsterCategory.Boss)
-                        {
-                            var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
 
 
-                            _floatingTextSpawner.AnimateColorGradient = redgrad;
-                            _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-                            GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
-                        }
+                        _floatingTextSpawner.AnimateColorGradient = redgrad;
+                        _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                        StartCoroutine(CoHit());
 
                     }
-                    else if (rand >= Player.Instance._criticalProbability)
+                    else if (_category == MonsterCategory.Boss)
                     {
-                        if (_category == MonsterCategory.Common)
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
                         {
-                            var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-                            _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                            _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                            damage = 0f;
                         }
-
-                        else if (_category == MonsterCategory.Boss)
-                        {
-
-                            var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-                            _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                            _mmfPlayer.PlayFeedbacks(transform.position, damage);
-                            GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
-                        }
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
 
 
+                        _floatingTextSpawner.AnimateColorGradient = redgrad;
+                        _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                        GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                        StartCoroutine(CoHit());
                     }
 
-                    if (rand < Player.Instance._dokevSkillProbability)
+                }
+                else if (rand >= Player.Instance._criticalProbability)
+                {
+                    if (_category == MonsterCategory.Common)
                     {
-                        int rand2 = Random.Range(0, 7);
-                        float stat;
-                        if (rand == 0)
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
                         {
-                            stat = _basicHp - (_basicHp * 0.1f);
-
-                            _hp = stat;
-                            Player.Instance._hp += stat;
-
+                            damage = 0f;
                         }
-                        else if (rand == 1)
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+                        _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                        _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                        StartCoroutine(CoHit());
+                    }
+
+                    else if (_category == MonsterCategory.Boss)
+                    {
+
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
                         {
-                            stat = _basicAtk - (_basicAtk * 0.1f);
-
-                            _atk = stat;
-                            Player.Instance._atk += stat;
+                            damage = 0f;
                         }
-                        else if (rand == 2)
-                        {
-                            stat = _basicMatk - (_basicMatk * 0.1f);
-
-                            _matk = stat;
-                            Player.Instance._matk += stat;
-                        }
-                        else if (rand == 3)
-                        {
-                            stat = _basicAtkSpeed - (_basicAtkSpeed * 0.1f);
-
-                            _atkSpeed = stat;
-                            Player.Instance._atkSpeed += stat;
-                        }
-                        else if (rand == 4)
-                        {
-                            stat = _basicDef - (_basicDef * 0.1f);
-
-                            _def = stat;
-                            Player.Instance._def += stat;
-                        }
-                        else if (rand == 5)
-                        {
-                            stat = _basicSpeed - (_basicSpeed * 0.1f);
-
-                            _speed = stat;
-                            Player.Instance._speed += stat;
-                        }
-                        else if (rand == 6)
-                        {
-                            stat = _basicCritical - (_basicCritical * 0.1f);
-
-                            _critical = stat;
-                            Player.Instance._critical += stat;
-                        }
-
-
-                        if (Player.Instance.dokevfirstskill == false)
-                        {
-                            Player.Instance.dokevfirstskill = true;
-                            AchievementManager.instance.Unlock("dokevfirstskill");
-                            Player.Instance.Save();
-                        }
-
-                        Player.Instance._ingameHp = 200f + (Player.Instance._hp * 10f);
-                        Player.Instance._maxHp = 200f + (Player.Instance._hp * 10f);
-                        Player.Instance._criticalProbability = Player.Instance._critical * 15f;
-                        if (Player.Instance._criticalProbability >= 100)
-                        {
-                            Player.Instance._criticalProbability = 100;
-                        }
-
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+                        _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                        _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                        GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                        StartCoroutine(CoHit());
                     }
 
 
-                    StartCoroutine(CoHit());
+                }
 
-                
+                if (rand < Player.Instance._dokevSkillProbability)
+                {
+                    int rand2 = Random.Range(0, 7);
+                    float stat;
+                    if (rand == 0)
+                    {
+                        stat = _basicHp - (_basicHp * 0.1f);
+
+                        _hp = stat;
+                        Player.Instance._hp += stat;
+
+                    }
+                    else if (rand == 1)
+                    {
+                        stat = _basicAtk - (_basicAtk * 0.1f);
+
+                        _atk = stat;
+                        Player.Instance._atk += stat;
+                    }
+                    else if (rand == 2)
+                    {
+                        stat = _basicMatk - (_basicMatk * 0.1f);
+
+                        _matk = stat;
+                        Player.Instance._matk += stat;
+                    }
+                    else if (rand == 3)
+                    {
+                        stat = _basicAtkSpeed - (_basicAtkSpeed * 0.1f);
+
+                        _atkSpeed = stat;
+                        Player.Instance._atkSpeed += stat;
+                    }
+                    else if (rand == 4)
+                    {
+                        stat = _basicDef - (_basicDef * 0.1f);
+
+                        _def = stat;
+                        Player.Instance._def += stat;
+                    }
+                    else if (rand == 5)
+                    {
+                        stat = _basicSpeed - (_basicSpeed * 0.1f);
+
+                        _speed = stat;
+                        Player.Instance._speed += stat;
+                    }
+                    else if (rand == 6)
+                    {
+                        stat = _basicCritical - (_basicCritical * 0.1f);
+
+                        _critical = stat;
+                        Player.Instance._critical += stat;
+                    }
+
+
+                    if (Player.Instance.dokevfirstskill == false)
+                    {
+                        Player.Instance.dokevfirstskill = true;
+                        AchievementManager.instance.Unlock("dokevfirstskill");
+                        Player.Instance.Save();
+                    }
+
+                    Player.Instance._ingameHp = 200f + (Player.Instance._hp * 10f);
+                    Player.Instance._maxHp = 200f + (Player.Instance._hp * 10f);
+                    Player.Instance._criticalProbability = Player.Instance._critical * 15f;
+                    if (Player.Instance._criticalProbability >= 100)
+                    {
+                        Player.Instance._criticalProbability = 100;
+                    }
+
+                }
+
+
+
+
 
             }
             else if (_onHit == false && Player.Instance._isAttack == true)
             {
-                
-                    _onHit = true;
 
-                    if (_category == MonsterCategory.Common)
+                _onHit = true;
+
+                if (_category == MonsterCategory.Common)
+                {
+                    int rand = Random.Range(0, 100);
+
+
+
+                    if (rand < Player.Instance._criticalProbability)
                     {
-                        int rand = Random.Range(0, 100);
-
-
-
-                        if (rand < Player.Instance._criticalProbability)
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
                         {
-                            var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-
-
-                            _floatingTextSpawner.AnimateColorGradient = redgrad;
-
-
-                            _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                            damage = 0f;
                         }
-                        else if (rand >= Player.Instance._criticalProbability)
-                        {
-                            var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-                            _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                            _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
 
 
-                        }
+                        _floatingTextSpawner.AnimateColorGradient = redgrad;
+
+
+                        _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                        StartCoroutine(CoHit());
                     }
-                    else if (_category == MonsterCategory.Boss)
+                    else if (rand >= Player.Instance._criticalProbability)
                     {
-                        int rand = Random.Range(0, 100);
-
-
-
-                        if (rand < Player.Instance._criticalProbability)
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
                         {
-                            var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-
-
-                            _floatingTextSpawner.AnimateColorGradient = redgrad;
-
-
-                            _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-                            GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                            damage = 0f;
                         }
-                        else if (rand >= Player.Instance._criticalProbability)
-                        {
-                            var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-                            _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                            _mmfPlayer.PlayFeedbacks(transform.position, damage);
-                            GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+                        _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                        _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                        StartCoroutine(CoHit());
 
 
-                        }
                     }
+                }
+                else if (_category == MonsterCategory.Boss)
+                {
+                    int rand = Random.Range(0, 100);
 
-                    StartCoroutine(CoHit());
-                
+
+
+                    if (rand < Player.Instance._criticalProbability)
+                    {
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+
+
+                        _floatingTextSpawner.AnimateColorGradient = redgrad;
+
+
+                        _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                        GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                        StartCoroutine(CoHit());
+                    }
+                    else if (rand >= Player.Instance._criticalProbability)
+                    {
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+                        _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                        _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                        GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                        StartCoroutine(CoHit());
+
+
+                    }
+                }
+
             }
             else if (_onHit == false && other.transform.root.GetComponent<Decoy>() != null)
             {
-                
 
-                    other.transform.root.GetComponent<Decoy>()._isAttack = false;
 
-                    if (_category == MonsterCategory.Common)
+                other.transform.root.GetComponent<Decoy>()._isAttack = false;
+
+                if (_category == MonsterCategory.Common)
+                {
+                    int rand = Random.Range(0, 100);
+
+
+
+                    if (rand < Player.Instance._criticalProbability)
                     {
-                        int rand = Random.Range(0, 100);
-
-
-
-                        if (rand < Player.Instance._criticalProbability)
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
                         {
-                            var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-
-
-                            _floatingTextSpawner.AnimateColorGradient = redgrad;
-
-
-                            _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                            damage = 0f;
                         }
-                        else if (rand >= Player.Instance._criticalProbability)
-                        {
-                            var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-                            _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                            _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
 
 
-                        }
+                        _floatingTextSpawner.AnimateColorGradient = redgrad;
+
+
+                        _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                        StartCoroutine(CoHit());
                     }
-                    else if (_category == MonsterCategory.Boss)
+                    else if (rand >= Player.Instance._criticalProbability)
                     {
-                        int rand = Random.Range(0, 100);
-
-
-
-                        if (rand < Player.Instance._criticalProbability)
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
                         {
-                            var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-
-                            _floatingTextSpawner.AnimateColorGradient = redgrad;
-
-
-                            _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-                            GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                            damage = 0f;
                         }
-                        else if (rand >= Player.Instance._criticalProbability)
-                        {
-                            var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
-                            if (damage <= 0f)
-                            {
-                                damage = 0f;
-                            }
-                            damage = Mathf.Round(damage);
-                            _ingameHp -= damage;
-                            _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                            _mmfPlayer.PlayFeedbacks(transform.position, damage);
-                            GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+                        _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                        _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                        StartCoroutine(CoHit());
 
-
-                        }
                     }
-                    StartCoroutine(CoHit());
-                
+                }
+                else if (_category == MonsterCategory.Boss)
+                {
+                    int rand = Random.Range(0, 100);
+
+
+
+                    if (rand < Player.Instance._criticalProbability)
+                    {
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._atk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+
+                        _floatingTextSpawner.AnimateColorGradient = redgrad;
+
+
+                        _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                        GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                        StartCoroutine(CoHit());
+                    }
+                    else if (rand >= Player.Instance._criticalProbability)
+                    {
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._atk * 5f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+                        _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                        _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                        GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                        StartCoroutine(CoHit());
+
+
+                    }
+                }
 
             }
 
@@ -1237,247 +1264,256 @@ public class Monster : BaseObject
 
             //  ChangeState(State.Hit);
             int rand = Random.Range(0, 100);
-  
-  
-  
-           if (rand < Player.Instance._criticalProbability)
-           {
-  
-               if (_category == MonsterCategory.Common)
-               {
-  
-                   var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 4f)) * Player.Instance._criticalDamage - (_def * 3f);
-                   if (damage <= 0f)
-                   {
-                       damage = 0f;
-                   }
-                   damage = Mathf.Round(damage);
-                   _ingameHp -= damage;
-  
-  
-                   _floatingTextSpawner.AnimateColorGradient = redgrad;
-                   _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-  
-               }
-               else if (_category == MonsterCategory.Boss)
-               {
-                   var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 4f)) * Player.Instance._criticalDamage - (_def * 3f);
-                   if (damage <= 0f)
-                   {
-                       damage = 0f;
-                   }
-                   damage = Mathf.Round(damage);
-                   _ingameHp -= damage;
-  
-  
-                   _floatingTextSpawner.AnimateColorGradient = redgrad;
-                   _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-                   GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
-               }
-  
-           }
-           else if (rand >= Player.Instance._criticalProbability)
-           {
-               if (_category == MonsterCategory.Common)
-               {
-                   var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 4f) - (_def * 3f);
-                   if (damage <= 0f)
-                   {
-                       damage = 0f;
-                   }
-                   damage = Mathf.Round(damage);
-                   _ingameHp -= damage;
-                   _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                   _mmfPlayer.PlayFeedbacks(transform.position, damage);
-               }
-  
-               else if (_category == MonsterCategory.Boss)
-               {
-  
-                   var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 4f) - (_def * 3f);
-                   if (damage <= 0f)
-                   {
-                       damage = 0f;
-                   }
-                   damage = Mathf.Round(damage);
-                   _ingameHp -= damage;
-                   _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                   _mmfPlayer.PlayFeedbacks(transform.position, damage);
-                   GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
-               }
-  
-  
-           }
-           int _30 = Random.Range(0, 3); // 30퍼확률로 빙결
-  
-           StartCoroutine(CoHit());
-           if (_30 == 0)
-           {
-               Freezing();
-  
-           }
-       }
-       else if (other.CompareTag("FireBall"))
-       {
-           // ChangeState(State.Hit);
-           int rand = Random.Range(0, 100);
-  
-  
-  
-           if (rand < Player.Instance._criticalProbability)
-           {
-  
-               if (_category == MonsterCategory.Common)
-               {
-  
-                   var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
-                   if (damage <= 0f)
-                   {
-                       damage = 0f;
-                   }
-                   damage = Mathf.Round(damage);
-                   _ingameHp -= damage;
-  
-  
-                   _floatingTextSpawner.AnimateColorGradient = redgrad;
-                   _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-  
-               }
-               else if (_category == MonsterCategory.Boss)
-               {
-                   var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
-                   if (damage <= 0f)
-                   {
-                       damage = 0f;
-                   }
-                   damage = Mathf.Round(damage);
-                   _ingameHp -= damage;
-  
-  
-                   _floatingTextSpawner.AnimateColorGradient = redgrad;
-                   _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-                   GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
-               }
-  
-           }
-           else if (rand >= Player.Instance._criticalProbability)
-           {
-               if (_category == MonsterCategory.Common)
-               {
-                   var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5f) - (_def * 3f);
-                   if (damage <= 0f)
-                   {
-                       damage = 0f;
-                   }
-                   damage = Mathf.Round(damage);
-                   _ingameHp -= damage;
-                   _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                   _mmfPlayer.PlayFeedbacks(transform.position, damage);
-               }
-  
-               else if (_category == MonsterCategory.Boss)
-               {
-  
-                   var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5f) - (_def * 3f);
-                   if (damage <= 0f)
-                   {
-                       damage = 0f;
-                   }
-                   damage = Mathf.Round(damage);
-                   _ingameHp -= damage;
-                   _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                   _mmfPlayer.PlayFeedbacks(transform.position, damage);
-                   GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
-               }
-  
-  
-           }
-           StartCoroutine(CoHit());
-           int _30 = Random.Range(0, 3);
-           if (_30 == 0)
-           {
-               Burn();
-           }
-       }
-       else if (other.CompareTag("Thunder"))
-       {
-           // ChangeState(State.Hit);
-           int rand = Random.Range(0, 100);
-  
-  
-  
-           if (rand < Player.Instance._criticalProbability)
-           {
-  
-               if (_category == MonsterCategory.Common)
-               {
-  
-                   var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
-                   if (damage <= 0f)
-                   {
-                       damage = 0f;
-                   }
-                   damage = Mathf.Round(damage);
-                   _ingameHp -= damage;
-  
-  
-                   _floatingTextSpawner.AnimateColorGradient = redgrad;
-                   _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-  
-               }
-               else if (_category == MonsterCategory.Boss)
-               {
-                   var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
-                   if (damage <= 0f)
-                   {
-                       damage = 0f;
-                   }
-                   damage = Mathf.Round(damage);
-                   _ingameHp -= damage;
-  
-  
-                   _floatingTextSpawner.AnimateColorGradient = redgrad;
-                   _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-                   GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
-               }
-  
-           }
-           else if (rand >= Player.Instance._criticalProbability)
-           {
-               if (_category == MonsterCategory.Common)
-               {
-                   var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5f) - (_def * 3f);
-                   if (damage <= 0f)
-                   {
-                       damage = 0f;
-                   }
-                   damage = Mathf.Round(damage);
-                   _ingameHp -= damage;
-                   _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                   _mmfPlayer.PlayFeedbacks(transform.position, damage);
-               }
-  
-               else if (_category == MonsterCategory.Boss)
-               {
-  
-                   var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5f) - (_def * 3f);
-                   if (damage <= 0f)
-                   {
-                       damage = 0f;
-                   }
-                   damage = Mathf.Round(damage);
-                   _ingameHp -= damage;
-                   _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                   _mmfPlayer.PlayFeedbacks(transform.position, damage);
-                   GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
-               }
-  
-  
-           }
-           StartCoroutine(CoHit());
-       }
-       else if (other.CompareTag("Meteor"))
-       {
+
+
+
+            if (rand < Player.Instance._criticalProbability)
+            {
+
+                if (_category == MonsterCategory.Common)
+                {
+
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 4f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
+                    _ingameHp -= damage;
+
+
+                    _floatingTextSpawner.AnimateColorGradient = redgrad;
+                    _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                    StartCoroutine(CoHit());
+
+                }
+                else if (_category == MonsterCategory.Boss)
+                {
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 4f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
+                    _ingameHp -= damage;
+
+
+                    _floatingTextSpawner.AnimateColorGradient = redgrad;
+                    _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                    GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                    StartCoroutine(CoHit());
+                }
+
+            }
+            else if (rand >= Player.Instance._criticalProbability)
+            {
+                if (_category == MonsterCategory.Common)
+                {
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 4f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
+                    _ingameHp -= damage;
+                    _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                    _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                    StartCoroutine(CoHit());
+                }
+
+                else if (_category == MonsterCategory.Boss)
+                {
+
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 4f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
+                    _ingameHp -= damage;
+                    _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                    _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                    GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                    StartCoroutine(CoHit());
+                }
+
+
+            }
+            int _30 = Random.Range(0, 3); // 30퍼확률로 빙결
+
+            if (_30 == 0)
+            {
+                Freezing();
+
+            }
+        }
+        else if (other.CompareTag("FireBall"))
+        {
+            // ChangeState(State.Hit);
+            int rand = Random.Range(0, 100);
+
+
+
+            if (rand < Player.Instance._criticalProbability)
+            {
+
+                if (_category == MonsterCategory.Common)
+                {
+
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
+                    _ingameHp -= damage;
+
+
+                    _floatingTextSpawner.AnimateColorGradient = redgrad;
+                    _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                    StartCoroutine(CoHit());
+
+                }
+                else if (_category == MonsterCategory.Boss)
+                {
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
+                    _ingameHp -= damage;
+
+
+                    _floatingTextSpawner.AnimateColorGradient = redgrad;
+                    _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                    GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                    StartCoroutine(CoHit());
+                }
+
+            }
+            else if (rand >= Player.Instance._criticalProbability)
+            {
+                if (_category == MonsterCategory.Common)
+                {
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
+                    _ingameHp -= damage;
+                    _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                    _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                    StartCoroutine(CoHit());
+                }
+
+                else if (_category == MonsterCategory.Boss)
+                {
+
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
+                    _ingameHp -= damage;
+                    _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                    _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                    GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                    StartCoroutine(CoHit());
+                }
+
+
+            }
+            int _30 = Random.Range(0, 3);
+            if (_30 == 0)
+            {
+                Burn();
+            }
+        }
+        else if (other.CompareTag("Thunder"))
+        {
+            // ChangeState(State.Hit);
+            int rand = Random.Range(0, 100);
+
+
+
+            if (rand < Player.Instance._criticalProbability)
+            {
+
+                if (_category == MonsterCategory.Common)
+                {
+
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
+                    _ingameHp -= damage;
+
+
+                    _floatingTextSpawner.AnimateColorGradient = redgrad;
+                    _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                    StartCoroutine(CoHit());
+
+                }
+                else if (_category == MonsterCategory.Boss)
+                {
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 5f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
+                    _ingameHp -= damage;
+
+
+                    _floatingTextSpawner.AnimateColorGradient = redgrad;
+                    _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                    GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                    StartCoroutine(CoHit());
+                }
+
+            }
+            else if (rand >= Player.Instance._criticalProbability)
+            {
+                if (_category == MonsterCategory.Common)
+                {
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
+                    _ingameHp -= damage;
+                    _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                    _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                    StartCoroutine(CoHit());
+                }
+
+                else if (_category == MonsterCategory.Boss)
+                {
+
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 5f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
+                    _ingameHp -= damage;
+                    _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                    _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                    GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                    StartCoroutine(CoHit());
+                }
+
+
+            }
+        }
+        else if (other.CompareTag("Meteor"))
+        {
 
             if (other.GetComponent<SkillBase>() != null && _onHit == false)
             {
@@ -1504,6 +1540,7 @@ public class Monster : BaseObject
 
                         _floatingTextSpawner.AnimateColorGradient = redgrad;
                         _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                        StartCoroutine(CoHit());
 
                     }
                     else if (_category == MonsterCategory.Boss)
@@ -1520,6 +1557,7 @@ public class Monster : BaseObject
                         _floatingTextSpawner.AnimateColorGradient = redgrad;
                         _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
                         GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                        StartCoroutine(CoHit());
                     }
 
                 }
@@ -1536,6 +1574,7 @@ public class Monster : BaseObject
                         _ingameHp -= damage;
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                        StartCoroutine(CoHit());
                     }
 
                     else if (_category == MonsterCategory.Boss)
@@ -1552,30 +1591,16 @@ public class Monster : BaseObject
                         _floatingTextSpawner.AnimateColorGradient = whitegrad;
                         _mmfPlayer.PlayFeedbacks(transform.position, damage);
                         GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                        StartCoroutine(CoHit());
                     }
 
 
                 }
-                StartCoroutine(CoHit());
             }
-       }
-       else if (this.gameObject.layer == 8)
-       {
-           if (other.CompareTag("Bone"))
-           {
-               var damage = other.GetComponent<SkillBase>()._skillDamage - (_def * 3f);
-               if (damage <= 0)
-               {
-                   damage = 0f;
-               }
-               damage = Mathf.Round(damage);
-               _ingameHp -= damage;
-               _mmfPlayer.PlayFeedbacks(transform.position, damage);
-  
-  
-               other.GetComponent<SkillBase>().SkillRelease();
-           }
-           else if (other.CompareTag("Rock"))
+        }
+        else if (this.gameObject.layer == 8)
+        {
+            if (other.CompareTag("Bone"))
             {
                 var damage = other.GetComponent<SkillBase>()._skillDamage - (_def * 3f);
                 if (damage <= 0)
@@ -1585,103 +1610,118 @@ public class Monster : BaseObject
                 damage = Mathf.Round(damage);
                 _ingameHp -= damage;
                 _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                StartCoroutine(CoHit());
 
 
                 other.GetComponent<SkillBase>().SkillRelease();
             }
-         
+            else if (other.CompareTag("Rock"))
+            {
+                var damage = other.GetComponent<SkillBase>()._skillDamage - (_def * 3f);
+                if (damage <= 0)
+                {
+                    damage = 0f;
+                }
+                damage = Mathf.Round(damage);
+                _ingameHp -= damage;
+                _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                StartCoroutine(CoHit());
+
+
+                other.GetComponent<SkillBase>().SkillRelease();
+            }
+
+        }
+
+
+
+
+
+    }
+    private void OnParticleCollision(GameObject other)
+    {
+        if (other.CompareTag("FireBall"))
+        {
+            int rand = Random.Range(0, 100);
+
+
+
+            if (rand < Player.Instance._criticalProbability)
+            {
+
+                if (_category == MonsterCategory.Common)
+                {
+
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 8f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
+                    _ingameHp -= damage;
+
+
+                    _floatingTextSpawner.AnimateColorGradient = redgrad;
+                    _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+
+                }
+                else if (_category == MonsterCategory.Boss)
+                {
+                    var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 8f)) * Player.Instance._criticalDamage - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
+                    _ingameHp -= damage;
+
+
+                    _floatingTextSpawner.AnimateColorGradient = redgrad;
+                    _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                    GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                }
+
+            }
+            else if (rand >= Player.Instance._criticalProbability)
+            {
+                if (_category == MonsterCategory.Common)
+                {
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 8f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
+                    _ingameHp -= damage;
+                    _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                    _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                }
+
+                else if (_category == MonsterCategory.Boss)
+                {
+
+                    var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 8f) - (_def * 3f);
+                    if (damage <= 0f)
+                    {
+                        damage = 0f;
+                    }
+                    damage = Mathf.Round(damage);
+                    _ingameHp -= damage;
+                    _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                    _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                    GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                }
+
+
+            }
+            int _30 = Random.Range(0, 3);
             StartCoroutine(CoHit());
-       }
-  
-  
-  
-  
-  
-   }
-   private void OnParticleCollision(GameObject other)
-   {
-       if (other.CompareTag("FireBall"))
-       {
-           int rand = Random.Range(0, 100);
-  
-  
-  
-           if (rand < Player.Instance._criticalProbability)
-           {
-  
-               if (_category == MonsterCategory.Common)
-               {
-  
-                   var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 8f)) * Player.Instance._criticalDamage - (_def * 3f);
-                   if (damage <= 0f)
-                   {
-                       damage = 0f;
-                   }
-                   damage = Mathf.Round(damage);
-                   _ingameHp -= damage;
-  
-  
-                   _floatingTextSpawner.AnimateColorGradient = redgrad;
-                   _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-  
-               }
-               else if (_category == MonsterCategory.Boss)
-               {
-                   var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 8f)) * Player.Instance._criticalDamage - (_def * 3f);
-                   if (damage <= 0f)
-                   {
-                       damage = 0f;
-                   }
-                   damage = Mathf.Round(damage);
-                   _ingameHp -= damage;
-  
-  
-                   _floatingTextSpawner.AnimateColorGradient = redgrad;
-                   _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
-                   GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
-               }
-  
-           }
-           else if (rand >= Player.Instance._criticalProbability)
-           {
-               if (_category == MonsterCategory.Common)
-               {
-                   var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 8f) - (_def * 3f);
-                   if (damage <= 0f)
-                   {
-                       damage = 0f;
-                   }
-                   damage = Mathf.Round(damage);
-                   _ingameHp -= damage;
-                   _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                   _mmfPlayer.PlayFeedbacks(transform.position, damage);
-               }
-  
-               else if (_category == MonsterCategory.Boss)
-               {
-  
-                   var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 8f) - (_def * 3f);
-                   if (damage <= 0f)
-                   {
-                       damage = 0f;
-                   }
-                   damage = Mathf.Round(damage);
-                   _ingameHp -= damage;
-                   _floatingTextSpawner.AnimateColorGradient = whitegrad;
-                   _mmfPlayer.PlayFeedbacks(transform.position, damage);
-                   GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
-               }
-  
-  
-           }
-           int _30 = Random.Range(0, 3);
-           StartCoroutine(CoHit());
-           if (_30 == 0)
-           {
-               Burn();
-           }
-       }
-   }
+            if (_30 == 0)
+            {
+                Burn();
+            }
+        }
+    }
 
 
 
