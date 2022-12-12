@@ -459,6 +459,7 @@ public class GamePlay : MonoBehaviour
     {
         if(obj._monster != Monster.MonsterKind.None)
         obj.gameObject.layer = 6;
+
         obj._floatingTextSpawner.Channel = _spawnChannelCount;
         obj._mmfPlayer.FeedbacksList[0].Channel = _spawnChannelCount;
         obj._mmfPlayer.Initialization();
@@ -1062,7 +1063,7 @@ public class GamePlay : MonoBehaviour
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Zeus)
         {
             _skill1Image.sprite = _listSkillIcon[19].sprite;
-            _skill1Text.text = "번개 전이횟수 증가";
+            _skill1Text.text = "번개 \n 전이횟수 증가";
             _skill2Image.sprite = _listSkillIcon[1].sprite;
             _skill2Text.text = "마력 증가";
             _skill3Image.sprite = _listSkillIcon[3].sprite;
@@ -1080,7 +1081,7 @@ public class GamePlay : MonoBehaviour
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Stranger)
         {
             _skill1Image.sprite = _listSkillIcon[20].sprite;
-            _skill1Text.text = "블랙홀마법 확률 증가";
+            _skill1Text.text = "블랙홀마법 \n 확률 증가";
             _skill2Image.sprite = _listSkillIcon[1].sprite;
             _skill2Text.text = "마력 증가";
             _skill3Image.sprite = _listSkillIcon[3].sprite;
@@ -1154,7 +1155,7 @@ public class GamePlay : MonoBehaviour
             _skill1Image.sprite = _listSkillIcon[8].sprite;
             _skill1Text.text = "빙결 확률 증가";
             _skill2Image.sprite = _listSkillIcon[0].sprite;
-            _skill2Text.text = "고유스킬 범위 증가";
+            _skill2Text.text = "고유스킬 \n 범위 증가";
             _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
@@ -1197,7 +1198,7 @@ public class GamePlay : MonoBehaviour
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Dosa)
         {
             _skill1Image.sprite = _listSkillIcon[27].sprite;
-            _skill1Text.text = "분신 등장 확률 증가";
+            _skill1Text.text = "분신 등장 \n확률 증가";
             _skill2Image.sprite = _listSkillIcon[26].sprite;
             _skill2Text.text = "분신 지능 상승";
             _skill3Image.sprite = _listSkillIcon[3].sprite;
@@ -1208,7 +1209,7 @@ public class GamePlay : MonoBehaviour
             _skill1Image.sprite = _listSkillIcon[17].sprite;
             _skill1Text.text = "능력치 증가";
             _skill2Image.sprite = _listSkillIcon[24].sprite;
-            _skill2Text.text = "좋은 능력치 가져올 확률 증가";
+            _skill2Text.text = "좋은 능력치 \n 가져올 확률 증가";
             _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }
@@ -1224,7 +1225,7 @@ public class GamePlay : MonoBehaviour
         else if (Player.Instance._playerTitle == Player.PlayerTitle.Orpheus)
         {
             _skill1Image.sprite = _listSkillIcon[25].sprite;
-            _skill1Text.text = "공격력감소버프 강화";
+            _skill1Text.text = "공격력감소버프\n 강화";
             _skill2Image.sprite = _listSkillIcon[2].sprite;
             _skill2Text.text = "공격력 증가";
             _skill3Image.sprite = _listSkillIcon[3].sprite;
@@ -1233,9 +1234,9 @@ public class GamePlay : MonoBehaviour
         else if (Player.Instance._playerTitle == Player.PlayerTitle.DokeV)
         {
             _skill1Image.sprite = _listSkillIcon[24].sprite;
-            _skill1Text.text = "고유스킬 확률 증가";
+            _skill1Text.text = "고유스킬 \n 확률 증가";
             _skill2Image.sprite = _listSkillIcon[24].sprite;
-            _skill2Text.text = "훔쳐오는 능력치 추가 획득";
+            _skill2Text.text = "훔쳐오는 능력치\n 추가 획득";
             _skill3Image.sprite = _listSkillIcon[3].sprite;
             _skill3Text.text = "체력 회복";
         }

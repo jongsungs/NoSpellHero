@@ -29,7 +29,6 @@ public class RFX4_DeactivateByTime : MonoBehaviour {
         {
             isActiveState = false;
             DeactivatedGameObject.SetActive(false);
-            Debug.Log(currentTime);
         }
 
     }

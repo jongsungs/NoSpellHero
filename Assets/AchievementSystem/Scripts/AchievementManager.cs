@@ -188,6 +188,7 @@ public class AchievementManager : MonoBehaviour
     {
         if (AchievementList[Index].Progression)
         {
+            States[Index].Progress = 0;
             if (States[Index].Progress + Progress >= AchievementList[Index].ProgressGoal)
             {
                 Unlock(Index);

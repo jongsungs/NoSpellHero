@@ -9970,6 +9970,7 @@ MonoBehaviour:
   _followCamera: {fileID: 0}
   _listWeapon: []
   _weapon: {fileID: 0}
+  _helenDistance: 0
   _isIdle: 1
   _playerTitle: 3
   _listState: []
@@ -57179,28 +57180,25 @@ MonoBehaviour:
   States:
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
-  - Progress: 0
-    LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
@@ -57233,46 +57231,46 @@ MonoBehaviour:
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
-  - Progress: 0
+    Achieved: 1
+  - Progress: 3
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
@@ -57287,91 +57285,91 @@ MonoBehaviour:
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
@@ -57380,7 +57378,7 @@ MonoBehaviour:
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
@@ -57389,22 +57387,22 @@ MonoBehaviour:
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
@@ -57413,16 +57411,16 @@ MonoBehaviour:
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
@@ -57434,7 +57432,7 @@ MonoBehaviour:
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
@@ -57446,10 +57444,13 @@ MonoBehaviour:
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
+  - Progress: 231
+    LastProgressUpdate: 9
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
@@ -57458,22 +57459,22 @@ MonoBehaviour:
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
@@ -57482,25 +57483,25 @@ MonoBehaviour:
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
@@ -57515,29 +57516,29 @@ MonoBehaviour:
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
+    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 0
-  - Progress: 0
+    Achieved: 1
+  - Progress: 2
     LastProgressUpdate: 0
     Achieved: 0
   AchievementList:
@@ -58932,7 +58933,7 @@ MonoBehaviour:
     Spoiler: 0
     Progression: 1
     ProgressGoal: 50
-    NotificationFrequency: 0
+    NotificationFrequency: 5
     ProgressSuffix: 
   UseFinalAchievement: 0
   FinalAchievementKey: 

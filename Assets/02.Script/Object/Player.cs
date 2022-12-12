@@ -608,6 +608,7 @@ public class Player : BaseObject
     PlayerData _data;
     public List<Weapon> _listWeapon = new List<Weapon>();
     public Weapon _weapon;
+    public float _helenDistance;
 
     
     public bool _isIdle = true;
@@ -951,10 +952,9 @@ public class Player : BaseObject
             getzeus,zeusskill1first,zeushidden,getpracticebug,practicebugskill1full,practicebugskill2full,getstranger,strangerfirstskill,stangerskill100,getqrf,qrfputhanger,qrfhidden,getservant,servantskill1first,servanthidden,getathlete,ahleteskill2full,ahleteclear,getversatile,versatilehidden,getacupuncturist,acupuncturistfirstskill,acupuncturistcritical,acupuncturistskill2full,acupuncturistclear,getspoonkiller,spoonkillerskill1full,spoonkillerskill2full,spoonkillerclear,gethelen,helenskill100,helenhidden,helenstage1die,helenclear,getrich,richget1000gold,getswell,swellskill1full,swellclear,getdelivery,deliveryskill1full,
             deliveryclear,getrepairman,repairmanhidden,repairmanclear,getdosa,dosafirstskill,dosaskilldie20,dosahidden,getgambler,gamblerlose,gamblerwin,gamblerskill2,getslowstarter,slowstarterclear,getorpheus,orpheusskill1full,orpheusfirstdie,getdokev,dokevfirstskill,dokevhidden,dokevhidden50,statlv5,stage1clear,stage2clear,_totalCreepScore,_jackfrostScore,_druidScore,_strangerblackholeScore,_helenScore,_dosaDieAvatar,_dokevHiddenSkillScore,_gold,_stat,_effectSound,_bgmSound);
         
-        _preSpeed = _speed + 1f;
+       
 
-        _ingameHp = 200f + (_hp * 10f);
-        _maxHp = 200f + (_hp * 10f);
+        
         _basicHp = _hp;
         _basicAtk = _atk;
         _basicMatk = _matk;
@@ -967,6 +967,7 @@ public class Player : BaseObject
         _basicCriticalDamage = _criticalDamage;
         _criticalProbability = _critical * 15f;
         _criticalDamage = 2f;
+        _preSpeed = (_speed * 0.7f) + 1f;
         _isDead = false;
         if(_weapon != null)
         _spellCastProbability = 10 + _weapon._spellProbability;
@@ -1198,9 +1199,11 @@ public class Player : BaseObject
         {
             ChangeTitle(_playerTitle);
             SoundManager.Instance.BGMPlay(SoundManager.Instance._gamePlayBgm);
+         
         }
-        
-        
+        _ingameHp = 200f + (_hp * 10f);
+        _maxHp = 200f + (_hp * 10f);
+        _helenDistance = 2f;
 
     }
 
@@ -1249,14 +1252,28 @@ public class Player : BaseObject
         }
         if(_playerTitle == PlayerTitle.Berserker)
         {
-            if (_ingameHp <= (_maxHp * (0.25f + _skill1 / 20f)))
+            if(_skill2 <3)
             {
-                _atk = (_basicAtk * 2f) + (_basicAtk * _skill2 / 10f);
+
+                if (_ingameHp <= (_maxHp * (0.2f + _skill1 / 20f)))
+                {
+                    _atk = (_basicAtk * 2f) + (_basicAtk * _skill2 / 10f);
+                }
             }
         }
+        if (_playerTitle == PlayerTitle.Warlock)
+        {
+            
 
-      
-       if(Input.GetKeyDown(KeyCode.K))
+                if (_ingameHp <= (_maxHp * (0.2f + _skill1 / 20f)))
+                {
+                    _matk = (_basicMatk * 2f) + (_basicMatk * _skill2 / 10f);
+                }
+            
+        }
+
+
+        if (Input.GetKeyDown(KeyCode.K))
         {
             Meteor();
         }
@@ -1287,12 +1304,12 @@ public class Player : BaseObject
             }
             else if (variableJoystick._isStop  && _isAttack == false)
             {
-                _basicSpeed = 0f;
+                _speed = 0f;
                ChangeState(State.Idle);
             }
             else if (variableJoystick._isStop == false)
             {
-                _basicSpeed = _preSpeed;
+                _speed = _preSpeed;
                ChangeState(State.Walk);
             }
            
@@ -1350,7 +1367,7 @@ public class Player : BaseObject
             if (_skill1 >= 3)
             {
                 achivementCheck(jackfrosthidden, "jackfrosthidden");
-                rand = UnityEngine.Random.Range(0, 10);
+                rand = UnityEngine.Random.Range(0, 5);
                 if (rand == 0 && GamePlay.Instance._isBlizzard == false)
                 {
                     StartCoroutine(Blizzard());
@@ -1475,6 +1492,7 @@ public class Player : BaseObject
             if (rand == 0)
             {
                 _ingameHp += _maxHp / 10f + (_maxHp / (10 - (_skill1 * 2)));
+                GamePlay.Instance._playerHp.UpdateBar(_ingameHp, 0, _maxHp);
                 Heal();
             }
           
@@ -1504,7 +1522,7 @@ public class Player : BaseObject
         else if (_playerTitle == PlayerTitle.DokeV)
         {
             rand = UnityEngine.Random.Range(0, 100);
-            if(rand < _dokevSkillProbability)
+            if(rand < _dokevSkillProbability && _skill1 >= 3)
             {
                 //몬스터 마법 실행
 
@@ -1558,16 +1576,17 @@ public class Player : BaseObject
         {
             case State.Idle:
                 Vector3 direction = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
-                _rigidbody.velocity = (direction * ((1f + _basicSpeed) * 50f) * Time.fixedDeltaTime);
+                _rigidbody.velocity = (direction * ((1f + _speed) * 50f) * Time.fixedDeltaTime);
                 m_transform.transform.rotation = Quaternion.LookRotation(direction);
                 m_transform.transform.Translate(Vector3.forward * _rotateSpeed * Time.deltaTime);
-            
+
+                _isAttack = false;
 
                 break;
             case State.Walk:
               
                     Vector3 direction2 = Vector3.forward * variableJoystick.Vertical + Vector3.right * variableJoystick.Horizontal;
-                    _rigidbody.velocity = (direction2 * ((1f + _basicSpeed) * 50f) * Time.fixedDeltaTime);
+                    _rigidbody.velocity = (direction2 * ((1f + _speed) * 50f) * Time.fixedDeltaTime);
                     m_transform.transform.rotation = Quaternion.LookRotation(direction2);
                     m_transform.transform.Translate(Vector3.forward * _rotateSpeed * Time.deltaTime);
              
@@ -1725,7 +1744,7 @@ public class Player : BaseObject
                 break;
             case PlayerTitle.Berserker:
                 //업데이트
-
+                //////ggggggggggggggg
 
                 _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
                 if(_skill1 >= 3)
@@ -1738,8 +1757,9 @@ public class Player : BaseObject
                 {
                     achivementCheck(berserkerhidden, "berserkerhidden");
                     berserkerhidden = true;
-                    _maxHp = _basicHp * 0.2f;
+                    _maxHp = (200f + (_hp * 10f)) * 0.2f;
                     _atk = (_basicAtk * 2f) + (_basicAtk * 2f);
+
                 }
                 
 
@@ -1755,7 +1775,7 @@ public class Player : BaseObject
                 
                 _criticalProbability = 100f;
                 _criticalDamage = _basicCriticalDamage + (_basicCriticalDamage * _skill1 / 10f);
-                _atk = (_basicAtk * 0.3f) + (_basicAtk * _skill2 / 10f);
+                _atk = (_basicAtk * 0.7f) + (_basicAtk * _skill2 / 10f);
 
 
                 break;
@@ -1776,7 +1796,7 @@ public class Player : BaseObject
                 break;
 
             case PlayerTitle.Ambidextrous:
-                _atkSpeed += _basicAtkSpeed + (_basicAtkSpeed * 0.5f) + (_basicAtkSpeed * _skill1 / 10f);
+                _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * 0.5f) + (_basicAtkSpeed * _skill1 / 10f);
                 _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
                 break;
             case PlayerTitle.LuBu:
@@ -1810,7 +1830,7 @@ public class Player : BaseObject
                 }
 
                 _spellCastProbability = 50 + _weapon._spellProbability;
-                _maxHp = 50f + (_hp * 10f);
+                _maxHp = 200f + (_hp * 10f);
 
                 break;
             case PlayerTitle.Priest:
@@ -1848,7 +1868,9 @@ public class Player : BaseObject
                     achivementCheck(zeusskill1first, "zeusskill1first");
                     zeusskill1first = true;
                 }
-
+                _iceBallProbability = 0f;
+                _chainLightProbability = 100f;
+                _fireBallProbability = 0f;
 
                 _jumpStack = 5 + _skill1;
                 _matk = _basicMatk + (_basicMatk * _skill2 / 10f);
@@ -1883,7 +1905,7 @@ public class Player : BaseObject
                 break;
             case PlayerTitle.Cook:
                 _atk = _basicAtk + (_basicAtk * _skill1 / 10f);
-
+                _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill3 / 10f);
                
                 break;
             case PlayerTitle.QRF:
@@ -1905,7 +1927,7 @@ public class Player : BaseObject
                 _atkSpeed = _basicAtkSpeed * (_basicAtkSpeed * _skill2 / 10f);
 
 
-                _maxHp = 50f + (_hp * 10f);
+                _maxHp = 200f + (_hp * 10f);
                 break;
             case PlayerTitle.Athlete:
 
@@ -1918,12 +1940,12 @@ public class Player : BaseObject
                 _hp = _basicHp + (_basicHp * 0.3f) + (_basicHp * _skill2 / 10f);
                 _speed = _basicSpeed + (_basicSpeed * 0.2f);
 
-                _maxHp = 50f + (_hp * 10f);
+                _maxHp = 200f + (_hp * 10f);
                 break;
             case PlayerTitle.Versatile:
 
 
-                _weapon._damage = _weapon._basicDamage * 2f + (_weapon._basicDamage + _skill1 / 10f);
+                _weapon._damage = _weapon._basicDamage * 2f + (_weapon._basicDamage * _skill1 / 10f);
 
 
                 _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * _skill2 / 10f);
@@ -1962,9 +1984,8 @@ public class Player : BaseObject
 
                 break;
             case PlayerTitle.Helen:
-                StopCoroutine(IceAge());
-
-
+              
+                if(_skill1 == 0 && _skill2 == 0&& _skill3 == 0)
                 StartCoroutine(IceAge());
 
                 break;
@@ -1998,7 +2019,7 @@ public class Player : BaseObject
                 _handicraft = _basicHandicraft + (_basicHandicraft * 0.2f) + (_basicHandicraft * _skill1 / 10f);
                 _charm = _basicCharm + (_basicCharm * 0.2f) + (_basicCharm * _skill1 / 10f);
 
-                _maxHp = 50f + (_hp * 10f);
+                _maxHp = 200 + (_hp * 10f);
                 _criticalProbability = _critical * 15f;
                 if (_criticalProbability >= 100)
                 {
@@ -2030,11 +2051,12 @@ public class Player : BaseObject
                 }
                 break;
             case PlayerTitle.Repairman:
-                StopCoroutine(HealingFactor());
+                
                 
 
                 _atk = _basicAtk + (_basicAtk * _skill2 / 10f);
                
+                if(_skill1 == 0 && _skill2 == 0 && _skill3 == 0)
                     StartCoroutine(HealingFactor());
 
                 break;
@@ -2051,24 +2073,25 @@ public class Player : BaseObject
                 //완료
                 break;
             case PlayerTitle.SlowStarter:
-                _hp = _basicHp + (_basicHp * 0.2f) + (_basicHp * _skill1 / 10f);
-                _atk = _basicAtk + (_basicAtk * 0.2f) + (_basicAtk * _skill1 / 10f);
-                _matk = _basicMatk + (_basicMatk * 0.2f) + (_basicMatk * _skill1 / 10f);
-                _atkSpeed = _basicAtkSpeed + (_basicAtkSpeed * 0.2f) + (_basicAtkSpeed * _skill1 / 10f); ;
-                _def = _basicDef + (_basicDef * 0.2f) + (_basicDef * _skill1 / 10f);
-                _speed = _basicSpeed + (_basicSpeed * 0.2f) + (_basicSpeed * _skill1 / 10f);
-                _critical = _basicCritical + (_basicCritical * 0.2f) + (_basicCritical * _skill1 / 10f);
-                _handicraft = _basicHandicraft + (_basicHandicraft * 0.2f) + (_basicHandicraft * _skill1 / 10f);
-                _charm = _basicCharm + (_basicCharm * 0.2f) + (_basicCharm * _skill1 / 10f);
+                _hp += 1 + (_skill1 / 5f);
+                _atk += 1 + (_skill1 / 5f);
+                _matk += 1 + ( _skill1 / 5f);
+                _atkSpeed += 1 + ( _skill1 / 5f); ;
+                _def += 1 + (_skill1 / 5f);
+                _speed += 1  + ( _skill1 / 5f);
+                _critical += 1  + (_skill1 / 5f);
+                _handicraft += 1  + ( _skill1 / 5f);
+                _charm += 1  + (_skill1 / 5f);
 
-                _maxHp = 50f + (_hp * 10f); _criticalProbability = _critical * 15f;
+                _maxHp = 200 + (_hp * 10f); 
+                _criticalProbability = _critical * 15f;
                 if (_criticalProbability >= 100)
                 {
                     _criticalProbability = 100;
                 }
                 break;
             case PlayerTitle.Orpheus:
-                StopCoroutine(MonsterAtkDown());
+               
 
                 _atk = _basicAtk + (_basicAtk + _skill2 / 10f);
                 if(orpheusskill1full == false)
@@ -2076,8 +2099,11 @@ public class Player : BaseObject
                     orpheusskill1full = true;
                     AchievementManager.instance.Unlock("orpheusskill1full");
                 }
+                if(_skill1 == 0 && _skill2 == 0 && _skill3 == 0)
+                {
+                    StartCoroutine(MonsterAtkDown());
 
-                StartCoroutine(MonsterAtkDown());
+                }
                 break;
             case PlayerTitle.DokeV:
                 _dokevSkillProbability = 10 + (_skill1 * 5);
@@ -2138,11 +2164,7 @@ public class Player : BaseObject
                 break;
             case PlayerTitle.Berserker:
                 //한번
-                if(_skill2 >= 3)
-                {
-                    _maxHp = _basicHp * 0.2f;
-                    _atk = (_basicAtk * 2f) + (_basicAtk * 2f);
-                }
+                
                 break;
             case PlayerTitle.Critialer:
                 break;
@@ -2169,8 +2191,8 @@ public class Player : BaseObject
                 {
                     achivementCheck(healthmagicianhidden, "healthmagicianhidden");
                     healthmagicianhidden = true;
-                    _matk = (_maxHp / 10f) + _basicMatk;
-                    _atk = (_maxHp / 10f) + _basicAtk;
+                    _matk = (_maxHp / 20f) + _basicMatk;
+                    _atk = (_maxHp / 20f) + _basicAtk;
                    
                 }
                 break;
@@ -2188,7 +2210,7 @@ public class Player : BaseObject
                 break;
             case PlayerTitle.Warlock:
                 //한번
-                if (_skill2 >= 3)
+                if (_skill1 >= 3)
                 {
                     achivementCheck(warlcokhidden, "warlcokhidden");
                     warlcokhidden = true;
@@ -2229,10 +2251,7 @@ public class Player : BaseObject
                 }
                 break;
             case PlayerTitle.QRF:
-                if (_skill2 >= 3)
-                {
-                    //공격시 스턴 구현 완료
-                }
+          
 
                 break;
             case PlayerTitle.Servant:
@@ -2352,14 +2371,14 @@ public class Player : BaseObject
                 {
                     Meteor();
                 }
-                if (_comboMeteor.Count >= 3 && _comboPristHeal.Exists(x => x < _meteorProbablility) == false && salamandermeteor3 == false)
+                if (_comboMeteor.Count >= 3 && _comboMeteor.Exists(x => x < _meteorProbablility) == false && salamandermeteor3 == false)
                 {
                     achivementCheck(salamandermeteor3, "salamandermeteor3");
                     salamandermeteor3 = true;
                 }
-                if (_comboPristHeal.Exists(x => x > _meteorProbablility) == true)
+                if (_comboMeteor.Exists(x => x > _meteorProbablility) == true)
                 {
-                    _comboPristHeal.Clear();
+                    _comboMeteor.Clear();
                 }
 
 
@@ -2408,13 +2427,13 @@ public class Player : BaseObject
 
                     for (int i = 0; i < _jumpStack; ++i)
                     {
-                        if (targets[i] != null && targets.Length >= _jumpStack)
+                        if (targets[i].GetComponent<Monster>() != null && targets.Length >= _jumpStack)
                         {
                             _listMonster.Add(targets[i].GetComponent<Monster>());
 
 
                         }
-                        else if (targets[i] != null && targets.Length < _jumpStack)
+                        else if (targets[i].GetComponent<Monster>() != null && targets.Length < _jumpStack)
                         {
                             _jumpStack = targets.Length;
                             _listMonster.Add(targets[i].GetComponent<Monster>());
@@ -2539,13 +2558,13 @@ public class Player : BaseObject
                 {
                     for (int i = 0; i < targets.Length; ++i)
                     {
-                        if (targets[i] != null && targets.Length >= _jumpStack)
+                        if (targets[i].GetComponent<Monster>() != null && targets.Length >= _jumpStack)
                         {
                             _listMonster.Add(targets[i].GetComponent<Monster>());
 
 
                         }
-                        else if (targets[i] != null && targets.Length < _jumpStack)
+                        else if (targets[i].GetComponent<Monster>() != null && targets.Length < _jumpStack)
                         {
                             _jumpStack = targets.Length;
                             _listMonster.Add(targets[i].GetComponent<Monster>());
@@ -2687,8 +2706,9 @@ public class Player : BaseObject
 
                     for (int i = 0; i < _jumpStack; ++i)
                     {
-                        if (targets[i] != null )
+                        if (targets[i].GetComponent<Monster>() != null )
                         {
+                            
                             _listMonster2.Add(targets[i].GetComponent<Monster>());
 
 
@@ -2808,7 +2828,7 @@ public class Player : BaseObject
                 {
                     for (int i = 0; i < targets.Length; ++i)
                     {
-                        if (targets[i] != null )
+                        if (targets[i].GetComponent<Monster>() != null)
                         {
                             _listMonster2.Add(targets[i].GetComponent<Monster>());
 
@@ -2952,13 +2972,16 @@ public class Player : BaseObject
 
         for(int i = 0; i < targets.Length; ++i)
         {
+            if(targets[i].GetComponent<Monster>() != null)
             _listBlizzardMonster.Add(targets[i].GetComponent<Monster>());
         }
 
         for(int i = 0; i < _listBlizzardMonster.Count; ++i)
         {
             _listBlizzardMonster[i].Freezing();
-            _listBlizzardMonster[i]._ingameHp -= (_atk + _weapon._damage) /2f;
+            var damage = (_atk + _weapon._damage);
+            _listBlizzardMonster[i]._ingameHp -= damage;
+            _listBlizzardMonster[i]._mmfPlayer.PlayFeedbacks(this.transform.position, damage);
         }
 
         yield return new WaitForSeconds(4f);
@@ -2970,7 +2993,7 @@ public class Player : BaseObject
     public void Roar()
     {
 
-    //    achivementCheck(zhangfeiroar, "zhangfeiroar");
+        achivementCheck(zhangfeiroar, "zhangfeiroar");
 
         GamePlay.Instance._roarPool.Get();
         SoundManager.Instance.EffectPlay(SoundManager.Instance._meteorex);
@@ -2988,6 +3011,7 @@ public class Player : BaseObject
 
         for(int i = 0; i < targets.Length; ++i)
         {
+            if(targets[i].GetComponent<Monster>() != null)
             _listBlizzardMonster.Add(targets[i].GetComponent<Monster>());
         }
 
@@ -2999,7 +3023,7 @@ public class Player : BaseObject
         }
 
 
-       // _listBlizzardMonster.Clear();
+        _listBlizzardMonster.Clear();
 
     }
 
@@ -3027,12 +3051,21 @@ public class Player : BaseObject
     }
     public IEnumerator Immolation()
     {
+
+
+
         while(true)
         {
             var obj = Physics.OverlapSphere(m_transform.position, m_viewDistance, m_targetMask);
             for(int i = 0; i < obj.Length; ++i)
             {
-                obj[i].GetComponent<Monster>()._ingameHp -= _matk / 2f; 
+                if(obj[i].GetComponent<Monster>() != null)
+                {
+                    var damage = _matk * 2f;
+                    obj[i].GetComponent<Monster>()._ingameHp -= damage;
+                    obj[i].GetComponent<Monster>()._mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+
+                }
             }
 
             yield return new WaitForSeconds(1f);
@@ -3051,18 +3084,23 @@ public class Player : BaseObject
         while (true)
         {
 
-            var obj = Physics.OverlapSphere(m_transform.position, m_viewDistance, m_targetMask);
+            var obj = Physics.OverlapSphere(m_transform.position, _helenDistance + _skill2, m_targetMask);
             for (int i = 0; i < obj.Length; ++i)
             {
                 int rand = UnityEngine.Random.Range(0, 10);
-                if (rand >= 3 - _skill1)
+                if (rand >= 8 - _skill1)
                 {
+                    if(obj[i].GetComponent<Monster>() != null)
                     obj[i].GetComponent<Monster>().Freezing();
                 }
                 if(_skill2 >= 3)
                 {
-
-                    obj[i].GetComponent<Monster>()._ingameHp -= _atk;
+                    if (obj[i].GetComponent<Monster>() != null)
+                    {
+                        var damage = _atk * 2f;
+                        obj[i].GetComponent<Monster>()._ingameHp -= damage;
+                        obj[i].GetComponent<Monster>()._mmfPlayer.PlayFeedbacks(transform.position, damage);
+                    }
                 }
 
             }
@@ -3082,8 +3120,11 @@ public class Player : BaseObject
             for (int i = 0; i < obj.Length; ++i)
             {
 
+                if(obj[i].GetComponent<Monster>() != null)
+                {
+                    obj[i].GetComponent<Monster>()._atk = obj[i].GetComponent<Monster>()._basicAtk * (0.7f + _skill2 / 10f);
 
-                obj[i].GetComponent<Monster>()._atk = obj[i].GetComponent<Monster>()._basicAtk * (0.7f + _skill2 / 10f);
+                }
 
 
 
@@ -3098,6 +3139,8 @@ public class Player : BaseObject
     public IEnumerator HealingFactor()
     {
         int time = 5;
+
+        yield return new WaitForSeconds(4f);
         while (true)
         {
 
@@ -3111,8 +3154,9 @@ public class Player : BaseObject
                 _ingameHp += _maxHp * 0.1f;
                 time = 1;
             }
-            
-            
+
+           
+                GamePlay.Instance._playerHp.UpdateBar(_ingameHp, 0, _maxHp);
             yield return new WaitForSeconds(time);
 
 

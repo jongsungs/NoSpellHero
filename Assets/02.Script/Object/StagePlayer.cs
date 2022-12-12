@@ -26,6 +26,7 @@ public class StagePlayer : MonoBehaviour
     public GameObject _helenEffect;
     public GameObject _repairManEffect;
     public GameObject _dosaEffect;
+    public GameObject _salamanderEffect;
     public MoreMountains.Feedbacks.MMFloatingTextSpawner _floatingTextSpawner;
     public MoreMountains.Feedbacks.MMF_Player _mmfPlayer;
 
@@ -44,6 +45,7 @@ public class StagePlayer : MonoBehaviour
         _helenEffect.SetActive(false);          //
         _repairManEffect.SetActive(false);      //
         _dosaEffect.SetActive(false);           //
+        _salamanderEffect.SetActive(false);
 
         StartCoroutine(CoStart());
 
@@ -451,12 +453,16 @@ public class StagePlayer : MonoBehaviour
         {
             _listLubuEffect[1].SetActive(true);
         }
+        else if (Player.Instance._playerTitle == Player.PlayerTitle.Salamander && Player.Instance._skill2 >= 3)
+        {
+            _salamanderEffect.SetActive(true);
+        }
 
-       
 
 
 
-        if (Player.Instance._playerTitle == Player.PlayerTitle.Priest && Player.Instance._skill1 >= 3 && Player.Instance._hp >= Player.Instance._maxHp)
+
+        if (Player.Instance._playerTitle == Player.PlayerTitle.Priest && Player.Instance._skill1 >= 3 && Player.Instance._ingameHp >= Player.Instance._maxHp)
         {
             _pristHiddenEffect.SetActive(true);
         }
