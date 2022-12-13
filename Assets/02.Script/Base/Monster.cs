@@ -138,6 +138,7 @@ public class Monster : BaseObject
         _basicCritical = _critical;
         _basicHandicraft = _handicraft;
         _basicCharm = _charm;
+        _onHit = false;
         if (_category == MonsterCategory.Common)
         {
             _ingameHp = 50 + (_hp * 10);
@@ -411,6 +412,7 @@ public class Monster : BaseObject
     public IEnumerator CoDie()
     {
         _layerMask = 0;
+        _onHit = true;
         StartCoroutine(CoFadeOut(1f));
         yield return new WaitForSeconds(2f);
         Player.Instance._deadCreepScore++;

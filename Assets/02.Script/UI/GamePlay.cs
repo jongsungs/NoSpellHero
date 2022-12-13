@@ -154,8 +154,8 @@ public class GamePlay : MonoBehaviour
     public Text _result4ScoreText;
 
     public TextMeshProUGUI _bossName;
-    
 
+    public int _remainMonster;
 
 
     public int _spawnChannelCount;
@@ -463,9 +463,9 @@ public class GamePlay : MonoBehaviour
         obj._floatingTextSpawner.Channel = _spawnChannelCount;
         obj._mmfPlayer.FeedbacksList[0].Channel = _spawnChannelCount;
         obj._mmfPlayer.Initialization();
-
+        _remainMonster++;
         _spawnChannelCount++;
-        if (obj._monster == Monster.MonsterKind.Slime)
+        if (obj._monster == Monster.MonsterKind.Slime && obj._category == Monster.MonsterCategory.Common)
         {
 
             obj._hp = 0f + (0f * ((float)_currentStage + 1) * 0.2f);
@@ -478,7 +478,7 @@ public class GamePlay : MonoBehaviour
             //obj.StartCoroutine(obj.CoFindEnemy());
             obj.FadeIn();
         }
-        if (obj._monster == Monster.MonsterKind.Wolf)
+        else if (obj._monster == Monster.MonsterKind.Wolf && obj._category == Monster.MonsterCategory.Common)
         {
 
             obj._hp = 2f + (2f * ((float)_currentStage + 1) * 0.2f);
@@ -490,7 +490,7 @@ public class GamePlay : MonoBehaviour
             obj._atkSpeed = 1f + (1f * ((float)_currentStage + 1) * 0.2f);
             obj.FadeIn();
         }
-        if (obj._monster == Monster.MonsterKind.WolfKing && obj._category == Monster.MonsterCategory.Common)
+        else if (obj._monster == Monster.MonsterKind.WolfKing && obj._category == Monster.MonsterCategory.Common)
         {
             obj._hp = 15f + (15f * ((float)_currentStage + 1) * 0.2f);
             obj._atk = 4f + (4f * ((float)_currentStage + 1) * 0.2f);
@@ -501,7 +501,7 @@ public class GamePlay : MonoBehaviour
             obj._atkSpeed = 1f + (1f * ((float)_currentStage + 1) * 0.2f);
             obj.FadeIn();
         }
-        if (obj._monster == Monster.MonsterKind.CaptainSkull && obj._category == Monster.MonsterCategory.Common)
+        else if (obj._monster == Monster.MonsterKind.CaptainSkull && obj._category == Monster.MonsterCategory.Common)
         {
 
             obj._hp = 10f + (10f * ((float)_currentStage + 1) * 0.2f);
@@ -514,7 +514,7 @@ public class GamePlay : MonoBehaviour
             obj.FadeIn();
         }
 
-        if (obj._monster == Monster.MonsterKind.Skull)
+        else if (obj._monster == Monster.MonsterKind.Skull && obj._category == Monster.MonsterCategory.Common)
         {
             obj._hp = 4f + (4f * ((float)_currentStage + 1) * 0.2f);
             obj._atk = 2f + (2f * ((float)_currentStage + 1) * 0.2f);
@@ -525,7 +525,40 @@ public class GamePlay : MonoBehaviour
             obj._atkSpeed = 1f + (1f * ((float)_currentStage + 1) * 0.2f);
             obj.FadeIn();
         }
-        if (obj._monster == Monster.MonsterKind.CaptainSkull && _isBoss == false && _currentStage == GameState.Stage1 && obj._category == Monster.MonsterCategory.Boss)
+        else if (obj._monster == Monster.MonsterKind.Golem && obj._category == Monster.MonsterCategory.Common)
+        {
+            obj._hp = 20 + (20 * ((float)_currentStage + 1) * 0.2f);
+            obj._atk = 5f + (5f * ((float)_currentStage + 1) * 0.2f);
+            obj._def = 3f + (3f * ((float)_currentStage + 1) * 0.2f);
+            obj._speed = 1f + (1f * ((float)_currentStage + 1) * 0.2f);
+            obj._critical = 3f + (3f * ((float)_currentStage + 1) * 0.2f);
+            obj._matk = 3f + (3f * ((float)_currentStage + 1) * 0.2f);
+            obj._atkSpeed = 2f + (2f * ((float)_currentStage + 1) * 0.2f);
+            obj.FadeIn();
+        }
+        else if (obj._monster == Monster.MonsterKind.Ork && obj._category == Monster.MonsterCategory.Common)
+        {
+            obj._hp = 8f + (8f * ((float)_currentStage + 1) * 0.2f);
+            obj._atk = 3f + (3f * ((float)_currentStage + 1) * 0.2f);
+            obj._def = 2f + (2f * ((float)_currentStage + 1) * 0.2f);
+            obj._speed = 1f + (1f * ((float)_currentStage + 1) * 0.2f);
+            obj._critical = 2f + (2f * ((float)_currentStage + 1) * 0.2f);
+            obj._matk = 2f + (2f * ((float)_currentStage + 1) * 0.2f);
+            obj._atkSpeed = 1f + (1f * ((float)_currentStage + 1) * 0.2f);
+            obj.FadeIn();
+        }
+        else if (obj._monster == Monster.MonsterKind.Dragon && obj._category == Monster.MonsterCategory.Common)
+        {
+            obj._hp = 25f + (25f * ((float)_currentStage + 1) * 0.2f);
+            obj._atk = 4f + (4f * ((float)_currentStage + 1) * 0.2f);
+            obj._def = 3f + (3f * ((float)_currentStage + 1) * 0.2f);
+            obj._speed = 1f + (1f * ((float)_currentStage + 1) * 0.2f);
+            obj._critical = 2f + (2f * ((float)_currentStage + 1) * 0.2f);
+            obj._matk = 3f + (3f * ((float)_currentStage + 1) * 0.2f);
+            obj._atkSpeed = 2f + (2f * ((float)_currentStage + 1) * 0.2f);
+            obj.FadeIn();
+        }
+        else if (obj._monster == Monster.MonsterKind.CaptainSkull && _isBoss == false && _currentStage == GameState.Stage1 && obj._category == Monster.MonsterCategory.Boss)
         {
             obj._hp = 20f + (20f * ((float)_currentStage + 1) * 0.2f);
             obj._atk = 3f + (3f * ((float)_currentStage + 1) * 0.2f);
@@ -538,45 +571,47 @@ public class GamePlay : MonoBehaviour
             obj.FadeIn();
 
         }
-        if (obj._monster == Monster.MonsterKind.WolfKing && _isBoss == false && _currentStage == GameState.Stage2 && obj._category == Monster.MonsterCategory.Boss)
+        else if (obj._monster == Monster.MonsterKind.Golem && _isBoss == false && _currentStage == GameState.Stage2 && obj._category == Monster.MonsterCategory.Boss)
         {
-            obj._hp = 20f + (20f * ((float)_currentStage + 1) * 0.2f);
-            obj._atk = 4f + (4f * ((float)_currentStage + 1) * 0.2f);
-            obj._def = 3f + (3f * ((float)_currentStage + 1) * 0.2f);
-            obj._speed = 2f + (2f * ((float)_currentStage + 1) * 0.2f);
-            obj._critical = 2f + (2f * ((float)_currentStage + 1) * 0.2f);
-            obj._matk = 2f + (2f * ((float)_currentStage + 1) * 0.2f);
-            obj._atkSpeed = 1f + (1f * ((float)_currentStage + 1) * 0.2f);
-            _isBoss = true;
-            obj.FadeIn();
-
-        }
-        if (obj._monster == Monster.MonsterKind.CaptainSkull && _isBoss == false && _currentStage == GameState.Stage3 && obj._category == Monster.MonsterCategory.Boss)
-        {
-            obj._hp = 20f + (20f * ((float)_currentStage + 1) * 0.2f);
-            obj._atk = 3f + (3f * ((float)_currentStage + 1) * 0.2f);
-            obj._def = 2f + (2f * ((float)_currentStage + 1) * 0.2f);
+            obj._hp = 120f + (120f * ((float)_currentStage + 1) * 0.2f);
+            obj._atk = 8f + (8f * ((float)_currentStage + 1) * 0.2f);
+            obj._def = 4f + (4f * ((float)_currentStage + 1) * 0.2f);
             obj._speed = 1f + (1f * ((float)_currentStage + 1) * 0.2f);
-            obj._critical = 2f + (2f * ((float)_currentStage + 1) * 0.2f);
+            obj._critical = 3f + (3f * ((float)_currentStage + 1) * 0.2f);
             obj._matk = 3f + (3f * ((float)_currentStage + 1) * 0.2f);
-            obj._atkSpeed = 1f + (1f * ((float)_currentStage + 1) * 0.2f);
+            obj._atkSpeed = 2f + (2f * ((float)_currentStage + 1) * 0.2f);
             _isBoss = true;
             obj.FadeIn();
 
         }
-        if (obj._monster == Monster.MonsterKind.WolfKing && _isBoss == false && _currentStage == GameState.Stage4 && obj._category == Monster.MonsterCategory.Boss)
+        else if (obj._monster == Monster.MonsterKind.Dragon && _isBoss == false && _currentStage == GameState.Stage3 && obj._category == Monster.MonsterCategory.Boss)
         {
-            obj._hp = 20f + (20f * ((float)_currentStage + 1) * 0.2f);
+            obj._hp = 200f + (200f * ((float)_currentStage + 1) * 0.2f);
+            obj._atk = 7f + (7f * ((float)_currentStage + 1) * 0.2f);
+            obj._def = 4f + (4f * ((float)_currentStage + 1) * 0.2f);
+            obj._speed = 1f + (1f * ((float)_currentStage + 1) * 0.2f);
+            obj._critical = 4f + (4f * ((float)_currentStage + 1) * 0.2f);
+            obj._matk = 7f + (7f * ((float)_currentStage + 1) * 0.2f);
+            obj._atkSpeed = 3f + (3f * ((float)_currentStage + 1) * 0.2f);
+            _isBoss = true;
+            obj.FadeIn();
+
+        }
+        else if (obj._monster == Monster.MonsterKind.DemonKing && _isBoss == false && _currentStage == GameState.Stage4 && obj._category == Monster.MonsterCategory.Boss)
+        {
+            obj._hp = 400f + (400f * ((float)_currentStage + 1) * 0.2f);
             obj._atk = 4f + (4f * ((float)_currentStage + 1) * 0.2f);
             obj._def = 3f + (3f * ((float)_currentStage + 1) * 0.2f);
-            obj._speed = 2f + (2f * ((float)_currentStage + 1) * 0.2f);
-            obj._critical = 2f + (2f * ((float)_currentStage + 1) * 0.2f);
-            obj._matk = 2f + (2f * ((float)_currentStage + 1) * 0.2f);
-            obj._atkSpeed = 1f + (1f * ((float)_currentStage + 1) * 0.2f);
+            obj._speed = 1f + (1f * ((float)_currentStage + 1) * 0.2f);
+            obj._critical = 5f + (5f * ((float)_currentStage + 1) * 0.2f);
+            obj._matk = 10f + (10f * ((float)_currentStage + 1) * 0.2f);
+            obj._atkSpeed = 4f + (4f * ((float)_currentStage + 1) * 0.2f);
             _isBoss = true;
             obj.FadeIn();
 
         }
+
+
         obj.transform.position = _randomSpawn.Return_RandomPosition();
         obj.gameObject.SetActive(true);
         
@@ -690,7 +725,7 @@ public class GamePlay : MonoBehaviour
             Player.Instance.Save();
         }
 
-
+        _remainMonster--;
         obj.gameObject.SetActive(false);
       
     }
@@ -1301,6 +1336,7 @@ public class GamePlay : MonoBehaviour
         boss.Get();
         ActiveBossHPBar();
         _bossName.gameObject.SetActive(true);
+        StartCoroutine(BossTimer());
 
     }
     public void BossDie()
@@ -1377,6 +1413,10 @@ public class GamePlay : MonoBehaviour
 
     public IEnumerator ReverseGround()
     {
+
+        yield return new WaitForSeconds(2f);
+        StartCoroutine(CoTimer());
+
         if ((int)_currentStage >= 2)
             _listStage[(int)_currentStage - 2].SetActive(false);
         if ((int)_currentStage < 4)
@@ -1422,6 +1462,9 @@ public class GamePlay : MonoBehaviour
     }
     public IEnumerator GetBackGround()
     {
+        yield return new WaitForSeconds(2f);
+        StartCoroutine(CoTimer());
+
         _listStage[(int)_currentStage].SetActive(true);
         _listPlayers[(int)_currentStage].gameObject.SetActive(true);
         Player.Instance._rigidbody = _listPlayers[(int)_currentStage].GetComponent<Rigidbody>();
@@ -1484,7 +1527,7 @@ public class GamePlay : MonoBehaviour
             Player.Instance.ChangeState(BaseObject.State.None);
             Player.Instance._followCamera._target = _listPlayers[(int)_currentStage].gameObject;
 
-           // StartCoroutine(CoTimer());
+            StartCoroutine(CoTimer());
 
 
 
@@ -1496,7 +1539,7 @@ public class GamePlay : MonoBehaviour
 
             StartCoroutine(ReverseGround());
 
-          //  StartCoroutine(CoTimer());
+           
 
         }
         else // ½ÃÀÛ 1¶ó¿îµå
@@ -1514,7 +1557,7 @@ public class GamePlay : MonoBehaviour
             Camera.main.backgroundColor = new Color32(255, 133, 71,255);
 
 
-         //   StartCoroutine(CoTimer());
+           StartCoroutine(CoTimer());
         }
 
     }
@@ -2098,6 +2141,7 @@ public class GamePlay : MonoBehaviour
     public IEnumerator CoTimer()
     {
         StartCoroutine(CoReSpawn());
+        StartCoroutine(CoReSpawn2());
         if(_currentStage == GameState.Stage1 && _isBoss == false)
         {
             _timer = 90f;
@@ -2158,19 +2202,76 @@ public class GamePlay : MonoBehaviour
         }
         else if (_currentStage == GameState.Stage2)
         {
-            BossSpawn(_wolfkingPool);
-            _bossName.text = "¿Õ°ÇÀÌ ´Á´ë";
+            BossSpawn(_golemBossPool);
+            _bossName.text = "¿Õ°ÇÀÌ °ñ·½";
         }
         else if (_currentStage == GameState.Stage3)
         {
-            BossSpawn(_captainSkullPool);
-            _bossName.text = "´ëÀå ÇØ°ñ";
+            BossSpawn(_orkPool);
+            _bossName.text = "±Ùº»ÀÖ´Â µå·¡°ï";
         }
         else if (_currentStage == GameState.Stage4)
         {
             BossSpawn(_wolfkingPool);
-            _bossName.text = "¿Õ°ÇÀÌ ´Á´ë";
+            _bossName.text = "¸¶¿Õ";
         }
+    }
+
+    public IEnumerator BossTimer()
+    {
+        if (_isBoss == true)
+        {
+
+            _timer = 270;
+        }
+
+        while (_timer >= 0 && _isBoss == true)
+        {
+            _timer -= Time.deltaTime;
+
+            yield return null;
+            _min = (int)_timer / 60;
+            _sec = ((int)_timer - _min * 60) % 60;
+
+            if (_timer <= 0)
+            {
+                _timer = 0;
+                _timerMin.text = 0.ToString();
+                _timerSec.text = 0.ToString();
+
+                break;
+
+            }
+            else
+            {
+                if (_sec > 60)
+                {
+                    _min += 1;
+                    _sec -= 60;
+                }
+                else
+                {
+                    _timerMin.text = _min.ToString();
+                    _timerSec.text = _sec.ToString();
+
+                }
+            }
+
+        }
+
+
+        yield return new WaitForSeconds(1f);
+
+        if (_timer <= 0)
+        {
+            Player.Instance._ingameHp = 0f;
+
+        }
+
+        
+            
+
+
     }
 
 
@@ -2397,7 +2498,117 @@ public class GamePlay : MonoBehaviour
             }
         }
     }
+    public IEnumerator CoReSpawn2()
+    {
 
+
+        yield return new WaitForSeconds(3f);
+
+
+        while (_isBoss == false)
+        {
+            yield return new WaitForSeconds(0.5f);
+
+            if (_remainMonster <= 0)
+            {
+
+                if (_currentStage == GameState.Stage1)
+                {
+                    int rand = Random.Range(0, 3);
+                    if (rand == 0)
+                    {
+                        _slimePool.Get();
+
+                    }
+                    else if (rand == 1)
+                    {
+                        _wolfpool.Get();
+                    }
+                    else if (rand == 2)
+                    {
+                        _skeletonPool.Get();
+                    }
+
+                    SoundManager.Instance.EffectPlay(SoundManager.Instance._spawn);
+                }
+                else if (_currentStage == GameState.Stage2)
+                {
+                    int rand = Random.Range(0, 4);
+                    if (rand == 0)
+                    {
+                        _slimePool.Get();
+
+                    }
+                    else if (rand == 1)
+                    {
+                        _wolfpool.Get();
+                    }
+                    else if (rand == 2)
+                    {
+                        _skeletonPool.Get();
+                    }
+                    else if (rand == 3)
+                    {
+                        _captainSkullNormalPool.Get();
+                    }
+                    SoundManager.Instance.EffectPlay(SoundManager.Instance._spawn);
+                }
+                else if (_currentStage == GameState.Stage3)
+                {
+                    int rand = Random.Range(0, 5);
+                    if (rand == 0)
+                    {
+                        _slimePool.Get();
+
+                    }
+                    else if (rand == 1)
+                    {
+                        _wolfpool.Get();
+                    }
+                    else if (rand == 2)
+                    {
+                        _skeletonPool.Get();
+                    }
+                    else if (rand == 3)
+                    {
+                        _captainSkullNormalPool.Get();
+                    }
+                    else if (rand == 4)
+                    {
+                        _wolfkingNormalPool.Get();
+                    }
+                    SoundManager.Instance.EffectPlay(SoundManager.Instance._spawn);
+                }
+                else if (_currentStage == GameState.Stage4)
+                {
+                    int rand = Random.Range(0, 5);
+                    if (rand == 0)
+                    {
+                        _slimePool.Get();
+
+                    }
+                    else if (rand == 1)
+                    {
+                        _wolfpool.Get();
+                    }
+                    else if (rand == 2)
+                    {
+                        _skeletonPool.Get();
+                    }
+                    else if (rand == 3)
+                    {
+                        _captainSkullNormalPool.Get();
+                    }
+                    else if (rand == 4)
+                    {
+                        _wolfkingNormalPool.Get();
+                    }
+                    SoundManager.Instance.EffectPlay(SoundManager.Instance._spawn);
+                }
+            }
+        }
+
+    }
 
     public IEnumerator CoStart()
     {

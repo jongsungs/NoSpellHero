@@ -93,7 +93,7 @@ GameObject:
   - component: {fileID: 114770141360659904}
   - component: {fileID: 114639397120908954}
   - component: {fileID: 9164191636813369973}
-  m_Layer: 5
+  m_Layer: 10
   m_Name: Achievement UI
   m_TagString: Untagged
   m_Icon: {fileID: 0}

@@ -83,6 +83,7 @@ public class Wolf : Monster
                     GamePlay.Instance.BossDie();
                     // GamePlay.Instance.ChangeStage();
                 }
+                
                 break;
         }
     }

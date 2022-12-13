@@ -3122,7 +3122,7 @@ public class Player : BaseObject
 
                 if(obj[i].GetComponent<Monster>() != null)
                 {
-                    obj[i].GetComponent<Monster>()._atk = obj[i].GetComponent<Monster>()._basicAtk * (0.7f + _skill2 / 10f);
+                    obj[i].GetComponent<Monster>()._atk = obj[i].GetComponent<Monster>()._basicAtk * (0.7f + _skill1 / 10f);
 
                 }
 

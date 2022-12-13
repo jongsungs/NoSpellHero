@@ -23,8 +23,8 @@ TagManager:
   - Enemy
   - Effect
   - PlayerTeam
-  - 
-  - 
+  - MeshShadow
+  - FrontUI
   - 
   - 
   - 
@@ -47,6 +47,12 @@ TagManager:
   - 
   - 
   m_SortingLayers:
+  - name: FrontUI
+    uniqueID: 2250150221
+    locked: 0
+  - name: UI
+    uniqueID: 4122510203
+    locked: 0
   - name: Default
     uniqueID: 0
     locked: 0
