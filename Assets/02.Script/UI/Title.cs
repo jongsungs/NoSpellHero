@@ -13,7 +13,15 @@ public class Title : MonoBehaviour,IPointerDownHandler
     private void Awake()
     {
         fade = GetComponent<Fade>();
-        _istouch = false;
+        if (OnTitle.Instance._onTitle == 1)
+            _istouch = false;
+        else if (OnTitle.Instance._onTitle > 1)
+            _istouch = true;
+    }
+    public void Start()
+    {
+
+        if(OnTitle.Instance._onTitle == 1 )
         StartCoroutine(coStart());
     }
     public void OnPointerDown(PointerEventData eventData)
@@ -24,7 +32,8 @@ public class Title : MonoBehaviour,IPointerDownHandler
 
     IEnumerator coStart()
     {
-        while(true)
+        OnTitle.Instance._onTitle++;
+        while (true)
         {
             yield return new WaitForSeconds(1.5f);
             _feedback.PlayFeedbacks();

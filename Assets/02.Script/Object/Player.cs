@@ -1610,25 +1610,25 @@ public class Player : BaseObject
                 {
                     earlydie = true;
                     AchievementManager.instance.Unlock("earlydie");
-                    Player.Instance.Save();
+                    Player.Instance.AchiveSave();
                 }
                 if(GamePlay.Instance._currentStage == GamePlay.GameState.Stage1 && _totalCreepScore == 0 && nonviolent == false)
                 {
                     nonviolent = true;
                     AchievementManager.instance.Unlock("nonviolent");
-                    Player.Instance.Save();
+                    Player.Instance.AchiveSave();
                 }
                 if(GamePlay.Instance._currentStage == GamePlay.GameState.Stage1 && _playerTitle == PlayerTitle.Helen && helenstage1die == false)
                 {
                     helenstage1die = true;
                     AchievementManager.instance.Unlock("helenstage1die");
-                    Player.Instance.Save();
+                    Player.Instance.AchiveSave();
                 }
                 if(_playerTitle == PlayerTitle.Orpheus && orpheusfirstdie == false)
                 {
                     orpheusfirstdie = true;
                     AchievementManager.instance.Unlock("orpheusfirstdie");
-                    Player.Instance.Save();
+                    Player.Instance.AchiveSave();
                 }
 
                 if(_isDead == false)
@@ -2331,7 +2331,7 @@ public class Player : BaseObject
             check = true;
             AchievementManager.instance.Unlock(str);
         }
-        Save();
+        AchiveSave();
     }
 
     public void Step()
@@ -2397,7 +2397,7 @@ public class Player : BaseObject
         {
             firstmagic = true;
             AchievementManager.instance.Unlock("firstmagic");
-            Player.Instance.Save();
+            Player.Instance.AchiveSave();
         }
 
     }
@@ -3214,10 +3214,21 @@ public class Player : BaseObject
         FileStream fs = new FileStream(Application.persistentDataPath + "/" + "PlayerData.json", FileMode.Create, FileAccess.Write);
         string path = Path.Combine(Application.dataPath + "Json/PlayerData.json");
         fs.Close();
-        Debug.Log("세이브");
         File.WriteAllText(fs.Name, data);
 
     }
+    public void AchiveSave()
+    {
+        AchivementDataSave();
+        string data = ObjectToJason(_data);
+
+        FileStream fs = new FileStream(Application.persistentDataPath + "/" + "PlayerData.json", FileMode.Create, FileAccess.Write);
+        string path = Path.Combine(Application.dataPath + "Json/PlayerData.json");
+        fs.Close();
+        File.WriteAllText(fs.Name, data);
+
+    }
+
 
     public void Load()
     {
@@ -3669,6 +3680,224 @@ public class Player : BaseObject
         _data.m_druidScore = _druidScore;
         _data.m_strangerblackholeScore = _strangerblackholeScore;
         _data.m_helenScore = _helenScore; 
+        _data.m_dosaDieAvatar = _dosaDieAvatar;
+        _data.m_dokevHiddenSkillScore = _dokevHiddenSkillScore;
+        _data.m_gold = _gold;
+        _data.m_stat = _stat;
+        _data.m_expX2 = _expX2;
+        _data.m_effectSound = _effectSound;
+        _data.m_bgmSound = _bgmSound;
+
+
+    }
+    public void AchivementDataSave()
+    {
+     
+
+        _data.m_isBasicStick = _isbasicStick;
+        _data.m_isStick = _isStick;
+        _data.m_isSward1 = _isSward1;
+        _data.m_isSward2 = _isSward2;
+        _data.m_isBroom = _isBroom;
+        _data.m_isClub = _isClub;
+        _data.m_isShortSward = _isShortSward;
+        _data.m_isHanger = _isHanger;
+        _data.m_isMace = _isMace;
+        _data.m_isShield = _isShield;
+        _data.m_isSpear = _isSpear;
+        _data.m_isUmbrella = _isUmbrella;
+        _data.m_isWaldo = _isWaldo;
+
+
+        _data.m_isKightHelmet = _isKightHelmet;
+        _data.m_isMasicianHat = _isMasicianHat;
+        _data.m_isGat = _isGat;
+        _data.m_isSkinHead = _isSkinHead;
+        _data.m_isnormalHair = _isnormalHair;
+        _data.m_isKnightTop = _isKnightTop;
+        _data.m_isMasicianTop = _isMasicianTop;
+        _data.m_isDurumagiTop = _isDurumagiTop;
+        _data.m_isKnightBottom = _isKnightBottom;
+        _data.m_isMasicianBottom = _isMasicianBottom;
+        _data.m_isdurumagiBottom = _isdurumagiBottom;
+        _data.m_isKnightShoes = _isKnightShoes;
+        _data.m_isSandal = _isSandal;
+        _data.m_isOldShoes = _isOldShoes;
+        _data.m_isEmptyHelmet = _isEmptyHelmet;
+        _data.m_isNormalTop = _isNormalTop;
+        _data.m_isTrunkBottom = _isTrunkBottom;
+        _data.m_isnormalShoes = _isnormalShoes;
+
+        _data.m_buyBasicStick = _buybasicStick;
+        _data.m_buyStick = _buyStick;
+        _data.m_buySward1 = _buySward1;
+        _data.m_buySward2 = _buySward2;
+        _data.m_buyBroom = _buyBroom;
+        _data.m_buyClub = _buyClub;
+        _data.m_buyShortSward = _buyShortSward;
+        _data.m_buyHanger = _buyHanger;
+        _data.m_buyMace = _buyMace;
+        _data.m_buyShield = _buyShield;
+        _data.m_buySpear = _buySpear;
+        _data.m_buyUmbrella = _buyUmbrella;
+        _data.m_buyWaldo = _buyWaldo;
+
+        _data.m_buyKightHelmet = _buyKightHelmet;
+        _data.m_buyMasicianHat = _buyMasicianHat;
+        _data.m_buyGat = _buyGat;
+        _data.m_buySkinHead = _buySkinHead;
+        _data.m_buynormalHair = _buynormalHair;
+        _data.m_buyKnightTop = _buyKnightTop;
+        _data.m_buyMasicianTop = _buyMasicianTop;
+        _data.m_buyDurumagiTop = _buyDurumagiTop;
+        _data.m_buyKnightBottom = _buyKnightBottom;
+        _data.m_buyMasicianBottom = _buyMasicianBottom;
+        _data.m_buydurumagiBottom = _buydurumagiBottom;
+        _data.m_buyKnightShoes = _buyKnightShoes;
+        _data.m_buySandal = _buySandal;
+        _data.m_buyOldShoes = _buyOldShoes;
+
+
+        _data.m_buyEmptyHelmet = _buyEmptyHelmet;
+        _data.m_buyNormalTop = _buyNormalTop;
+        _data.m_buyTrunkBottom = _buyTrunkBottom;
+        _data.m_buynormalShoes = _buynormalShoes;
+
+
+
+
+        _data.m_firststat = firststat;
+        _data.m_firstmaster = firstmaster;
+        _data.m_firstjob = firstjob;
+        _data.m_earlydie = earlydie;
+        _data.m_nonviolent = nonviolent;
+        _data.m_firstmagic = firstmagic;
+        _data.m_firsthunt = firsthunt;
+        _data.m_getmagicalblader = getmagicalblader;
+        _data.m_magicalbladerhidden = magicalbladerhidden;
+        _data.m_getmadman = getmadman;
+        _data.m_madmanmadness = madmanmadness;
+        _data.m_getstrongman = getstrongman;
+        _data.m_strongmanhidden = strongmanhidden;
+        _data.m_strongmanskill1full = strongmanskill1full;
+        _data.m_getwarrior = getwarrior;
+        _data.m_warriorskill1full = warriorskill1full;
+        _data.m_getdwarf = getdwarf;
+        _data.m_dwarfskill1full = dwarfskill1full;
+        _data.m_getjackfrost = getjackfrost;
+        _data.m_jackfrosthidden = jackfrosthidden;
+        _data.m_jackfrosttuna = jackfrosttuna;
+        _data.m_getassaultcaptain = getassaultcaptain;
+        _data.m_assaultcaptainfull = assaultcaptainfull;
+        _data.m_getzhangfei = getzhangfei;
+        _data.m_zhangfeiroar = zhangfeiroar;
+        _data.m_zhangfeirowhp = zhangfeirowhp;
+        _data.m_zhangfeihidden = zhangfeihidden;
+        _data.m_getberserker = getberserker;
+        _data.m_berserkerskill1full = berserkerskill1full;
+        _data.m_berserkerhidden = berserkerhidden;
+        _data.m_berserkerclear = berserkerclear;
+        _data.m_getcriticaler = getcriticaler;
+        _data.m_criticalerskill1full = criticalerskill1full;
+        _data.m_getdruid = getdruid;
+        _data.m_druidfirstskill = druidfirstskill;
+        _data.m_druidskill100 = druidskill100;
+        _data.m_getassassin = getassassin;
+        _data.m_assassinskill2full = assassinskill2full;
+        _data.m_getambidextrous = getambidextrous;
+        _data.m_getlubu = getlubu;
+        _data.m_lubuhidden = lubuhidden;
+        _data.m_lubuskill1full = lubuskill1full;
+        _data.m_getheavycavalry = getheavycavalry;
+        _data.m_gethealthmagician = gethealthmagician;
+        _data.m_healthmagicianskill2full = healthmagicianskill2full;
+        _data.m_healthmagicianhidden = healthmagicianhidden;
+        _data.m_getprist = getprist;
+        _data.m_pristhpfull = pristhpfull;
+        _data.m_pristjesus = pristjesus;
+        _data.m_pristhidden = pristhidden;
+        _data.m_getwarlock = getwarlock;
+        _data.m_warlockskill1full = warlockskill1full;
+        _data.m_warlockclear = warlockclear;
+        _data.m_warlcokhidden = warlcokhidden;
+        _data.m_getsalamander = getsalamander;
+        _data.m_salamandermeteor = salamandermeteor;
+        _data.m_salamandermeteor3 = salamandermeteor3;
+        _data.m_salamanderhidden = salamanderhidden;
+        _data.m_getcook = getcook;
+        _data.m_cookfullhp = cookfullhp;
+        _data.m_cookhidden = cookhidden;
+        _data.m_getzeus = getzeus;
+        _data.m_zeusskill1first = zeusskill1first;
+        _data.m_zeushidden = zeushidden;
+        _data.m_getpracticebug = getpracticebug;
+        _data.m_practicebugskill1full = practicebugskill1full;
+        _data.m_practicebugskill2full = practicebugskill2full;
+        _data.m_getstranger = getstranger;
+        _data.m_strangerfirstskill = strangerfirstskill;
+        _data.m_stangerskill100 = stangerskill100;
+        _data.m_getqrf = getqrf;
+        _data.m_qrfputhanger = qrfputhanger;
+        _data.m_qrfhidden = qrfhidden;
+        _data.m_getservant = getservant;
+        _data.m_servantskill1first = servantskill1first;
+        _data.m_servanthidden = servanthidden;
+        _data.m_getathlete = getathlete;
+        _data.m_ahleteskill2full = ahleteskill2full;
+        _data.m_ahleteclear = ahleteclear;
+        _data.m_getversatile = getversatile;
+        _data.m_versatilehidden = versatilehidden;
+        _data.m_getacupuncturist = getacupuncturist;
+        _data.m_acupuncturistfirstskill = acupuncturistfirstskill;
+        _data.m_acupuncturistcritical = acupuncturistcritical;
+        _data.m_acupuncturistskill2full = acupuncturistskill2full;
+        _data.m_acupuncturistclear = acupuncturistclear;
+        _data.m_getspoonkiller = getspoonkiller;
+        _data.m_spoonkillerskill1full = spoonkillerskill1full;
+        _data.m_spoonkillerskill2full = spoonkillerskill2full;
+        _data.m_spoonkillerclear = spoonkillerclear;
+        _data.m_gethelen = gethelen;
+        _data.m_helenskill100 = helenskill100;
+        _data.m_helenhidden = helenhidden;
+        _data.m_helenstage1die = helenstage1die;
+        _data.m_helenclear = helenclear;
+        _data.m_getrich = getrich;
+        _data.m_richget1000gold = richget1000gold;
+        _data.m_getswell = getswell;
+        _data.m_swellskill1full = swellskill1full;
+        _data.m_swellclear = swellclear;
+        _data.m_getdelivery = getdelivery;
+        _data.m_deliveryskill1full = deliveryskill1full;
+        _data.m_deliveryclear = deliveryclear;
+        _data.m_getrepairman = getrepairman;
+        _data.m_repairmanhidden = repairmanhidden;
+        _data.m_repairmanclear = repairmanclear;
+        _data.m_getdosa = getdosa;
+        _data.m_dosafirstskill = dosafirstskill;
+        _data.m_dosaskilldie20 = dosaskilldie20;
+        _data.m_dosahidden = dosahidden;
+        _data.m_getgambler = getgambler;
+        _data.m_gamblerlose = gamblerlose;
+        _data.m_gamblerwin = gamblerwin;
+        _data.m_gamblerskill2 = gamblerskill2;
+        _data.m_getslowstarter = getslowstarter;
+        _data.m_slowstarterclear = slowstarterclear;
+        _data.m_getorpheus = getorpheus;
+        _data.m_orpheusskill1full = orpheusskill1full;
+        _data.m_orpheusfirstdie = orpheusfirstdie;
+        _data.m_getdokev = getdokev;
+        _data.m_dokevfirstskill = dokevfirstskill;
+        _data.m_dokevhidden = dokevhidden;
+        _data.m_dokevhidden50 = dokevhidden50;
+        _data.m_statlv5 = statlv5;
+        _data.m_stage1clear = stage1clear;
+        _data.m_stage2clear = stage2clear;
+
+        _data.m_totalCreepScore = _totalCreepScore;
+        _data.m_jackfrostScore = _jackfrostScore;
+        _data.m_druidScore = _druidScore;
+        _data.m_strangerblackholeScore = _strangerblackholeScore;
+        _data.m_helenScore = _helenScore;
         _data.m_dosaDieAvatar = _dosaDieAvatar;
         _data.m_dokevHiddenSkillScore = _dokevHiddenSkillScore;
         _data.m_gold = _gold;

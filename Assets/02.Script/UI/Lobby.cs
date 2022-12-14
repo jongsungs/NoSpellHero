@@ -105,7 +105,7 @@ public class Lobby : MonoBehaviour
             _listStatSpace[8].transform.GetChild(i).gameObject.SetActive(true);
         }
 
-        _player._currentStat = _player._stat - (int)_player._atk - (int)_player._matk - (int)_player._atkSpeed - (int)_player._def - (int)_player._hp - (int)_player._charm - (int)_player._handicraft - (int)_player._critical;
+        _player._currentStat = _player._stat - (int)_player._atk - (int)_player._matk - (int)_player._atkSpeed - (int)_player._def - (int)_player._hp - (int)_player._charm - (int)_player._handicraft - (int)_player._critical - (int)_player._speed;
 
     }
 
@@ -1241,7 +1241,7 @@ public class Lobby : MonoBehaviour
         #endregion
 
 
-        _player._currentStat = _player._stat - (int)_player._atk - (int)_player._matk - (int)_player._atkSpeed - (int)_player._def - (int)_player._hp - (int)_player._charm - (int)_player._handicraft - (int)_player._critical;
+        _player._currentStat = _player._stat - (int)_player._atk - (int)_player._matk - (int)_player._atkSpeed - (int)_player._def - (int)_player._hp - (int)_player._charm - (int)_player._handicraft - (int)_player._critical - (int)_player._speed;
         _goldText.text = Player.Instance._gold.ToString();
         _statText.text = Player.Instance._currentStat.ToString();
 

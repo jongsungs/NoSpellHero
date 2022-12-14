@@ -1063,7 +1063,7 @@ public class Monster : BaseObject
                         {
                             Player.Instance.acupuncturistfirstskill = true;
                             AchievementManager.instance.Unlock("acupuncturistfirstskill");
-                            Player.Instance.Save();
+                            Player.Instance.AchiveSave();
                         }
                     }
                     else if (_category == MonsterCategory.Boss)
@@ -1120,7 +1120,7 @@ public class Monster : BaseObject
                 {
                     Player.Instance.acupuncturistcritical = true;
                     AchievementManager.instance.Unlock("acupuncturistcritical");
-                    Player.Instance.Save();
+                    Player.Instance.AchiveSave();
                 }
                 if (Player.Instance._comboInstantDie.Exists(x => x >= Player.Instance._instantDeathProbablility) == true)
                 {
@@ -1269,7 +1269,7 @@ public class Monster : BaseObject
                     {
                         Player.Instance.dokevfirstskill = true;
                         AchievementManager.instance.Unlock("dokevfirstskill");
-                        Player.Instance.Save();
+                        Player.Instance.AchiveSave();
                     }
 
                    

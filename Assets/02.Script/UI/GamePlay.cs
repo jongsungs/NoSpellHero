@@ -722,7 +722,7 @@ public class GamePlay : MonoBehaviour
         {
             Player.Instance.firsthunt = true;
             AchievementManager.instance.Unlock("firsthunt");
-            Player.Instance.Save();
+            Player.Instance.AchiveSave();
         }
 
         _remainMonster--;

@@ -103,7 +103,7 @@ public class Decoy : Monster
             {
                 Player.Instance.dosahidden = true;
                 AchievementManager.instance.Unlock("dosahidden");
-                Player.Instance.Save();
+                Player.Instance.AchiveSave();
             }
 
             if (spell < Player.Instance._spellCastProbability)
