@@ -30,6 +30,7 @@ public class StagePlayer : MonoBehaviour
     public MoreMountains.Feedbacks.MMFloatingTextSpawner _floatingTextSpawner;
     public MoreMountains.Feedbacks.MMF_Player _mmfPlayer;
 
+    public bool _onhit;
     private void Start()
     {
         for(int i = 0; i < _listLubuEffect.Count; ++i)
@@ -549,7 +550,37 @@ public class StagePlayer : MonoBehaviour
 
     }
 
+    private void OnParticleCollision(GameObject other)
+    {
+        if (other.CompareTag("FireBress"))
+        {
+            if(_onhit == false)
+            {
 
+                _onhit = true;
+                var damage = other.GetComponent<SkillBase>()._skillDamage - (Player.Instance._def * 3f);
+                if (damage <= 0)
+                {
+                    damage = 0f;
+                }
+                damage = Mathf.Round(damage);
+                Player.Instance._ingameHp -= damage;
+                GamePlay.Instance._playerHp.UpdateBar(Player.Instance._ingameHp, 0, Player.Instance._maxHp);
+                _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                SoundManager.Instance.EffectPlay(SoundManager.Instance._playerHit);
+                Player.Instance._hitCount++;
+                StartCoroutine(CoHit());
+            }
+
+
+        }
+    }
+
+    public IEnumerator CoHit()
+    {
+        yield return new WaitForSeconds(0.5f);
+        _onhit = false;
+    }
     public IEnumerator CoStart()
     {
         yield return new WaitForSeconds(3f);

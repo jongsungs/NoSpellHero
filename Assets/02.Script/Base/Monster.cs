@@ -1841,6 +1841,93 @@ public class Monster : BaseObject
                 Burn();
             }
         }
+        if (other.CompareTag("FireBress"))
+        {
+
+            if (_onHit == false)
+            {
+                _onHit = true;
+
+                int rand = Random.Range(0, 100);
+
+
+
+                if (rand < Player.Instance._criticalProbability)
+                {
+
+                    if (_category == MonsterCategory.Common)
+                    {
+
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 2f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+
+
+                        _floatingTextSpawner.AnimateColorGradient = redgrad;
+                        _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+
+                    }
+                    else if (_category == MonsterCategory.Boss)
+                    {
+                        var damage = (Player.Instance._weapon._damage + (Player.Instance._matk * 2f)) * Player.Instance._criticalDamage - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+
+
+                        _floatingTextSpawner.AnimateColorGradient = redgrad;
+                        _mmfPlayer.PlayFeedbacks(this.transform.position, damage);
+                        GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                    }
+
+                }
+                else if (rand >= Player.Instance._criticalProbability)
+                {
+                    if (_category == MonsterCategory.Common)
+                    {
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 2f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+                        _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                        _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                    }
+
+                    else if (_category == MonsterCategory.Boss)
+                    {
+
+                        var damage = Player.Instance._weapon._damage + (Player.Instance._matk * 2f) - (_def * 3f);
+                        if (damage <= 0f)
+                        {
+                            damage = 0f;
+                        }
+                        damage = Mathf.Round(damage);
+                        _ingameHp -= damage;
+                        _floatingTextSpawner.AnimateColorGradient = whitegrad;
+                        _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                        GamePlay.Instance._bossHpbarPlayer.UpdateBar(_ingameHp, 0, _maxHp);
+                    }
+
+
+                }
+                int _30 = Random.Range(0, 3);
+                StartCoroutine(CoHit());
+                if (_30 == 0)
+                {
+                    Burn();
+                }
+            }
+        }
     }
 
 

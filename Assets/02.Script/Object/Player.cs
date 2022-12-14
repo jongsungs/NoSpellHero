@@ -660,7 +660,6 @@ public class Player : BaseObject
 
     
     public int _currentStat;
-   
     #region Cloth
     //////옷----------------------------------------
 
