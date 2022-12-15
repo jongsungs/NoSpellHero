@@ -526,6 +526,21 @@ public class StagePlayer : MonoBehaviour
             other.GetComponent<SkillBase>().SkillRelease();
             Player.Instance._hitCount++;
         }
+        else if (other.CompareTag("DemonKingMeteor"))
+        {
+            var damage = other.GetComponent<SkillBase>()._skillDamage;
+            if (damage <= 0)
+            {
+                damage = 0f;
+            }
+            damage = Mathf.Round(damage);
+            Player.Instance._ingameHp -= damage;
+            GamePlay.Instance._playerHp.UpdateBar(Player.Instance._ingameHp, 0, Player.Instance._maxHp);
+            _mmfPlayer.PlayFeedbacks(transform.position, damage);
+
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._playerHit);
+            Player.Instance._hitCount++;
+        }
         else if (other.CompareTag("Weapon") && other.transform.root.GetComponent<Monster>() != null && other.transform.root.gameObject.layer == 6)
         {
             if( other.GetComponent<Weapon>()._isOnce == true)

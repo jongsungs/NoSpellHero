@@ -14,6 +14,7 @@ TagManager:
   - Bone
   - Rock
   - FireBress
+  - DemonKingMeteor
   layers:
   - Default
   - TransparentFX
