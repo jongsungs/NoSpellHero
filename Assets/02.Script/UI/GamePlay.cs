@@ -250,10 +250,7 @@ public class GamePlay : MonoBehaviour
         {
             _golemNormalPool.Get();
         }
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            _demonkingMeteorPool.Get();
-        }
+     
 
 
         if (Input.GetKeyDown(KeyCode.Q))

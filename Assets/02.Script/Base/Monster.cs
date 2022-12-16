@@ -378,6 +378,11 @@ public class Monster : BaseObject
                         ChangeState(State.Attack2);
 
                     }
+                    else if (_monster == MonsterKind.Dragon && _category == MonsterCategory.Boss && distToTarget >= 3.5f)
+                    {
+                        transform.LookAt(target);
+                        ChangeState(State.Attack2);
+                    }
                     else if (_monster == MonsterKind.Ork && _attackStack > 0)
                     {
                         transform.LookAt(target);
