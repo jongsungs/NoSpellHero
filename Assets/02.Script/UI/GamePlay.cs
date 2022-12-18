@@ -34,7 +34,8 @@ public class GamePlay : MonoBehaviour
     public Monster _ork;
     public Monster _golemBoss;
     public Monster _golemNormal;
-
+    public Monster _dragonBoss;
+    public Monster _dragonNormal;
     public Monster _demonKing;
     public Monster _skeleton;
 
@@ -99,6 +100,9 @@ public class GamePlay : MonoBehaviour
     public IObjectPool<Monster> _orkPool;
     public IObjectPool<Monster> _golemBossPool;
     public IObjectPool<Monster> _golemNormalPool;
+    public IObjectPool<Monster> _dragonBossPool;
+    public IObjectPool<Monster> _dragonNormalPool;
+
 
     private IObjectPool<Monster> _demonkingPool;
     public IObjectPool<LightningBoltScript> _lightningPool;
@@ -178,7 +182,8 @@ public class GamePlay : MonoBehaviour
         _orkPool = new ObjectPool<Monster>(CreateOrk, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
         _golemBossPool = new ObjectPool<Monster>(CreateGolemBoss, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
         _golemNormalPool = new ObjectPool<Monster>(CreateGolemNormal, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
-
+        _dragonBossPool = new ObjectPool<Monster>(CreateDragonBoss, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
+        _dragonNormalPool = new ObjectPool<Monster>(CreateDragonNormal, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
 
 
         _demonkingPool = new ObjectPool<Monster>(CreatDemonKing, OngetMonster, OnReleaseMonster, OnDestroyMonster, maxSize: 10);
@@ -307,6 +312,9 @@ public class GamePlay : MonoBehaviour
     {
         var monster = Instantiate(_captainSkull, _randomSpawn.Return_RandomPosition(), Quaternion.identity);
         monster.SetPool(_captainSkullPool);
+        monster._floatingTextSpawner.Channel = _spawnChannelCount;
+        monster._mmfPlayer.FeedbacksList[0].Channel = _spawnChannelCount;
+        monster._mmfPlayer.Initialization();
 
         return monster;
     }
@@ -314,6 +322,9 @@ public class GamePlay : MonoBehaviour
     {
         var monster = Instantiate(_captainSkullNormal, _randomSpawn.Return_RandomPosition(), Quaternion.identity);
         monster.SetPool(_captainSkullNormalPool);
+        monster._floatingTextSpawner.Channel = _spawnChannelCount;
+        monster._mmfPlayer.FeedbacksList[0].Channel = _spawnChannelCount;
+        monster._mmfPlayer.Initialization();
 
         return monster;
     }
@@ -321,40 +332,74 @@ public class GamePlay : MonoBehaviour
     {
         var monster = Instantiate(_skeleton, _randomSpawn.Return_RandomPosition(), Quaternion.identity);
         monster.SetPool(_skeletonPool);
+        monster._floatingTextSpawner.Channel = _spawnChannelCount;
+        monster._mmfPlayer.FeedbacksList[0].Channel = _spawnChannelCount;
+        monster._mmfPlayer.Initialization();
         return monster;
     }
     private Monster CreateWolfKing()
     {
         var monster = Instantiate(_wolfKing, _randomSpawn.Return_RandomPosition(), Quaternion.identity);
         monster.SetPool(_wolfkingPool);
+        monster._floatingTextSpawner.Channel = _spawnChannelCount;
+        monster._mmfPlayer.FeedbacksList[0].Channel = _spawnChannelCount;
+        monster._mmfPlayer.Initialization();
         return monster;
     }
     private Monster CreateWolfKingNormal()
     {
         var monster = Instantiate(_wolfKingNormal, _randomSpawn.Return_RandomPosition(), Quaternion.identity);
         monster.SetPool(_wolfkingNormalPool);
+        monster._floatingTextSpawner.Channel = _spawnChannelCount;
+        monster._mmfPlayer.FeedbacksList[0].Channel = _spawnChannelCount;
+        monster._mmfPlayer.Initialization();
         return monster;
     }
     private Monster CreateOrk()
     {
         var monster = Instantiate(_ork, _randomSpawn.Return_RandomPosition(), Quaternion.identity);
         monster.SetPool(_orkPool);
+        monster._floatingTextSpawner.Channel = _spawnChannelCount;
+        monster._mmfPlayer.FeedbacksList[0].Channel = _spawnChannelCount;
+        monster._mmfPlayer.Initialization();
         return monster;
     }
     private Monster CreateGolemBoss()
     {
         var monster = Instantiate(_golemBoss, _randomSpawn.Return_RandomPosition(), Quaternion.identity);
         monster.SetPool(_golemBossPool);
+        monster._floatingTextSpawner.Channel = _spawnChannelCount;
+        monster._mmfPlayer.FeedbacksList[0].Channel = _spawnChannelCount;
+        monster._mmfPlayer.Initialization();
         return monster;
     }
     private Monster CreateGolemNormal()
     {
         var monster = Instantiate(_golemNormal, _randomSpawn.Return_RandomPosition(), Quaternion.identity);
         monster.SetPool(_golemNormalPool);
+        monster._floatingTextSpawner.Channel = _spawnChannelCount;
+        monster._mmfPlayer.FeedbacksList[0].Channel = _spawnChannelCount;
+        monster._mmfPlayer.Initialization();
         return monster;
     }
-
-
+    private Monster CreateDragonNormal()
+    {
+        var monster = Instantiate(_dragonNormal, _randomSpawn.Return_RandomPosition(), Quaternion.identity);
+        monster.SetPool(_dragonNormalPool);
+        monster._floatingTextSpawner.Channel = _spawnChannelCount;
+        monster._mmfPlayer.FeedbacksList[0].Channel = _spawnChannelCount;
+        monster._mmfPlayer.Initialization();
+        return monster;
+    }
+    private Monster CreateDragonBoss()
+    {
+        var monster = Instantiate(_dragonBoss, _randomSpawn.Return_RandomPosition(), Quaternion.identity);
+        monster.SetPool(_dragonBossPool);
+        monster._floatingTextSpawner.Channel = _spawnChannelCount;
+        monster._mmfPlayer.FeedbacksList[0].Channel = _spawnChannelCount;
+        monster._mmfPlayer.Initialization();
+        return monster;
+    }
 
 
     private Monster CreatDemonKing()
