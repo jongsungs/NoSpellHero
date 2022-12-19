@@ -3,7 +3,12 @@ guid: 49a49edd6cd8b96418a710e46c51a301
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Closet_deco
+    second: {fileID: 2100000, guid: 0e3df52f3f4bdd84ba01ea877d964e53, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -88,7 +93,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 0.03
+    globalScale: 3
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0

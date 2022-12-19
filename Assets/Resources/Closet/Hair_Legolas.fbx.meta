@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 47d045afb9bc80747a1d4127132ca2cd
+guid: b78c23cfa326292468aea5cfe7e05f38
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable: []
@@ -7,8 +7,8 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Closet_deco
-    second: {fileID: 2100000, guid: 0e3df52f3f4bdd84ba01ea877d964e53, type: 2}
+      name: Yellow_s
+    second: {fileID: 2100000, guid: d458e3ae25ba5bf4c9c7174f4d73d487, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -40,7 +40,7 @@ ModelImporter:
     isReadable: 0
   meshes:
     lODScreenPercentages: []
-    globalScale: 3
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     useSRGBMaterialColor: 1
@@ -93,7 +93,7 @@ ModelImporter:
     armStretch: 0.05
     legStretch: 0.05
     feetSpacing: 0
-    globalScale: 3
+    globalScale: 1
     rootMotionBoneName: 
     hasTranslationDoF: 0
     hasExtraRoot: 0
