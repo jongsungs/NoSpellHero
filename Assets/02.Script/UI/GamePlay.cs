@@ -2268,7 +2268,7 @@ public class GamePlay : MonoBehaviour
         else if (_currentStage == GameState.Stage3)
         {
             BossSpawn(_orkPool);
-            _bossName.text = "±Ùº»ÀÖ´Â µå·¡°ï";
+            _bossName.text = "¸¶¿Õ¿À¸¥ÆÈÀÌ¿¡¿ë";
         }
         else if (_currentStage == GameState.Stage4)
         {
@@ -2386,28 +2386,6 @@ public class GamePlay : MonoBehaviour
         }
         else if (_currentStage == GameState.Stage2)
         {
-            int rand = Random.Range(0, 4);
-            if (rand == 0)
-            {
-                _slimePool.Get();
-
-            }
-            else if (rand == 1)
-            {
-                _wolfpool.Get();
-            }
-            else if (rand == 2)
-            {
-                _skeletonPool.Get();
-            }
-            else if (rand == 3)
-            {
-                _captainSkullNormalPool.Get();
-            }
-            SoundManager.Instance.EffectPlay(SoundManager.Instance._spawn);
-        }
-        else if (_currentStage == GameState.Stage3)
-        {
             int rand = Random.Range(0, 5);
             if (rand == 0)
             {
@@ -2428,13 +2406,48 @@ public class GamePlay : MonoBehaviour
             }
             else if (rand == 4)
             {
+                _orkPool.Get();
+            }
+
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._spawn);
+        }
+        else if (_currentStage == GameState.Stage3)
+        {
+            int rand = Random.Range(0, 7);
+            if (rand == 0)
+            {
+                _slimePool.Get();
+
+            }
+            else if (rand == 1)
+            {
+                _wolfpool.Get();
+            }
+            else if (rand == 2)
+            {
+                _skeletonPool.Get();
+            }
+            else if (rand == 3)
+            {
+                _captainSkullNormalPool.Get();
+            }
+            else if (rand == 4)
+            {
                 _wolfkingNormalPool.Get();
+            }
+            else if (rand == 5)
+            {
+                _orkPool.Get();
+            }
+            else if (rand == 6)
+            {
+                _golemNormalPool.Get();
             }
             SoundManager.Instance.EffectPlay(SoundManager.Instance._spawn);
         }
         else if (_currentStage == GameState.Stage4)
         {
-            int rand = Random.Range(0, 5);
+            int rand = Random.Range(0, 8);
             if (rand == 0)
             {
                 _slimePool.Get();
@@ -2456,6 +2469,19 @@ public class GamePlay : MonoBehaviour
             {
                 _wolfkingNormalPool.Get();
             }
+            else if (rand == 5)
+            {
+                _orkPool.Get();
+            }
+            else if (rand == 6)
+            {
+                _golemNormalPool.Get();
+            }
+            else if (rand == 7)
+            {
+                _dragonNormalPool.Get();
+            }
+           
             SoundManager.Instance.EffectPlay(SoundManager.Instance._spawn);
         }
         yield return new WaitForSeconds(8 - (int)_currentStage);
@@ -2484,7 +2510,7 @@ public class GamePlay : MonoBehaviour
             }
             else if (_currentStage == GameState.Stage2)
             {
-                int rand = Random.Range(0, 4);
+                int rand = Random.Range(0, 5);
                 if (rand == 0)
                 {
                     _slimePool.Get();
@@ -2501,12 +2527,16 @@ public class GamePlay : MonoBehaviour
                 else if (rand == 3)
                 {
                     _captainSkullNormalPool.Get();
+                }
+                else if (rand == 4)
+                {
+                    _orkPool.Get();
                 }
                 SoundManager.Instance.EffectPlay(SoundManager.Instance._spawn);
             }
             else if (_currentStage == GameState.Stage3)
             {
-                int rand = Random.Range(0, 5);
+                int rand = Random.Range(0, 7);
                 if (rand == 0)
                 {
                     _slimePool.Get();
@@ -2527,12 +2557,20 @@ public class GamePlay : MonoBehaviour
                 else if (rand == 4)
                 {
                     _wolfkingNormalPool.Get();
+                }
+                else if (rand == 5)
+                {
+                    _orkPool.Get();
+                }
+                else if (rand == 6)
+                {
+                    _golemNormalPool.Get();
                 }
                 SoundManager.Instance.EffectPlay(SoundManager.Instance._spawn);
             }
             else if (_currentStage == GameState.Stage4)
             {
-                int rand = Random.Range(0, 5);
+                int rand = Random.Range(0, 8);
                 if (rand == 0)
                 {
                     _slimePool.Get();
@@ -2553,6 +2591,18 @@ public class GamePlay : MonoBehaviour
                 else if (rand == 4)
                 {
                     _wolfkingNormalPool.Get();
+                }
+                else if (rand == 5)
+                {
+                    _orkPool.Get();
+                }
+                else if (rand == 6)
+                {
+                    _golemNormalPool.Get();
+                }
+                else if (rand == 7)
+                {
+                    _dragonNormalPool.Get();
                 }
                 SoundManager.Instance.EffectPlay(SoundManager.Instance._spawn);
             }
@@ -2593,7 +2643,7 @@ public class GamePlay : MonoBehaviour
                 }
                 else if (_currentStage == GameState.Stage2)
                 {
-                    int rand = Random.Range(0, 4);
+                    int rand = Random.Range(0, 5);
                     if (rand == 0)
                     {
                         _slimePool.Get();
@@ -2610,12 +2660,16 @@ public class GamePlay : MonoBehaviour
                     else if (rand == 3)
                     {
                         _captainSkullNormalPool.Get();
+                    }
+                    else if (rand == 4)
+                    {
+                        _orkPool.Get();
                     }
                     SoundManager.Instance.EffectPlay(SoundManager.Instance._spawn);
                 }
                 else if (_currentStage == GameState.Stage3)
                 {
-                    int rand = Random.Range(0, 5);
+                    int rand = Random.Range(0, 7);
                     if (rand == 0)
                     {
                         _slimePool.Get();
@@ -2636,12 +2690,20 @@ public class GamePlay : MonoBehaviour
                     else if (rand == 4)
                     {
                         _wolfkingNormalPool.Get();
+                    }
+                    else if (rand == 5)
+                    {
+                        _orkPool.Get();
+                    }
+                    else if (rand == 6)
+                    {
+                        _golemNormalPool.Get();
                     }
                     SoundManager.Instance.EffectPlay(SoundManager.Instance._spawn);
                 }
                 else if (_currentStage == GameState.Stage4)
                 {
-                    int rand = Random.Range(0, 5);
+                    int rand = Random.Range(0, 8);
                     if (rand == 0)
                     {
                         _slimePool.Get();
@@ -2662,6 +2724,18 @@ public class GamePlay : MonoBehaviour
                     else if (rand == 4)
                     {
                         _wolfkingNormalPool.Get();
+                    }
+                    else if (rand == 5)
+                    {
+                        _orkPool.Get();
+                    }
+                    else if (rand == 6)
+                    {
+                        _golemNormalPool.Get();
+                    }
+                    else if (rand == 7)
+                    {
+                        _dragonNormalPool.Get();
                     }
                     SoundManager.Instance.EffectPlay(SoundManager.Instance._spawn);
                 }

@@ -91,18 +91,31 @@ public class PlayerData
     public bool m_isKightHelmet;
     public bool m_isMasicianHat;
     public bool m_isGat;
+    public bool m_isMedievalHelmet;
+
     public bool m_isSkinHead;
     public bool m_isnormalHair;
+    public bool m_isLegolasHair;
+    public bool m_isParkHair;
+    public bool m_isPotHair;
+
     public bool m_isKnightTop;
     public bool m_isMasicianTop;
     public bool m_isDurumagiTop;
+    public bool m_isCasualTop;
+    public bool m_isMedievalTop;
+
     public bool m_isKnightBottom;
     public bool m_isMasicianBottom;
     public bool m_isdurumagiBottom;
+    public bool m_isCasualBottom;
+    public bool m_isMedievalBottom;
+
     public bool m_isKnightShoes;
     public bool m_isSandal;
     public bool m_isOldShoes;
-    
+    public bool m_isCasualShoes;
+    public bool m_isMedievalShoes;
 
     public bool m_isEmptyHelmet;
     public bool m_isNormalTop;
@@ -127,19 +140,34 @@ public class PlayerData
     public bool m_buyKightHelmet;
     public bool m_buyMasicianHat;
     public bool m_buyGat;
+    public bool m_buyMedievalHelmet;
+
     public bool m_buySkinHead;
     public bool m_buynormalHair;
+    public bool m_buyLegolasHair;
+    public bool m_buyParkHair;
+    public bool m_buyPotHair;
+
     public bool m_buyKnightTop;
     public bool m_buyMasicianTop;
     public bool m_buyDurumagiTop;
+    public bool m_buyCasualTop;
+    public bool m_buyMedievalTop;
+
     public bool m_buyKnightBottom;
     public bool m_buyMasicianBottom;
     public bool m_buydurumagiBottom;
+    public bool m_buyCasualBottom;
+    public bool m_buyMedievalBottom;
+
     public bool m_buyKnightShoes;
     public bool m_buySandal;
     public bool m_buyOldShoes;
-                  
-                  
+    public bool m_buyCasualShoes;
+    public bool m_buyMedievalShoes;
+
+
+
     public bool m_buyEmptyHelmet;
     public bool m_buyNormalTop;
     public bool m_buyTrunkBottom;
@@ -298,7 +326,8 @@ public class PlayerData
         bool getlubu, bool lubuhidden, bool lubuskill1full, bool getheavycavalry, bool gethealthmagician, bool healthmagicianskill2full, bool healthmagiciangidden, bool getprist, bool pristhpfull, bool pristjesus, bool pristhidden, bool getwarlock, bool warlockskill1full, bool warlockclear, bool warlockhidden, bool getsalamander, bool salamandermeteor, bool salamandermeteor3, bool salamanderhidden, bool getcook, bool cookfullhp, bool cookhidden, bool getzeus, bool zeusskill1first,
         bool zeushidden, bool getpracticebug, bool practicebugskill1full, bool practicebugskill2full, bool getstranger, bool strangerfirstskill, bool strangerskill100, bool getqrf, bool qrfputhanger, bool qrfhidden, bool getservant,bool servantskill1first ,bool servanthidden, bool getathlete, bool ahlerteskill2full, bool ahleteclear, bool getversatile, bool versatilehidden, bool getaacupuncturist, bool acupuncturistfirstskill, bool acupuncturistcritical, bool acupuncturistskill2full, bool acupuncturistclear,
         bool getspoonkiller, bool spoonkillerskill1full, bool spoonkkillerskill2full, bool spoonkillerclear, bool gethelen, bool helenskill100, bool helenhidden, bool helenstage1die, bool helenclear, bool getrich, bool richget1000gold, bool getswell, bool swellskill1full, bool swellclear, bool getdelivery, bool deliveryskill1full, bool deliveryclear, bool getrepairman, bool repairmanhidden, bool repairmanclear, bool getdosa, bool dosafirstskill, bool dosaskilldie20, bool dosahidden, bool getgambler, bool gamblerlose, bool gamblerwin, bool gamblerskill2,
-        bool getslowstarter, bool slowstarterclear, bool getorpheus, bool orpheusskill1full, bool orpheusfirstdie, bool getdokev, bool dokevfirstskill, bool dokevhidden, bool dokevhidden50, bool statlv5, bool stage1clear, bool stage2clear, int totalcreepscore,int jackfrostscore,int druidscore, int strangerblackholescore, int helenscore, int dosadieavatar,int dokevhiddenskillscore,int gold,int stat,float effectsound,float bgmsound)
+        bool getslowstarter, bool slowstarterclear, bool getorpheus, bool orpheusskill1full, bool orpheusfirstdie, bool getdokev, bool dokevfirstskill, bool dokevhidden, bool dokevhidden50, bool statlv5, bool stage1clear, bool stage2clear, int totalcreepscore,int jackfrostscore,int druidscore, int strangerblackholescore, int helenscore, int dosadieavatar,int dokevhiddenskillscore,int gold,int stat,float effectsound,float bgmsound,bool ismedivalHelmet,bool islegolashair,bool isparkhair,bool ispothair,bool iscasualtop,bool ismedievaltop,bool iscasualbottom,bool ismedievalbottom, bool iscasualshoes,bool ismedievalshoes,
+        bool buymedievalhemet,bool buylegolashair,bool buyparkhair,bool buypothair,bool buycasualtop,bool buymedievaltop,bool buycasualbottom,bool buymedievalbottom,bool buycasualshoes,bool buymedievalshoes)
     {
         m_hp = hp;
         m_atk = atk;
@@ -344,6 +373,20 @@ public class PlayerData
         m_isNormalTop = normaltop;
         m_isTrunkBottom = trunkbottom;
         m_isnormalShoes = normalshoes;
+        m_isMedievalHelmet = ismedivalHelmet;
+        m_isLegolasHair = islegolashair;
+        m_isParkHair = isparkhair;
+        m_isPotHair = ispothair;
+        m_isCasualTop = iscasualtop;
+        m_isMedievalTop = ismedievaltop;
+        m_isCasualBottom = iscasualbottom;
+        m_isMedievalBottom = ismedievalbottom;
+        m_isCasualShoes = iscasualshoes;
+        m_isMedievalShoes = ismedievalshoes;
+
+
+
+
 
         m_buyBasicStick = buybasicstick;
         m_buyStick = buystick;
@@ -379,6 +422,18 @@ public class PlayerData
         m_buyNormalTop = buynormaltop;
         m_buyTrunkBottom = buytrunkbottom;
         m_buynormalShoes = buynormalshoes;
+
+
+        m_buyMedievalHelmet = buymedievalhemet;
+        m_buyLegolasHair = buylegolashair;
+        m_buyParkHair = buyparkhair;
+        m_buyPotHair = buypothair;
+        m_buyCasualTop = buycasualtop;
+        m_buyMedievalTop = buymedievaltop;
+        m_buyCasualBottom = buycasualbottom;
+        m_buyMedievalBottom = buymedievalbottom;
+        m_buyCasualShoes = buycasualshoes;
+        m_buyMedievalShoes = buymedievalshoes;
 
 
         m_firststat = firststat;
@@ -714,20 +769,28 @@ public class Player : BaseObject
     public bool _isMasicianHat;
     public bool _isGat;
     public bool _isEmptyHelmet;
+    public bool _isMedievalHelmet;
 
     public bool _buyKightHelmet;
     public bool _buyMasicianHat;
     public bool _buyGat;
     public bool _buyEmptyHelmet;
+    public bool _buyMedievalHelmet;
 
     //머리
    
 
     public bool _isSkinHead;
     public bool _isnormalHair;
+    public bool _isLegolasHair;
+    public bool _isParkHair;
+    public bool _isPotHair;
 
     public bool _buySkinHead;
     public bool _buynormalHair;
+    public bool _buyLegolasHair;
+    public bool _buyParkHair;
+    public bool _buyPotHair;
 
     //상의
 
@@ -736,11 +799,15 @@ public class Player : BaseObject
     public bool _isMasicianTop;
     public bool _isDurumagiTop;
     public bool _isNormalTop;
+    public bool _isCasualTop;
+    public bool _isMedievalTop;
 
     public bool _buyKnightTop;
     public bool _buyMasicianTop;
     public bool _buyDurumagiTop;
     public bool _buyNormalTop;
+    public bool _buyCasualTop;
+    public bool _buyMedievalTop;
 
     //하의
 
@@ -749,11 +816,16 @@ public class Player : BaseObject
     public bool _isMasicianBottom;
     public bool _isdurumagiBottom;
     public bool _isTrunkBottom;
+    public bool _isCasualBottom;
+    public bool _isMedievalBottom;
+
 
     public bool _buyKnightBottom;
     public bool _buyMasicianBottom;
     public bool _buydurumagiBottom;
     public bool _buyTrunkBottom;
+    public bool _buyCasualBottom;
+    public bool _buyMedievalBottom;
 
     //신발
 
@@ -762,11 +834,15 @@ public class Player : BaseObject
     public bool _isSandal;
     public bool _isOldShoes;
     public bool _isnormalShoes;
+    public bool _isCasualShoes;
+    public bool _isMedievalShoes;
 
     public bool _buyKnightShoes;
     public bool _buySandal;
     public bool _buyOldShoes;
     public bool _buynormalShoes;
+    public bool _buyCasualShoes;
+    public bool _buyMedievalShoes;
 
     #endregion
 
@@ -929,13 +1005,13 @@ public class Player : BaseObject
         if(File.Exists(Application.persistentDataPath + "/" + "PlayerData.json") == false && SceneManager.GetActiveScene().name != "GamePlay")
         {
             _data = new PlayerData(_hp, _atk, _matk, _atkSpeed, _def, _speed, _critical, _handicraft, _charm, _criticalDamage,
-           _isKightHelmet, _isMasicianHat, _isGat, _isSkinHead, _isnormalHair, _isKnightTop, _isMasicianTop, _isDurumagiTop, _isKnightBottom, _isMasicianBottom, _isdurumagiBottom, _isKnightShoes, _isSandal, _isOldShoes, _isEmptyHelmet, _isNormalTop, _isTrunkBottom, _isnormalShoes, _isStick, _isSward1, _isSward2, _isBroom, _isClub, _isShortSward, _isHanger, _isMace, _isShield, _isSpear, _isUmbrella, _isWaldo, _buyStick, _buySward1, _buySward2, _buyBroom, _buyClub, _buyShortSward, _buyHanger, _buyMace, _buyShield, _buySpear, _buyUmbrella, _buyWaldo, _buyKightHelmet, _buyMasicianHat, _buyGat,
-           _buySkinHead, _buynormalHair, _buyKnightTop, _buyMasicianTop, _buyDurumagiTop, _buyKnightBottom, _buyMasicianBottom, _buydurumagiBottom, _buyKnightShoes, _buySandal, _buyOldShoes, _buyEmptyHelmet, _buyNormalTop, _buyTrunkBottom, _buynormalShoes
-           , _isbasicStick, _buybasicStick, firststat, firstmaster, firstjob, earlydie, nonviolent, firstmagic, firsthunt, getmagicalblader, magicalbladerhidden, getmadman, madmanmadness, getstrongman, strongmanhidden, strongmanskill1full, getwarrior, warriorskill1full, getdwarf, dwarfskill1full, getjackfrost, jackfrosthidden, jackfrosttuna, getassaultcaptain, assaultcaptainfull,
-           getzhangfei, zhangfeiroar, zhangfeirowhp, zhangfeihidden, getberserker, berserkerskill1full, berserkerhidden, berserkerclear, getcriticaler, criticalerskill1full, getdruid, druidfirstskill, druidskill100, getassassin, assassinskill2full, getambidextrous, getlubu, lubuhidden, lubuskill1full, getheavycavalry, gethealthmagician, healthmagicianskill2full, healthmagicianhidden, getprist, pristhpfull, pristjesus, pristhidden, getwarlock, warlockskill1full, warlockclear, warlcokhidden, getsalamander, salamandermeteor, salamandermeteor3, salamanderhidden, getcook, cookfullhp, cookhidden,
-           getzeus, zeusskill1first, zeushidden, getpracticebug, practicebugskill1full, practicebugskill2full, getstranger, strangerfirstskill, stangerskill100, getqrf, qrfputhanger, qrfhidden, getservant, servantskill1first, servanthidden, getathlete, ahleteskill2full, ahleteclear, getversatile, versatilehidden, getacupuncturist, acupuncturistfirstskill, acupuncturistcritical, acupuncturistskill2full, acupuncturistclear, getspoonkiller, spoonkillerskill1full, spoonkillerskill2full, spoonkillerclear, gethelen, helenskill100, helenhidden, helenstage1die, helenclear, getrich, richget1000gold, getswell, swellskill1full, swellclear, getdelivery, deliveryskill1full,
-           deliveryclear, getrepairman, repairmanhidden, repairmanclear, getdosa, dosafirstskill, dosaskilldie20, dosahidden, getgambler, gamblerlose, gamblerwin, gamblerskill2, getslowstarter, slowstarterclear, getorpheus, orpheusskill1full, orpheusfirstdie, getdokev, dokevfirstskill, dokevhidden, dokevhidden50, statlv5, stage1clear, stage2clear, _totalCreepScore, _jackfrostScore, _druidScore, _strangerblackholeScore, _helenScore, _dosaDieAvatar, _dokevHiddenSkillScore, _gold, _stat, _effectSound, _bgmSound);
-
+             _isKightHelmet, _isMasicianHat, _isGat, _isSkinHead, _isnormalHair, _isKnightTop, _isMasicianTop, _isDurumagiTop, _isKnightBottom, _isMasicianBottom, _isdurumagiBottom, _isKnightShoes, _isSandal, _isOldShoes, _isEmptyHelmet, _isNormalTop, _isTrunkBottom, _isnormalShoes, _isStick, _isSward1, _isSward2, _isBroom, _isClub, _isShortSward, _isHanger, _isMace, _isShield, _isSpear, _isUmbrella, _isWaldo, _buyStick, _buySward1, _buySward2, _buyBroom, _buyClub, _buyShortSward, _buyHanger, _buyMace, _buyShield, _buySpear, _buyUmbrella, _buyWaldo, _buyKightHelmet, _buyMasicianHat, _buyGat,
+             _buySkinHead, _buynormalHair, _buyKnightTop, _buyMasicianTop, _buyDurumagiTop, _buyKnightBottom, _buyMasicianBottom, _buydurumagiBottom, _buyKnightShoes, _buySandal, _buyOldShoes, _buyEmptyHelmet, _buyNormalTop, _buyTrunkBottom, _buynormalShoes
+             , _isbasicStick, _buybasicStick, firststat, firstmaster, firstjob, earlydie, nonviolent, firstmagic, firsthunt, getmagicalblader, magicalbladerhidden, getmadman, madmanmadness, getstrongman, strongmanhidden, strongmanskill1full, getwarrior, warriorskill1full, getdwarf, dwarfskill1full, getjackfrost, jackfrosthidden, jackfrosttuna, getassaultcaptain, assaultcaptainfull,
+             getzhangfei, zhangfeiroar, zhangfeirowhp, zhangfeihidden, getberserker, berserkerskill1full, berserkerhidden, berserkerclear, getcriticaler, criticalerskill1full, getdruid, druidfirstskill, druidskill100, getassassin, assassinskill2full, getambidextrous, getlubu, lubuhidden, lubuskill1full, getheavycavalry, gethealthmagician, healthmagicianskill2full, healthmagicianhidden, getprist, pristhpfull, pristjesus, pristhidden, getwarlock, warlockskill1full, warlockclear, warlcokhidden, getsalamander, salamandermeteor, salamandermeteor3, salamanderhidden, getcook, cookfullhp, cookhidden,
+             getzeus, zeusskill1first, zeushidden, getpracticebug, practicebugskill1full, practicebugskill2full, getstranger, strangerfirstskill, stangerskill100, getqrf, qrfputhanger, qrfhidden, getservant, servantskill1first, servanthidden, getathlete, ahleteskill2full, ahleteclear, getversatile, versatilehidden, getacupuncturist, acupuncturistfirstskill, acupuncturistcritical, acupuncturistskill2full, acupuncturistclear, getspoonkiller, spoonkillerskill1full, spoonkillerskill2full, spoonkillerclear, gethelen, helenskill100, helenhidden, helenstage1die, helenclear, getrich, richget1000gold, getswell, swellskill1full, swellclear, getdelivery, deliveryskill1full,
+             deliveryclear, getrepairman, repairmanhidden, repairmanclear, getdosa, dosafirstskill, dosaskilldie20, dosahidden, getgambler, gamblerlose, gamblerwin, gamblerskill2, getslowstarter, slowstarterclear, getorpheus, orpheusskill1full, orpheusfirstdie, getdokev, dokevfirstskill, dokevhidden, dokevhidden50, statlv5, stage1clear, stage2clear, _totalCreepScore, _jackfrostScore, _druidScore, _strangerblackholeScore, _helenScore, _dosaDieAvatar, _dokevHiddenSkillScore, _gold, _stat, _effectSound, _bgmSound, _isMedievalHelmet, _isLegolasHair, _isParkHair, _isPotHair, _isCasualTop, _isMedievalTop, _isCasualBottom, _isMedievalBottom, _isCasualShoes, _isMedievalShoes, _buyMedievalHelmet, _buyLegolasHair, _buyParkHair, _buyPotHair,
+             _buyCasualTop, _buyMedievalTop, _buyCasualBottom, _buyMedievalBottom, _buyCasualShoes, _buyMedievalShoes);
             Save();
         }
         else if(File.Exists(Application.persistentDataPath + "/" + "PlayerData.json") == true)
@@ -949,7 +1025,8 @@ public class Player : BaseObject
             ,_isbasicStick,_buybasicStick,firststat,firstmaster,firstjob,earlydie,nonviolent,firstmagic,firsthunt,getmagicalblader,magicalbladerhidden,getmadman,madmanmadness,getstrongman,strongmanhidden,strongmanskill1full,getwarrior,warriorskill1full,getdwarf,dwarfskill1full,getjackfrost,jackfrosthidden,jackfrosttuna,getassaultcaptain,assaultcaptainfull,
             getzhangfei,zhangfeiroar,zhangfeirowhp,zhangfeihidden,getberserker,berserkerskill1full,berserkerhidden,berserkerclear,getcriticaler,criticalerskill1full,getdruid,druidfirstskill,druidskill100,getassassin,assassinskill2full,getambidextrous,getlubu,lubuhidden,lubuskill1full,getheavycavalry,gethealthmagician,healthmagicianskill2full,healthmagicianhidden,getprist,pristhpfull,pristjesus,pristhidden,getwarlock,warlockskill1full,warlockclear,warlcokhidden,getsalamander,salamandermeteor,salamandermeteor3,salamanderhidden,getcook,cookfullhp,cookhidden,
             getzeus,zeusskill1first,zeushidden,getpracticebug,practicebugskill1full,practicebugskill2full,getstranger,strangerfirstskill,stangerskill100,getqrf,qrfputhanger,qrfhidden,getservant,servantskill1first,servanthidden,getathlete,ahleteskill2full,ahleteclear,getversatile,versatilehidden,getacupuncturist,acupuncturistfirstskill,acupuncturistcritical,acupuncturistskill2full,acupuncturistclear,getspoonkiller,spoonkillerskill1full,spoonkillerskill2full,spoonkillerclear,gethelen,helenskill100,helenhidden,helenstage1die,helenclear,getrich,richget1000gold,getswell,swellskill1full,swellclear,getdelivery,deliveryskill1full,
-            deliveryclear,getrepairman,repairmanhidden,repairmanclear,getdosa,dosafirstskill,dosaskilldie20,dosahidden,getgambler,gamblerlose,gamblerwin,gamblerskill2,getslowstarter,slowstarterclear,getorpheus,orpheusskill1full,orpheusfirstdie,getdokev,dokevfirstskill,dokevhidden,dokevhidden50,statlv5,stage1clear,stage2clear,_totalCreepScore,_jackfrostScore,_druidScore,_strangerblackholeScore,_helenScore,_dosaDieAvatar,_dokevHiddenSkillScore,_gold,_stat,_effectSound,_bgmSound);
+            deliveryclear,getrepairman,repairmanhidden,repairmanclear,getdosa,dosafirstskill,dosaskilldie20,dosahidden,getgambler,gamblerlose,gamblerwin,gamblerskill2,getslowstarter,slowstarterclear,getorpheus,orpheusskill1full,orpheusfirstdie,getdokev,dokevfirstskill,dokevhidden,dokevhidden50,statlv5,stage1clear,stage2clear,_totalCreepScore,_jackfrostScore,_druidScore,_strangerblackholeScore,_helenScore,_dosaDieAvatar,_dokevHiddenSkillScore,_gold,_stat,_effectSound,_bgmSound,_isMedievalHelmet,_isLegolasHair,_isParkHair,_isPotHair,_isCasualTop,_isMedievalTop,_isCasualBottom,_isMedievalBottom,_isCasualShoes,_isMedievalShoes,_buyMedievalHelmet,_buyLegolasHair,_buyParkHair,_buyPotHair,
+            _buyCasualTop,_buyMedievalTop,_buyCasualBottom,_buyMedievalBottom,_buyCasualShoes,_buyMedievalShoes);
         
        
 
@@ -3286,6 +3363,20 @@ public class Player : BaseObject
         _isTrunkBottom = data.m_isTrunkBottom;
         _isnormalShoes = data.m_isnormalShoes;
 
+        _isMedievalHelmet = data.m_isMedievalHelmet;
+        _isLegolasHair = data.m_isLegolasHair;
+        _isParkHair = data.m_isParkHair;
+        _isPotHair = data.m_isPotHair;
+        _isCasualTop = data.m_isCasualTop;
+        _isMedievalTop = data.m_isMedievalTop;
+        _isCasualBottom = data.m_isCasualBottom;
+        _isMedievalBottom = data.m_isMedievalBottom;
+        _isCasualShoes = data.m_isCasualShoes;
+        _isMedievalShoes = data.m_isMedievalShoes;
+
+
+
+
         _buybasicStick = data.m_buyBasicStick;
         _buyStick = data.m_buyStick;
         _buySward1 = data.m_buySward1;
@@ -3320,6 +3411,18 @@ public class Player : BaseObject
         _buyNormalTop = data.m_buyNormalTop;
         _buyTrunkBottom = data.m_buyTrunkBottom;
         _buynormalShoes = data.m_buynormalShoes;
+
+        _buyMedievalHelmet = data.m_buyMedievalHelmet;
+        _buyLegolasHair = data.m_buyLegolasHair;
+        _buyParkHair = data.m_buyParkHair;
+        _buyPotHair = data.m_buyPotHair;
+        _buyCasualTop = data.m_buyCasualTop;
+        _buyMedievalTop = data.m_buyMedievalTop;
+        _buyCasualBottom = data.m_buyCasualBottom;
+        _buyMedievalBottom = data.m_buyMedievalBottom;
+        _buyCasualShoes = data.m_buyCasualShoes;
+        _buyMedievalShoes = data.m_buyMedievalShoes;
+
 
         firststat = data.m_firststat;
         firstmaster = data.m_firstmaster;
@@ -3509,6 +3612,20 @@ public class Player : BaseObject
         _data.m_isTrunkBottom = _isTrunkBottom;
         _data.m_isnormalShoes = _isnormalShoes;
 
+        _data.m_isMedievalHelmet = _isMedievalHelmet;
+        _data.m_isLegolasHair = _isLegolasHair;
+        _data.m_isParkHair = _isParkHair;
+        _data.m_isPotHair = _isPotHair;
+        _data.m_isCasualTop = _isCasualTop;
+        _data.m_isMedievalTop = _isMedievalTop;
+        _data.m_isCasualBottom = _isCasualBottom;
+        _data.m_isMedievalBottom = _isMedievalBottom;
+        _data.m_isCasualShoes = _isCasualShoes;
+        _data.m_isMedievalShoes = _isMedievalShoes;
+
+
+
+
         _data.m_buyBasicStick = _buybasicStick;
         _data.m_buyStick = _buyStick;
         _data.m_buySward1 = _buySward1;
@@ -3544,7 +3661,16 @@ public class Player : BaseObject
         _data.m_buyTrunkBottom = _buyTrunkBottom;
         _data.m_buynormalShoes = _buynormalShoes;
 
-
+        _data.m_buyMedievalHelmet = _buyMedievalHelmet;
+        _data.m_buyLegolasHair = _buyLegolasHair;
+        _data.m_buyParkHair = _buyParkHair;
+        _data.m_buyPotHair = _buyPotHair;
+        _data.m_buyCasualTop = _buyCasualTop;
+        _data.m_buyMedievalTop = _buyMedievalTop;
+        _data.m_buyCasualBottom = _buyCasualBottom;
+        _data.m_buyMedievalBottom = _buyMedievalBottom;
+        _data.m_buyCasualShoes = _buyCasualShoes;
+        _data.m_buyMedievalShoes = _buyMedievalShoes;
 
 
         _data.m_firststat = firststat;
@@ -3691,7 +3817,7 @@ public class Player : BaseObject
     }
     public void AchivementDataSave()
     {
-     
+
 
         _data.m_isBasicStick = _isbasicStick;
         _data.m_isStick = _isStick;
@@ -3726,6 +3852,20 @@ public class Player : BaseObject
         _data.m_isNormalTop = _isNormalTop;
         _data.m_isTrunkBottom = _isTrunkBottom;
         _data.m_isnormalShoes = _isnormalShoes;
+
+        _data.m_isMedievalHelmet = _isMedievalHelmet;
+        _data.m_isLegolasHair = _isLegolasHair;
+        _data.m_isParkHair = _isParkHair;
+        _data.m_isPotHair = _isPotHair;
+        _data.m_isCasualTop = _isCasualTop;
+        _data.m_isMedievalTop = _isMedievalTop;
+        _data.m_isCasualBottom = _isCasualBottom;
+        _data.m_isMedievalBottom = _isMedievalBottom;
+        _data.m_isCasualShoes = _isCasualShoes;
+        _data.m_isMedievalShoes = _isMedievalShoes;
+
+
+
 
         _data.m_buyBasicStick = _buybasicStick;
         _data.m_buyStick = _buyStick;
@@ -3762,7 +3902,16 @@ public class Player : BaseObject
         _data.m_buyTrunkBottom = _buyTrunkBottom;
         _data.m_buynormalShoes = _buynormalShoes;
 
-
+        _data.m_buyMedievalHelmet = _buyMedievalHelmet;
+        _data.m_buyLegolasHair = _buyLegolasHair;
+        _data.m_buyParkHair = _buyParkHair;
+        _data.m_buyPotHair = _buyPotHair;
+        _data.m_buyCasualTop = _buyCasualTop;
+        _data.m_buyMedievalTop = _buyMedievalTop;
+        _data.m_buyCasualBottom = _buyCasualBottom;
+        _data.m_buyMedievalBottom = _buyMedievalBottom;
+        _data.m_buyCasualShoes = _buyCasualShoes;
+        _data.m_buyMedievalShoes = _buyMedievalShoes;
 
 
         _data.m_firststat = firststat;
@@ -3904,7 +4053,6 @@ public class Player : BaseObject
         _data.m_expX2 = _expX2;
         _data.m_effectSound = _effectSound;
         _data.m_bgmSound = _bgmSound;
-
 
     }
     string ObjectToJason(object data)

@@ -208,6 +208,14 @@ public class StagePlayer : MonoBehaviour
             }
             _listHelmet[3].SetActive(true);
         }
+        else if (Player.Instance._isMedievalHelmet == true)
+        {
+            for (int i = 0; i < _listHelmet.Count; ++i)
+            {
+                _listHelmet[i].SetActive(false);
+            }
+            _listHelmet[4].SetActive(true);
+        }
         #endregion
 
         #region Hair
@@ -228,6 +236,30 @@ public class StagePlayer : MonoBehaviour
                 _listHair[i].SetActive(false);
             }
             _listHair[1].SetActive(true);
+        }
+        else if (Player.Instance._isPotHair == true)
+        {
+            for (int i = 0; i < _listHair.Count; ++i)
+            {
+                _listHair[i].SetActive(false);
+            }
+            _listHair[4].SetActive(true);
+        }
+        else if (Player.Instance._isLegolasHair == true)
+        {
+            for (int i = 0; i < _listHair.Count; ++i)
+            {
+                _listHair[i].SetActive(false);
+            }
+            _listHair[2].SetActive(true);
+        }
+        else if (Player.Instance._isParkHair == true)
+        {
+            for (int i = 0; i < _listHair.Count; ++i)
+            {
+                _listHair[i].SetActive(false);
+            }
+            _listHair[3].SetActive(true);
         }
         #endregion
 
@@ -305,6 +337,41 @@ public class StagePlayer : MonoBehaviour
             }
             _listTop[3].SetActive(true);
         }
+        else if (Player.Instance._isCasualTop == true)
+        {
+            for (int i = 0; i < _listTop.Count; ++i)
+            {
+                _listTop[i].SetActive(false);
+            }
+            for (int i = 0; i < _listTopDeco.Count; ++i)
+            {
+                _listTopDeco[i].SetActive(false);
+            }
+            for (int i = 0; i < _listSkin.Count; ++i)
+            {
+                _listSkin[i].SetActive(false);
+            }
+            _listTop[4].SetActive(true);
+            _listSkin[2].SetActive(true);
+            _listTopDeco[3].SetActive(true);
+        }
+        else if (Player.Instance._isMedievalTop == true)
+        {
+            for (int i = 0; i < _listTop.Count; ++i)
+            {
+                _listTop[i].SetActive(false);
+            }
+            for (int i = 0; i < _listTopDeco.Count; ++i)
+            {
+                _listTopDeco[i].SetActive(false);
+            }
+            for (int i = 0; i < _listSkin.Count; ++i)
+            {
+                _listSkin[i].SetActive(false);
+            }
+            _listTop[5].SetActive(true);
+            _listTopDeco[4].SetActive(true);
+        }
         #endregion
 
 
@@ -361,7 +428,30 @@ public class StagePlayer : MonoBehaviour
             }
             _listBottom[3].SetActive(true);
         }
-
+        else if (Player.Instance._isCasualBottom == true)
+        {
+            for (int i = 0; i < _listBottom.Count; ++i)
+            {
+                _listBottom[i].SetActive(false);
+            }
+            for (int i = 0; i < _listBottomDeco.Count; ++i)
+            {
+                _listBottomDeco[i].SetActive(false);
+            }
+            _listBottom[4].SetActive(true);
+        }
+        else if (Player.Instance._isMedievalBottom == true)
+        {
+            for (int i = 0; i < _listBottom.Count; ++i)
+            {
+                _listBottom[i].SetActive(false);
+            }
+            for (int i = 0; i < _listBottomDeco.Count; ++i)
+            {
+                _listBottomDeco[i].SetActive(false);
+            }
+            _listBottom[5].SetActive(true);
+        }
         #endregion
 
         #region Shoes
@@ -424,6 +514,34 @@ public class StagePlayer : MonoBehaviour
 
             _listShoes[6].SetActive(true);
             _listShoes[7].SetActive(true);
+        }
+        else if (Player.Instance._isCasualShoes == true)
+        {
+            for (int i = 0; i < _listShoes.Count; ++i)
+            {
+                _listShoes[i].SetActive(false);
+            }
+            for (int i = 0; i < _listShoesDeco.Count; ++i)
+            {
+                _listShoesDeco[i].SetActive(false);
+            }
+
+            _listShoes[8].SetActive(true);
+            _listShoes[9].SetActive(true);
+        }
+        else if (Player.Instance._isMedievalShoes == true)
+        {
+            for (int i = 0; i < _listShoes.Count; ++i)
+            {
+                _listShoes[i].SetActive(false);
+            }
+            for (int i = 0; i < _listShoesDeco.Count; ++i)
+            {
+                _listShoesDeco[i].SetActive(false);
+            }
+
+            _listShoes[10].SetActive(true);
+            _listShoes[11].SetActive(true);
         }
         #endregion
 
@@ -588,6 +706,21 @@ public class StagePlayer : MonoBehaviour
             }
 
 
+        }
+        else if (other.CompareTag("DemonKingFireBall"))
+        {
+            var damage = other.GetComponent<SkillBase>()._skillDamage - (Player.Instance._def * 3f);
+            if (damage <= 0)
+            {
+                damage = 0f;
+            }
+            damage = Mathf.Round(damage);
+            Player.Instance._ingameHp -= damage;
+            GamePlay.Instance._playerHp.UpdateBar(Player.Instance._ingameHp, 0, Player.Instance._maxHp);
+            _mmfPlayer.PlayFeedbacks(transform.position, damage);
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._playerHit);
+            Player.Instance._hitCount++;
+            StartCoroutine(CoHit());
         }
     }
 

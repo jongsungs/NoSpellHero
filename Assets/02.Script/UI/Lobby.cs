@@ -16,6 +16,7 @@ public class Lobby : MonoBehaviour
     public GameObject _alarmPopUp;
     public GameObject _settingPopUp;
     public GameObject _resetCheckPopUp;
+    public GameObject _gameStartButton;
     public TextMeshProUGUI _goldText;
     public TextMeshProUGUI _statText;
     public TextMeshProUGUI _alarmText;
@@ -780,7 +781,34 @@ public class Lobby : MonoBehaviour
             _listHair[1].SetActive(false);
         }
 
-        
+        if (_player._isLegolasHair == true)
+        {
+            _listHair[2].SetActive(true);
+        }
+        else if (_player._isLegolasHair == false)
+        {
+            _listHair[2].SetActive(false);
+        }
+
+        if (_player._isParkHair == true)
+        {
+            _listHair[3].SetActive(true);
+        }
+        else if (_player._isParkHair == false)
+        {
+            _listHair[3].SetActive(false);
+        }
+
+        if (_player._isPotHair == true)
+        {
+            _listHair[4].SetActive(true);
+        }
+        else if (_player._isPotHair == false)
+        {
+            _listHair[4].SetActive(false);
+        }
+
+
         #endregion
         #region Helmet
         if (_player._isEmptyHelmet == true)
@@ -817,6 +845,15 @@ public class Lobby : MonoBehaviour
         else if (_player._isGat == false)
         {
             _listHelmet[3].SetActive(false);
+        }
+
+        if (_player._isMedievalHelmet == true)
+        {
+            _listHelmet[4].SetActive(true);
+        }
+        else if (_player._isMedievalHelmet == false)
+        {
+            _listHelmet[4].SetActive(false);
         }
         #endregion
         #region Top
@@ -865,6 +902,30 @@ public class Lobby : MonoBehaviour
             _listTopDeco[2].SetActive(false);
             _listSkin[2].SetActive(false);
         }
+
+        if (_player._isCasualTop == true)
+        {
+            _listTop[4].SetActive(true);
+            _listTopDeco[3].SetActive(true);
+            _listSkin[3].SetActive(true);
+        }
+        else if (_player._isCasualTop == false)
+        {
+            _listTop[4].SetActive(false);
+            _listTopDeco[3].SetActive(false);
+            _listSkin[3].SetActive(false);
+        }
+
+        if (_player._isMedievalTop == true)
+        {
+            _listTop[5].SetActive(true);
+            _listTopDeco[4].SetActive(true);
+        }
+        else if (_player._isMedievalTop == false)
+        {
+            _listTop[5].SetActive(false);
+            _listTopDeco[4].SetActive(false);
+        }
         #endregion
         #region Bottom
         if (_player._isTrunkBottom == true)
@@ -905,6 +966,24 @@ public class Lobby : MonoBehaviour
         else if (_player._isdurumagiBottom == false)
         {
             _listBottom[3].SetActive(false);
+        }
+
+        if (_player._isCasualBottom == true)
+        {
+            _listBottom[4].SetActive(true);
+        }
+        else if (_player._isCasualBottom == false)
+        {
+            _listBottom[4].SetActive(false);
+        }
+
+        if (_player._isMedievalBottom == true)
+        {
+            _listBottom[5].SetActive(true);
+        }
+        else if (_player._isMedievalBottom == false)
+        {
+            _listBottom[5].SetActive(false);
         }
         #endregion
         #region Shoes
@@ -955,9 +1034,31 @@ public class Lobby : MonoBehaviour
             _listShoes[6].SetActive(false);
             _listShoes[7].SetActive(false);
         }
+
+        if (_player._isCasualShoes == true)
+        {
+            _listShoes[8].SetActive(true);
+            _listShoes[9].SetActive(true);
+        }
+        else if (_player._isCasualShoes == false)
+        {
+            _listShoes[8].SetActive(false);
+            _listShoes[9].SetActive(false);
+        }
+
+        if (_player._isMedievalShoes == true)
+        {
+            _listShoes[10].SetActive(true);
+            _listShoes[11].SetActive(true);
+        }
+        else if (_player._isMedievalShoes == false)
+        {
+            _listShoes[10].SetActive(false);
+            _listShoes[11].SetActive(false);
+        }
         #endregion
         #region UnpackItem
-        if(Player.Instance._buybasicStick == false && _closetPopUp.activeSelf == true)
+        if (Player.Instance._buybasicStick == false && _closetPopUp.activeSelf == true)
         {
             _listScreen[0].SetActive(true);
         }
@@ -1236,8 +1337,95 @@ public class Lobby : MonoBehaviour
             _listScreen[30].SetActive(false);
         }
 
+        if (Player.Instance._buyMedievalHelmet == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[31].SetActive(true);
+        }
+        else if (Player.Instance._buyMedievalHelmet == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[31].SetActive(false);
+        }
 
+        if (Player.Instance._buyLegolasHair == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[32].SetActive(true);
+        }
+        else if (Player.Instance._buyLegolasHair == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[32].SetActive(false);
+        }
 
+        if (Player.Instance._buyParkHair == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[33].SetActive(true);
+        }
+        else if (Player.Instance._buyParkHair == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[33].SetActive(false);
+        }
+
+        if (Player.Instance._buyPotHair == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[34].SetActive(true);
+        }
+        else if (Player.Instance._buyPotHair == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[34].SetActive(false);
+        }
+
+        if (Player.Instance._buyCasualTop == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[35].SetActive(true);
+        }
+        else if (Player.Instance._buyCasualTop == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[35].SetActive(false);
+        }
+
+        if (Player.Instance._buyMedievalTop == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[36].SetActive(true);
+        }
+        else if (Player.Instance._buyMedievalTop == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[36].SetActive(false);
+        }
+
+        if (Player.Instance._buyCasualBottom == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[37].SetActive(true);
+        }
+        else if (Player.Instance._buyCasualBottom == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[37].SetActive(false);
+        }
+
+        if (Player.Instance._buyMedievalBottom == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[38].SetActive(true);
+        }
+        else if (Player.Instance._buyMedievalBottom == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[38].SetActive(false);
+        }
+
+        if (Player.Instance._buyCasualShoes == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[39].SetActive(true);
+        }
+        else if (Player.Instance._buyCasualShoes == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[39].SetActive(false);
+        }
+
+        if (Player.Instance._buyMedievalShoes == false && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[40].SetActive(true);
+        }
+        else if (Player.Instance._buyMedievalShoes == true && _closetPopUp.activeSelf == true)
+        {
+            _listScreen[40].SetActive(false);
+        }
         #endregion
 
 
@@ -1472,6 +1660,7 @@ public class Lobby : MonoBehaviour
     public void ExitClosetPopUP()
     {
         _closetPopUp.SetActive(false);
+
         SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
     }
     public void EnterAchivementPopUp()
@@ -1484,6 +1673,14 @@ public class Lobby : MonoBehaviour
     {
         AchievenmentListIngame.instance.ToggleWindow();
         SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
+    }
+    public void GameStartButtonFalse()
+    {
+        _gameStartButton.SetActive(false);
+    }
+    public void GameStartButtonTrue()
+    {
+        _gameStartButton.SetActive(true);
     }
     public void EnterSettingPopUp()
     {
@@ -1807,7 +2004,7 @@ public class Lobby : MonoBehaviour
             _player._isKightHelmet = false;
             _player._isMasicianHat = false;
             _player._isGat = false;
-
+            _player._isMedievalHelmet = false;
         }
         else if(cnt == 26 && _listScreen[12].activeSelf == true)
         {
@@ -1821,6 +2018,7 @@ public class Lobby : MonoBehaviour
             _player._isKightHelmet = true;
             _player._isMasicianHat = false;
             _player._isGat = false;
+            _player._isMedievalHelmet = false;
         }
         else if (cnt == 12 && _listScreen[13].activeSelf == true)
         {
@@ -1834,6 +2032,7 @@ public class Lobby : MonoBehaviour
             _player._isKightHelmet = false;
             _player._isMasicianHat = true;
             _player._isGat = false;
+            _player._isMedievalHelmet = false;
         }
         else if (cnt == 13 && _listScreen[14].activeSelf == true)
         {
@@ -1847,8 +2046,24 @@ public class Lobby : MonoBehaviour
             _player._isKightHelmet = false;
             _player._isMasicianHat = false;
             _player._isGat = true;
+            _player._isMedievalHelmet = false;
         }
         else if (cnt == 14 && _listScreen[15].activeSelf == true)
+        {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
+            EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
+        }
+
+        else if (cnt == 32 && _listScreen[31].activeSelf == false)
+        {
+            _player._isEmptyHelmet = false;
+            _player._isKightHelmet = false;
+            _player._isMasicianHat = false;
+            _player._isGat = false;
+            _player._isMedievalHelmet = true;
+        }
+        else if (cnt == 32 && _listScreen[31].activeSelf == true)
         {
             _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
@@ -1864,6 +2079,9 @@ public class Lobby : MonoBehaviour
         {
             _player._isnormalHair = true;
             _player._isSkinHead = false;
+            _player._isLegolasHair = false;
+            _player._isParkHair = false;
+            _player._isPotHair = false;
         }
         else if (cnt == 16 && _listScreen[16].activeSelf == true)
         {
@@ -1875,6 +2093,9 @@ public class Lobby : MonoBehaviour
         {
             _player._isnormalHair = false;
             _player._isSkinHead = true;
+            _player._isLegolasHair = false;
+            _player._isParkHair = false;
+            _player._isPotHair = false;
         }
         else if(cnt == 15 && _listScreen[17].activeSelf == true)
         {
@@ -1882,7 +2103,48 @@ public class Lobby : MonoBehaviour
             EnterCheckOutPopUp();
             SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
         }
-
+        else if (cnt == 33 && _listScreen[32].activeSelf == false)
+        {
+            _player._isnormalHair = false;
+            _player._isSkinHead = false;
+            _player._isLegolasHair = true;
+            _player._isParkHair = false;
+            _player._isPotHair = false;
+        }
+        else if (cnt == 33 && _listScreen[32].activeSelf == true)
+        {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
+            EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
+        }
+        else if (cnt == 34 && _listScreen[33].activeSelf == false)
+        {
+            _player._isnormalHair = false;
+            _player._isSkinHead = false;
+            _player._isLegolasHair = false;
+            _player._isParkHair = true;
+            _player._isPotHair = false;
+        }
+        else if (cnt == 34 && _listScreen[33].activeSelf == true)
+        {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
+            EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
+        }
+        else if (cnt == 35 && _listScreen[34].activeSelf == false)
+        {
+            _player._isnormalHair = false;
+            _player._isSkinHead = false;
+            _player._isLegolasHair = false;
+            _player._isParkHair = false;
+            _player._isPotHair = true;
+        }
+        else if (cnt == 35 && _listScreen[34].activeSelf == true)
+        {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
+            EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
+        }
         _player.Save();
 
     }
@@ -1897,6 +2159,8 @@ public class Lobby : MonoBehaviour
             _player._isKnightTop = false;
             _player._isMasicianTop = false;
             _player._isDurumagiTop = false;
+            _player._isCasualTop = false;
+            _player._isMedievalTop = false;
 
         }
         else if (cnt == 27 && _listScreen[18].activeSelf == true)
@@ -1911,6 +2175,8 @@ public class Lobby : MonoBehaviour
             _player._isKnightTop = true;
             _player._isMasicianTop = false;
             _player._isDurumagiTop = false;
+            _player._isCasualTop = false;
+            _player._isMedievalTop = false;
         }
         else if (cnt == 17 && _listScreen[19].activeSelf == true)
         {
@@ -1924,6 +2190,8 @@ public class Lobby : MonoBehaviour
             _player._isKnightTop = false;
             _player._isMasicianTop = true;
             _player._isDurumagiTop = false;
+            _player._isCasualTop = false;
+            _player._isMedievalTop = false;
         }
         else if (cnt == 18 && _listScreen[20].activeSelf == true)
         {
@@ -1937,8 +2205,40 @@ public class Lobby : MonoBehaviour
             _player._isKnightTop = false;
             _player._isMasicianTop = false;
             _player._isDurumagiTop = true;
+            _player._isCasualTop = false;
+            _player._isMedievalTop = false;
         }
         else if (cnt == 19 && _listScreen[21].activeSelf == true)
+        {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
+            EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
+        }
+        else if (cnt == 36 && _listScreen[35].activeSelf == false)
+        {
+            _player._isNormalTop = false;
+            _player._isKnightTop = false;
+            _player._isMasicianTop = false;
+            _player._isDurumagiTop = false;
+            _player._isCasualTop = true;
+            _player._isMedievalTop = false;
+        }
+        else if (cnt == 36 && _listScreen[35].activeSelf == true)
+        {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
+            EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
+        }
+        else if (cnt == 37 && _listScreen[36].activeSelf == false)
+        {
+            _player._isNormalTop = false;
+            _player._isKnightTop = false;
+            _player._isMasicianTop = false;
+            _player._isDurumagiTop = false;
+            _player._isCasualTop = false;
+            _player._isMedievalTop = true;
+        }
+        else if (cnt == 37 && _listScreen[36].activeSelf == true)
         {
             _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
@@ -1956,6 +2256,8 @@ public class Lobby : MonoBehaviour
             _player._isKnightBottom = false;
             _player._isMasicianBottom = false;
             _player._isdurumagiBottom = false;
+            _player._isCasualBottom = false;
+            _player._isMedievalBottom = false;
 
         }
         else if (cnt == 28 && _listScreen[22].activeSelf == true)
@@ -1970,6 +2272,8 @@ public class Lobby : MonoBehaviour
             _player._isKnightBottom = true;
             _player._isMasicianBottom = false;
             _player._isdurumagiBottom = false;
+            _player._isCasualBottom = false;
+            _player._isMedievalBottom = false;
         }
         else if (cnt == 20 && _listScreen[23].activeSelf == true)
         {
@@ -1983,6 +2287,8 @@ public class Lobby : MonoBehaviour
             _player._isKnightBottom = false;
             _player._isMasicianBottom = true;
             _player._isdurumagiBottom = false;
+            _player._isCasualBottom = false;
+            _player._isMedievalBottom = false;
         }
         else if (cnt == 21 && _listScreen[24].activeSelf == true)
         {
@@ -1996,8 +2302,40 @@ public class Lobby : MonoBehaviour
             _player._isKnightBottom = false;
             _player._isMasicianBottom = false;
             _player._isdurumagiBottom = true;
+            _player._isCasualBottom = false;
+            _player._isMedievalBottom = false;
         }
         else if (cnt == 22 && _listScreen[25].activeSelf == true)
+        {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
+            EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
+        }
+        else if (cnt == 38 && _listScreen[37].activeSelf == false)
+        {
+            _player._isTrunkBottom = false;
+            _player._isKnightBottom = false;
+            _player._isMasicianBottom = false;
+            _player._isdurumagiBottom = false;
+            _player._isCasualBottom = true;
+            _player._isMedievalBottom = false;
+        }
+        else if (cnt == 38 && _listScreen[37].activeSelf == true)
+        {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
+            EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
+        }
+        else if (cnt == 39 && _listScreen[38].activeSelf == false)
+        {
+            _player._isTrunkBottom = false;
+            _player._isKnightBottom = false;
+            _player._isMasicianBottom = false;
+            _player._isdurumagiBottom = false;
+            _player._isCasualBottom = false;
+            _player._isMedievalBottom = true;
+        }
+        else if (cnt == 39 && _listScreen[38].activeSelf == true)
         {
             _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
@@ -2015,6 +2353,8 @@ public class Lobby : MonoBehaviour
             _player._isKnightShoes = false;
             _player._isSandal = false;
             _player._isOldShoes = false;
+            _player._isCasualShoes = false;
+            _player._isMedievalShoes = false;
 
         }
         else if (cnt == 29 && _listScreen[26].activeSelf == true)
@@ -2030,6 +2370,8 @@ public class Lobby : MonoBehaviour
             _player._isKnightShoes = true;
             _player._isSandal = false;
             _player._isOldShoes = false;
+            _player._isCasualShoes = false;
+            _player._isMedievalShoes = false;
         }
         else if (cnt == 23 && _listScreen[27].activeSelf == true)
         {
@@ -2043,6 +2385,8 @@ public class Lobby : MonoBehaviour
             _player._isKnightShoes = false;
             _player._isSandal = true;
             _player._isOldShoes = false;
+            _player._isCasualShoes = false;
+            _player._isMedievalShoes = false;
         }
         else if (cnt == 24 && _listScreen[28].activeSelf == true)
         {
@@ -2056,8 +2400,40 @@ public class Lobby : MonoBehaviour
             _player._isKnightShoes = false;
             _player._isSandal = false;
             _player._isOldShoes = true;
+            _player._isCasualShoes = false;
+            _player._isMedievalShoes = false;
         }
         else if (cnt == 25 && _listScreen[29].activeSelf == true)
+        {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
+            EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
+        }
+        else if (cnt == 40 && _listScreen[39].activeSelf == false)
+        {
+            _player._isnormalShoes = false;
+            _player._isKnightShoes = false;
+            _player._isSandal = false;
+            _player._isOldShoes = false;
+            _player._isCasualShoes = true;
+            _player._isMedievalShoes = false;
+        }
+        else if (cnt == 40 && _listScreen[39].activeSelf == true)
+        {
+            _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
+            EnterCheckOutPopUp();
+            SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
+        }
+        else if (cnt == 41 && _listScreen[40].activeSelf == false)
+        {
+            _player._isnormalShoes = false;
+            _player._isKnightShoes = false;
+            _player._isSandal = false;
+            _player._isOldShoes = false;
+            _player._isCasualShoes = false;
+            _player._isMedievalShoes = true;
+        }
+        else if (cnt == 41 && _listScreen[40].activeSelf == true)
         {
             _CheckOutText.text = "필요 골드 : " + _closetCost.ToString() + "\n 구매하시겠습니까?";
             EnterCheckOutPopUp();
@@ -2224,7 +2600,46 @@ public class Lobby : MonoBehaviour
             {
                 Player.Instance._buynormalShoes = true;
             }
-
+            else if (_choiceNumber == 32)
+            {
+                Player.Instance._buyMedievalHelmet = true;
+            }
+            else if (_choiceNumber == 33)
+            {
+                Player.Instance._buyLegolasHair = true;
+            }
+            else if (_choiceNumber == 34)
+            {
+                Player.Instance._buyParkHair = true;
+            }
+            else if (_choiceNumber == 35)
+            {
+                Player.Instance._buyPotHair = true;
+            }
+            else if (_choiceNumber == 36)
+            {
+                Player.Instance._buyCasualTop = true;
+            }
+            else if (_choiceNumber == 37)
+            {
+                Player.Instance._buyMedievalTop = true;
+            }
+            else if (_choiceNumber == 38)
+            {
+                Player.Instance._buyCasualBottom = true;
+            }
+            else if (_choiceNumber == 39)
+            {
+                Player.Instance._buyMedievalBottom = true;
+            }
+            else if (_choiceNumber == 40)
+            {
+                Player.Instance._buyCasualShoes = true;
+            }
+            else if (_choiceNumber == 41)
+            {
+                Player.Instance._buyMedievalShoes = true;
+            }
             Player.Instance._gold -= _closetCost;
             SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
 
@@ -2263,11 +2678,13 @@ public class Lobby : MonoBehaviour
         _statePopUp.SetActive(true);
         _closetPopUp.SetActive(false);
 
+
         SoundManager.Instance.EffectPlay(SoundManager.Instance._pop2);
     }
     public void ExitStatePopUp()
     {
         _statePopUp.SetActive(false);
+
 
         SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
 
@@ -2526,6 +2943,24 @@ public class Lobby : MonoBehaviour
         Player.Instance._dokevHiddenSkillScore = 0;
         Player.Instance._gold = 0;
         Player.Instance._stat = 0;
+        Player.Instance._isMedievalHelmet = false;
+        Player.Instance._buyMedievalHelmet = false;
+        Player.Instance._isLegolasHair = false;
+        Player.Instance._buyLegolasHair = false;
+        Player.Instance._isParkHair = false;
+        Player.Instance._buyParkHair = false;
+        Player.Instance._isPotHair = false;
+        Player.Instance._buyPotHair = false;
+        Player.Instance._isCasualTop = false;
+        Player.Instance._buyCasualTop = false;
+        Player.Instance._isMedievalTop = false;
+        Player.Instance._buyMedievalTop = false;
+        Player.Instance._isCasualBottom = false;
+        Player.Instance._buyCasualBottom = false;
+        Player.Instance._isCasualShoes = false;
+        Player.Instance._buyCasualShoes = false;
+        Player.Instance._isMedievalShoes = false;
+        Player.Instance._buyMedievalShoes = false;
 
 
         SoundManager.Instance.EffectPlay(SoundManager.Instance._debuff);

@@ -15,6 +15,7 @@ TagManager:
   - Rock
   - FireBress
   - DemonKingMeteor
+  - DemonKingFireBall
   layers:
   - Default
   - TransparentFX

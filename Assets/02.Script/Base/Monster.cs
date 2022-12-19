@@ -108,7 +108,7 @@ public class Monster : BaseObject
         _attackOnce = true;
         redkey[0].color = _red;
         redkey[0].time = 0;
-        redkey[1].color = _white;
+        redkey[1].color = _red;
         redkey[1].time = 1;
         redakey[0].alpha = 1;
         redakey[0].time = 0;
@@ -228,7 +228,6 @@ public class Monster : BaseObject
     {
         if (_monsterWeapon != null)
             _monsterWeapon._isOnce = true;
-        Debug.Log("여기여기여기");
         if (_monster != MonsterKind.CaptainSkull)
         {
             SoundManager.Instance.EffectPlay(SoundManager.Instance._monsterAttack);
@@ -366,6 +365,10 @@ public class Monster : BaseObject
                     if (_CC == CrowdControl.Stun || _CC == CrowdControl.Freezing)
                     {
                         _speed = 0f;
+                    }
+                    else if (_monster == MonsterKind.DemonKing && _category == MonsterCategory.Boss && _attackStack >= 5)
+                    {
+                        ChangeState(State.Attack2);
                     }
                     else if (_monster == MonsterKind.Golem && _category == MonsterCategory.Boss && _attackStack >= 3)
                     {
@@ -1754,6 +1757,30 @@ public class Monster : BaseObject
 
 
                 other.GetComponent<SkillBase>().SkillRelease();
+            }
+            else if (other.CompareTag("DemonKingFireBall"))
+            {
+                var damage = other.GetComponent<SkillBase>()._skillDamage - (_def * 3f);
+                if (damage <= 0)
+                {
+                    damage = 0f;
+                }
+                damage = Mathf.Round(damage);
+                _ingameHp -= damage;
+                _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                StartCoroutine(CoHit());
+            }
+            else if(other.CompareTag("DemonKingMeteor"))
+            {
+                var damage = other.GetComponent<SkillBase>()._skillDamage - (_def * 3f);
+                if (damage <= 0)
+                {
+                    damage = 0f;
+                }
+                damage = Mathf.Round(damage);
+                _ingameHp -= damage;
+                _mmfPlayer.PlayFeedbacks(transform.position, damage);
+                StartCoroutine(CoHit());
             }
 
         }
