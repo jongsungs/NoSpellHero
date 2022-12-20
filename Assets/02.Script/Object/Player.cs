@@ -1349,10 +1349,6 @@ public class Player : BaseObject
         }
 
 
-        if (Input.GetKeyDown(KeyCode.K))
-        {
-            Meteor();
-        }
        
 
 
@@ -1600,8 +1596,23 @@ public class Player : BaseObject
             rand = UnityEngine.Random.Range(0, 100);
             if(rand < _dokevSkillProbability && _skill1 >= 3)
             {
-                //몬스터 마법 실행
+                int rand2 = UnityEngine.Random.Range(0, 3);
 
+                if(rand2 == 0)
+                {
+                    Roar();
+                }
+                else if(rand2 == 1)
+                {
+                    GamePlay.Instance._bressPool.Get();
+                }
+                else if(rand2 == 2)
+                {
+                    for(int i = 0; i < 4; ++i)
+                    {
+                        GamePlay.Instance._randomMeteorPool.Get();
+                    }
+                }
 
 
 

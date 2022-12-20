@@ -57,6 +57,8 @@ public class GamePlay : MonoBehaviour
     public SkillBase _thunder;
     public SkillBase _footStep;
     public SkillBase _demonKingMeteor;
+    public SkillBase _bress;
+    public SkillBase _randomMeteor;
 
     public Slider _effectSoundSlider;
     public Slider _bgmSouundSlider;
@@ -120,7 +122,8 @@ public class GamePlay : MonoBehaviour
     public IObjectPool<SkillBase> _footStepPool;
     public IObjectPool<SkillBase> _iceballPool;
     public IObjectPool<SkillBase> _demonkingMeteorPool;
-
+    public IObjectPool<SkillBase> _bressPool;
+    public IObjectPool<SkillBase> _randomMeteorPool;
 
 
     public GameState _currentStage;
@@ -201,6 +204,8 @@ public class GamePlay : MonoBehaviour
         _footStepPool = new ObjectPool<SkillBase>(CreateFootStepEffect, OngetFootStepEffect, OnReleaseSkill, OnDestroySkill, maxSize: 50);
         _iceballPool = new ObjectPool<SkillBase>(CreateIceBall, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 10);
         _demonkingMeteorPool = new ObjectPool<SkillBase>(CreateDemonMeteor, OngetDemonMeteor, OnReleaseSkill, OnDestroySkill, maxSize: 20);
+        _randomMeteorPool = new ObjectPool<SkillBase>(CreateRandomMeteor, OngetRandomMeteor, OnReleaseSkill, OnDestroySkill, maxSize: 10);
+        _bressPool = new ObjectPool<SkillBase>(CreateBress, OngetSkill, OnReleaseSkill, OnDestroySkill, maxSize: 10);
         DisableBossHPBar();
 
         for (int i = 1; i < _listStage.Count; ++i)
@@ -455,6 +460,12 @@ public class GamePlay : MonoBehaviour
         blackHole.SetPool(_fireBallPool);
         return blackHole;
     }
+    private SkillBase CreateBress()
+    {
+        var blackHole = Instantiate(_bress, Player.Instance._meteorPoint.transform.position + new Vector3(0, 0.5f, 0), Player.Instance.m_transform.rotation, _objectPool.transform);
+        blackHole.SetPool(_bressPool);
+        return blackHole;
+    }
     private SkillBase CreateRoar()
     {
         var roar = Instantiate(_roar, Player.Instance.m_transform.position, Quaternion.identity, Player.Instance.m_transform);
@@ -498,6 +509,12 @@ public class GamePlay : MonoBehaviour
     {
         var thunder = Instantiate(_demonKingMeteor, _randomSpawn.Return_RandomPosition(), Quaternion.identity, _objectPool.transform);
         thunder.SetPool(_demonkingMeteorPool);
+        return thunder;
+    }
+    private SkillBase CreateRandomMeteor()
+    {
+        var thunder = Instantiate(_randomMeteor, _randomSpawn.Return_RandomPosition(), Quaternion.identity, _objectPool.transform);
+        thunder.SetPool(_randomMeteorPool);
         return thunder;
     }
     private SkillBase CreateIceBall()
@@ -754,6 +771,11 @@ public class GamePlay : MonoBehaviour
         skill.gameObject.SetActive(true);
     }
     private void OngetDemonMeteor(SkillBase skill)
+    {
+        skill.transform.position = _randomSpawn.Return_RandomPosition() + new Vector3(8, 8, 0);
+        skill.gameObject.SetActive(true);
+    }
+    private void OngetRandomMeteor(SkillBase skill)
     {
         skill.transform.position = _randomSpawn.Return_RandomPosition() + new Vector3(8, 8, 0);
         skill.gameObject.SetActive(true);
