@@ -2512,7 +2512,7 @@ public class Lobby : MonoBehaviour
             }
             else if (_choiceNumber == 30)
             {
-                Player.Instance._buybasicStick = true;
+                Player.Instance._buyStick = true;
             }
 
             SoundManager.Instance.EffectPlay(SoundManager.Instance._pop);
@@ -2710,15 +2710,15 @@ public class Lobby : MonoBehaviour
     }
     public void PlusStat()
     {
-        if(_player._gold >= 300 && _player._stat < 37)
+        if(_player._gold >= 200 && _player._stat < 37)
         {
             _player._stat++;
-            _player._gold -= 300;
+            _player._gold -= 200;
 
         }
-        else if (_player._gold <300)
+        else if (_player._gold <200)
         {
-            _alarmText.text = "골드가 부족합니다. \n 필요골드 : " + 300;
+            _alarmText.text = "골드가 부족합니다. \n 필요골드 : " + 200;
             EnterAlarmPopUp();
 
             SoundManager.Instance.EffectPlay(SoundManager.Instance._decline);
@@ -2957,6 +2957,8 @@ public class Lobby : MonoBehaviour
         Player.Instance._buyMedievalTop = false;
         Player.Instance._isCasualBottom = false;
         Player.Instance._buyCasualBottom = false;
+        Player.Instance._isMedievalBottom = false;
+        Player.Instance._buyMedievalBottom = false;
         Player.Instance._isCasualShoes = false;
         Player.Instance._buyCasualShoes = false;
         Player.Instance._isMedievalShoes = false;

@@ -28284,7 +28284,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\uACE4\uB8E1\uD3EC \uD558\uC758"
+  m_Text: "\uCE90\uC8FC\uC5BC \uD558\uC758"
 --- !u!222 &885400268
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -33057,7 +33057,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1030385594
 RectTransform:
   m_ObjectHideFlags: 0
@@ -44443,7 +44443,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 63}
-  m_SizeDelta: {x: 1024, y: 1024}
+  m_SizeDelta: {x: 896.4, y: 896.4}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1406037868
 MonoBehaviour:
@@ -68229,13 +68229,7 @@ MonoBehaviour:
   States:
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 1
-  - Progress: 0
-    LastProgressUpdate: 0
     Achieved: 0
-  - Progress: 0
-    LastProgressUpdate: 0
-    Achieved: 1
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
@@ -68244,10 +68238,10 @@ MonoBehaviour:
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 1
+    Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 1
+    Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
@@ -68418,7 +68412,13 @@ MonoBehaviour:
     Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
-    Achieved: 1
+    Achieved: 0
+  - Progress: 0
+    LastProgressUpdate: 0
+    Achieved: 0
+  - Progress: 0
+    LastProgressUpdate: 0
+    Achieved: 0
   - Progress: 0
     LastProgressUpdate: 0
     Achieved: 0
